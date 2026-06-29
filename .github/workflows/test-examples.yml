@@ -1,0 +1,56 @@
+name: Test pbuild-ai Examples
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run weekly to catch regressions
+    - cron: '0 0 * * 0'
+
+jobs:
+  test-examples:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Set up dependencies
+      run: |
+        # Install pbuild and dependencies
+        # Note: Adjust based on actual pbuild installation method
+        sudo apt-get update
+        # sudo apt-get install -y pbuild
+
+    - name: Install pbuild-ai
+      run: |
+        # Clone and install pbuild-ai
+        git clone https://github.com/adrianschroeter/pbuild-ai.git /tmp/pbuild-ai
+        # Add installation steps as needed
+
+    - name: Run all examples
+      run: |
+        chmod +x scripts/*.sh
+        ./scripts/run-all.sh
+      continue-on-error: true
+
+    - name: Generate benchmark report
+      run: |
+        ./scripts/generate-report.sh
+
+    - name: Upload results
+      uses: actions/upload-artifact@v6
+      with:
+        name: test-results
+        path: results/
+
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs

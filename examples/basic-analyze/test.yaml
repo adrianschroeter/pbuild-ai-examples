@@ -1,0 +1,29 @@
+name: "Basic Package Analysis"
+description: "Demonstrates basic package source analysis without modifications"
+
+source:
+  type: remote  # Cloned at runtime (not submodule due to SHA-256 incompatibility)
+  path: "../../sources/cowsay"
+  url: "https://src.opensuse.org/pool/cowsay"
+  ref: "852d1df910bf97567adb4a1989a4e3939e6bd5242a5c6fd46dc5d39da78c30c5"
+
+command: "pbuild-ai"
+options: []
+
+expected:
+  success: true
+  changes: false
+  files_modified: []
+  build_result: "not_built"  # Analysis only, no build
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: "gemma4"
+
+tags:
+  - "basic"
+  - "analysis"
+  - "read-only"

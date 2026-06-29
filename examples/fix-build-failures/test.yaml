@@ -1,0 +1,31 @@
+name: "Fix Build Failures"
+description: "Automatically detect and fix package build failures"
+
+source:
+  type: local
+  path: "../../sources/fix-build-example"
+  local_path: "./package"  # Relative to this example directory
+
+command: "pbuild-ai"
+options:
+  - "--fix"
+
+expected:
+  success: true
+  changes: true  # May apply fixes if build fails
+  files_modified:
+    - "*.spec"
+    - "*.patch"
+  build_result: "succeeded"
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: "gemma4"
+
+tags:
+  - "intermediate"
+  - "fix"
+  - "build"

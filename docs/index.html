@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pbuild-ai Examples - openSUSE</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="vendor/ansi_up_setup.js"></script>
+</head>
+<body>
+    <!-- Modal for example details -->
+    <div id="exampleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Description</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Command</h3>
+                    <div class="modal-command">
+                        <code id="modalCommand"></code>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>Console Output</h3>
+                    <div class="retro-console" id="modalConsole">
+                        <div class="console-header">
+                            <span class="console-title">pbuild-ai terminal</span>
+                            <span class="console-status">● RUNNING</span>
+                        </div>
+                        <div class="console-body">
+                            <pre id="consoleOutput">Loading output...</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>Benchmark Results</h3>
+                    <div class="benchmark-grid">
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Status</span>
+                            <span class="benchmark-value" id="modalStatus">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Exit Code</span>
+                            <span class="benchmark-value" id="modalExitCode">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Total Runtime</span>
+                            <span class="benchmark-value" id="modalTotalRuntime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Model</span>
+                            <span class="benchmark-value" id="modalAiModel">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Calls</span>
+                            <span class="benchmark-value" id="modalAiCalls">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Time</span>
+                            <span class="benchmark-value" id="modalAiTime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">pbuild Calls</span>
+                            <span class="benchmark-value" id="modalPbuildCalls">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">pbuild Time</span>
+                            <span class="benchmark-value" id="modalPbuildTime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Timestamp</span>
+                            <span class="benchmark-value" id="modalTimestamp">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1 class="site-title">pbuild-ai Examples</h1>
+                </div>
+                <div class="alpha-badge">
+                    This page is as alpha as pbuild-ai is
+                </div>
+                <nav class="nav">
+                    <a href="#examples" class="nav-link">Examples</a>
+                    <a href="benchmark-report.html" class="nav-link">Benchmarks</a>
+                    <a href="https://github.com/adrianschroeter/pbuild-ai" class="nav-link">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">AI-Powered Package Building</h2>
+                <p class="hero-subtitle">
+                    Explore practical examples and test cases demonstrating pbuild-ai's capabilities
+                    for automated package analysis, build fixing, and upstream updates.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#examples" class="btn btn-primary">Explore Examples</a>
+                    <a href="https://github.com/adrianschroeter/pbuild-ai-examples" class="btn btn-secondary">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- What is pbuild-ai Section -->
+            <section class="section intro-section">
+                <div class="section-header">
+                    <h2 class="section-title">What is pbuild-ai?</h2>
+                </div>
+                <div class="intro-content">
+                    <div class="intro-text">
+                        <p>
+                            <strong>pbuild-ai</strong> is an AI agent for the openSUSE pbuild tool.
+                            It automates package analysis, build fixing, upstream updates, and package generation
+                            using AI models provided by an openai api (e.g. ollama).
+                        </p>
+                        <p>
+                            This site showcases practical examples demonstrating pbuild-ai's capabilities.
+                            Each example includes the source package, command used, expected results, and benchmark data.
+                            The examples also serve as a functional test suite for pbuild-ai.
+                        </p>
+                        <p>
+                            pbuild-ai is designed to be used on git-based packages or entire projects. However,
+                            it can also be used on legacy package sources of OBS. Working on OBS projects requires
+                            some workarounds.
+                        </p>
+                        <p>
+                            <strong>Extendable via skills and scripts.</strong> Global, project or package specific.
+                        </p>
+                    </div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                            <span>Automated package analysis</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span>Intelligent build fixing</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <span>Upstream version updates</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
+                            <span>Vibe packaging via prompts</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span>Secure by default</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What is pbuild-ai NOT Section -->
+            <section class="section intro-section">
+                <div class="section-header">
+                    <h2 class="section-title">What is pbuild-ai NOT?</h2>
+                </div>
+                <div class="intro-content">
+                    <div class="intro-text">
+                        <p>
+                            <strong>Fast:</strong> pbuild-ai often requires many steps and the speed depends heavily on the AI you use.
+                            It is actually horribly slow at the moment; its main value is that it can run fully automatically. However, we will
+                            improve the speed in the future.
+                        </p>
+                        <p>
+                            <strong>At risk of high costs:</strong> We depend on an OpenAI API provider. Keep it under your control
+                            to manage costs. Alternatively, a system like an AMD Strix Halo only consumes 120 Watts of electrical
+                            power, making it environmentally friendly.
+                        </p>
+                        <p>
+                            <strong>A tool for creating denial of service:</strong> pbuild-ai will not push changes or create pull
+                            requests by default. However, you could extend it for your project through custom tool scripts.
+                            Please use this capability responsibly.
+                        </p>
+                        <p>
+                            <strong>Complete:</strong> We only have 10 skills at the moment. Tuning and further skills are needed.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Examples Section -->
+            <section class="section" id="examples">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Examples</h2>
+                    <p class="section-subtitle">Practical demonstrations of pbuild-ai capabilities</p>
+                </div>
+
+                <div class="examples-grid">
+                    <!-- Example 1 -->
+                    <div class="example-card" onclick="showExample('basic-analyze')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Basic Package Analysis</h3>
+                        <p class="example-description">
+                            Analyze a package source without making any modifications.
+                            Perfect for understanding package structure and dependencies.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-green">basic</span>
+                            <span class="tag tag-blue">analysis</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 2 -->
+                    <div class="example-card" onclick="showExample('fix-build-failures')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Fix Build Failures</h3>
+                        <p class="example-description">
+                            Automatically detect and fix build failures. The AI analyzes build logs
+                            and applies appropriate patches.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --fix</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-orange">fix</span>
+                            <span class="tag tag-purple">intermediate</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 3 -->
+                    <div class="example-card" onclick="showExample('update-upstream')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Update to Upstream</h3>
+                        <p class="example-description">
+                            Update package to the latest upstream version, rebuild, and fix any
+                            compatibility issues automatically.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --update</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">update</span>
+                            <span class="tag tag-red">advanced</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 4 -->
+                    <div class="example-card" onclick="showExample('backport-security-fix')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Backport Security Fix</h3>
+                        <p class="example-description">
+                            Apply a security fix from upstream using AI-guided patching with custom prompt and --fix mode.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --prompt "Apply security fix from URL" --fix</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-red">security</span>
+                            <span class="tag tag-orange">fix</span>
+                            <span class="tag tag-blue">intermediate</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 5 -->
+                    <div class="example-card" onclick="showExample('simple-modification')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Simple Modification</h3>
+                        <p class="example-description">
+                            Make quick, targeted changes using the --modify flag with a simple text prompt.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --modify "Add a systemd service file"</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-green">basic</span>
+                            <span class="tag tag-purple">modify</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 6 -->
+                    <div class="example-card" onclick="showExample('deep-analysis')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Deep Analysis Mode</h3>
+                        <p class="example-description">
+                            Interactive investigation session inside the build environment.
+                            Diagnose complex build failures step-by-step.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --deep-analyze --interactive --fix</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-red">advanced</span>
+                            <span class="tag tag-orange">debugging</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 7 -->
+                    <div class="example-card" onclick="showExample('generate-package')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Generate New Package</h3>
+                        <p class="example-description">
+                            Create a complete RPM package from scratch based on a description.
+                            AI researches upstream and generates spec files.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --generate "package ripgrep CLI tool"</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">generate</span>
+                            <span class="tag tag-red">advanced</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 7 -->
+                    <div class="example-card" onclick="showExample('update-custom-tools')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Update Package with Own Tools</h3>
+                        <p class="example-description">
+                            Update a package using custom tool scripts to extend pbuild-ai with
+                            project-specific automation and workflows.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --update</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">update</span>
+                            <span class="tag tag-purple">custom</span>
+                            <span class="tag tag-red">advanced</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Examples Section -->
+            <section class="section" id="project-examples">
+                <div class="section-header">
+                    <h2 class="section-title">Project Examples</h2>
+                    <p class="section-subtitle">Working with entire projects containing multiple packages</p>
+                </div>
+
+                <div class="examples-grid">
+                    <!-- Project Example 1 -->
+                    <div class="example-card" onclick="showExample('project-testbuild-fix')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Test Build and Fix Project</h3>
+                        <p class="example-description">
+                            Test build an entire project containing multiple packages and automatically
+                            fix any build failures across all packages.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --fix</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-orange">fix</span>
+                            <span class="tag tag-red">project</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Example 2 -->
+                    <div class="example-card" onclick="showExample('project-update-no-build')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Update Sources Only</h3>
+                        <p class="example-description">
+                            Update all package sources in a project to their latest upstream versions
+                            without running test builds. Fast update for preparation work.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --update-only</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">update</span>
+                            <span class="tag tag-green">fast</span>
+                        </div>
+                    </div>
+
+                    <!-- Project Example 3 -->
+                    <div class="example-card" onclick="showExample('project-update-build-fix')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Update, Build and Fix All</h3>
+                        <p class="example-description">
+                            Complete project update workflow: update all sources to the latest upstream,
+                            test build everything, and automatically fix any compatibility issues.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --update</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">update</span>
+                            <span class="tag tag-orange">fix</span>
+                            <span class="tag tag-red">advanced</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="section cta-section">
+                <div class="cta-card">
+                    <h2 class="cta-title">Ready to Get Started?</h2>
+                    <p class="cta-text">
+                        Explore the repository, try out the examples, and contribute your own test cases.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="https://github.com/adrianschroeter/pbuild-ai" class="btn btn-primary btn-large">
+                            View pbuild-ai on GitHub
+                        </a>
+                        <a href="https://github.com/adrianschroeter/pbuild-ai-examples" class="btn btn-secondary btn-large">
+                            Contribute Examples
+                        </a>
+                        <a href="benchmark-report.html" class="btn btn-outline btn-large">
+                            View Benchmarks
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">pbuild-ai</h4>
+                    <p class="footer-text">
+                        AI-powered package building for openSUSE
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai">pbuild-ai</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples">Examples Repo</a></li>
+                        <li><a href="https://github.com/openSUSE/obs-build/">pbuild Tool</a></li>
+                        <li><a href="https://github.com/openSUSE/pbuild">pbuild GitHub action</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Community</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.opensuse.org/">openSUSE</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples">Contribute</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Part of the openSUSE ecosystem • MIT License</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Example data repository
+        const examples = {
+            'basic-analyze': {
+                title: 'Basic Package Analysis',
+                description: 'Analyze a package source without making any modifications. Perfect for understanding package structure and dependencies.',
+                command: 'pbuild-ai <source-directory>',
+                exampleDir: 'basic-analyze'
+            },
+            'fix-build-failures': {
+                title: 'Fix Build Failures',
+                description: 'Automatically detect and fix build failures. The AI analyzes build logs and applies appropriate patches.',
+                command: 'pbuild-ai --fix <source-directory>',
+                exampleDir: 'fix-build-failures'
+            },
+            'update-upstream': {
+                title: 'Update to Upstream',
+                description: 'Update package to the latest upstream version, rebuild, and fix any compatibility issues automatically.',
+                command: 'pbuild-ai --update <source-directory>',
+                exampleDir: 'update-upstream'
+            },
+            'backport-security-fix': {
+                title: 'Backport Security Fix',
+                description: 'Apply a security fix from upstream using AI-guided patching with --prompt and --fix. Demonstrates targeted modifications with custom instructions.',
+                command: 'pbuild-ai --prompt "Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df..." --fix <source-directory>',
+                exampleDir: 'backport-security-fix'
+            },
+            'simple-modification': {
+                title: 'Simple Modification',
+                description: 'Make quick, targeted changes using the --modify flag with a simple text prompt. Perfect for adding files or making small enhancements.',
+                command: 'pbuild-ai --modify "Add a systemd service file for glance server" <source-directory>',
+                exampleDir: 'simple-modification'
+            },
+            'deep-analysis': {
+                title: 'Deep Analysis Mode',
+                description: 'Interactive investigation session inside the build environment. Diagnose complex build failures step-by-step.',
+                command: 'pbuild-ai --deep-analyze --interactive --fix <source-directory>',
+                exampleDir: 'deep-analysis'
+            },
+            'generate-package': {
+                title: 'Generate New Package',
+                description: 'Create a complete RPM package from scratch based on a description. AI researches upstream and generates spec files.',
+                command: 'pbuild-ai --generate "package ripgrep CLI tool"',
+                exampleDir: 'generate-package'
+            },
+            'update-custom-tools': {
+                title: 'Update Package with Own Tools',
+                description: 'Update a package using custom tool scripts. Extend pbuild-ai with project-specific automation and workflows.',
+                command: 'pbuild-ai --update <source-directory>',
+                exampleDir: 'update-custom-tools'
+            },
+            'project-testbuild-fix': {
+                title: 'Test Build and Fix Project',
+                description: 'Test build an entire project containing multiple packages and automatically fix any build failures across all packages.',
+                command: 'pbuild-ai --fix',
+                exampleDir: 'project-testbuild-fix'
+            },
+            'project-update-no-build': {
+                title: 'Update Sources Only',
+                description: 'Update all package sources in a project to their latest upstream versions without running test builds. Fast update for preparation work.',
+                command: 'pbuild-ai --update-only',
+                exampleDir: 'project-update-no-build'
+            },
+            'project-update-build-fix': {
+                title: 'Update, Build and Fix All',
+                description: 'Complete project update workflow: update all sources to the latest upstream, test build everything, and automatically fix any compatibility issues.',
+                command: 'pbuild-ai --update',
+                exampleDir: 'project-update-build-fix'
+            }
+        };
+
+        function showExample(exampleId) {
+            const example = examples[exampleId];
+            if (!example) return;
+
+            // Populate modal with example data
+            document.getElementById('modalTitle').textContent = example.title;
+            document.getElementById('modalDescription').textContent = example.description;
+            document.getElementById('modalCommand').textContent = example.command;
+
+            // Load actual results if available
+            loadExampleResults(example.exampleDir);
+
+            // Show modal
+            document.getElementById('exampleModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('exampleModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        async function loadExampleResults(exampleDir) {
+            // Try to load actual results from generated manifest
+            try {
+                const response = await fetch('results.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.examples && data.examples[exampleDir]) {
+                        showActualResults(data.examples[exampleDir]);
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.log('Could not load results:', e);
+            }
+            showPlaceholderResults(exampleDir);
+        }
+
+        function showActualResults(result) {
+            // Show actual console output with ANSI color support
+            const consoleOutput = document.getElementById('consoleOutput');
+
+            // Convert ANSI escape codes to HTML (fallback to plain text if library not loaded)
+            if (typeof AnsiUp !== 'undefined') {
+                const ansi_up = new AnsiUp();
+                ansi_up.use_classes = true;  // Use CSS classes for styling
+                const htmlOutput = ansi_up.ansi_to_html(result.output);
+                consoleOutput.innerHTML = htmlOutput;
+            } else {
+                consoleOutput.textContent = result.output;
+            }
+
+            // Update console status
+            const consoleStatus = document.querySelector('.console-status');
+            if (result.success) {
+                consoleStatus.innerHTML = '● COMPLETE';
+                consoleStatus.style.color = 'var(--geeko-green)';
+            } else {
+                consoleStatus.innerHTML = '● FAILED';
+                consoleStatus.style.color = '#ff4444';
+            }
+
+            // Show actual benchmarks
+            const statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            document.getElementById('modalStatus').innerHTML =
+                `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
+            document.getElementById('modalExitCode').textContent = result.exit_code;
+            document.getElementById('modalTotalRuntime').textContent =
+                (result.total_runtime_seconds !== null && result.total_runtime_seconds !== undefined && result.total_runtime_seconds !== '') ? `${result.total_runtime_seconds}s` : '-';
+            document.getElementById('modalAiModel').textContent =
+                (result.ai_model !== null && result.ai_model !== undefined && result.ai_model !== '') ? result.ai_model : '-';
+            document.getElementById('modalAiCalls').textContent =
+                (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
+            document.getElementById('modalAiTime').textContent =
+                (result.ai_time_seconds !== null && result.ai_time_seconds !== undefined) ? `${result.ai_time_seconds}s` : '-';
+            document.getElementById('modalPbuildCalls').textContent =
+                (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : '-';
+            document.getElementById('modalPbuildTime').textContent =
+                (result.pbuild_time_seconds !== null && result.pbuild_time_seconds !== undefined) ? `${result.pbuild_time_seconds}s` : '-';
+            document.getElementById('modalTimestamp').textContent = result.timestamp;
+        }
+
+        function showPlaceholderResults(exampleDir) {
+            // Placeholder console output
+            const consoleOutput = document.getElementById('consoleOutput');
+            consoleOutput.textContent = `$ pbuild-ai ${exampleDir}
+
+[pbuild-ai] Loading package from sources...
+[pbuild-ai] Analyzing package structure...
+[pbuild-ai] Reading spec file...
+[pbuild-ai] Checking dependencies...
+
+Example not yet run. Execute ./scripts/run-example.sh examples/${exampleDir}
+to generate actual results.
+
+Run the example to see:
+  - Full console output
+  - Build logs
+  - AI reasoning
+  - Applied changes
+  - Benchmark timing`;
+
+            // Placeholder benchmarks
+            document.getElementById('modalStatus').innerHTML = '<span style="color: var(--text-muted)">Not run yet</span>';
+            document.getElementById('modalExitCode').textContent = '-';
+            document.getElementById('modalTotalRuntime').textContent = '-';
+            document.getElementById('modalAiModel').textContent = '-';
+            document.getElementById('modalAiCalls').textContent = '-';
+            document.getElementById('modalAiTime').textContent = '-';
+            document.getElementById('modalPbuildCalls').textContent = '-';
+            document.getElementById('modalPbuildTime').textContent = '-';
+            document.getElementById('modalTimestamp').textContent = '-';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('exampleModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

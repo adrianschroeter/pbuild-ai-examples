@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmark Report - pbuild-ai Examples</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .benchmark-table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        .benchmark-table th {
+            background: var(--opensuse-dark);
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .benchmark-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .benchmark-table tr:last-child td {
+            border-bottom: none;
+        }
+        .benchmark-table tr:hover {
+            background: var(--color-bg-gray);
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .timing {
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        .trend-cell {
+            font-size: 0.875rem;
+            white-space: nowrap;
+        }
+        .timestamp-text {
+            color: var(--color-text-light);
+            font-size: 0.85rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        .back-link:hover {
+            color: var(--color-primary-dark);
+        }
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1 class="site-title">pbuild-ai Examples</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="benchmark-report.html" class="nav-link">Benchmarks</a>
+                    <a href="https://github.com/adrianschroeter/pbuild-ai" class="nav-link">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <a href="index.html" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Examples
+            </a>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">Benchmark Report</h2>
+                    <p class="section-subtitle">Performance metrics for pbuild-ai examples</p>
+                    <p class="timestamp-text">Generated: $(date '+%Y-%m-%d %H:%M:%S')</p>
+                </div>
+
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th>Example</th>
+                            <th>Status</th>
+                            <th>Run Time</th>
+                            <th>Trend</th>
+                            <th>Exit Code</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>backport-security-fix</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">0s</span></td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_150112</td>
+                        </tr>
+                        <tr>
+                            <td><strong>basic-analyze</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">150s</span></td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_165709</td>
+                        </tr>
+                        <tr>
+                            <td><strong>fix-build-failures</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">3178s</span></td>
+                            <td><span style="color: #ef4444; font-weight: 600;">↑ 2203% slower</span></td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_175422</td>
+                        </tr>
+                        <tr>
+                            <td><strong>inline-example</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">0s</span></td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_125003</td>
+                        </tr>
+                        <tr>
+                            <td><strong>update-upstream</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">0s</span></td>
+                            <td>-</td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_084943</td>
+                        </tr>
+                        <tr>
+                            <td><strong>version-update-single-package</strong></td>
+                            <td><span class="status-badge status-success">✓ PASSED</span></td>
+                            <td><span class="timing">15s</span></td>
+                            <td><span style="color: #ef4444; font-weight: 600;">↑ 1400% slower</span></td>
+                            <td>0</td>
+                            <td class="timestamp-text">20260629_104042</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <div class="cta-card">
+                    <h2 class="cta-title">Run Your Own Benchmarks</h2>
+                    <p class="cta-text">
+                        Clone the repository and run the examples to generate your own benchmark data.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="https://github.com/adrianschroeter/pbuild-ai-examples" class="btn btn-outline btn-large">
+                            Get Started
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="footer-title">pbuild-ai</h4>
+                    <p class="footer-text">
+                        AI-powered package building for openSUSE
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai">pbuild-ai</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples">Examples Repo</a></li>
+                        <li><a href="https://github.com/openSUSE/obs-build/">pbuild Tool</a></li>
+                        <li><a href="https://github.com/openSUSE/pbuild">pbuild GitHub action</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">Community</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.opensuse.org/">openSUSE</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/adrianschroeter/pbuild-ai-examples">Contribute</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Part of the openSUSE ecosystem • MIT License</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

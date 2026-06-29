@@ -1,0 +1,31 @@
+name: "Update to Latest Upstream"
+description: "Automatically update package to latest upstream version and fix compatibility issues"
+
+source:
+  type: remote  # Cloned at runtime (not submodule due to SHA-256 incompatibility)
+  path: "../../sources/cowsay"
+  url: "https://src.opensuse.org/pool/cowsay"
+  ref: "main"  # Will be pinned after first successful run
+
+command: "pbuild-ai"
+options:
+  - "--update"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "cowsay.spec"  # Version updates
+    - "cowsay.changes"  # Changelog
+  build_result: "succeeded"
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: "gemma4"
+
+tags:
+  - "intermediate"
+  - "update"

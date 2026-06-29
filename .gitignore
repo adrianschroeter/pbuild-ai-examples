@@ -1,0 +1,22 @@
+# Build artifacts
+results/*.log
+results/tmp/
+
+# Source packages (cloned at runtime, not committed)
+sources/*/
+!sources/README.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~
