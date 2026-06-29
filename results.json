@@ -1,0 +1,95 @@
+{
+  "generated": "2026-06-29T19:07:12+00:00",
+  "examples": {
+    "basic-analyze": {
+      "timestamp": "20260629_190707",
+      "run_time_seconds": 0,
+      "success": true,
+      "exit_code": 0,
+      "ai_model": "null",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": -100.0,
+      "first_run_time_seconds": 150,
+      "run_count": 2,
+      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "result_path": "../results/basic-analyze/20260629_190707"
+    }
+,
+    "fix-build-failures": {
+      "timestamp": "20260629_190711",
+      "run_time_seconds": 0,
+      "success": true,
+      "exit_code": 0,
+      "ai_model": "null",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": -100.0,
+      "first_run_time_seconds": 3178,
+      "run_count": 2,
+      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "result_path": "../results/fix-build-failures/20260629_190711"
+    }
+,
+    "inline-example": {
+      "timestamp": "20260629_190711",
+      "run_time_seconds": 0,
+      "success": true,
+      "exit_code": 0,
+      "ai_model": "null",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": null,
+      "first_run_time_seconds": null,
+      "run_count": 1,
+      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "result_path": "../results/inline-example/20260629_190711"
+    }
+,
+    "update-upstream": {
+      "timestamp": "20260629_190711",
+      "run_time_seconds": 0,
+      "success": true,
+      "exit_code": 0,
+      "ai_model": "null",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": null,
+      "first_run_time_seconds": 0,
+      "run_count": 6,
+      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "result_path": "../results/update-upstream/20260629_190711"
+    }
+,
+    "version-update-single-package": {
+      "timestamp": "20260629_080910",
+      "run_time_seconds": 1,
+      "success": false,
+      "exit_code": 1,
+      "ai_model": "",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": null,
+      "first_run_time_seconds": null,
+      "run_count": 1,
+      "output": "No output log available",
+      "result_path": "../results/version-update-single-package/20260629_080910"
+    }
+
+  }
+}
