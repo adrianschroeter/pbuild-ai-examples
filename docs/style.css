@@ -1030,11 +1030,10 @@ a:hover {
 }
 
 .console-body pre {
-    color: var(--geeko-green);
+    color: #c0c0c0;
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.6;
-    text-shadow: 0 0 5px rgba(66, 205, 66, 0.5);
     font-family: 'Courier New', monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
