@@ -6,6 +6,9 @@ set -e
 if [ -z "$1" ]; then
     echo "Usage: $0 <example-directory>"
     echo "Example: $0 examples/basic-analyze"
+    echo ""
+    echo "Environment variables:"
+    echo "  PBUILD_AI_BIN  Path to pbuild-ai executable (default: from test.yaml)"
     exit 1
 fi
 
@@ -144,18 +147,25 @@ elif [ "$SOURCE_TYPE" = "remote" ] || [ "$SOURCE_TYPE" = "clone" ]; then
     fi
 fi
 
+# Parse test.yaml to get command and options
+COMMAND=$(grep "^command:" "$TEST_YAML" | sed 's/command: *//' | tr -d '"')
+
+# Allow override via PBUILD_AI_BIN environment variable
+if [ -n "$PBUILD_AI_BIN" ]; then
+    COMMAND="$PBUILD_AI_BIN"
+fi
+
 # Log test metadata
+PBUILD_AI_PATH=$(command -v "$COMMAND" 2>/dev/null || echo "$COMMAND")
 cat > "${RESULT_DIR}/metadata.json" <<EOF
 {
   "example": "$(basename "$EXAMPLE_DIR")",
   "timestamp": "$(date -Iseconds)",
   "hostname": "$(hostname)",
-  "repo_root": "${REPO_ROOT}"
+  "repo_root": "${REPO_ROOT}",
+  "pbuild_ai_bin": "$PBUILD_AI_PATH"
 }
 EOF
-
-# Parse test.yaml to get command and options
-COMMAND=$(grep "^command:" "$TEST_YAML" | sed 's/command: *//' | tr -d '"')
 
 # Parse options - only lines between "options:" and the next section (expected:)
 # Keep escaped quotes intact by only removing the outer YAML quotes
@@ -168,7 +178,11 @@ else
     FULL_COMMAND="$COMMAND $OPTIONS"
 fi
 
-echo "Command: $FULL_COMMAND"
+if [ -n "$PBUILD_AI_BIN" ]; then
+    echo "Command: $FULL_COMMAND  (via PBUILD_AI_BIN=$PBUILD_AI_BIN)"
+else
+    echo "Command: $FULL_COMMAND"
+fi
 echo ""
 
 # Record start time
