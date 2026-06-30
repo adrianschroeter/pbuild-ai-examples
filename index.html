@@ -65,6 +65,10 @@
                             <span class="benchmark-label">Timestamp</span>
                             <span class="benchmark-value" id="modalTimestamp">-</span>
                         </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">pbuild-ai Version</span>
+                            <span class="benchmark-value" id="modalPbuildAiVersion">-</span>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-section">
@@ -761,6 +765,8 @@
             document.getElementById('modalPbuildTime').textContent =
                 (result.pbuild_time_seconds !== null && result.pbuild_time_seconds !== undefined) ? `${result.pbuild_time_seconds}s` : '-';
             document.getElementById('modalTimestamp').textContent = result.timestamp;
+            document.getElementById('modalPbuildAiVersion').textContent =
+                (result.pbuild_ai_version !== null && result.pbuild_ai_version !== undefined) ? result.pbuild_ai_version : '-';
         }
 
         let diffVisible = false;
@@ -800,6 +806,7 @@ Run the example to see:
             document.getElementById('modalPbuildCalls').textContent = '-';
             document.getElementById('modalPbuildTime').textContent = '-';
             document.getElementById('modalTimestamp').textContent = '-';
+            document.getElementById('modalPbuildAiVersion').textContent = '-';
             document.getElementById('diffSection').style.display = 'none';
         }
 
