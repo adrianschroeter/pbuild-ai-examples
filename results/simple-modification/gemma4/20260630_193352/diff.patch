@@ -1,0 +1,33 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/gemma4/20260630_193352/source_backup/glances.service /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances.service
+--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/gemma4/20260630_193352/source_backup/glances.service	1970-01-01 01:00:00.000000000 +0100
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances.service	2026-06-30 19:35:19.729632870 +0200
+@@ -0,0 +1,11 @@
++[Unit]
++Description=Glances monitoring tool server
++After=network.target
++
++[Service]
++Type=simple
++ExecStart=/usr/bin/glances -w
++Restart=on-failure
++
++[Install]
++WantedBy=multi-user.target
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/gemma4/20260630_193352/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/gemma4/20260630_193352/source_backup/python-Glances.spec	2026-06-30 19:33:53.688949647 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec	2026-06-30 19:36:52.916538939 +0200
+@@ -67,6 +67,14 @@
+ %install
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
++install -D -m 644 glances.service %{buildroot}%{_sysconfdir}/systemd/system/glances.service
++
++%package glances-common
++Summary: Common files for Glances
++Group: System/Service
++
++%files glances-common
++%{_sysconfdir}/systemd/system/glances.service
+ 
+ %files %{python_files}
+ %license COPYING

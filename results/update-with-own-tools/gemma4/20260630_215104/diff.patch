@@ -1,0 +1,49 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/gemma4/20260630_215104/source_backup/ollama.changes /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/gemma4/20260630_215104/source_backup/ollama.changes	2026-06-30 21:51:04.499898700 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes	2026-06-30 21:59:12.963919227 +0200
+@@ -1,3 +1,13 @@
++
++-------------------------------------------------------------------
++Mon Jun 30 12:00:00 UTC 2026 - Adrian Schröter <adrian@suse.de>
++
++- Updated to version 0.30.12
++  * tools: ignore braces inside JSON strings when detecting tool call end
++  * mlx: bump dependency
++  * llama.cpp update
++- Update generated using pbuild-ai
++
+ -------------------------------------------------------------------
+ Sat Jun 27 08:59:05 UTC 2026 - Adrian Schröter <adrian@suse.de>
+ 
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/gemma4/20260630_215104/source_backup/ollama.spec /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/gemma4/20260630_215104/source_backup/ollama.spec	2026-06-30 21:51:04.499898700 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec	2026-06-30 21:59:39.164561199 +0200
+@@ -65,13 +65,12 @@
+ %define cuda_version %{cuda_version_major}-%{cuda_version_minor}
+ 
+ Name:           ollama
+-Version:        0.30.11
++Version:        0.30.12
+ Release:        0
+ Summary:        Tool for running AI models on-premise
+ License:        MIT
+ URL:            https://ollama.com
+ #!RemoteAsset: git+https://github.com/ollama/ollama#v%{version}
+-#!CreateArchive
+ Source:         %{name}-%{version}.tar.xz
+ Source1:        vendor.tar.zstd
+ Source2:        %{name}.service
+@@ -79,11 +78,11 @@
+ Source4:        sysconfig.%{name}
+ Source5:        %{name}-rpmlintrc
+ 
+-#!RemoteAsset: git+https://github.com/ggml-org/llama.cpp#b9781
++#!RemoteAsset: git+https://github.com/ggml-org/llama.cpp#b9840
+ #!CreateArchive
+ Source10:       llama.cpp-main.tar.xz
+ 
+-#!RemoteAsset: git+https://github.com/ml-explore/mlx#51b2768da7e1897d3c4258f7ddbb47083d1eef01
++#!RemoteAsset: git+https://github.com/ml-explore/mlx#548dd80
+ #!CreateArchive
+ Source11:       mlx-main.tar.xz
+ 

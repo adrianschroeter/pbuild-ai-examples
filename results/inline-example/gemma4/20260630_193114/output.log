@@ -1,0 +1,12 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: hello.spec...
+-> AI(default) says:
+- **Remove `%changelog`**: Per openSUSE conventions, the changelog must be in a separate `PACKAGE.changes` file, not the `.spec`.
+- **Missing Copyright Header**: Every spec file must start with a copyright header.
+- **Invalid Group**: `Group: Invalid` is incorrect; use a valid group or omit it.
+- **Empty Package**: The `%build` section only echoes text and `%install` is empty. No files are actually created or installed to `%{buildroot}`, which will cause the build to fail during the `%files` check.
+- **Empty `%files`**: `%doc` is listed, but no documentation files were installed in the `%install` phase.
+
+[STATS] AI model: default  |  AI calls: 1  |  AI time: 157.6s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 157.6s

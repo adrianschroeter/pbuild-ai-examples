@@ -1,0 +1,147 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] AGENTS.md found. Using for Ollama context.
+[PREBUILD] Executing update_references.sh...
+[INFO] No specific skill found. Using default profile.
+
+[UPDATE] Updating ollama.spec to 0.30.12...
+[FIX] Error fetching https://github.com/ollama/ollama/releases/tag/v0.30.12: HTTP Error 404: Not Found
+[TOOL] web_fetch: https://github.com/ollama/ollama/releases (570933 bytes -> 29703 stripped)
+[FIX] [Fetched 570933 bytes]
+[TOOL] list_files: . (22 entries)
+[FIX] .git/
+.gitattributes
+.gitignore
+AGENTS.md
+_multibuild
+disable-llama.cpp-ui.patch
+fix-mlxrunner-tests.diff
+llama.cpp-main.tar.xz
+llama.cpp.obsinfo
+mlx-c-main.tar.xz
+mlx-c.obsinfo
+mlx-main.tar.xz
+mlx.obsinfo
+ollama-0.30.11.tar.gz
+ollama-rpmlintrc
+ollama-user.conf
+ollama.changes
+ollama.service
+ollama.spec
+sysconfig.ollama
+tool-scripts/
+vendor.tar.zstd
+[TOOL] web_fetch: https://github.com/ollama/ollama/pull/16935 (283695 bytes -> 19431 stripped)
+[FIX] [Fetched 283695 bytes]
+[TOOL] web_fetch: https://github.com/ollama/ollama/pull/16960 (264329 bytes -> 18453 stripped)
+[FIX] [Fetched 264329 bytes]
+[TOOL] web_fetch: https://github.com/ollama/ollama/commit/1c5ebbf (321649 bytes -> 30241 stripped)
+[FIX] [Fetched 321649 bytes]
+[TOOL] web_fetch: https://api.github.com/repos/ollama/ollama/commits?sha=1c5ebbf&since=2026-06-25T00:00:00Z (41658 bytes -> 41146 stripped)
+[FIX] [Fetched 41658 bytes]
+[TOOL] read_file: ollama.changes
+[FIX] read_file: ollama.changes (2092 lines)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[36m[TOOL][0m [36m@@ -65,7 +65,7 @@
+[0m[TOOL]  %define cuda_version %{cuda_version_major}-%{cuda_version_minor}
+[TOOL]  
+[TOOL]  Name:           ollama
+[31m[TOOL][0m [31m-Version:        0.30.11
+[0m[32m[TOOL][0m [32m+Version:        0.30.12
+[0m[TOOL]  Release:        0
+[TOOL]  Summary:        Tool for running AI models on-premise
+[TOOL]  License:        MIT
+[TOOL] --- End diff ---
+[TOOL] edit_file: ollama.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[36m[TOOL][0m [36m@@ -79,7 +79,7 @@
+[0m[TOOL]  Source4:        sysconfig.%{name}
+[TOOL]  Source5:        %{name}-rpmlintrc
+[TOOL]  
+[31m[TOOL][0m [31m-#!RemoteAsset: git+https://github.com/ggml-org/llama.cpp#b9781
+[0m[32m[TOOL][0m [32m+#!RemoteAsset: git+https://github.com/ggml-org/llama.cpp#b9840
+[0m[TOOL]  #!CreateArchive
+[TOOL]  Source10:       llama.cpp-main.tar.xz
+[TOOL]  
+[TOOL] --- End diff ---
+[TOOL] edit_file: ollama.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+[0m[36m[TOOL][0m [36m@@ -83,7 +83,7 @@
+[0m[TOOL]  #!CreateArchive
+[TOOL]  Source10:       llama.cpp-main.tar.xz
+[TOOL]  
+[31m[TOOL][0m [31m-#!RemoteAsset: git+https://github.com/ml-explore/mlx#51b2768da7e1897d3c4258f7ddbb47083d1eef01
+[0m[32m[TOOL][0m [32m+#!RemoteAsset: git+https://github.com/ml-explore/mlx#548dd80
+[0m[TOOL]  #!CreateArchive
+[TOOL]  Source11:       mlx-main.tar.xz
+[TOOL]  
+[TOOL] --- End diff ---
+[TOOL] edit_file: ollama.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes
+[0m[36m[TOOL][0m [36m@@ -1,3 +1,13 @@
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+-------------------------------------------------------------------
+[0m[32m[TOOL][0m [32m+Mon Jun 30 12:00:00 UTC 2026 - Adrian Schröter <adrian@suse.de>
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+- Updated to version 0.30.12
+[0m[32m[TOOL][0m [32m+  * tools: ignore braces inside JSON strings when detecting tool call end
+[0m[32m[TOOL][0m [32m+  * mlx: bump dependency
+[0m[32m[TOOL][0m [32m+  * llama.cpp update
+[0m[32m[TOOL][0m [32m+- Update generated using pbuild-ai
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  -------------------------------------------------------------------
+[TOOL]  Sat Jun 27 08:59:05 UTC 2026 - Adrian Schröter <adrian@suse.de>
+[TOOL]  
+[TOOL] --- End diff ---
+[TOOL] edit_file: ollama.changes (1 match replaced)
+[FIX] OK: Edited ollama.spec
+[FIX] OK: Edited ollama.spec
+[FIX] OK: Edited ollama.spec
+[FIX] OK: Edited ollama.changes
+[FIX] Error downloading https://github.com/ollama/ollama/archive/refs/tags/v0.30.12.tar.xz: HTTP Error 404: Not Found
+[UPDATE] web_fetch: Error fetching https://github.com/ollama/ollama/releases/tag/v0.30.12: HTTP Error 404: Not Found
+[UPDATE] web_fetch: [Fetched 570933 bytes]
+[UPDATE] list_files: .git/
+.gitattributes
+.gitignore
+AGENTS.md
+_multibuild
+disable-llama.cpp-ui.patch
+fix-mlxrunner-tests.diff
+llama.cpp-main.tar.xz
+llama.cpp.obsinfo
+mlx-c-main.tar.xz
+mlx-c.obsinfo
+mlx-main.tar.xz
+mlx.obsinfo
+ollama-0.30.11.tar.gz
+ollama-rpmlintrc
+ollama-user.conf
+ollama.changes
+ollama.service
+ollama.spec
+sysconfig.ollama
+tool-scripts/
+vendor.tar.zstd
+[UPDATE] web_fetch: [Fetched 283695 bytes]
+[UPDATE] web_fetch: [Fetched 264329 bytes]
+[UPDATE] web_fetch: [Fetched 321649 bytes]
+[UPDATE] web_fetch: [Fetched 41658 bytes]
+[UPDATE] read_file: -------------------------------------------------------------------
+[UPDATE] edit_file: OK: Edited ollama.spec
+[UPDATE] edit_file: OK: Edited ollama.spec
+[UPDATE] edit_file: OK: Edited ollama.spec
+[UPDATE] edit_file: OK: Edited ollama.changes
+[UPDATE] download_file: Error downloading https://github.com/ollama/ollama/archive/refs/tags/v0.30.12.tar.xz: HTTP Error 404: Not Found
+[UPDATE] AI modified ollama.spec (12626b vs 12659b original)
+[UPDATE] Fixed RemoteAsset/CreateArchive formatting.
+[UPDATE] #!CreateArchive found — source from git. Skipping download.
+Script aborted: name '_dl_failed' is not defined
