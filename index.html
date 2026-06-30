@@ -46,8 +46,8 @@
                             <span class="benchmark-value" id="modalStatus">-</span>
                         </div>
                         <div class="benchmark-item">
-                            <span class="benchmark-label">Exit Code</span>
-                            <span class="benchmark-value" id="modalExitCode">-</span>
+                            <span class="benchmark-label">Files Changed</span>
+                            <span class="benchmark-value" id="modalFilesChanged">-</span>
                         </div>
                         <div class="benchmark-item">
                             <span class="benchmark-label">Total Runtime</span>
@@ -78,6 +78,10 @@
                             <span class="benchmark-value" id="modalTimestamp">-</span>
                         </div>
                     </div>
+                </div>
+                <div class="modal-section" id="diffSection" style="display:none;">
+                    <h3>Diff of Changes</h3>
+                    <div class="diff-view" id="diffContent">Loading diff...</div>
                 </div>
             </div>
         </div>
@@ -670,7 +674,20 @@
             const statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
             document.getElementById('modalStatus').innerHTML =
                 `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
-            document.getElementById('modalExitCode').textContent = result.exit_code;
+
+            // Files changed
+            const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
+            const filesChangedEl = document.getElementById('modalFilesChanged');
+            const hasDiff = result.diff && result.diff.length > 0;
+            if (hasDiff) {
+                filesChangedEl.innerHTML = `<a href="#" class="diff-link" onclick="toggleDiff();return false;">${filesChanged}</a>`;
+                document.getElementById('diffContent').textContent = result.diff;
+                document.getElementById('diffSection').style.display = 'none';
+            } else {
+                filesChangedEl.textContent = filesChanged > 0 ? filesChanged : '-';
+                document.getElementById('diffSection').style.display = 'none';
+            }
+
             document.getElementById('modalTotalRuntime').textContent =
                 (result.total_runtime_seconds !== null && result.total_runtime_seconds !== undefined && result.total_runtime_seconds !== '') ? `${result.total_runtime_seconds}s` : '-';
             document.getElementById('modalAiModel').textContent =
@@ -684,6 +701,13 @@
             document.getElementById('modalPbuildTime').textContent =
                 (result.pbuild_time_seconds !== null && result.pbuild_time_seconds !== undefined) ? `${result.pbuild_time_seconds}s` : '-';
             document.getElementById('modalTimestamp').textContent = result.timestamp;
+        }
+
+        let diffVisible = false;
+        function toggleDiff() {
+            const section = document.getElementById('diffSection');
+            diffVisible = !diffVisible;
+            section.style.display = diffVisible ? 'block' : 'none';
         }
 
         function showPlaceholderResults(exampleDir) {
@@ -708,7 +732,7 @@ Run the example to see:
 
             // Placeholder benchmarks
             document.getElementById('modalStatus').innerHTML = '<span style="color: var(--text-muted)">Not run yet</span>';
-            document.getElementById('modalExitCode').textContent = '-';
+            document.getElementById('modalFilesChanged').textContent = '-';
             document.getElementById('modalTotalRuntime').textContent = '-';
             document.getElementById('modalAiModel').textContent = '-';
             document.getElementById('modalAiCalls').textContent = '-';
@@ -716,6 +740,7 @@ Run the example to see:
             document.getElementById('modalPbuildCalls').textContent = '-';
             document.getElementById('modalPbuildTime').textContent = '-';
             document.getElementById('modalTimestamp').textContent = '-';
+            document.getElementById('diffSection').style.display = 'none';
         }
 
         // Close modal on outside click

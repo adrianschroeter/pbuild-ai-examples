@@ -1030,11 +1030,10 @@ a:hover {
 }
 
 .console-body pre {
-    color: var(--geeko-green);
+    color: #c0c0c0;
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.6;
-    text-shadow: 0 0 5px rgba(66, 205, 66, 0.5);
     font-family: 'Courier New', monospace;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -1223,4 +1222,51 @@ a:hover {
     word-wrap: break-word;
     font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
     line-height: 1.5;
+}
+
+/* ============================================
+   Diff Viewer
+   ============================================ */
+
+.diff-link {
+    color: var(--geeko-green);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.diff-link:hover {
+    color: var(--butterfly-blue);
+}
+
+.diff-view {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(66, 205, 66, 0.3);
+    border-radius: 6px;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 400px;
+    overflow-y: auto;
+    color: #c0c0c0;
+}
+
+.diff-view .diff-added,
+.diff-view .addition {
+    color: #00cd00;
+}
+
+.diff-view .diff-removed,
+.diff-view .deletion {
+    color: #cd0000;
+}
+
+.diff-view .diff-header {
+    color: #5c5cff;
+}
+
+.diff-view .diff-hunk {
+    color: #cdcd00;
 }
