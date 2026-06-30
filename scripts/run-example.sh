@@ -8,7 +8,7 @@ if [ -z "$1" ]; then
     echo "Example: $0 examples/basic-analyze"
     echo ""
     echo "Environment variables:"
-    echo "  PBUILD_AI_BIN  Path to pbuild-ai executable (default: from test.yaml)"
+    echo "  PBUILD_AI_CMD  Path to pbuild-ai executable (default: from test.yaml)"
     exit 1
 fi
 
@@ -112,54 +112,33 @@ elif [ "$SOURCE_TYPE" = "remote" ] || [ "$SOURCE_TYPE" = "clone" ]; then
         RELATIVE_PATH="${SOURCE_PATH#../../}"
         FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
 
-        if [ ! -d "$FULL_SOURCE_PATH" ]; then
-            echo "Cloning source package..."
-            echo "  URL: $SOURCE_URL"
-            echo "  Path: $FULL_SOURCE_PATH"
-            if [ -n "$SOURCE_REF" ]; then
-                echo "  Ref: $SOURCE_REF (pinned for reproducibility)"
-            fi
-
-            mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
-            git clone "$SOURCE_URL" "$FULL_SOURCE_PATH" || {
-                echo "Warning: git clone failed, source may need manual setup"
-                echo ""
-                exit 1
-            }
-
-            # Checkout specific ref if specified
-            if [ -n "$SOURCE_REF" ]; then
-                echo "Checking out ref: $SOURCE_REF"
-                (cd "$FULL_SOURCE_PATH" && git checkout "$SOURCE_REF" 2>&1) || {
-                    echo "Warning: failed to checkout ref $SOURCE_REF"
-                }
-            fi
-            echo ""
-        else
-            echo "Source already exists at: $FULL_SOURCE_PATH"
-
-            # Reset to pinned ref for reproducibility
-            if [ -n "$SOURCE_REF" ]; then
-                CURRENT_REF=$(cd "$FULL_SOURCE_PATH" && git rev-parse HEAD 2>/dev/null || echo "")
-
-                if [ -z "$CURRENT_REF" ]; then
-                    echo "Git not available or not a git repository"
-                else
-                    echo "Resetting to pinned ref: $SOURCE_REF"
-                    (
-                        cd "$FULL_SOURCE_PATH" && \
-                        git fetch --quiet 2>/dev/null || true && \
-                        git checkout "$SOURCE_REF" 2>&1 && \
-                        git reset --hard "$SOURCE_REF" 2>&1 && \
-                        git clean -fd 2>&1
-                    ) || {
-                        echo "Warning: failed to reset to ref $SOURCE_REF"
-                    }
-                    echo "✓ Source reset to clean state at pinned ref"
-                fi
-            fi
-            echo ""
+        if [ -d "$FULL_SOURCE_PATH" ]; then
+            echo "Removing existing source at: $FULL_SOURCE_PATH"
+            rm -rf "$FULL_SOURCE_PATH"
         fi
+
+        echo "Cloning source package..."
+        echo "  URL: $SOURCE_URL"
+        echo "  Path: $FULL_SOURCE_PATH"
+        if [ -n "$SOURCE_REF" ]; then
+            echo "  Ref: $SOURCE_REF (pinned for reproducibility)"
+        fi
+
+        mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
+        git clone "$SOURCE_URL" "$FULL_SOURCE_PATH" || {
+            echo "Warning: git clone failed, source may need manual setup"
+            echo ""
+            exit 1
+        }
+
+        # Checkout specific ref if specified
+        if [ -n "$SOURCE_REF" ]; then
+            echo "Checking out ref: $SOURCE_REF"
+            (cd "$FULL_SOURCE_PATH" && git checkout "$SOURCE_REF" 2>&1) || {
+                echo "Warning: failed to checkout ref $SOURCE_REF"
+            }
+        fi
+        echo ""
     fi
 fi
 
@@ -171,9 +150,9 @@ if [ -z "$COMMAND" ]; then
     COMMAND="pbuild-ai"
 fi
 
-# Allow override via PBUILD_AI_BIN environment variable
-if [ -n "$PBUILD_AI_BIN" ]; then
-    COMMAND="$PBUILD_AI_BIN"
+# Allow override via PBUILD_AI_CMD environment variable
+if [ -n "$PBUILD_AI_CMD" ]; then
+    COMMAND="$PBUILD_AI_CMD"
 fi
 
 # Log test metadata
@@ -218,8 +197,8 @@ if [ -n "$FULL_SOURCE_PATH" ]; then
     DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
 fi
 
-if [ -n "$PBUILD_AI_BIN" ]; then
-    echo "Command: $DISPLAY_CMD  (via PBUILD_AI_BIN=$PBUILD_AI_BIN)"
+if [ -n "$PBUILD_AI_CMD" ]; then
+    echo "Command: $DISPLAY_CMD  (via PBUILD_AI_CMD=$PBUILD_AI_CMD)"
 else
     echo "Command: $DISPLAY_CMD"
 fi

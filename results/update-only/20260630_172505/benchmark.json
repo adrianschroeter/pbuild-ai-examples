@@ -1,12 +1,13 @@
 {
-  "run_time_seconds": 29,
+  "run_time_seconds": 0,
   "exit_code": 0,
   "success": true,
   "files_changed": 0,
+  "pbuild_ai_version": "0.1.5",
   "ai_model": "gemma4",
-  "ai_calls": 1,
-  "ai_time_seconds": 28.5,
+  "ai_calls": 0,
+  "ai_time_seconds": 0.0,
   "pbuild_calls": 0,
   "pbuild_time_seconds": 0.0,
-  "total_runtime_seconds": 28.5
+  "total_runtime_seconds": 0.2
 }
