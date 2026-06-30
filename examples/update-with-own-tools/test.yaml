@@ -1,0 +1,34 @@
+name: "Update Ollama with own tools"
+description: "An example how to hook in own scripts, provided by the package."
+
+source:
+  type: remote
+  path: "../../sources/ollama"
+  url: "https://src.opensuse.org/AI/ollama"
+  ref: "9e4403f8874830248b27aff31cb8de6e250411da5a7214115e0b307bd8e3b43a"
+
+command: "pbuild-ai"
+options: [
+  - '--update'
+  - '--update-version=0.30.12'
+  - '--allow-tool-scripts'
+  ]
+  # Add flags like --fix, --update, etc.
+  # Do NOT add --dist or source paths - pbuild-ai finds sources automatically
+
+expected:
+  success: true
+  changes: false  # set to true if source modifications expected
+  files_modified: []
+  build_result: "succeeded"  # succeeded, failed, skipped
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: "gemma4"
+
+tags:
+  - "advanced"  # Tags: basic, advanced, fix, update, generate, analysis
+  - "update"
