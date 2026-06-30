@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-30T19:52:21+00:00",
+  "generated": "2026-06-30T19:54:12+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -37,25 +37,25 @@
           "diff": "",
           "result_path": "../results/backport-security-fix/20260630_134100"
         },
-        "gemma4": {
-          "timestamp": "20260630_195139",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_204505",
+          "run_time_seconds": 456,
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": null,
-          "ai_calls": null,
-          "ai_time_seconds": null,
-          "pbuild_calls": null,
-          "pbuild_time_seconds": null,
-          "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/backport-security-fix/gemma4/20260630_195139"
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 1,
+          "ai_time_seconds": 161.8,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 294.2,
+          "total_runtime_seconds": 456.1,
+          "pbuild_ai_version": "0.1.6",
+          "trend_percent": -20.6,
+          "first_run_time_seconds": 574.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\nHere are the critical issues and required fixes, per openSUSE guidelines:\n\n**🔴 Critical Errors**\n1. **RPM Parse Failure**: `0%{?rhel_version <= 700}` is missing a closing `}`. Additionally, RHEL/CentOS version macros (`600`/`700`) are incorrect for modern distributions and unnecessary in a SUSE spec. **Remove the entire `%if 0%{?centos_version}...` block** or fix to proper macro syntax: `%if 0%{?rhel_version} <= 700`.\n2. **Empty `%changelog`**: Per guidelines, remove the trailing `%changelog` section entirely. Changelogs belong in `PACKAGE.changes`.\n\n**⚠️ Best Practice Violations**\n3. **File Conflict**: Both `%files -n bsdtar` and `%files -n %{libname}` claim `%{_mandir}/man5/*`. This will cause installation conflicts. Move shared man pages to the main library package or add `%exclude %{_mandir}/man5/*` in the `bsdtar` file list.\n4. **Unused Source**: `Source1000: baselibs.conf` is defined but never processed. Remove unless explicitly handled by an OBS `_service`.\n5. **Deprecated Tags**: `Group:` tags are legacy. Safe to remove, but not build-breaking.\n\n**✅ Security Fix Application**\nSave the commit diff as `020c40df-security-fix.patch` in your `%{_sourcedir}` and add:\n```spec\nPatch4:         020c40df-security-fix.patch\n```\n`%autopatch -p1` in `%prep` will automatically apply it alongside existing patches. Ensure `Patch4:` is defined before the `%prep` section.\n\n**Summary of Actions:**\n- Remove RHEL/CentOS `%if` block (broken & unnecessary for SUSE)\n- Delete empty `%changelog`\n- Resolve `man5/*` file conflict\n- Add `Patch4:` definition for the security fix\n- Remove unused `Source1000`\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 161.8s  |  pbuild calls: 1  |  pbuild time: 294.2s  |  total runtime: 456.1s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36bf16/20260630_204505/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/qwen36bf16/20260630_204505"
         }
       }
     },
@@ -81,25 +81,25 @@
           "diff": "",
           "result_path": "../results/basic-analyze/20260629_165709"
         },
-        "gemma4": {
-          "timestamp": "20260630_195147",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_205242",
+          "run_time_seconds": 91,
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": null,
-          "ai_calls": null,
-          "ai_time_seconds": null,
-          "pbuild_calls": null,
-          "pbuild_time_seconds": null,
-          "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 1,
+          "ai_time_seconds": 91.1,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 91.1,
+          "pbuild_ai_version": "0.1.6",
+          "trend_percent": -16.5,
+          "first_run_time_seconds": 109.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\nHere are the issues and required adjustments per openSUSE standards:\n\n**Critical / Must Fix**\n- `%changelog` section present but empty → **Remove entirely**. Per guidelines, changelogs belong in `PACKAGE.changes`.\n- `%defattr(-,root,root)` → Deprecated. Modern RPM defaults to `-`; omit it (will be auto-stripped by `format_spec_file`).\n\n**Deprecated / Obsolete Tags**\n- `Group: Amusements/Toys/Other` → RPM ≥4.15 ignores this. Omit or change to `Other`.\n- `Url:` uses HTTP → Update to HTTPS if the upstream host supports it (security best practice).\n\n**Modernization & Tooling**\n- Run `/usr/lib/obs/service/format_spec_file` on the directory to auto-normalize macros, whitespace, and section ordering per `spec-cleaner` rules.\n- Replace `%setup -q` with `%autosetup` (modern default; add `-n <dir>` if extraction root differs).\n- Move `bash` from `BuildRequires:` to direct execution in `%install` unless it's strictly needed for build-time processing. BuildRequires should only list actual build dependencies.\n\n**No build-breaking errors detected.** After removing `%changelog`, dropping `%defattr`, and running `format_spec_file`, the spec will be compliant.\n\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 91.1s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 91.1s\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/gemma4/20260630_195147"
+          "result_path": "../results/basic-analyze/qwen36bf16/20260630_205242"
         }
       }
     },
@@ -125,9 +125,9 @@
           "diff": "",
           "result_path": "../results/fix-build-failures/20260629_175422"
         },
-        "gemma4": {
-          "timestamp": "20260630_195152",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_205415",
+          "run_time_seconds": 227,
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
@@ -137,13 +137,13 @@
           "pbuild_calls": null,
           "pbuild_time_seconds": null,
           "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/fix-build-failures/gemma4/20260630_195152"
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] python_skill.py for python-adb-shell.spec\n[INFO] Using skill profile: python_skill\n[AI] Analyzing Spec-file: python-adb-shell.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\nThe provided spec relies on deprecated `%python_build`/`%python_install` macros, incorrectly places runtime dependencies in `Requires:` instead of using modern `BuildRequires: %{python_module <name>}` declarations, and lacks essential build requirements like Python development headers or setuptools/wheel. If the source contains a `pyproject.toml`, replace the legacy build/install sections with `%pyproject_wheel` and `%pyproject_install` while ensuring all dependencies follow the standardized macro format. For a standards-compliant baseline, regenerate the file using `py2pack generate adb-shell 0.4.3` and manually verify that no deprecated RPM constructs or unresolved `BuildRequires` remain.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed\n[GITEXPLORER] Querying files endpoint for: adb-shell-0.4.3\n\n[ERROR] Build for python-adb-shell.spec failed. Consulting qwen3.6:35b-a3b-bf16...\n\n[FIX MODE] Attempt 1/10 — Diagnosing build failure...\nScript aborted: name 're' is not defined\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/fix-build-failures/qwen36bf16/20260630_205415/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/fix-build-failures/qwen36bf16/20260630_205415"
         }
       }
     },
@@ -169,9 +169,9 @@
           "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/20260630_145705/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec\n--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/20260630_145705/source_backup/ripgrep/ripgrep.spec\t1970-01-01 01:00:00.000000000 +0100\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec\t2026-06-30 15:12:06.207503301 +0200\n@@ -0,0 +1,38 @@\n+# | name:         ripgrep\n+# | summary:    A line-oriented search tool that recursively searches for a regex pattern\n+# | maintainer: packager\n+# | license:      MIT AND Unlicense\n+# | upstream_url: https://github.com/BurntSushi/ripgrep\n+\n+Name:           ripgrep\n+Version:        15.1.0\n+Release:        0\n+Summary:        A line-oriented search tool that recursively searches for a regex pattern\n+License:        MIT AND Unlicense\n+Url:            https://github.com/BurntSushi/ripgrep\n+Source:         https://github.com/BurntSushi/ripgrep/archive/refs/tags/%{version}.tar.gz#/ripgrep-%{version}.tar.gz\n+BuildRequires:  cargo\n+BuildRequires:  rustup\n+\n+%description\n+ripgrep (rg) recursively searches your current directory for a regex pattern while\n+respecting gitignore rules. By default, ripgrep will skip hidden files/directories\n+and binary files. It is fast because it is written in Rust.\n+\n+%prep\n+%autosetup -n %{name}-%{version}\n+\n+%build\n+export CARGO_HOME=%{_builddir}/cargo-home\n+rustup-init -y --no-modify-path --default-toolchain stable 2>/dev/null || true\n+PATH=\"$HOME/.cargo/bin:$PATH\" \\\n+    cargo build --release %{?_smp_mflags}\n+\n+%install\n+export CARGO_HOME=%{_builddir}/cargo-home\n+install -Dm0755 %{_builddir}/target/release/rg %{buildroot}%{_bindir}/rg\n+\n+%files\n+%{_bindir}/rg\n+\n+%fdupes %{_datadir}\n",
           "result_path": "../results/generate-new-package/20260630_145705"
         },
-        "gemma4": {
-          "timestamp": "20260630_195152",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_205802",
+          "run_time_seconds": 167,
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
@@ -181,37 +181,37 @@
           "pbuild_calls": null,
           "pbuild_time_seconds": null,
           "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[GENERATE] Creating new package from prompt: package ripgrep CLI tool\n[TOOL] web_fetch: https://api.github.com/repos/BurntSushi/ripgrep/releases/latest (50551 bytes -> 50549 stripped)\n[TOOL] web_fetch: https://api.github.com/repos/BurntSushi/ripgrep/tags (13519 bytes -> 13519 stripped)\n[GENERATE] [Fetched 50551 bytes]\n[GENERATE] [Fetched 13519 bytes]\n[TOOL] list_files: /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep (1 entries)\n[TOOL] web_fetch: https://api.github.com/repos/BurntSushi/ripgrep/contents/Cargo.toml?ref=15.1.0 (5193 bytes -> 5193 stripped)\n[GENERATE] ripgrep/\n[GENERATE] [Fetched 5193 bytes]\n[TOOL] web_fetch: https://api.github.com/repos/BurntSushi/ripgrep/contents/?ref=15.1.0 (17212 bytes -> 17212 stripped)\n[GENERATE] [Fetched 17212 bytes]\nScript aborted: list index out of range\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/gemma4/20260630_195152"
+          "result_path": "../results/generate-new-package/qwen36bf16/20260630_205802"
         }
       }
     },
     "inline-example": {
       "models": {
-        "gemma4": {
-          "timestamp": "20260630_195153",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_210050",
+          "run_time_seconds": 69,
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": null,
-          "ai_calls": null,
-          "ai_time_seconds": null,
-          "pbuild_calls": null,
-          "pbuild_time_seconds": null,
-          "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 1,
+          "ai_time_seconds": 68.8,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 68.8,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: hello.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\n**Errors:**\n*   **`Group: Invalid`**: Remove the `Group:` tag entirely. OpenSUSE standards prohibit group tags; spec-cleaner will flag this as an error.\n*   **`%changelog` section**: Remove this section entirely. Per policy, changelogs must be maintained in a separate `PACKAGE.changes` file, not within the `.spec`.\n\n**Best Practices / Missing:**\n*   **Copyright Header**: The spec lacks the required copyright/license header at the top. Add standard OpenSUSE packaging headers.\n*   **`%files %doc`**: The `%doc` directive is present but no documentation files (e.g., `README`) are generated or listed. Remove `%doc` if no docs exist to avoid empty package warnings.\n\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 68.8s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 68.8s\n",
           "diff": "",
-          "result_path": "../results/inline-example/gemma4/20260630_195153"
+          "result_path": "../results/inline-example/qwen36bf16/20260630_210050"
         }
       }
     },
@@ -237,25 +237,25 @@
           "diff": "",
           "result_path": "../results/simple-modification/20260630_113342"
         },
-        "gemma4": {
-          "timestamp": "20260630_195153",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_210159",
+          "run_time_seconds": 397,
           "success": true,
           "exit_code": 0,
-          "files_changed": 0,
-          "ai_model": null,
-          "ai_calls": null,
-          "ai_time_seconds": null,
-          "pbuild_calls": null,
-          "pbuild_time_seconds": null,
-          "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "files_changed": 2,
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 15,
+          "ai_time_seconds": 396.7,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 397.0,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/simple-modification/gemma4/20260630_195153"
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] python_skill.py for python-Glances.spec\n[INFO] Using skill profile: python_skill\n\n[MODIFY] Sending python-Glances.spec sources to qwen3.6:35b-a3b-bf16...\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -0,0 +1,15 @@\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+[Unit]\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Description=Glances Web Server\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Documentation=https://glances.readthedocs.io/\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Wants=network-online.target\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+After=network-online.target\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+[Service]\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Type=simple\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+ExecStartPre=-/usr/bin/glances --remove-webserver-password\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+ExecStart=/usr/bin/glances -w\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Restart=on-failure\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+RestartSec=5s\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+[Install]\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+WantedBy=multi-user.target\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] write_file: glances-server.service\n[MODIFY] OK: Wrote glances-server.service\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -25,6 +25,7 @@\n\u001b[0m[TOOL]  Group:          Development/Languages/Python\n[TOOL]  URL:            https://github.com/nicolargo/glances\n[TOOL]  Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz\n\u001b[32m[TOOL]\u001b[0m \u001b[32m+Source1:        glances-server.service\n\u001b[0m[TOOL]  Patch0:         adjust-data-files.patch\n[TOOL]  Patch1:         remove-shebang.patch\n[TOOL]  BuildRequires:  %{python_module bottle}\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (79 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -44,7 +44,19 @@\n\u001b[0m[TOOL]  Provides:       glances\n[TOOL]  %endif\n[TOOL]  BuildArch:      noarch\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-%python_subpackages\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{?!python_module:%define python_module() python-%{**} python3-%{**}}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%package glances-common\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Summary:        A cross-platform curses-based monitoring tool (Common files)\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Group:          System/Management\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Requires:       python-psutil >= 5.3.0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%description glances-common\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Glances is a cross-platform monitoring tool which presents a\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+large amount of monitoring information through a curses or Web\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+based interface. The information dynamically adapts depending on the\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+size of the user interface.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+This subpackage contains common files for Glances.\n\u001b[0m[TOOL]  \n[TOOL]  %description\n[TOOL]  Glances is a cross-platform monitoring tool which presents a\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (91 lines)\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (91 lines)\n[MODIFY] Error: Command must start with 'git '\n[MODIFY] Error: Command must start with 'git '\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (91 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -44,19 +44,19 @@\n\u001b[0m[TOOL]  Provides:       glances\n[TOOL]  %endif\n[TOOL]  BuildArch:      noarch\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-%{?!python_module:%define python_module() python-%{**} python3-%{**}}\n\u001b[0m[TOOL]  \n[TOOL]  %package glances-common\n[TOOL]  Summary:        A cross-platform curses-based monitoring tool (Common files)\n[TOOL]  Group:          System/Management\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-Requires:       python-psutil >= 5.3.0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Requires:       %{name} = %{version}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Requires:       systemd\n\u001b[0m[TOOL]  \n[TOOL]  %description glances-common\n[TOOL]  Glances is a cross-platform monitoring tool which presents a\n[TOOL]  large amount of monitoring information through a curses or Web\n[TOOL]  based interface. The information dynamically adapts depending on the\n[TOOL]  size of the user interface.\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-This subpackage contains common files for Glances.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+This subpackage contains common files for Glances, including a systemd service file.\n\u001b[0m[TOOL]  \n[TOOL]  %description\n[TOOL]  Glances is a cross-platform monitoring tool which presents a\n\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -80,6 +80,8 @@\n\u001b[0m[TOOL]  %install\n[TOOL]  %python_install\n[TOOL]  %python_expand %fdupes %{buildroot}%{$python_sitelib}\n\u001b[32m[TOOL]\u001b[0m \u001b[32m+mkdir -p %{buildroot}%{_unitdir}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+cp %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service\n\u001b[0m[TOOL]  \n[TOOL]  %files %{python_files}\n[TOOL]  %license COPYING\n\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -88,4 +90,7 @@\n\u001b[0m[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz\n[TOOL]  %{python_sitelib}/*\n[TOOL]  \n\u001b[32m[TOOL]\u001b[0m \u001b[32m+%files glances-common\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{_unitdir}/glances-server.service\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m[TOOL]  %changelog\n[TOOL] --- End diff ---\n[TOOL] write_file: python-Glances.spec\n[MODIFY] OK: Wrote python-Glances.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -6,7 +6,6 @@\n\u001b[0m[TOOL]  \n[TOOL]  [Service]\n[TOOL]  Type=simple\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-ExecStartPre=-/usr/bin/glances --remove-webserver-password\n\u001b[0m[TOOL]  ExecStart=/usr/bin/glances -w\n[TOOL]  Restart=on-failure\n[TOOL]  RestartSec=5s\n[TOOL] --- End diff ---\n[TOOL] write_file: glances-server.service\n[MODIFY] OK: Wrote glances-server.service\n[MODIFY] Error: edit_file: old_string not found in python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (96 lines)\n[TOOL] write_file: python-Glances.spec\n[MODIFY] OK: Wrote python-Glances.spec\n\n[MODIFY] Ollama:\nI have completed the requested changes:\n\n1. **Created `glances-server.service`** - A systemd unit file for the Glances web server that starts on boot and restarts on failure.\n\n2. **Added `Source1: glances-server.service`** to reference the service file in the build.\n\n3. **Created `%package glances-common`** subpackage with:\n   - Proper summary identifying it as \"Common files\"\n   - Group set to `System/Management`\n   - Requires the main package (`%{name} = %{version}`) and systemd\n   - Appropriate description explaining it contains common files including the systemd service\n\n4. **Updated `%install`** section to:\n   - Create the systemd units directory\n   - Install the service file to `%{_unitdir}/glances-server.service`\n\n5. **Added `%files glances-common`** section to include only the service file in the new subpackage.\n\n[MODIFY] Changes confirmed.\n[MODIFY] Downloading https://github.com/nicolargo/glances/archive/v%{version}.tar.gz -> v%{version}.tar.gz\n[MODIFY] Failed to download https://github.com/nicolargo/glances/archive/v%{version}.tar.gz: HTTP Error 400: Bad Request\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 15  |  AI time: 396.7s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 397.0s\n",
+          "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/glances-server.service /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/glances-server.service\t1970-01-01 01:00:00.000000000 +0100\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\t2026-06-30 21:06:30.174535211 +0200\n@@ -0,0 +1,14 @@\n+[Unit]\n+Description=Glances Web Server\n+Documentation=https://glances.readthedocs.io/\n+Wants=network-online.target\n+After=network-online.target\n+\n+[Service]\n+Type=simple\n+ExecStart=/usr/bin/glances -w\n+Restart=on-failure\n+RestartSec=5s\n+\n+[Install]\n+WantedBy=multi-user.target\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/python-Glances.spec\t2026-06-30 21:01:59.701175541 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\t2026-06-30 21:08:07.095897266 +0200\n@@ -25,6 +25,7 @@\n Group:          Development/Languages/Python\n URL:            https://github.com/nicolargo/glances\n Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz\n+Source1:        glances-server.service\n Patch0:         adjust-data-files.patch\n Patch1:         remove-shebang.patch\n BuildRequires:  %{python_module bottle}\n@@ -43,7 +44,19 @@\n Provides:       glances\n %endif\n BuildArch:      noarch\n-%python_subpackages\n+\n+%package glances-common\n+Summary:        A cross-platform curses-based monitoring tool (Common files)\n+Group:          System/Management\n+Requires:       %{name} = %{version}\n+Requires:       systemd\n+\n+%description glances-common\n+Glances is a cross-platform monitoring tool which presents a\n+large amount of monitoring information through a curses or Web\n+based interface. The information dynamically adapts depending on the\n+size of the user interface.\n+This subpackage contains common files for Glances, including a systemd service file.\n \n %description\n Glances is a cross-platform monitoring tool which presents a\n@@ -67,6 +80,8 @@\n %install\n %python_install\n %python_expand %fdupes %{buildroot}%{$python_sitelib}\n+mkdir -p %{buildroot}%{_unitdir}\n+cp %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service\n \n %files %{python_files}\n %license COPYING\n@@ -75,4 +90,7 @@\n %python3_only %{_mandir}/man1/glances.1.gz\n %{python_sitelib}/*\n \n+%files glances-common\n+%{_unitdir}/glances-server.service\n+\n %changelog\n",
+          "result_path": "../results/simple-modification/qwen36bf16/20260630_210159"
         }
       }
     },
@@ -281,25 +281,25 @@
           "diff": "",
           "result_path": "../results/update-only/20260630_172505"
         },
-        "gemma4": {
-          "timestamp": "20260630_195200",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_210838",
+          "run_time_seconds": 575,
           "success": true,
           "exit_code": 0,
-          "files_changed": 0,
-          "ai_model": null,
-          "ai_calls": null,
-          "ai_time_seconds": null,
-          "pbuild_calls": null,
-          "pbuild_time_seconds": null,
-          "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "files_changed": 2,
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 15,
+          "ai_time_seconds": 299.8,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 574.7,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/update-only/gemma4/20260630_195200"
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n\n[UPDATE] Researching latest upstream version for gawk.spec...\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[TOOL] list_files: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only (16 entries)\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (312 lines)\n[FIX] .git/\n.gitattributes\n.gitignore\ndev-fd.diff\ndfa-mbcset.diff\nembedded-nul.diff\nfieldwidths.diff\ngawk-3.1.5.diff\ngawk-3.1.5.tar.bz2\ngawk.changes\ngawk.spec\nmultibyte.diff\nnumeric-conversion.diff\nparallel-make.diff\nready\nsub-common.diff\n[TOOL] web_fetch: https://ftp.gnu.org/pub/gnu/gawk/ (59908 bytes -> 11558 stripped)\n[FIX] [Fetched 59908 bytes]\n[TOOL] download_file: https://ftp.gnu.org/pub/gnu/gawk/gawk-5.4.0.tar.xz -> gawk.update-only/gawk-5.4.0.tar.xz (3803276 bytes)\n[FIX] OK: Downloaded 3803276 bytes to gawk.update-only/gawk-5.4.0.tar.xz\n[FIX] Error fetching https://www.gnu.org/software/gawk/news.html: <urlopen error timed out>\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/ANNOUNCE-5.4.0: HTTP Error 404: Not Found\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/NEWS-5.4: HTTP Error 404: Not Found\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/NEWS-5.3: HTTP Error 404: Not Found\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/ANNOUNCE-5.3.2: HTTP Error 404: Not Found\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes (460 lines)\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/README-5.3: HTTP Error 404: Not Found\n[FIX] Error fetching https://www.nongnu.org/gawk/manual/gawk.html#SEC_HEAD: <urlopen error timed out>\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (312 lines)\n[FIX] Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/msg00000.html: HTTP Error 404: Not Found\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -1,5 +1,5 @@\n\u001b[0m[TOOL]  #\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-# spec file for package gawk (Version 3.1.5)\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# spec file for package gawk (Version 5.4.0)\n\u001b[0m[TOOL]  #\n[TOOL]  # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.\n[TOOL]  # This file and all modifications and additions to the pristine\n\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -11,26 +11,16 @@\n\u001b[0m[TOOL]  # norootforbuild\n[TOOL]  \n[TOOL]  Name:           gawk\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-URL:            http://www.gnu.org/software/gawk/\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-License:        GPL, Other License(s), see package\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+URL:            https://www.gnu.org/software/gawk/\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+License:        GPL-3.0-or-later\n\u001b[0m[TOOL]  Group:          Productivity/Text/Utilities\n[TOOL]  Provides:       awk\n[TOOL]  Autoreqprov:    on\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-PreReq:         %{install_info_prereq}\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Version:        3.1.5\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Release:        24\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Version:        5.4.0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Release:        1\n\u001b[0m[TOOL]  Summary:        GNU awk\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-Source:         gawk-%{version}.tar.bz2\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch:          gawk-%{version}.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch1:         multibyte.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch2:         fieldwidths.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch3:         embedded-nul.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch4:         parallel-make.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch5:         dfa-mbcset.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch8:         sub-common.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch9:         dev-fd.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch10:        numeric-conversion.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-BuildRoot:      %{_tmppath}/%{name}-%{version}-build\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Source:         https://ftp.gnu.org/gnu/gawk/%{name}-%{version}.tar.xz\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+BuildRoot:      %{_tmppath}/%{name}-%{version}-buildtmppath}/%{name}-%{version}-build\n\u001b[0m[TOOL]  \n[TOOL]  %description\n[TOOL]  GNU awk is upwardly compatible with the System V Release 4 awk.  It is\n[TOOL] --- End diff ---\n[TOOL] edit_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (1 match replaced)\n[FIX] OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/: <urlopen error timed out>\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (302 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -20,7 +20,7 @@\n\u001b[0m[TOOL]  Release:        1\n[TOOL]  Summary:        GNU awk\n[TOOL]  Source:         https://ftp.gnu.org/gnu/gawk/%{name}-%{version}.tar.xz\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildtmppath}/%{name}-%{version}-build\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+BuildRoot:      %{_tmppath}/%{name}-%{version}-build\n\u001b[0m[TOOL]  \n[TOOL]  %description\n[TOOL]  GNU awk is upwardly compatible with the System V Release 4 awk.  It is\n[TOOL] --- End diff ---\n[TOOL] edit_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (1 match replaced)\n[FIX] OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/toc.html: <urlopen error timed out>\n[AI] Reached max rounds (15).\n[UPDATE] read_file: #\n[UPDATE] list_files: .git/\n.gitattributes\n.gitignore\ndev-fd.diff\ndfa-mbcset.diff\nembedded-nul.diff\nfieldwidths.diff\ngawk-3.1.5.diff\ngawk-3.1.5.tar.bz2\ngawk.changes\ngawk.spec\nmultibyte.diff\nnumeric-conversion.diff\nparallel-make.diff\nready\nsub-common.diff\n[UPDATE] web_fetch: [Fetched 59908 bytes]\n[UPDATE] download_file: OK: Downloaded 3803276 bytes to gawk.update-only/gawk-5.4.0.tar.xz\n[UPDATE] web_fetch: Error fetching https://www.gnu.org/software/gawk/news.html: <urlopen error timed out>\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/ANNOUNCE-5.4.0: HTTP Error 404: Not Found\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/NEWS-5.4: HTTP Error 404: Not Found\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/NEWS-5.3: HTTP Error 404: Not Found\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/ANNOUNCE-5.3.2: HTTP Error 404: Not Found\n[UPDATE] read_file: -------------------------------------------------------------------\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/README-5.3: HTTP Error 404: Not Found\n[UPDATE] web_fetch: Error fetching https://www.nongnu.org/gawk/manual/gawk.html#SEC_HEAD: <urlopen error timed out>\n[UPDATE] read_file: #\n[UPDATE] web_fetch: Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/msg00000.html: HTTP Error 404: Not Found\n[UPDATE] edit_file: OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[UPDATE] web_fetch: Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/: <urlopen error timed out>\n[UPDATE] read_file: #\n[UPDATE] edit_file: OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[UPDATE] web_fetch: Error fetching https://lists.gnu.org/archive/info-gawk/2026-02/toc.html: <urlopen error timed out>\n[UPDATE] AI modified gawk.spec (9223b vs 9551b original)\n[UPDATE] Updated to version 5.4.0\n[UPDATE] Downloading gawk-5.4.0.tar.xz...\n[TOOL] download_file: https://ftp.gnu.org/gnu/gawk/gawk-5.4.0.tar.xz -> gawk-5.4.0.tar.xz (3803276 bytes)\n[UPDATE] OK: Downloaded 3803276 bytes to gawk-5.4.0.tar.xz\n[UPDATE] Removed old source: gawk-3.1.5.tar.bz2\n[UPDATE] Added changelog entry for 3.1.5 -> 5.4.0.\n[UPDATE] Updated gawk.spec.\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 15  |  AI time: 299.8s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 574.7s\n[UPDATE] Sources updated for 1 packages. Exiting (--update-only, no build).\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk-3.1.5.tar.bz2 und /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk-3.1.5.tar.bz2 sind verschieden.\nBinärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk-5.4.0.tar.xz und /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk-5.4.0.tar.xz sind verschieden.\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk.changes /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\n--- /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk.changes\t2026-06-30 21:08:38.772525657 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\t2026-06-30 21:18:13.912429468 +0200\n@@ -1,4 +1,10 @@\n -------------------------------------------------------------------\n+Tue Jun 30 19:18:13 UTC 2026 - pbuild-ai <Your Name>\n+\n+- Updated to version 5.4.0\n+- Update generated using pbuild-ai\n+\n+-------------------------------------------------------------------\n Fri Sep  1 13:02:34 CEST 2006 - schwab@suse.de\n \n - Drop doc subpackage.\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk.spec /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n--- /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk.spec\t2026-06-30 21:08:38.772525657 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\t2026-06-30 21:16:59.509646273 +0200\n@@ -1,5 +1,5 @@\n #\n-# spec file for package gawk (Version 3.1.5)\n+# spec file for package gawk (Version 5.4.0)\n #\n # Copyright (c) 2006 SUSE LINUX Products GmbH, Nuernberg, Germany.\n # This file and all modifications and additions to the pristine\n@@ -11,25 +11,15 @@\n # norootforbuild\n \n Name:           gawk\n-URL:            http://www.gnu.org/software/gawk/\n-License:        GPL, Other License(s), see package\n+URL:            https://www.gnu.org/software/gawk/\n+License:        GPL-3.0-or-later\n Group:          Productivity/Text/Utilities\n Provides:       awk\n Autoreqprov:    on\n-PreReq:         %{install_info_prereq}\n-Version:        3.1.5\n-Release:        24\n+Version:        5.4.0\n+Release:        1\n Summary:        GNU awk\n-Source:         gawk-%{version}.tar.bz2\n-Patch:          gawk-%{version}.diff\n-Patch1:         multibyte.diff\n-Patch2:         fieldwidths.diff\n-Patch3:         embedded-nul.diff\n-Patch4:         parallel-make.diff\n-Patch5:         dfa-mbcset.diff\n-Patch8:         sub-common.diff\n-Patch9:         dev-fd.diff\n-Patch10:        numeric-conversion.diff\n+Source:         https://ftp.gnu.org/gnu/gawk/%{name}-%{version}.tar.xz\n BuildRoot:      %{_tmppath}/%{name}-%{version}-build\n \n %description\nBinärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-only/qwen36bf16/20260630_210838/source_backup/gawk.update-only/gawk-5.4.0.tar.xz und /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.update-only/gawk-5.4.0.tar.xz sind verschieden.\n",
+          "result_path": "../results/update-only/qwen36bf16/20260630_210838"
         }
       }
     },
@@ -325,32 +325,32 @@
           "diff": "",
           "result_path": "../results/update-upstream/20260630_100436"
         },
-        "gemma4": {
-          "timestamp": "20260630_195207",
-          "run_time_seconds": 0,
+        "qwen36bf16": {
+          "timestamp": "20260630_211814",
+          "run_time_seconds": 673,
           "success": true,
           "exit_code": 0,
-          "files_changed": 0,
+          "files_changed": 2,
           "ai_model": null,
           "ai_calls": null,
           "ai_time_seconds": null,
           "pbuild_calls": null,
           "pbuild_time_seconds": null,
           "total_runtime_seconds": null,
-          "pbuild_ai_version": null,
+          "pbuild_ai_version": "0.1.6",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/update-upstream/gemma4/20260630_195207"
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n\n[UPDATE] Researching latest upstream version for gawk.spec...\n[TOOL] web_fetch: https://ftp.gnu.org/pub/gnu/gawk/ (59908 bytes -> 11558 stripped)\n[FIX] [Fetched 59908 bytes]\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/README-5.4.0: HTTP Error 404: Not Found\n[FIX] Error fetching https://www.gnu.org/software/gawk/manual/html_node/Changelog.html: <urlopen error timed out>\n[FIX] Error fetching https://www.gnu.org/software/gawk/manual/gawk.html: <urlopen error timed out>\n[TOOL] list_files: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only (16 entries)\n[FIX] .git/\n.gitattributes\n.gitignore\ndev-fd.diff\ndfa-mbcset.diff\nembedded-nul.diff\nfieldwidths.diff\ngawk-3.1.5.diff\ngawk-3.1.5.tar.bz2\ngawk.changes\ngawk.spec\nmultibyte.diff\nnumeric-conversion.diff\nparallel-make.diff\nready\nsub-common.diff\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes (460 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -17,7 +17,7 @@\n\u001b[0m[TOOL]  Provides:       awk\n[TOOL]  Autoreqprov:    on\n[TOOL]  PreReq:         %{install_info_prereq}\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-Version:        3.1.5\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Version:        5.4.0\n\u001b[0m[TOOL]  Release:        24\n[TOOL]  Summary:        GNU awk\n[TOOL]  Source:         gawk-%{version}.tar.bz2\n[TOOL] --- End diff ---\n[TOOL] edit_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (1 match replaced)\n[FIX] OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -21,15 +21,6 @@\n\u001b[0m[TOOL]  Release:        24\n[TOOL]  Summary:        GNU awk\n[TOOL]  Source:         gawk-%{version}.tar.bz2\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch:          gawk-%{version}.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch1:         multibyte.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch2:         fieldwidths.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch3:         embedded-nul.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch4:         parallel-make.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch5:         dfa-mbcset.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch8:         sub-common.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch9:         dev-fd.diff\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-Patch10:        numeric-conversion.diff\n\u001b[0m[TOOL]  BuildRoot:      %{_tmppath}/%{name}-%{version}-build\n[TOOL]  \n[TOOL]  %description\n[TOOL] --- End diff ---\n[TOOL] edit_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (1 match replaced)\n[FIX] OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (303 lines)\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (303 lines)\n[FIX] Error fetching https://ftp.gnu.org/gnu/gawk/NEWS: HTTP Error 404: Not Found\n[TOOL] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[FIX] read_file: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec (303 lines)\n[UPDATE] web_fetch: [Fetched 59908 bytes]\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/README-5.4.0: HTTP Error 404: Not Found\n[UPDATE] web_fetch: Error fetching https://www.gnu.org/software/gawk/manual/html_node/Changelog.html: <urlopen error timed out>\n[UPDATE] web_fetch: Error fetching https://www.gnu.org/software/gawk/manual/gawk.html: <urlopen error timed out>\n[UPDATE] list_files: .git/\n.gitattributes\n.gitignore\ndev-fd.diff\ndfa-mbcset.diff\nembedded-nul.diff\nfieldwidths.diff\ngawk-3.1.5.diff\ngawk-3.1.5.tar.bz2\ngawk.changes\ngawk.spec\nmultibyte.diff\nnumeric-conversion.diff\nparallel-make.diff\nready\nsub-common.diff\n[UPDATE] read_file: -------------------------------------------------------------------\n[UPDATE] edit_file: OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[UPDATE] edit_file: OK: Edited /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n[UPDATE] read_file: #\n[UPDATE] read_file: #\n[UPDATE] web_fetch: Error fetching https://ftp.gnu.org/gnu/gawk/NEWS: HTTP Error 404: Not Found\n[UPDATE] read_file: #\n[UPDATE] AI modified gawk.spec (9249b vs 9551b original)\n[UPDATE] Updated to version 5.4.0\n[UPDATE] Downloading gawk-5.4.0.tar.bz2...\n[UPDATE] Error: Only HTTP(S) URLs are allowed, got: gawk-5.4.0.tar.bz2\n[UPDATE] Source download failed — skipping build for gawk.spec.\n[UPDATE] Added changelog entry for 3.1.5 -> 5.4.0.\n\n[BUILD] All packages updated. Starting build phase...\n\n[INFO] No specific skill found. Using default profile.\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed\n\n[ERROR] Build for gawk.spec failed. Consulting qwen3.6:35b-a3b-bf16...\n\n[FIX MODE] Attempt 1/10 — Diagnosing build failure...\nScript aborted: name 're' is not defined\n",
+          "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-upstream/qwen36bf16/20260630_211814/source_backup/gawk.changes /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\n--- /home/adrian/opencode/pbuild-ai-examples/results/update-upstream/qwen36bf16/20260630_211814/source_backup/gawk.changes\t2026-06-30 21:18:14.501801095 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.changes\t2026-06-30 21:27:28.451365015 +0200\n@@ -1,4 +1,10 @@\n -------------------------------------------------------------------\n+Tue Jun 30 19:27:28 UTC 2026 - pbuild-ai <localhero@opensuse.org>\n+\n+- Updated to version 5.4.0\n+- Update generated using pbuild-ai\n+\n+-------------------------------------------------------------------\n Fri Sep  1 13:02:34 CEST 2006 - schwab@suse.de\n \n - Drop doc subpackage.\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-upstream/qwen36bf16/20260630_211814/source_backup/gawk.spec /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\n--- /home/adrian/opencode/pbuild-ai-examples/results/update-upstream/qwen36bf16/20260630_211814/source_backup/gawk.spec\t2026-06-30 21:18:14.501801095 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/gawk.spec\t2026-06-30 21:25:16.901604198 +0200\n@@ -17,19 +17,10 @@\n Provides:       awk\n Autoreqprov:    on\n PreReq:         %{install_info_prereq}\n-Version:        3.1.5\n+Version:        5.4.0\n Release:        24\n Summary:        GNU awk\n Source:         gawk-%{version}.tar.bz2\n-Patch:          gawk-%{version}.diff\n-Patch1:         multibyte.diff\n-Patch2:         fieldwidths.diff\n-Patch3:         embedded-nul.diff\n-Patch4:         parallel-make.diff\n-Patch5:         dfa-mbcset.diff\n-Patch8:         sub-common.diff\n-Patch9:         dev-fd.diff\n-Patch10:        numeric-conversion.diff\n BuildRoot:      %{_tmppath}/%{name}-%{version}-build\n \n %description\nBinärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-upstream/qwen36bf16/20260630_211814/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-only/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/update-upstream/qwen36bf16/20260630_211814"
         }
       }
     },
     "update-with-own-tools": {
       "models": {
-        "gemma4": {
-          "timestamp": "20260630_195213",
+        "qwen36bf16": {
+          "timestamp": "20260630_214955",
           "run_time_seconds": 0,
           "success": true,
           "exit_code": 0,
@@ -363,11 +363,11 @@
           "total_runtime_seconds": null,
           "pbuild_ai_version": null,
           "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "./scripts/run-example.sh: line 347: pbuild-ai: command not found\n",
+          "first_run_time_seconds": 1.0,
+          "run_count": 3,
+          "output": "usage: pbuild_ai.py [-h] [--analyze] [--version] [--fix] [--update]\n                    [--generate GENERATE] [--modify MODIFY] [--root ROOT]\n                    [--show-buildlog] [--shell-after-build]\n                    [--vm-type VM_TYPE] [--vm-memory VM_MEMORY]\n                    [--update-only] [--preset PRESET] [--allow-tool-scripts]\n                    [--debug] [--fix-attempts FIX_ATTEMPTS]\n                    [--max-rounds MAX_ROUNDS] [--deep-analyze]\n                    [--prompt PROMPT] [--fresh] [-i]\n                    [--openai-server OPENAI_SERVER] [--model MODEL]\n                    [--email EMAIL] [--changelog] [--clean | --no-clean]\n                    workspace_dir [package_name]\npbuild_ai.py: error: unrecognized arguments: '--allow-tool-scripts' /home/adrian/opencode/pbuild-ai-examples/sources/ollama\n",
           "diff": "",
-          "result_path": "../results/update-with-own-tools/gemma4/20260630_195213"
+          "result_path": "../results/update-with-own-tools/qwen36bf16/20260630_214955"
         }
       }
     },
