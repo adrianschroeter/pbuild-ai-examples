@@ -974,6 +974,49 @@ a:hover {
     line-height: 1.8;
 }
 
+.info-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.info-card {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+}
+
+.info-card h3 {
+    color: var(--geeko-green);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 0.5rem;
+}
+
+.info-card p, .info-card div {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.info-card a {
+    color: var(--butterfly-blue);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.info-card a:hover {
+    text-decoration: underline;
+}
+
+.text-muted {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 .modal-command {
     background: rgba(0, 0, 0, 0.4);
     padding: 1rem;
