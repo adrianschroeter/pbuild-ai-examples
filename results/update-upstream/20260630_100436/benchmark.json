@@ -1,0 +1,12 @@
+{
+  "run_time_seconds": 1800,
+  "exit_code": 1,
+  "success": false,
+  "files_changed": 19,
+  "ai_model": "qwen3.6:27b",
+  "ai_calls": 28,
+  "ai_time_seconds": 1620,
+  "pbuild_calls": 10,
+  "pbuild_time_seconds": 180,
+  "total_runtime_seconds": 1800
+}
