@@ -223,8 +223,9 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
         "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
 
     if [ -n "$DIFF_CONTENT" ]; then
-        # Count number of files changed
-        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" || echo "0")
+        # Count number of files changed - ensure single integer value
+        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
+        FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
         echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
         echo "✓ Captured diff for $FILES_CHANGED file(s)"
     fi
@@ -234,10 +235,12 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
 fi
 
 # If diff didn't capture changes, try counting from pbuild-ai output as fallback
-if [ "$FILES_CHANGED" -eq 0 ] && [ -f "${RESULT_DIR}/output.log" ]; then
+if [ "$FILES_CHANGED" -eq 0 ] 2>/dev/null && [ -f "${RESULT_DIR}/output.log" ]; then
     # Count "[TOOL] --- Diff for" lines which indicate file modifications
     OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "${RESULT_DIR}/output.log" 2>/dev/null || echo "0")
-    if [ "$OUTPUT_FILES" -gt 0 ]; then
+    # Ensure it's a single integer
+    OUTPUT_FILES=$(echo "$OUTPUT_FILES" | head -1 | tr -d '\n')
+    if [ -n "$OUTPUT_FILES" ] && [ "$OUTPUT_FILES" -gt 0 ] 2>/dev/null; then
         FILES_CHANGED=$OUTPUT_FILES
         echo "✓ Counted $FILES_CHANGED file modification(s) from output"
     fi
