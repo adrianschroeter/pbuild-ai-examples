@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-30T07:40:57+02:00",
+  "generated": "2026-06-30T11:47:48+02:00",
   "examples": {
     "basic-analyze": {
       "timestamp": "20260629_165709",
@@ -41,6 +41,46 @@
       "result_path": "../results/fix-build-failures/20260629_175422"
     }
 ,
+    "inline-example": {
+      "timestamp": "20260629_125003",
+      "run_time_seconds": 0,
+      "success": true,
+      "exit_code": 0,
+      "files_changed": 0,
+      "ai_model": "",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": null,
+      "first_run_time_seconds": 0,
+      "run_count": 3,
+      "output": "usage: pbuild_ai.py [-h] [--fix] [--root ROOT] [--show-buildlog]\n                    [--shell-after-build] [--vm-type VM_TYPE]\n                    [--vm-memory VM_MEMORY] [--update] [--update-only]\n                    [--preset PRESET] [--allow-tool-scripts] [--debug]\n                    [--fix-attempts FIX_ATTEMPTS] [--deep-analyze]\n                    [--prompt PROMPT] [--fresh] [--modify MODIFY]\n                    [--generate GENERATE] [-i] [--openai-server OPENAI_SERVER]\n                    [--model MODEL] [--email EMAIL] [--changelog] [--clean |\n                    --no-clean]\n                    workspace_dir [package_name]\npbuild_ai.py: error: the following arguments are required: workspace_dir\n",
+      "diff": "",
+      "result_path": "../results/inline-example/20260629_125003"
+    }
+,
+    "simple-modification": {
+      "timestamp": "20260630_113342",
+      "run_time_seconds": 394,
+      "success": true,
+      "exit_code": 0,
+      "files_changed": 0,
+      "ai_model": "qwen3.6:35b-a3b",
+      "ai_calls": 0,
+      "ai_time_seconds": 0.0,
+      "pbuild_calls": 0,
+      "pbuild_time_seconds": 0.0,
+      "total_runtime_seconds": 394.1,
+      "trend_percent": null,
+      "first_run_time_seconds": null,
+      "run_count": 1,
+      "output": "[PBUILD-AI] Version 0.1.5\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] python_skill.py for python-Glances.spec\n[INFO] Using skill profile: python_skill\n\n[MODIFY] Sending python-Glances.spec sources to qwen3.6:35b-a3b...\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL] --- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL] +++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL] @@ -73,6 +73,17 @@\n\u001b[0m[TOOL]  %doc NEWS README.rst\n[TOOL]  %python3_only %{_bindir}/glances\n[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz\n\u001b[31m[TOOL] -%{python_sitelib}/*\n\u001b[0m\u001b[32m[TOOL] +\n\u001b[0m\u001b[32m[TOOL] +%package common\n\u001b[0m\u001b[32m[TOOL] +Summary:        Glances server files\n\u001b[0m\u001b[32m[TOOL] +Group:          System/Management\n\u001b[0m\u001b[32m[TOOL] +Requires:       python-psutil >= 5.3.0\n\u001b[0m\u001b[32m[TOOL] +\n\u001b[0m\u001b[32m[TOOL] +%description common\n\u001b[0m\u001b[32m[TOOL] +Glances common (server) files.\n\u001b[0m\u001b[32m[TOOL] +\n\u001b[0m\u001b[32m[TOOL] +%files common\n\u001b[0m\u001b[32m[TOOL] +%config(noreplace) %{_sysconfdir}/glances/glances.conf\n\u001b[0m\u001b[32m[TOOL] +%{_unitdir}/glances-server.service\n\u001b[0m[TOOL]  \n[TOOL]  %changelog\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL] --- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL] +++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL] @@ -25,6 +25,7 @@\n\u001b[0m[TOOL]  Group:          Development/Languages/Python\n[TOOL]  URL:            https://github.com/nicolargo/glances\n[TOOL]  Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz\n\u001b[32m[TOOL] +Source1:        glances-server.service\n\u001b[0m[TOOL]  Patch0:         adjust-data-files.patch\n[TOOL]  Patch1:         remove-shebang.patch\n[TOOL]  BuildRequires:  %{python_module bottle}\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL] --- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL] +++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL] @@ -67,6 +67,9 @@\n\u001b[0m[TOOL]  \n[TOOL]  %install\n[TOOL]  %python_install\n\u001b[32m[TOOL] +cp -p %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service\n\u001b[0m\u001b[32m[TOOL] +%systemd_prein glances-server.service\n\u001b[0m\u001b[32m[TOOL] +%systemd_post glances-server.service\n\u001b[0m[TOOL]  %python_expand %fdupes %{buildroot}%{$python_sitelib}\n[TOOL]  \n[TOOL]  %files %{python_files}\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (93 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---\n\u001b[31m[TOOL] --- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL] +++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL] @@ -87,7 +87,6 @@\n\u001b[0m[TOOL]  Glances common (server) files.\n[TOOL]  \n[TOOL]  %files common\n\u001b[31m[TOOL] -%config(noreplace) %{_sysconfdir}/glances/glances.conf\n\u001b[0m[TOOL]  %{_unitdir}/glances-server.service\n[TOOL]  \n[TOOL]  %changelog\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (92 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service ---\n\u001b[31m[TOOL] --- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[32m[TOOL] +++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service\n\u001b[0m\u001b[36m[TOOL] @@ -0,0 +1,12 @@\n\u001b[0m\u001b[32m[TOOL] +[Unit]\n\u001b[0m\u001b[32m[TOOL] +Description=Glances Server\n\u001b[0m\u001b[32m[TOOL] +After=network.target\n\u001b[0m\u001b[32m[TOOL] +\n\u001b[0m\u001b[32m[TOOL] +[Service]\n\u001b[0m\u001b[32m[TOOL] +Type=simple\n\u001b[0m\u001b[32m[TOOL] +ExecStart=/usr/bin/glances --server\n\u001b[0m\u001b[32m[TOOL] +Restart=on-failure\n\u001b[0m\u001b[32m[TOOL] +RestartSec=5\n\u001b[0m\u001b[32m[TOOL] +\n\u001b[0m\u001b[32m[TOOL] +[Install]\n\u001b[0m\u001b[32m[TOOL] +WantedBy=multi-user.target\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] write_file: glances-server.service\n[MODIFY] OK: Wrote glances-server.service\n\n[MODIFY] Ollama:\nThe systemd service file has been added and configured in the glances-common subpackage. Changes made:\n\n1. Added `Source1: glances-server.service` to reference the service file\n2. Created `glances-server.service` with proper unit/service/install sections\n3. Added `%install` step to install the service file with systemd macros (%systemd_prein, %systemd_post)\n4. Added new `%package common`, `%description common`, and `%files common` subpackage containing the service file\n\n**Analysis summary:** The spec uses old-style python module macros (`%python_module`, `%python_install`, etc.) rather than modern pyproject-based macros. It already includes `python-rpm-macros` in BuildRequires but does not use `%pyproject_wheel` or `%pyproject_buildrequires`. Consider migrating to pyproject-based build system for better compatibility with upstream packaging standards.\n\n[MODIFY] Changes confirmed.\n[MODIFY] Downloading https://github.com/nicolargo/glances/archive/v%{version}.tar.gz -> v%{version}.tar.gz\n[MODIFY] Failed to download https://github.com/nicolargo/glances/archive/v%{version}.tar.gz: HTTP Error 400: Bad Request\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 0  |  AI time: 0.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 394.1s\n",
+      "diff": "",
+      "result_path": "../results/simple-modification/20260630_113342"
+    }
+,
     "update-only": {
       "timestamp": "20260630_073929",
       "run_time_seconds": 29,
@@ -62,10 +102,10 @@
     }
 ,
     "version-update-single-package": {
-      "timestamp": "20260629_080910",
-      "run_time_seconds": 1,
-      "success": false,
-      "exit_code": 1,
+      "timestamp": "20260629_104042",
+      "run_time_seconds": 15,
+      "success": true,
+      "exit_code": 0,
       "files_changed": 0,
       "ai_model": "",
       "ai_calls": null,
@@ -73,12 +113,12 @@
       "pbuild_calls": null,
       "pbuild_time_seconds": null,
       "total_runtime_seconds": null,
-      "trend_percent": null,
-      "first_run_time_seconds": null,
-      "run_count": 1,
-      "output": "No output log available",
+      "trend_percent": 1400.0,
+      "first_run_time_seconds": 1,
+      "run_count": 3,
+      "output": "[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n\n[UPDATE] Researching latest upstream version for owntone.spec...\n[UPDATE] Could not determine latest version.\n[UPDATE] No packages were updated. Exiting.\n",
       "diff": "",
-      "result_path": "../results/version-update-single-package/20260629_080910"
+      "result_path": "../results/version-update-single-package/20260629_104042"
     }
 
   }
