@@ -253,8 +253,16 @@ AI_TIME="null"
 PBUILD_CALLS="null"
 PBUILD_TIME="null"
 TOTAL_RUNTIME="null"
+PBUILD_AI_VERSION="null"
 
 if [ -f "${RESULT_DIR}/output.log" ]; then
+    # Extract pbuild-ai version from [PBUILD-AI] Version line
+    VERSION_LINE=$(grep "^\[PBUILD-AI\] Version" "${RESULT_DIR}/output.log" | head -1 || echo "")
+    if [ -n "$VERSION_LINE" ]; then
+        PBUILD_AI_VERSION=$(echo "$VERSION_LINE" | sed -n 's/.*Version \([0-9.]*\).*/\1/p')
+        [ -n "$PBUILD_AI_VERSION" ] && PBUILD_AI_VERSION="\"$PBUILD_AI_VERSION\"" || PBUILD_AI_VERSION="null"
+    fi
+
     STATS_LINE=$(grep "\[STATS\]" "${RESULT_DIR}/output.log" || echo "")
     if [ -n "$STATS_LINE" ]; then
         AI_MODEL=$(echo "$STATS_LINE" | sed -n 's/.*AI model: \([^ |]*\).*/\1/p' | tr -d ' ')
@@ -281,6 +289,7 @@ cat > "${RESULT_DIR}/benchmark.json" <<EOF
   "exit_code": $EXIT_CODE,
   "success": $([ $EXIT_CODE -eq 0 ] && echo "true" || echo "false"),
   "files_changed": $FILES_CHANGED,
+  "pbuild_ai_version": $PBUILD_AI_VERSION,
   "ai_model": $AI_MODEL,
   "ai_calls": $AI_CALLS,
   "ai_time_seconds": $AI_TIME,
