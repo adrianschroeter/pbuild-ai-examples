@@ -8,9 +8,9 @@ source:
   ref: "9e4403f8874830248b27aff31cb8de6e250411da5a7214115e0b307bd8e3b43a"
 
 options:
-  - '--update'
-  - '--update-version=0.30.12'
-  - '--allow-tool-scripts'
+  - "--update"
+  - "--update-version=0.30.12"
+  - "--allow-tool-scripts"
 
 expected:
   success: true
