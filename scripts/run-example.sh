@@ -166,6 +166,11 @@ fi
 # Parse test.yaml to get command and options
 COMMAND=$(grep "^command:" "$TEST_YAML" | sed 's/command: *//' | tr -d '"')
 
+# Default to pbuild-ai if no command specified
+if [ -z "$COMMAND" ]; then
+    COMMAND="pbuild-ai"
+fi
+
 # Allow override via PBUILD_AI_BIN environment variable
 if [ -n "$PBUILD_AI_BIN" ]; then
     COMMAND="$PBUILD_AI_BIN"
@@ -184,20 +189,39 @@ cat > "${RESULT_DIR}/metadata.json" <<EOF
 EOF
 
 # Parse options - only lines between "options:" and the next section (expected:)
-# Keep escaped quotes intact by only removing the outer YAML quotes
-OPTIONS=$(awk '/^options:/,/^expected:/ {if ($0 ~ /^  - /) print}' "$TEST_YAML" | sed 's/^  - *//' | sed 's/^"\(.*\)"$/\1/' | tr '\n' ' ')
+# Build as array to preserve multi-word arguments properly
+OPTIONS_ARRAY=()
+while IFS= read -r line; do
+    # Remove leading "- " and outer YAML quotes if present
+    option=$(echo "$line" | sed 's/^  - *//' | sed 's/^"\(.*\)"$/\1/')
+    if [ -n "$option" ]; then
+        OPTIONS_ARRAY+=("$option")
+    fi
+done < <(awk '/^options:/,/^expected:/ {if ($0 ~ /^  - /) print}' "$TEST_YAML")
 
-# Build full command with source directory path
+# Build full command array with source directory path
+FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}")
 if [ -n "$FULL_SOURCE_PATH" ]; then
-    FULL_COMMAND="$COMMAND $OPTIONS $FULL_SOURCE_PATH"
-else
-    FULL_COMMAND="$COMMAND $OPTIONS"
+    FULL_COMMAND_ARRAY+=("$FULL_SOURCE_PATH")
+fi
+
+# Display command for logging (quote multi-word args)
+DISPLAY_CMD="$COMMAND"
+for opt in "${OPTIONS_ARRAY[@]}"; do
+    if [[ "$opt" =~ [[:space:]] ]]; then
+        DISPLAY_CMD="$DISPLAY_CMD \"$opt\""
+    else
+        DISPLAY_CMD="$DISPLAY_CMD $opt"
+    fi
+done
+if [ -n "$FULL_SOURCE_PATH" ]; then
+    DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
 fi
 
 if [ -n "$PBUILD_AI_BIN" ]; then
-    echo "Command: $FULL_COMMAND  (via PBUILD_AI_BIN=$PBUILD_AI_BIN)"
+    echo "Command: $DISPLAY_CMD  (via PBUILD_AI_BIN=$PBUILD_AI_BIN)"
 else
-    echo "Command: $FULL_COMMAND"
+    echo "Command: $DISPLAY_CMD"
 fi
 echo ""
 
@@ -216,7 +240,7 @@ fi
 set +e
 (
     cd "$EXAMPLE_DIR_ABS"
-    eval "$FULL_COMMAND" 2>&1 | tee "${RESULT_DIR}/output.log"
+    "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
 )
 EXIT_CODE=$?
 set -e

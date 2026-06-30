@@ -7,11 +7,9 @@ source:
   type: none
   path: "../../sources/ripgrep"
 
-command:
-  base: "pbuild-ai"
-  options:
-    - "--generate"
-    - "package ripgrep CLI tool"
+options:
+  - "--generate"
+  - "package ripgrep CLI tool"
 
 expected:
   should_succeed: true
