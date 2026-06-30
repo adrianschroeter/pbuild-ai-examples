@@ -325,6 +325,26 @@
                         </div>
                     </div>
 
+                    <!-- Example 3b -->
+                    <div class="example-card" onclick="showExample('update-only')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Update Sources Only</h3>
+                        <p class="example-description">
+                            Update package sources to the latest upstream version without running a test build.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --update-only</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">update</span>
+                            <span class="tag tag-green">basic</span>
+                        </div>
+                    </div>
+
                     <!-- Example 4 -->
                     <div class="example-card" onclick="showExample('backport-security-fix')">
                         <div class="example-icon">
@@ -584,8 +604,16 @@
             'update-upstream': {
                 title: 'Update to Upstream',
                 description: 'Update package to the latest upstream version, rebuild, and fix any compatibility issues automatically.',
-                command: 'pbuild-ai --update <source-directory>',
+                command: 'pbuild-ai --update --email localhero@opensuse.org <source-directory>',
                 exampleDir: 'update-upstream',
+                sourceUrl: 'https://src.opensuse.org/pool/sysstat',
+                sourceRef: '476ba7ecd55772dbf34a886f8aa2a10b68e2aac9abb47a14cedcd08a014c66e7'
+            },
+            'update-only': {
+                title: 'Update Sources Only',
+                description: 'Update package sources to the latest upstream version without running a test build.',
+                command: 'pbuild-ai --update-only <source-directory>',
+                exampleDir: 'update-only',
                 sourceUrl: 'https://src.opensuse.org/pool/sysstat',
                 sourceRef: '476ba7ecd55772dbf34a886f8aa2a10b68e2aac9abb47a14cedcd08a014c66e7'
             },
@@ -620,7 +648,7 @@
             'update-with-own-tools': {
                 title: 'Update Package with Own Tools',
                 description: 'Update a package using custom tool scripts. Extend pbuild-ai with project-specific automation and workflows.',
-                command: 'pbuild-ai --update <source-directory>',
+                command: 'pbuild-ai --update --update-version=0.30.12 --allow-tool-scripts',
                 exampleDir: 'update-with-own-tools',
                 sourceUrl: 'https://src.opensuse.org/AI/ollama',
                 sourceRef: '9e4403f8874830248b27aff31cb8de6e250411da5a7214115e0b307bd8e3b43a'
