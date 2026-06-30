@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-30T11:47:48+02:00",
+  "generated": "2026-06-30T10:01:26+00:00",
   "examples": {
     "basic-analyze": {
       "timestamp": "20260629_165709",
@@ -26,7 +26,7 @@
       "run_time_seconds": 3178,
       "success": true,
       "exit_code": 0,
-      "files_changed": 0,
+      "files_changed": 23,
       "ai_model": "qwen3.6:35b-a3b",
       "ai_calls": 76,
       "ai_time_seconds": 2970.9,
@@ -66,7 +66,7 @@
       "run_time_seconds": 394,
       "success": true,
       "exit_code": 0,
-      "files_changed": 0,
+      "files_changed": 5,
       "ai_model": "qwen3.6:35b-a3b",
       "ai_calls": 0,
       "ai_time_seconds": 0.0,

@@ -212,6 +212,15 @@ if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH/.git" ]; then
     fi
 fi
 
+# If git diff didn't capture changes, try counting from pbuild-ai output
+if [ "$FILES_CHANGED" -eq 0 ] && [ -f "${RESULT_DIR}/output.log" ]; then
+    # Count "[TOOL] --- Diff for" lines which indicate file modifications
+    OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "${RESULT_DIR}/output.log" 2>/dev/null || echo "0")
+    if [ "$OUTPUT_FILES" -gt 0 ]; then
+        FILES_CHANGED=$OUTPUT_FILES
+    fi
+fi
+
 # Parse statistics from output.log if available
 AI_MODEL="null"
 AI_CALLS="null"

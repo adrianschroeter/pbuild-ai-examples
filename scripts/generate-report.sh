@@ -328,6 +328,18 @@ if [ -d "$RESULTS_DIR" ]; then
             EXIT_CODE=$(grep "exit_code" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "1")
             FILES_CHANGED=$(grep "files_changed" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "0")
 
+            # Fallback: If files_changed is 0 but output shows file modifications, count them
+            if [ -z "$FILES_CHANGED" ] || [ "$FILES_CHANGED" = "0" ]; then
+                if [ -f "$OUTPUT_LOG" ]; then
+                    OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "$OUTPUT_LOG" 2>/dev/null || echo "0")
+                    if [ "$OUTPUT_FILES" -gt 0 ] 2>/dev/null; then
+                        FILES_CHANGED=$OUTPUT_FILES
+                    else
+                        FILES_CHANGED=0
+                    fi
+                fi
+            fi
+
             # Parse new statistics fields
             AI_MODEL=$(grep "\"ai_model\"" "$LATEST_BENCHMARK" | sed 's/.*"ai_model": *//; s/[,"]//g' || echo "null")
             AI_CALLS=$(grep "\"ai_calls\"" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "null")
