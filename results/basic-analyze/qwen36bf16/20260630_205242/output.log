@@ -1,0 +1,23 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+Here are the issues and required adjustments per openSUSE standards:
+
+**Critical / Must Fix**
+- `%changelog` section present but empty → **Remove entirely**. Per guidelines, changelogs belong in `PACKAGE.changes`.
+- `%defattr(-,root,root)` → Deprecated. Modern RPM defaults to `-`; omit it (will be auto-stripped by `format_spec_file`).
+
+**Deprecated / Obsolete Tags**
+- `Group: Amusements/Toys/Other` → RPM ≥4.15 ignores this. Omit or change to `Other`.
+- `Url:` uses HTTP → Update to HTTPS if the upstream host supports it (security best practice).
+
+**Modernization & Tooling**
+- Run `/usr/lib/obs/service/format_spec_file` on the directory to auto-normalize macros, whitespace, and section ordering per `spec-cleaner` rules.
+- Replace `%setup -q` with `%autosetup` (modern default; add `-n <dir>` if extraction root differs).
+- Move `bash` from `BuildRequires:` to direct execution in `%install` unless it's strictly needed for build-time processing. BuildRequires should only list actual build dependencies.
+
+**No build-breaking errors detected.** After removing `%changelog`, dropping `%defattr`, and running `format_spec_file`, the spec will be compliant.
+
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 91.1s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 91.1s

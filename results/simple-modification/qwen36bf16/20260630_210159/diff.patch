@@ -1,0 +1,67 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/glances-server.service /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service
+--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/glances-server.service	1970-01-01 01:00:00.000000000 +0100
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service	2026-06-30 21:06:30.174535211 +0200
+@@ -0,0 +1,14 @@
++[Unit]
++Description=Glances Web Server
++Documentation=https://glances.readthedocs.io/
++Wants=network-online.target
++After=network-online.target
++
++[Service]
++Type=simple
++ExecStart=/usr/bin/glances -w
++Restart=on-failure
++RestartSec=5s
++
++[Install]
++WantedBy=multi-user.target
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36bf16/20260630_210159/source_backup/python-Glances.spec	2026-06-30 21:01:59.701175541 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec	2026-06-30 21:08:07.095897266 +0200
+@@ -25,6 +25,7 @@
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+ Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source1:        glances-server.service
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+@@ -43,7 +44,19 @@
+ Provides:       glances
+ %endif
+ BuildArch:      noarch
+-%python_subpackages
++
++%package glances-common
++Summary:        A cross-platform curses-based monitoring tool (Common files)
++Group:          System/Management
++Requires:       %{name} = %{version}
++Requires:       systemd
++
++%description glances-common
++Glances is a cross-platform monitoring tool which presents a
++large amount of monitoring information through a curses or Web
++based interface. The information dynamically adapts depending on the
++size of the user interface.
++This subpackage contains common files for Glances, including a systemd service file.
+ 
+ %description
+ Glances is a cross-platform monitoring tool which presents a
+@@ -67,6 +80,8 @@
+ %install
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
++mkdir -p %{buildroot}%{_unitdir}
++cp %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service
+ 
+ %files %{python_files}
+ %license COPYING
+@@ -75,4 +90,7 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
++%files glances-common
++%{_unitdir}/glances-server.service
++
+ %changelog

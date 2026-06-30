@@ -1,0 +1,35 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: libarchive.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+Here are the critical issues and required fixes, per openSUSE guidelines:
+
+**🔴 Critical Errors**
+1. **RPM Parse Failure**: `0%{?rhel_version <= 700}` is missing a closing `}`. Additionally, RHEL/CentOS version macros (`600`/`700`) are incorrect for modern distributions and unnecessary in a SUSE spec. **Remove the entire `%if 0%{?centos_version}...` block** or fix to proper macro syntax: `%if 0%{?rhel_version} <= 700`.
+2. **Empty `%changelog`**: Per guidelines, remove the trailing `%changelog` section entirely. Changelogs belong in `PACKAGE.changes`.
+
+**⚠️ Best Practice Violations**
+3. **File Conflict**: Both `%files -n bsdtar` and `%files -n %{libname}` claim `%{_mandir}/man5/*`. This will cause installation conflicts. Move shared man pages to the main library package or add `%exclude %{_mandir}/man5/*` in the `bsdtar` file list.
+4. **Unused Source**: `Source1000: baselibs.conf` is defined but never processed. Remove unless explicitly handled by an OBS `_service`.
+5. **Deprecated Tags**: `Group:` tags are legacy. Safe to remove, but not build-breaking.
+
+**✅ Security Fix Application**
+Save the commit diff as `020c40df-security-fix.patch` in your `%{_sourcedir}` and add:
+```spec
+Patch4:         020c40df-security-fix.patch
+```
+`%autopatch -p1` in `%prep` will automatically apply it alongside existing patches. Ensure `Patch4:` is defined before the `%prep` section.
+
+**Summary of Actions:**
+- Remove RHEL/CentOS `%if` block (broken & unnecessary for SUSE)
+- Delete empty `%changelog`
+- Resolve `man5/*` file conflict
+- Add `Patch4:` definition for the security fix
+- Remove unused `Source1000`
+
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096
+
+[OK] Build for libarchive.spec succeeded.
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 161.8s  |  pbuild calls: 1  |  pbuild time: 294.2s  |  total runtime: 456.1s

@@ -11,15 +11,10 @@ __pycache__/
 *.pyc
 .venv/
 
-# OS files
-.DS_Store
-Thumbs.db
-
 # Local model config overrides (may contain secrets like host URLs)
 models.yaml.local
 
 # Editor files
-.vscode/
-.idea/
 *.swp
 *~
+
