@@ -1126,6 +1126,53 @@ a:hover {
     gap: 0.5rem;
 }
 
+/* ============================================
+   Model Selector Tabs
+   ============================================ */
+
+.model-selector {
+    margin-bottom: 1.5rem;
+}
+
+.model-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.model-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.model-tab:hover {
+    border-color: var(--geeko-green);
+    color: var(--geeko-green);
+}
+
+.model-tab.active {
+    background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%);
+    color: #000;
+    border-color: var(--geeko-green);
+    box-shadow: 0 0 8px rgba(66, 205, 66, 0.3);
+}
+
+.model-tab .tab-badge {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
 .benchmark-label {
     color: var(--text-muted);
     font-size: 0.85rem;

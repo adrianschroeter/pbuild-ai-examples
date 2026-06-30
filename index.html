@@ -81,6 +81,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal-section model-selector" id="modelSelector" style="display:none;">
+                    <h3>AI Model</h3>
+                    <div class="model-tabs" id="modelTabs"></div>
+                </div>
                 <div class="modal-section">
                     <h3>Console Output</h3>
                     <div class="retro-console" id="modalConsole">
@@ -711,12 +715,11 @@
             document.body.style.overflow = 'auto';
         }
 
-        function showDiffModal(exampleDir) {
+        function showDiffModal() {
             const diffModal = document.getElementById('diffModal');
             const diffContent = document.getElementById('diffModalContent');
 
             if (window.currentDiff) {
-                // Convert ANSI colors in diff
                 const ansi_up = new AnsiUp();
                 const htmlDiff = ansi_up.ansi_to_html(window.currentDiff);
                 diffContent.innerHTML = `<pre>${htmlDiff}</pre>`;
@@ -752,6 +755,12 @@
             return `${s}s`;
         }
 
+        // Global state for per-model results
+        let currentModels = {};
+        let currentModelKeys = [];
+        let currentModelsMeta = {};
+        let activeModelKey = null;
+
         async function loadExampleResults(exampleDir) {
             // Try to load actual results from generated manifest
             try {
@@ -759,7 +768,23 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data.examples && data.examples[exampleDir]) {
-                        showActualResults(data.examples[exampleDir]);
+                        const ex = data.examples[exampleDir];
+                        if (ex.models) {
+                            // New per-model format
+                            currentModels = ex.models;
+                            currentModelKeys = Object.keys(ex.models);
+                            currentModelsMeta = data.models || {};
+                        } else {
+                            // Old flat format - wrap in default model
+                            currentModels = { default: ex };
+                            currentModelKeys = ['default'];
+                            currentModelsMeta = data.models || { default: { display: 'Unknown Model' } };
+                        }
+                        if (!currentModelsMeta.default) {
+                            currentModelsMeta.default = { display: 'Unknown Model' };
+                        }
+                        activeModelKey = currentModelKeys[0];
+                        showActualResults();
                         return;
                     }
                 }
@@ -769,14 +794,44 @@
             showPlaceholderResults(exampleDir);
         }
 
-        function showActualResults(result) {
+        function showActualResults() {
+            // Build model selector tabs
+            const modelSelector = document.getElementById('modelSelector');
+            const modelTabs = document.getElementById('modelTabs');
+            if (currentModelKeys.length > 1) {
+                modelSelector.style.display = 'block';
+                modelTabs.innerHTML = currentModelKeys.map(key => {
+                    const meta = currentModelsMeta[key] || {};
+                    const active = key === activeModelKey ? ' active' : '';
+                    return `<button class="model-tab${active}" data-key="${key}" onclick="switchModel('${key}')">${meta.display || key}</button>`;
+                }).join('');
+            } else {
+                modelSelector.style.display = 'none';
+            }
+
+            renderModelData(activeModelKey);
+        }
+
+        function switchModel(modelKey) {
+            activeModelKey = modelKey;
+            document.querySelectorAll('.model-tab').forEach(t => {
+                t.classList.toggle('active', t.getAttribute('data-key') === modelKey);
+            });
+            renderModelData(modelKey);
+        }
+
+        function renderModelData(modelKey) {
+            const result = currentModels[modelKey];
+            if (!result) return;
+
+            // Track current diff for this model
+            window.currentDiff = null;
+
             // Show actual console output with ANSI color support
             const consoleOutput = document.getElementById('consoleOutput');
-
-            // Convert ANSI escape codes to HTML (fallback to plain text if library not loaded)
             if (typeof AnsiUp !== 'undefined') {
                 const ansi_up = new AnsiUp();
-                ansi_up.use_classes = true;  // Use CSS classes for styling
+                ansi_up.use_classes = true;
                 const htmlOutput = ansi_up.ansi_to_html(result.output);
                 consoleOutput.innerHTML = htmlOutput;
             } else {
@@ -798,14 +853,12 @@
             document.getElementById('modalStatus').innerHTML =
                 `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
 
-            // Files changed - extract diff from output if available
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
             const filesChangedEl = document.getElementById('modalFilesChanged');
 
-            // Extract diff from output
+            // Extract diff from result or output
             let diffContent = result.diff || '';
             if (!diffContent && result.output) {
-                // Try to extract diffs from [TOOL] --- Diff for lines
                 const diffMatches = result.output.match(/\[TOOL\] --- Diff for [\s\S]*?\[TOOL\] --- End diff ---/g);
                 if (diffMatches) {
                     diffContent = diffMatches.join('\n\n');
@@ -816,21 +869,18 @@
             const changesCard = document.getElementById('changesCard');
             const modalChanges = document.getElementById('modalChanges');
             if (filesChanged > 0) {
-                modalChanges.innerHTML = `<button class="files-changed-btn" onclick="showDiffModal('${result.exampleDir || ''}');return false;">
+                modalChanges.innerHTML = `<button class="files-changed-btn" onclick="showDiffModal();return false;">
                     <span class="btn-number">${filesChanged}</span>
                     <span class="btn-label">show diff</span>
                 </button>`;
                 window.currentDiff = diffContent || result.output || 'No diff available';
                 changesCard.style.display = 'block';
                 document.getElementById('infoRow').style.display = 'flex';
-
-                // Just show the number in the benchmark grid
                 filesChangedEl.textContent = filesChanged;
             } else {
                 modalChanges.innerHTML = '<span class="text-muted">No changes</span>';
                 changesCard.style.display = 'block';
                 document.getElementById('infoRow').style.display = 'flex';
-                window.currentDiff = null;
                 filesChangedEl.textContent = '-';
             }
 
@@ -869,6 +919,7 @@ Run the example to see:
   - Benchmark timing`;
 
             // Placeholder benchmarks
+            document.getElementById('modelSelector').style.display = 'none';
             document.getElementById('modalStatus').innerHTML = '<span style="color: var(--text-muted)">Not run yet</span>';
             document.getElementById('modalFilesChanged').textContent = '-';
             document.getElementById('modalTotalRuntime').textContent = '-';
