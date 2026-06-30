@@ -1,8 +1,8 @@
 {
-  "generated": "2026-06-30T06:41:27+00:00",
+  "generated": "2026-06-30T08:06:20+00:00",
   "examples": {
     "basic-analyze": {
-      "timestamp": "20260630_064118",
+      "timestamp": "20260630_080611",
       "run_time_seconds": 0,
       "success": true,
       "exit_code": 0,
@@ -16,13 +16,13 @@
       "trend_percent": -100.0,
       "first_run_time_seconds": 150,
       "run_count": 2,
-      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "output": "./scripts/run-example.sh: line 195: pbuild-ai: command not found\n",
       "diff": "",
-      "result_path": "../results/basic-analyze/20260630_064118"
+      "result_path": "../results/basic-analyze/20260630_080611"
     }
 ,
     "fix-build-failures": {
-      "timestamp": "20260630_064122",
+      "timestamp": "20260630_080615",
       "run_time_seconds": 0,
       "success": true,
       "exit_code": 0,
@@ -36,13 +36,13 @@
       "trend_percent": -100.0,
       "first_run_time_seconds": 3178,
       "run_count": 2,
-      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "output": "./scripts/run-example.sh: line 195: pbuild-ai: command not found\n",
       "diff": "",
-      "result_path": "../results/fix-build-failures/20260630_064122"
+      "result_path": "../results/fix-build-failures/20260630_080615"
     }
 ,
     "inline-example": {
-      "timestamp": "20260630_064122",
+      "timestamp": "20260630_080615",
       "run_time_seconds": 0,
       "success": true,
       "exit_code": 0,
@@ -56,34 +56,34 @@
       "trend_percent": null,
       "first_run_time_seconds": null,
       "run_count": 1,
-      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "output": "./scripts/run-example.sh: line 195: pbuild-ai: command not found\n",
       "diff": "",
-      "result_path": "../results/inline-example/20260630_064122"
+      "result_path": "../results/inline-example/20260630_080615"
     }
 ,
     "update-only": {
-      "timestamp": "20260630_073929",
-      "run_time_seconds": 29,
+      "timestamp": "20260630_080615",
+      "run_time_seconds": 0,
       "success": true,
       "exit_code": 0,
       "files_changed": 0,
-      "ai_model": "gemma4",
-      "ai_calls": 1,
-      "ai_time_seconds": 28.5,
-      "pbuild_calls": 0,
-      "pbuild_time_seconds": 0.0,
-      "total_runtime_seconds": 28.5,
-      "trend_percent": -79.6,
+      "ai_model": "null",
+      "ai_calls": null,
+      "ai_time_seconds": null,
+      "pbuild_calls": null,
+      "pbuild_time_seconds": null,
+      "total_runtime_seconds": null,
+      "trend_percent": -100.0,
       "first_run_time_seconds": 142,
       "run_count": 3,
-      "output": "[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n\n[UPDATE] Researching latest upstream version for sysstat.spec...\n[UPDATE] Updated to version 6.0.2\n[STATS] AI model: gemma4  |  AI calls: 1  |  AI time: 28.5s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 28.5s\n[UPDATE] No changes found. Exiting (--update-only).\n",
+      "output": "./scripts/run-example.sh: line 195: pbuild-ai: command not found\n",
       "diff": "",
-      "result_path": "../results/update-only/20260630_073929"
+      "result_path": "../results/update-only/20260630_080615"
     }
 ,
     "update-upstream": {
-      "timestamp": "20260630_064126",
-      "run_time_seconds": 1,
+      "timestamp": "20260630_080619",
+      "run_time_seconds": 0,
       "success": true,
       "exit_code": 0,
       "files_changed": 0,
@@ -96,9 +96,9 @@
       "trend_percent": null,
       "first_run_time_seconds": null,
       "run_count": 1,
-      "output": "./scripts/run-example.sh: line 181: pbuild-ai: command not found\n",
+      "output": "./scripts/run-example.sh: line 195: pbuild-ai: command not found\n",
       "diff": "",
-      "result_path": "../results/update-upstream/20260630_064126"
+      "result_path": "../results/update-upstream/20260630_080619"
     }
 ,
     "version-update-single-package": {
