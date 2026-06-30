@@ -1,0 +1,20 @@
+# AI model configurations for pbuild-ai examples
+# Override any value by creating models.yaml.local in the same directory
+# (models.yaml.local is gitignored and won't be committed)
+models:
+  gemma4:
+    display: "Gemma 4 31B"
+    host: ""
+    model: "default"
+  qwen36:
+    display: "Qwen3.6:35B-a3b"
+    host: ""
+    model: "qwen3.6:35b-a3b"
+  qwen36bf16:
+    display: "Qwen3.6:35B-a3b-bf16"
+    host: ""
+    model: "qwen3.6:35b-a3b-bf16"
+# qwen27:
+#   display: "Qwen 3.5 27B"
+#   host: ""
+#   model: "qwen3.6:27b"
