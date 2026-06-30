@@ -187,6 +187,17 @@ set -e
 END_TIME=$(date +%s)
 RUN_TIME=$((END_TIME - START_TIME))
 
+# Capture git diff if source is a git repository
+FILES_CHANGED=0
+DIFF_CONTENT=""
+if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH/.git" ]; then
+    DIFF_CONTENT=$(cd "$FULL_SOURCE_PATH" && git diff 2>/dev/null || true)
+    if [ -n "$DIFF_CONTENT" ]; then
+        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff --git" || echo "0")
+        echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
+    fi
+fi
+
 # Parse statistics from output.log if available
 AI_MODEL="null"
 AI_CALLS="null"
@@ -221,6 +232,7 @@ cat > "${RESULT_DIR}/benchmark.json" <<EOF
   "run_time_seconds": $RUN_TIME,
   "exit_code": $EXIT_CODE,
   "success": $([ $EXIT_CODE -eq 0 ] && echo "true" || echo "false"),
+  "files_changed": $FILES_CHANGED,
   "ai_model": $AI_MODEL,
   "ai_calls": $AI_CALLS,
   "ai_time_seconds": $AI_TIME,

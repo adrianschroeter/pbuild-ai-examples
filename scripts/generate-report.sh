@@ -326,6 +326,7 @@ if [ -d "$RESULTS_DIR" ]; then
             RUN_TIME=$(grep "run_time_seconds" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "0")
             SUCCESS=$(grep "\"success\"" "$LATEST_BENCHMARK" | grep -o "true\|false" || echo "false")
             EXIT_CODE=$(grep "exit_code" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "1")
+            FILES_CHANGED=$(grep "files_changed" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "0")
 
             # Parse new statistics fields
             AI_MODEL=$(grep "\"ai_model\"" "$LATEST_BENCHMARK" | sed 's/.*"ai_model": *//; s/[,"]//g' || echo "null")
@@ -366,6 +367,17 @@ except:
 print(json.dumps(text)[1:-1])
 " "$OUTPUT_LOG" 2>/dev/null || echo "")
 
+            # Read diff file if present
+            DIFF_PATH="${RESULT_DIR}/diff.patch"
+            DIFF_CONTENT=$(python3 -c "
+import sys, json
+try:
+    text = open(sys.argv[1]).read()
+except:
+    text = ''
+print(json.dumps(text)[1:-1])
+" "$DIFF_PATH" 2>/dev/null || echo "")
+
             # Add comma separator for all but first entry
             if [ "$FIRST" = true ]; then
                 FIRST=false
@@ -380,6 +392,7 @@ print(json.dumps(text)[1:-1])
       "run_time_seconds": $RUN_TIME,
       "success": $SUCCESS,
       "exit_code": $EXIT_CODE,
+      "files_changed": $FILES_CHANGED,
       "ai_model": "$AI_MODEL",
       "ai_calls": $AI_CALLS,
       "ai_time_seconds": $AI_TIME,
@@ -390,6 +403,7 @@ print(json.dumps(text)[1:-1])
       "first_run_time_seconds": $FIRST_RUN_TIME,
       "run_count": $BENCHMARK_COUNT,
       "output": "$OUTPUT_CONTENT",
+      "diff": "$DIFF_CONTENT",
       "result_path": "../results/$EXAMPLE/$TIMESTAMP"
     }
 EOF

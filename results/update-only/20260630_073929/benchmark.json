@@ -1,0 +1,12 @@
+{
+  "run_time_seconds": 29,
+  "exit_code": 0,
+  "success": true,
+  "files_changed": 0,
+  "ai_model": "gemma4",
+  "ai_calls": 1,
+  "ai_time_seconds": 28.5,
+  "pbuild_calls": 0,
+  "pbuild_time_seconds": 0.0,
+  "total_runtime_seconds": 28.5
+}

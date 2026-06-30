@@ -1,0 +1,31 @@
+name: "Update to Latest Upstream"
+description: "Automatically update package to latest upstream version and fix compatibility issues"
+
+source:
+  type: remote
+  path: "../../sources/sysstat.update-only"
+  url: "https://src.opensuse.org/pool/sysstat"
+  ref: "476ba7ecd55772dbf34a886f8aa2a10b68e2aac9abb47a14cedcd08a014c66e7"
+
+command: "pbuild-ai"
+options:
+  - "--update-only"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "sysstat.spec"  # Version updates
+    - "sysstat.changes"  # Changelog
+  build_result: "not_built"
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: "gemma4"
+
+tags:
+  - "basic"
+  - "update"
