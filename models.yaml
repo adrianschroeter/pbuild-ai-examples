@@ -14,7 +14,11 @@ models:
     display: "Qwen3.6:35B-a3b-bf16"
     host: ""
     model: "qwen3.6:35b-a3b-bf16"
-# qwen27:
-#   display: "Qwen 3.5 27B"
-#   host: ""
-#   model: "qwen3.6:27b"
+  qwen27:
+    display: "Qwen 3.5 27B"
+    host: ""
+    model: "qwen3.6:27b"
+  ornith35b:
+    display: "Ornith 1.0 35B"
+    host: ""
+    model: "ornith:35b"
