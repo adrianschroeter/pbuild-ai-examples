@@ -188,6 +188,14 @@ echo ""
 # Record start time
 START_TIME=$(date +%s)
 
+# Create a backup of the source directory for diff comparison
+BACKUP_DIR=""
+if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+    BACKUP_DIR="${RESULT_DIR}/source_backup"
+    echo "Creating backup of source directory for diff..."
+    cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
+fi
+
 # Run the command and capture output
 set +e
 (
@@ -201,23 +209,37 @@ set -e
 END_TIME=$(date +%s)
 RUN_TIME=$((END_TIME - START_TIME))
 
-# Capture git diff if source is a git repository
+# Create unified diff between backup and current state
 FILES_CHANGED=0
 DIFF_CONTENT=""
-if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH/.git" ]; then
-    DIFF_CONTENT=$(cd "$FULL_SOURCE_PATH" && git diff 2>/dev/null || true)
+if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+    echo "Generating diff of changes..."
+    # Use diff to compare, excluding .git and build directories
+    DIFF_CONTENT=$(diff -Nur \
+        --exclude=".git" \
+        --exclude="_build.*" \
+        --exclude="*.pyc" \
+        --exclude="__pycache__" \
+        "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
+
     if [ -n "$DIFF_CONTENT" ]; then
-        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff --git" || echo "0")
+        # Count number of files changed
+        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" || echo "0")
         echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
+        echo "✓ Captured diff for $FILES_CHANGED file(s)"
     fi
+
+    # Clean up backup directory to save space
+    rm -rf "$BACKUP_DIR"
 fi
 
-# If git diff didn't capture changes, try counting from pbuild-ai output
+# If diff didn't capture changes, try counting from pbuild-ai output as fallback
 if [ "$FILES_CHANGED" -eq 0 ] && [ -f "${RESULT_DIR}/output.log" ]; then
     # Count "[TOOL] --- Diff for" lines which indicate file modifications
     OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "${RESULT_DIR}/output.log" 2>/dev/null || echo "0")
     if [ "$OUTPUT_FILES" -gt 0 ]; then
         FILES_CHANGED=$OUTPUT_FILES
+        echo "✓ Counted $FILES_CHANGED file modification(s) from output"
     fi
 fi
 

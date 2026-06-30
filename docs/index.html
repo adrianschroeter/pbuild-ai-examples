@@ -86,6 +86,22 @@
             </div>
         </div>
     </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-modal-content">
+            <div class="diff-modal-header">
+                <h2 class="diff-modal-title">File Changes</h2>
+                <button class="diff-modal-close" onclick="closeDiffModal()">&times;</button>
+            </div>
+            <div class="diff-modal-body">
+                <div class="diff-content" id="diffModalContent">
+                    <pre>Loading diff...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -629,6 +645,36 @@
             document.body.style.overflow = 'auto';
         }
 
+        function showDiffModal(exampleDir) {
+            const diffModal = document.getElementById('diffModal');
+            const diffContent = document.getElementById('diffModalContent');
+
+            if (window.currentDiff) {
+                // Convert ANSI colors in diff
+                const ansi_up = new AnsiUp();
+                const htmlDiff = ansi_up.ansi_to_html(window.currentDiff);
+                diffContent.innerHTML = `<pre>${htmlDiff}</pre>`;
+            } else {
+                diffContent.innerHTML = '<pre>No diff available</pre>';
+            }
+
+            diffModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDiffModal() {
+            document.getElementById('diffModal').style.display = 'none';
+            document.body.style.overflow = 'hidden'; // Keep body scroll hidden since main modal is still open
+        }
+
+        // Close diff modal when clicking outside
+        window.onclick = function(event) {
+            const diffModal = document.getElementById('diffModal');
+            if (event.target === diffModal) {
+                closeDiffModal();
+            }
+        }
+
         async function loadExampleResults(exampleDir) {
             // Try to load actual results from generated manifest
             try {
@@ -675,17 +721,31 @@
             document.getElementById('modalStatus').innerHTML =
                 `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
 
-            // Files changed
+            // Files changed - extract diff from output if available
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
             const filesChangedEl = document.getElementById('modalFilesChanged');
-            const hasDiff = result.diff && result.diff.length > 0;
-            if (hasDiff) {
-                filesChangedEl.innerHTML = `<a href="#" class="diff-link" onclick="toggleDiff();return false;">${filesChanged}</a>`;
-                document.getElementById('diffContent').textContent = result.diff;
-                document.getElementById('diffSection').style.display = 'none';
+
+            // Extract diff from output
+            let diffContent = result.diff || '';
+            if (!diffContent && result.output) {
+                // Try to extract diffs from [TOOL] --- Diff for lines
+                const diffMatches = result.output.match(/\[TOOL\] --- Diff for [\s\S]*?\[TOOL\] --- End diff ---/g);
+                if (diffMatches) {
+                    diffContent = diffMatches.join('\n\n');
+                }
+            }
+
+            if (filesChanged > 0) {
+                // Make it a clickable button
+                filesChangedEl.innerHTML = `<button class="files-changed-btn" onclick="showDiffModal('${result.exampleDir || ''}');return false;">
+                    <span class="btn-number">${filesChanged}</span>
+                    <span class="btn-label">show diff</span>
+                </button>`;
+                // Store diff content for later
+                window.currentDiff = diffContent || result.output || 'No diff available';
             } else {
-                filesChangedEl.textContent = filesChanged > 0 ? filesChanged : '-';
-                document.getElementById('diffSection').style.display = 'none';
+                filesChangedEl.textContent = '-';
+                window.currentDiff = null;
             }
 
             document.getElementById('modalTotalRuntime').textContent =
