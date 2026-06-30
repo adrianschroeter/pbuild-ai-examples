@@ -1,0 +1,22 @@
+[PBUILD-AI] Version 0.1.5
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: libarchive.spec...
+-> AI(gemma4:31b-it-qat-q4_0-it-256k) says:
+**Errors & Best Practice Violations:**
+
+1.  **Remove `%changelog`**: Per SUSE conventions, the `%changelog` section must not exist in the `.spec` file; entries belong in `PACKAGE.changes`.
+2.  **Security Fix**: To apply commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`, add a new patch:
+    *   Add `Patch4: security-fix.patch` to the source list.
+    *   Since `%autopatch -p1` is used in `%prep`, it will be applied automatically once defined.
+
+**Summary of changes needed:**
+*   Delete line: `%changelog`
+*   Insert line: `Patch4: security-fix.patch` (and provide the corresponding patch file).
+
+[EXEC] pbuild --result
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096
+
+[OK] Build for libarchive.spec succeeded.
+[STATS] AI model: gemma4:31b-it-qat-q4_0-it-256k  |  AI calls: 1  |  AI time: 235.5s  |  pbuild calls: 1  |  pbuild time: 358.5s  |  total runtime: 594.3s
