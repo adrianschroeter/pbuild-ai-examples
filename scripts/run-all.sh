@@ -4,12 +4,40 @@
 set -e
 
 EXAMPLES_DIR="examples"
+MODEL_FLAG=""
+
+# Parse optional --model argument
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --model)
+            if [ -z "$2" ]; then
+                echo "Error: --model requires a model key argument"
+                exit 1
+            fi
+            MODEL_FLAG="--model $2"
+            shift 2
+            ;;
+        -h|--help)
+            echo "Usage: $0 [--model <key>]"
+            echo "Run all example test cases with optional model selection."
+            echo ""
+            echo "  --model <key>  Use a specific model from models.yaml (default: first model)"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
 TOTAL=0
 PASSED=0
 FAILED=0
 
 echo "Running all pbuild-ai examples..."
 echo "========================================"
+[ -n "$MODEL_FLAG" ] && echo "  Model: $(echo $MODEL_FLAG | cut -d' ' -f2)"
 echo ""
 
 for example_dir in "$EXAMPLES_DIR"/*; do
@@ -26,7 +54,7 @@ for example_dir in "$EXAMPLES_DIR"/*; do
 
     echo "[$TOTAL] Running: $(basename "$example_dir")"
 
-    if ./scripts/run-example.sh "$example_dir"; then
+    if ./scripts/run-example.sh $MODEL_FLAG "$example_dir"; then
         PASSED=$((PASSED + 1))
         echo "✓ PASSED"
     else

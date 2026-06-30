@@ -10,8 +10,11 @@ source:
 
 command: "pbuild-ai"
 options:
-  - "--prompt 'Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02' --fix"
-  - "--vm-memory 8096"
+  - "--prompt"
+  - "Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02"
+  - "--fix"
+  - "--vm-memory"
+  - "8096"
 
 expected:
   success: true

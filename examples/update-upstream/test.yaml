@@ -3,9 +3,9 @@ description: "Automatically update package to latest upstream version and fix co
 
 source:
   type: remote
-  path: "../../sources/sysstat.update-only"
-  url: "https://src.opensuse.org/pool/sysstat"
-  ref: "476ba7ecd55772dbf34a886f8aa2a10b68e2aac9abb47a14cedcd08a014c66e7" # our oldest version
+  path: "../../sources/gawk.update-only"
+  url: "https://src.opensuse.org/pool/gawk"
+  ref: "c30cc95a4861c123bd2f75f4ec913ffe64592ea11f7bf1a3d39c9b21c12403d5" # our oldest version
 
 command: "pbuild-ai"
 options:
@@ -17,8 +17,8 @@ expected:
   success: true
   changes: true
   files_modified:
-    - "sysstat.spec"  # Version updates
-    - "sysstat.changes"  # Changelog
+    - "gawk.spec"  # Version updates
+    - "gawk.changes"  # Changelog
   build_result: "succeeded"
 
 benchmarks:

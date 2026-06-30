@@ -3,13 +3,44 @@
 
 set -e
 
-if [ -z "$1" ]; then
-    echo "Usage: $0 <example-directory>"
+usage() {
+    echo "Usage: $0 [--model <key>] <example-directory>"
     echo "Example: $0 examples/basic-analyze"
+    echo "         $0 --model qwen35 examples/basic-analyze"
     echo ""
     echo "Environment variables:"
     echo "  PBUILD_AI_CMD  Path to pbuild-ai executable (default: from test.yaml)"
+    echo "  OLLAMA_HOST    Fallback host (overridden by --model / models.yaml)"
+    echo "  OLLAMA_MODEL   Fallback model (overridden by --model / models.yaml)"
     exit 1
+}
+
+# Parse optional --model argument
+MODEL_KEY=""
+POSITIONAL_ARGS=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --model)
+            if [ -z "$2" ]; then
+                echo "Error: --model requires a model key argument"
+                usage
+            fi
+            MODEL_KEY="$2"
+            shift 2
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            POSITIONAL_ARGS+=("$1")
+            shift
+            ;;
+    esac
+done
+set -- "${POSITIONAL_ARGS[@]}"
+
+if [ -z "$1" ]; then
+    usage
 fi
 
 EXAMPLE_DIR="$1"
@@ -27,8 +58,100 @@ EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 echo "Running example: $EXAMPLE_DIR"
 echo "----------------------------------------"
 
-# Create results directory first (with absolute path)
-RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/$(date +%Y%m%d_%H%M%S)"
+# Read model configurations from models.yaml + models.yaml.local
+MODELS_JSON=$(python3 << 'PYEOF' 2>/dev/null || echo "{}")
+import json, os, re
+
+def read_yaml_simple(path):
+    data = {}
+    current_model = None
+    try:
+        with open(path) as f:
+            for line in f:
+                # Strip comments
+                line = re.sub(r'#.*$', '', line).rstrip()
+                if not line:
+                    continue
+                # Model key line: "  gemma4:"
+                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                if m:
+                    current_model = m.group(1)
+                    data[current_model] = {}
+                    continue
+                # Key-value line: "    host: "value"" or "    model: value"
+                m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
+                if m and current_model is not None:
+                    val = m.group(2).strip()
+                    # Strip surrounding quotes
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                        val = val[1:-1]
+                    data[current_model][m.group(1)] = val
+    except FileNotFoundError:
+        pass
+    return data
+
+config = {}
+for yaml_file in ['models.yaml', 'models.yaml.local']:
+    if os.path.exists(yaml_file):
+        cfg = read_yaml_simple(yaml_file)
+        for key, val in cfg.items():
+            if key not in config:
+                config[key] = {}
+            config[key].update(val)
+
+print(json.dumps(config))
+PYEOF
+
+# Determine model key
+if [ -z "$MODEL_KEY" ]; then
+    MODEL_KEY=$(python3 -c "
+import json, sys, os
+d = json.loads(sys.stdin.read())
+if not d:
+    print('default')
+    sys.exit(0)
+# Try to match existing OLLAMA_MODEL env var
+env_model = os.environ.get('OLLAMA_MODEL', '')
+if env_model:
+    for k, v in d.items():
+        if v.get('model') == env_model:
+            print(k)
+            sys.exit(0)
+# Fall back to first model key
+print(next(iter(d.keys())))
+" <<< "$MODELS_JSON" 2>/dev/null || echo "default")
+fi
+
+# Get model config values
+MODEL_HOST=$(python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+print(d.get(key, {}).get('host', '') or '')
+" <<< "$MODELS_JSON" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_NAME=$(python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+print(d.get(key, {}).get('model', '') or '')
+" <<< "$MODELS_JSON" "$MODEL_KEY" 2>/dev/null || echo "")
+
+# Export model environment for pbuild-ai
+if [ -n "$MODEL_HOST" ]; then
+    export OLLAMA_HOST="$MODEL_HOST"
+fi
+if [ -n "$MODEL_NAME" ]; then
+    export OLLAMA_MODEL="$MODEL_NAME"
+fi
+
+echo "  Model key: $MODEL_KEY"
+[ -n "$MODEL_NAME" ] && echo "  AI model: $MODEL_NAME"
+[ -n "$MODEL_HOST" ] && echo "  AI host: $MODEL_HOST"
+echo ""
+
+# Create results directory with per-model nesting
+RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/${MODEL_KEY}/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$RESULT_DIR"
 
 # Check if source needs to be cloned
@@ -160,6 +283,8 @@ PBUILD_AI_PATH=$(command -v "$COMMAND" 2>/dev/null || echo "$COMMAND")
 cat > "${RESULT_DIR}/metadata.json" <<EOF
 {
   "example": "$(basename "$EXAMPLE_DIR")",
+  "model_key": "${MODEL_KEY}",
+  "model_name": "${MODEL_NAME}",
   "timestamp": "$(date -Iseconds)",
   "hostname": "$(hostname)",
   "repo_root": "${REPO_ROOT}",
@@ -219,7 +344,7 @@ fi
 set +e
 (
     cd "$EXAMPLE_DIR_ABS"
-    "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
+    NO_SPINNER=1 "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
 )
 EXIT_CODE=$?
 set -e

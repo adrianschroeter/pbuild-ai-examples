@@ -136,6 +136,7 @@ cat > "$OUTPUT_FILE" <<'HTMLHEAD'
                     <thead>
                         <tr>
                             <th>Example</th>
+                            <th>Model</th>
                             <th>Status</th>
                             <th>Run Time</th>
                             <th>Trend</th>
@@ -166,6 +167,24 @@ if [ -d "$RESULTS_DIR" ]; then
             RUN_TIME=$(grep "run_time_seconds" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "0")
             SUCCESS=$(grep "\"success\"" "$LATEST_BENCHMARK" | grep -o "true\|false" || echo "false")
             EXIT_CODE=$(grep "exit_code" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "1")
+
+            # Extract AI model from benchmark or metadata
+            AI_MODEL=$(grep "\"ai_model\"" "$LATEST_BENCHMARK" | sed 's/.*"ai_model": *//; s/[,"]//g' || echo "?")
+            # Try to read model_key from metadata.json for cleaner display
+            BENCHMARK_DIR=$(dirname "$LATEST_BENCHMARK")
+            METADATA_PATH="${BENCHMARK_DIR}/metadata.json"
+            MODEL_DISPLAY=""
+            if [ -f "$METADATA_PATH" ]; then
+                MODEL_KEY=$(grep "\"model_key\"" "$METADATA_PATH" | sed 's/.*"model_key": *"\([^"]*\)".*/\1/' 2>/dev/null || echo "")
+                if [ -n "$MODEL_KEY" ]; then
+                    # Try to resolve display name from models.yaml
+                    if [ -f "models.yaml" ]; then
+                        MODEL_DISPLAY=$(grep -A2 "^\s\+${MODEL_KEY}:" models.yaml | grep "display:" | sed 's/.*display: *"\([^"]*\)".*/\1/' 2>/dev/null || echo "$MODEL_KEY")
+                    fi
+                    [ -z "$MODEL_DISPLAY" ] && MODEL_DISPLAY="$MODEL_KEY"
+                fi
+            fi
+            [ -z "$MODEL_DISPLAY" ] && MODEL_DISPLAY="$AI_MODEL"
 
             if [ "$SUCCESS" = "true" ]; then
                 STATUS_CLASS="status-success"
@@ -208,9 +227,13 @@ if [ -d "$RESULTS_DIR" ]; then
                 fi
             fi
 
+            # Escape MODEL_DISPLAY for HTML
+            MODEL_DISPLAY_ESC=$(echo "$MODEL_DISPLAY" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g')
+
             cat >> "$OUTPUT_FILE" <<EOF
                         <tr>
                             <td><strong>$EXAMPLE</strong></td>
+                            <td class="timestamp-text">$MODEL_DISPLAY_ESC</td>
                             <td><span class="status-badge $STATUS_CLASS">$STATUS_TEXT</span></td>
                             <td><span class="timing">${RUN_TIME}s</span></td>
                             <td>$TREND_HTML</td>
@@ -293,141 +316,204 @@ HTMLFOOT
 
 echo "Report generated: $OUTPUT_FILE"
 
-# Generate results.json for JavaScript consumption
+# Generate results.json for JavaScript consumption (model-aware)
 echo "Generating results manifest..."
 
-cat > "$RESULTS_JSON" <<'JSONHEAD'
-{
-  "generated": "TIMESTAMP_PLACEHOLDER",
-  "examples": {
-JSONHEAD
+python3 << 'PYEOF' > "$RESULTS_JSON"
+import json, os, re, glob
+from collections import OrderedDict
 
-# Replace timestamp placeholder
-sed -i "s/TIMESTAMP_PLACEHOLDER/$(date -Iseconds)/" "$RESULTS_JSON"
+RESULTS_DIR = "results"
+config = {}
 
-# Build JSON data
-FIRST=true
-if [ -d "$RESULTS_DIR" ]; then
-    EXAMPLES=$(find "$RESULTS_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
+def read_yaml_simple(path):
+    data = {}
+    current_model = None
+    try:
+        with open(path) as f:
+            for line in f:
+                line = re.sub(r'#.*$', '', line).rstrip()
+                if not line:
+                    continue
+                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                if m:
+                    current_model = m.group(1)
+                    data[current_model] = {}
+                    continue
+                m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
+                if m and current_model is not None:
+                    val = m.group(2).strip()
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                        val = val[1:-1]
+                    data[current_model][m.group(1)] = val
+    except FileNotFoundError:
+        pass
+    return data
 
-    for EXAMPLE in $EXAMPLES; do
-        # Find all benchmarks for trend calculation
-        ALL_BENCHMARKS=$(find "$RESULTS_DIR/$EXAMPLE" -name "benchmark.json" -type f 2>/dev/null | sort)
-        BENCHMARK_COUNT=$(echo "$ALL_BENCHMARKS" | grep -c "benchmark.json" || echo "0")
+for yaml_file in ['models.yaml', 'models.yaml.local']:
+    if os.path.exists(yaml_file):
+        cfg = read_yaml_simple(yaml_file)
+        for key, val in cfg.items():
+            if key not in config:
+                config[key] = {}
+            config[key].update(val)
 
-        LATEST_BENCHMARK=$(echo "$ALL_BENCHMARKS" | tail -1)
+# Build models metadata
+models_meta = {"default": {"display": "Unknown Model"}}
+for key, val in config.items():
+    models_meta[key] = {"display": val.get("display", key)}
 
-        if [ -n "$LATEST_BENCHMARK" ]; then
-            RESULT_DIR=$(dirname "$LATEST_BENCHMARK")
-            TIMESTAMP=$(basename "$RESULT_DIR")
-            OUTPUT_LOG="${RESULT_DIR}/output.log"
-
-            # Parse benchmark data
-            RUN_TIME=$(grep "run_time_seconds" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "0")
-            SUCCESS=$(grep "\"success\"" "$LATEST_BENCHMARK" | grep -o "true\|false" || echo "false")
-            EXIT_CODE=$(grep "exit_code" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "1")
-            FILES_CHANGED=$(grep "files_changed" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "0")
-
-            # Fallback: If files_changed is 0 but output shows file modifications, count them
-            if [ -z "$FILES_CHANGED" ] || [ "$FILES_CHANGED" = "0" ]; then
-                if [ -f "$OUTPUT_LOG" ]; then
-                    OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "$OUTPUT_LOG" 2>/dev/null || echo "0")
-                    if [ "$OUTPUT_FILES" -gt 0 ] 2>/dev/null; then
-                        FILES_CHANGED=$OUTPUT_FILES
-                    else
-                        FILES_CHANGED=0
-                    fi
-                fi
-            fi
-
-            # Parse new statistics fields
-            AI_MODEL=$(grep "\"ai_model\"" "$LATEST_BENCHMARK" | sed 's/.*"ai_model": *//; s/[,"]//g' || echo "null")
-            AI_CALLS=$(grep "\"ai_calls\"" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "null")
-            AI_TIME=$(grep "\"ai_time_seconds\"" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "null")
-            PBUILD_CALLS=$(grep "\"pbuild_calls\"" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "null")
-            PBUILD_TIME=$(grep "\"pbuild_time_seconds\"" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "null")
-            TOTAL_RUNTIME=$(grep "\"total_runtime_seconds\"" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "null")
-
-            # Calculate trend vs first run
-            TREND_PERCENT="null"
-            FIRST_RUN_TIME="null"
-            if [ "$BENCHMARK_COUNT" -gt 1 ]; then
-                FIRST_BENCHMARK=$(echo "$ALL_BENCHMARKS" | head -1)
-                FIRST_RUN_TIME=$(grep "run_time_seconds" "$FIRST_BENCHMARK" | grep -oE '[0-9.]+' || echo "0")
-
-                if [ "$FIRST_RUN_TIME" != "0" ] && [ -n "$FIRST_RUN_TIME" ]; then
-                    TREND_PERCENT=$(awk -v latest="$RUN_TIME" -v first="$FIRST_RUN_TIME" 'BEGIN {
-                        if (first > 0) {
-                            change = ((latest - first) / first) * 100
-                            printf "%.1f", change
-                        } else {
-                            print "0"
-                        }
-                    }')
-                fi
-            fi
-
-            # Read output log content (properly JSON-encoded via Python)
-            OUTPUT_CONTENT=$(python3 -c "
-import sys, json
-f = sys.argv[1]
-try:
-    text = open(f).read()
-except:
-    text = 'No output log available'
-# Return raw content (no surrounding quotes) for heredoc insertion
-print(json.dumps(text)[1:-1])
-" "$OUTPUT_LOG" 2>/dev/null || echo "")
-
-            # Read diff file if present
-            DIFF_PATH="${RESULT_DIR}/diff.patch"
-            DIFF_CONTENT=$(python3 -c "
-import sys, json
-try:
-    text = open(sys.argv[1]).read()
-except:
-    text = ''
-print(json.dumps(text)[1:-1])
-" "$DIFF_PATH" 2>/dev/null || echo "")
-
-            # Add comma separator for all but first entry
-            if [ "$FIRST" = true ]; then
-                FIRST=false
-            else
-                echo "," >> "$RESULTS_JSON"
-            fi
-
-            # Write JSON entry
-            cat >> "$RESULTS_JSON" <<EOF
-    "$EXAMPLE": {
-      "timestamp": "$TIMESTAMP",
-      "run_time_seconds": $RUN_TIME,
-      "success": $SUCCESS,
-      "exit_code": $EXIT_CODE,
-      "files_changed": $FILES_CHANGED,
-      "ai_model": "$AI_MODEL",
-      "ai_calls": $AI_CALLS,
-      "ai_time_seconds": $AI_TIME,
-      "pbuild_calls": $PBUILD_CALLS,
-      "pbuild_time_seconds": $PBUILD_TIME,
-      "total_runtime_seconds": $TOTAL_RUNTIME,
-      "trend_percent": $TREND_PERCENT,
-      "first_run_time_seconds": $FIRST_RUN_TIME,
-      "run_count": $BENCHMARK_COUNT,
-      "output": "$OUTPUT_CONTENT",
-      "diff": "$DIFF_CONTENT",
-      "result_path": "../results/$EXAMPLE/$TIMESTAMP"
-    }
-EOF
-        fi
-    done
-fi
-
-# Close JSON
-cat >> "$RESULTS_JSON" <<'JSONFOOT'
-
-  }
+TIMESTAMP_RE = re.compile(r'^\d{8}_\d{6}$')
+result = {
+    "generated": "",
+    "models": models_meta,
+    "examples": OrderedDict()
 }
-JSONFOOT
+
+if os.path.isdir(RESULTS_DIR):
+    example_dirs = sorted([
+        d for d in os.listdir(RESULTS_DIR)
+        if os.path.isdir(os.path.join(RESULTS_DIR, d))
+    ])
+
+    for example in example_dirs:
+        example_path = os.path.join(RESULTS_DIR, example)
+        example_models = []
+
+        for subdir in sorted(os.listdir(example_path)):
+            subpath = os.path.join(example_path, subdir)
+            if not os.path.isdir(subpath):
+                continue
+
+            is_timestamp = bool(TIMESTAMP_RE.match(subdir))
+
+            if is_timestamp:
+                # Old format: results/example/timestamp/
+                model_key = "default"
+                ts_dirs = [(subdir, subpath)]
+            else:
+                # New format: results/example/model/timestamp/
+                model_key = subdir
+                ts_dirs = []
+                for ts in sorted(os.listdir(subpath)):
+                    tsp = os.path.join(subpath, ts)
+                    if os.path.isdir(tsp):
+                        ts_dirs.append((ts, tsp))
+
+            # Find latest benchmark per model
+            latest_bm_path = None
+            latest_ts = None
+            all_bm_paths = []
+            for ts, tsp in ts_dirs:
+                bm = os.path.join(tsp, "benchmark.json")
+                if os.path.exists(bm):
+                    all_bm_paths.append((ts, bm))
+                    if latest_ts is None or ts > latest_ts:
+                        latest_bm_path = bm
+                        latest_ts = ts
+
+            if latest_bm_path is None:
+                continue
+
+            # Parse benchmark JSON
+            with open(latest_bm_path) as f:
+                bm = json.load(f)
+
+            run_time = bm.get("run_time_seconds", 0)
+            success = bm.get("success", False)
+            exit_code = bm.get("exit_code", 1)
+            files_changed = bm.get("files_changed", 0)
+            ai_model = bm.get("ai_model", None) or ""
+            ai_calls = bm.get("ai_calls", None)
+            ai_time = bm.get("ai_time_seconds", None)
+            pbuild_calls = bm.get("pbuild_calls", None)
+            pbuild_time = bm.get("pbuild_time_seconds", None)
+            total_runtime = bm.get("total_runtime_seconds", None)
+            pbuild_ai_version = bm.get("pbuild_ai_version", None) or ""
+
+            # Fallback files_changed from output
+            output_log = os.path.join(os.path.dirname(latest_bm_path), "output.log")
+            if files_changed == 0 and os.path.exists(output_log):
+                with open(output_log, encoding="utf-8", errors="replace") as f:
+                    content = f.read()
+                diff_count = content.count("[TOOL] --- Diff for")
+                if diff_count > 0:
+                    files_changed = diff_count
+
+            # Trend calculation
+            trend_percent = None
+            first_run_time = None
+            if len(all_bm_paths) > 1:
+                first_ts, first_bm = all_bm_paths[0]
+                with open(first_bm) as f:
+                    first_bm_data = json.load(f)
+                first_run_time_val = first_bm_data.get("run_time_seconds", 0)
+                if first_run_time_val and float(first_run_time_val) > 0:
+                    first_run_time = float(first_run_time_val)
+                    if float(run_time) > 0:
+                        trend_percent = round((float(run_time) - first_run_time) / first_run_time * 100, 1)
+
+            # Read output log
+            output_content = ""
+            if os.path.exists(output_log):
+                with open(output_log, encoding="utf-8", errors="replace") as f:
+                    output_content = f.read()
+
+            # Read diff
+            diff_path = os.path.join(os.path.dirname(latest_bm_path), "diff.patch")
+            diff_content = ""
+            if os.path.exists(diff_path):
+                with open(diff_path, encoding="utf-8", errors="replace") as f:
+                    diff_content = f.read()
+
+            # Read metadata for model_key if not already known
+            meta_path = os.path.join(os.path.dirname(latest_bm_path), "metadata.json")
+            meta_model_key = model_key
+            if os.path.exists(meta_path):
+                with open(meta_path) as f:
+                    try:
+                        meta = json.load(f)
+                        if "model_key" in meta:
+                            meta_model_key = meta["model_key"]
+                    except json.JSONDecodeError:
+                        pass
+
+            # Build result_path (old format: example/timestamp, new: example/model/timestamp)
+            if is_timestamp:
+                rel_path = "../results/" + example + "/" + subdir
+            else:
+                rel_path = "../results/" + example + "/" + subdir + "/" + (latest_ts or "")
+
+            entry = {
+                "timestamp": latest_ts,
+                "run_time_seconds": run_time,
+                "success": success,
+                "exit_code": exit_code,
+                "files_changed": files_changed,
+                "ai_model": ai_model if ai_model else None,
+                "ai_calls": ai_calls,
+                "ai_time_seconds": ai_time,
+                "pbuild_calls": pbuild_calls,
+                "pbuild_time_seconds": pbuild_time,
+                "total_runtime_seconds": total_runtime,
+                "pbuild_ai_version": pbuild_ai_version if pbuild_ai_version else None,
+                "trend_percent": trend_percent,
+                "first_run_time_seconds": first_run_time,
+                "run_count": len(all_bm_paths),
+                "output": output_content,
+                "diff": diff_content,
+                "result_path": rel_path
+            }
+            example_models.append((meta_model_key, entry))
+
+        if example_models:
+            result["examples"][example] = {"models": OrderedDict()}
+            for mk, entry in example_models:
+                result["examples"][example]["models"][mk] = entry
+
+result["generated"] = os.popen("date -Iseconds").read().strip()
+
+print(json.dumps(result, indent=2, ensure_ascii=False))
+PYEOF
 
 echo "Results manifest generated: $RESULTS_JSON"

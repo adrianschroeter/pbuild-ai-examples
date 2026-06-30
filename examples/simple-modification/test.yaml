@@ -10,7 +10,8 @@ source:
 
 command: "pbuild-ai"
 options:
-  - "--modify 'Add a systemd service file for glances server and package it in the glances-common package.'"
+  - "--modify"
+  - "Add a systemd service file for glances server and package it in the glances-common package."
 
 expected:
   success: true
