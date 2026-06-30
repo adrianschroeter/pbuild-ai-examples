@@ -1,24 +1,24 @@
 {
-  "generated": "2026-06-30T13:51:21+02:00",
+  "generated": "2026-06-30T12:18:47+00:00",
   "examples": {
     "backport-security-fix": {
-      "timestamp": "20260630_134100",
-      "run_time_seconds": 595,
+      "timestamp": "20260630_140258",
+      "run_time_seconds": 776,
       "success": true,
       "exit_code": 0,
       "files_changed": 0,
       "ai_model": "gemma4:31b-it-qat-q4_0-it-256k",
       "ai_calls": 1,
-      "ai_time_seconds": 235.5,
+      "ai_time_seconds": 234.1,
       "pbuild_calls": 1,
-      "pbuild_time_seconds": 358.5,
-      "total_runtime_seconds": 594.3,
-      "trend_percent": -67.6,
+      "pbuild_time_seconds": 540.6,
+      "total_runtime_seconds": 774.8,
+      "trend_percent": -57.8,
       "first_run_time_seconds": 1838,
       "run_count": 3,
-      "output": "[PBUILD-AI] Version 0.1.5\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(gemma4:31b-it-qat-q4_0-it-256k) says:\n**Errors & Best Practice Violations:**\n\n1.  **Remove `%changelog`**: Per SUSE conventions, the `%changelog` section must not exist in the `.spec` file; entries belong in `PACKAGE.changes`.\n2.  **Security Fix**: To apply commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`, add a new patch:\n    *   Add `Patch4: security-fix.patch` to the source list.\n    *   Since `%autopatch -p1` is used in `%prep`, it will be applied automatically once defined.\n\n**Summary of changes needed:**\n*   Delete line: `%changelog`\n*   Insert line: `Patch4: security-fix.patch` (and provide the corresponding patch file).\n\n[EXEC] pbuild --result\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: gemma4:31b-it-qat-q4_0-it-256k  |  AI calls: 1  |  AI time: 235.5s  |  pbuild calls: 1  |  pbuild time: 358.5s  |  total runtime: 594.3s\n",
-      "diff": "",
-      "result_path": "../results/backport-security-fix/20260630_134100"
+      "output": "[PBUILD-AI] Version 0.1.5\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(gemma4:31b-it-qat-q4_0-it-256k) says:\n**Errors & Missing Best Practices:**\n\n1.  **Forbidden Section:** The `%changelog` section must be removed from the `.spec` file; changes belong in `PACKAGE.changes`.\n2.  **Missing Security Fix:** Commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02` is not applied.\n\n**Required Changes:**\n\n*   Add the security patch to the header:\n    `Patch4: security-fix-CVE-etc.patch` (or appropriate name).\n*   Delete the `%changelog` section at the end of the file.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: gemma4:31b-it-qat-q4_0-it-256k  |  AI calls: 1  |  AI time: 234.1s  |  pbuild calls: 1  |  pbuild time: 540.6s  |  total runtime: 774.8s\n",
+      "diff": "Bin\u00e4rdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/20260630_140258/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+      "result_path": "../results/backport-security-fix/20260630_140258"
     }
 ,
     "basic-analyze": {

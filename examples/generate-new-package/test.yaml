@@ -1,0 +1,25 @@
+name: "Generate New Package"
+description: "Generate a complete package from scratch without any source files"
+category: "generation"
+
+# No source needed for --generate mode, but specify where to create the generated files
+source:
+  type: none
+  path: "../../sources/ripgrep"
+
+command:
+  base: "pbuild-ai"
+  options:
+    - "--generate"
+    - "package ripgrep CLI tool"
+
+expected:
+  should_succeed: true
+  files_modified:
+    - "ripgrep.spec"
+    - "ripgrep.changes"
+
+notes: |
+  This example demonstrates pbuild-ai's ability to generate a complete package
+  from scratch based on a natural language description. It doesn't require any
+  existing source files - just a description of what package to create.

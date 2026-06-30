@@ -38,7 +38,23 @@ SOURCE_URL=$(grep -E "^\s+url:" "$TEST_YAML" | sed 's/.*url:\s*//' | sed 's/#.*/
 SOURCE_PATH=$(grep -E "^\s+path:" "$TEST_YAML" | sed 's/.*path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
 SOURCE_REF=$(grep -E "^\s+ref:" "$TEST_YAML" | sed 's/.*ref:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
 
-if [ "$SOURCE_TYPE" = "inline" ]; then
+if [ "$SOURCE_TYPE" = "none" ]; then
+    # For --generate mode, create an empty directory where pbuild-ai will generate the package
+    SOURCE_PATH=$(grep -E "^\s+path:" "$TEST_YAML" | sed 's/.*path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
+    if [ -n "$SOURCE_PATH" ]; then
+        # Convert relative path to absolute from repo root
+        RELATIVE_PATH="${SOURCE_PATH#../../}"
+        FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+
+        # Create empty directory for generated files
+        mkdir -p "$FULL_SOURCE_PATH"
+        echo "Creating directory for generated package: $FULL_SOURCE_PATH"
+        echo ""
+    else
+        echo "Error: --generate mode requires a path field in test.yaml"
+        exit 1
+    fi
+elif [ "$SOURCE_TYPE" = "inline" ]; then
     # For inline sources, path is relative to example directory
     if [ -n "$SOURCE_PATH" ]; then
         FULL_SOURCE_PATH="${EXAMPLE_DIR_ABS}/${SOURCE_PATH}"
