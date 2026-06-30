@@ -7,14 +7,10 @@ source:
   url: "https://src.opensuse.org/AI/ollama"
   ref: "9e4403f8874830248b27aff31cb8de6e250411da5a7214115e0b307bd8e3b43a"
 
-command: "pbuild-ai"
-options: [
+options:
   - '--update'
   - '--update-version=0.30.12'
   - '--allow-tool-scripts'
-  ]
-  # Add flags like --fix, --update, etc.
-  # Do NOT add --dist or source paths - pbuild-ai finds sources automatically
 
 expected:
   success: true
