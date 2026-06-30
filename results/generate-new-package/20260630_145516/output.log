@@ -1,0 +1,12 @@
+usage: pbuild_ai.py [-h] [--analyze] [--version] [--fix] [--update]
+                    [--generate GENERATE] [--modify MODIFY] [--root ROOT]
+                    [--show-buildlog] [--shell-after-build]
+                    [--vm-type VM_TYPE] [--vm-memory VM_MEMORY]
+                    [--update-only] [--preset PRESET] [--allow-tool-scripts]
+                    [--debug] [--fix-attempts FIX_ATTEMPTS]
+                    [--max-rounds MAX_ROUNDS] [--deep-analyze]
+                    [--prompt PROMPT] [--fresh] [-i]
+                    [--openai-server OPENAI_SERVER] [--model MODEL]
+                    [--email EMAIL] [--changelog] [--clean | --no-clean]
+                    workspace_dir [package_name]
+pbuild_ai.py: error: unrecognized arguments: tool /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep
