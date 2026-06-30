@@ -1,0 +1,35 @@
+name: "Backport Security Fix"
+description: "Apply a security fix from upstream using AI-guided patching with --prompt and --fix"
+
+source:
+  # Type: "remote" = clone at runtime, "inline" = included in example dir, "manual" = user provides
+  type: remote
+  path: "../../sources/libarchive"
+  url: "https://src.opensuse.org/pool/libarchive"
+  ref: "da539241ef7df83d772531fe3f9fe57038ef850d61aaa059d27dfe3021509f88"  # Pin to specific commit for reproducibility
+
+command: "pbuild-ai"
+options:
+  #- "--prompt 'Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02' --fix"
+  - "--modify 'Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02'"
+
+expected:
+  success: true
+  changes: true  # We expect source modifications from the security fix
+  files_modified:
+    - "libarchive.spec"
+    - "*.patch"
+  build_result: "succeeded"  # succeeded, failed, skipped
+
+benchmarks:
+  # Fill in after running the test
+  run_time_seconds: null
+  build_time_seconds: null
+  ai_time_seconds: null
+  model: null
+
+tags:
+  - "security"
+  - "fix"
+  - "backport"
+  - "advanced"
