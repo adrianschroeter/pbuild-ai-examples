@@ -54,58 +54,95 @@ fi
 REPO_ROOT=$(pwd)
 
 # Read model configurations from models.yaml + models.yaml.local
-MODELS_JSON=$(python3 << 'PYEOF' 2>/dev/null || echo "{}")
-import json, os, re
+MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
-    data = {}
-    current_model = None
+    """Parse YAML with default:, hosts:, and models: sections"""
+    data = {"default": None, "hosts": {}, "models": {}}
+    current_section = None
+    current_key = None
+
     try:
         with open(path) as f:
             for line in f:
-                # Strip comments
-                line = re.sub(r'#.*$', '', line).rstrip()
+                line = re.sub(r"#.*$", "", line).rstrip()
                 if not line:
                     continue
-                # Model key line: "  gemma4:"
-                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
-                if m:
-                    current_model = m.group(1)
-                    data[current_model] = {}
+
+                # Top-level default: key
+                if line.startswith("default:"):
+                    m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                    if m:
+                        data["default"] = m.group(1)
                     continue
-                # Key-value line: "    host: "value"" or "    model: value"
-                m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
-                if m and current_model is not None:
+
+                # Top-level section: hosts: or models:
+                if line.startswith("hosts:"):
+                    current_section = "hosts"
+                    continue
+                elif line.startswith("models:"):
+                    current_section = "models"
+                    continue
+
+                # Entry key: "  keyname:"
+                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
+                if m and current_section:
+                    current_key = m.group(1)
+                    data[current_section][current_key] = {}
+                    continue
+
+                # Property: "    propname: value"
+                m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
+                if m and current_section and current_key:
                     val = m.group(2).strip()
-                    # Strip surrounding quotes
-                    if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
                         val = val[1:-1]
-                    data[current_model][m.group(1)] = val
+                    data[current_section][current_key][m.group(1)] = val
     except FileNotFoundError:
         pass
     return data
 
-config = {}
-for yaml_file in ['models.yaml', 'models.yaml.local']:
+# Merge models.yaml and models.yaml.local
+config = {"default": None, "hosts": {}, "models": {}}
+for yaml_file in ["models.yaml", "models.yaml.local"]:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
-        for key, val in cfg.items():
-            if key not in config:
-                config[key] = {}
-            config[key].update(val)
+        # Last file wins for default
+        if cfg.get("default"):
+            config["default"] = cfg["default"]
+        for section in ["hosts", "models"]:
+            for key, val in cfg.get(section, {}).items():
+                if key not in config[section]:
+                    config[section][key] = {}
+                config[section][key].update(val)
+
+# Resolve host references in models
+for model_key, model_data in config["models"].items():
+    host_key = model_data.get("host", "")
+    if host_key and host_key in config["hosts"]:
+        # Replace host key with actual URL and metadata
+        model_data["host_url"] = config["hosts"][host_key].get("url", "")
+        model_data["host_name"] = config["hosts"][host_key].get("name", host_key)
+        model_data["host_description"] = config["hosts"][host_key].get("description", "")
+    else:
+        # No host or unknown host - use empty/fallback
+        model_data["host_url"] = ""
+        model_data["host_name"] = ""
+        model_data["host_description"] = ""
 
 print(json.dumps(config))
-PYEOF
+' 2>/dev/null || echo "{}")
 
 # Handle --all-models: run for each model key
 if [ "$ALL_MODELS" = true ]; then
     MODEL_KEYS=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
-if not d:
+models = d.get('models', {})
+if not models:
     print('default')
 else:
-    print(' '.join(sorted(d.keys())))
+    print(' '.join(sorted(models.keys())))
 " 2>/dev/null || echo "default")
 
     OVERALL_EXIT=0
@@ -134,16 +171,23 @@ if [ -z "$MODEL_KEY" ]; then
     MODEL_KEY=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys, os
 d = json.loads(sys.stdin.read())
-if not d:
+models = d.get('models', {})
+if not models:
     print('default')
     sys.exit(0)
 env_model = os.environ.get('OLLAMA_MODEL', '')
 if env_model:
-    for k, v in d.items():
+    for k, v in models.items():
         if v.get('model') == env_model:
             print(k)
             sys.exit(0)
-print(next(iter(d.keys())))
+# Use configured default if available
+default_model = d.get('default')
+if default_model and default_model in models:
+    print(default_model)
+    sys.exit(0)
+# Fall back to first model key
+print(next(iter(models.keys())))
 " 2>/dev/null || echo "default")
 fi
 
@@ -151,14 +195,32 @@ MODEL_HOST=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
-print(d.get(key, {}).get('host', '') or '')
+models = d.get('models', {})
+print(models.get(key, {}).get('host_url', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
 MODEL_NAME=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
-print(d.get(key, {}).get('model', '') or '')
+models = d.get('models', {})
+print(models.get(key, {}).get('model', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_HOST_NAME=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+print(models.get(key, {}).get('host_name', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_HOST_DESC=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+print(models.get(key, {}).get('host_description', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
 if [ -n "$MODEL_HOST" ]; then
@@ -292,6 +354,8 @@ for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do
   "example": "$(basename "$EXAMPLE_DIR")",
   "model_key": "${MODEL_KEY}",
   "model_name": "${MODEL_NAME}",
+  "model_host_name": "${MODEL_HOST_NAME}",
+  "model_host_description": "${MODEL_HOST_DESC}",
   "timestamp": "$(date -Iseconds)",
   "hostname": "$(hostname)",
   "repo_root": "${REPO_ROOT}",
@@ -332,11 +396,59 @@ EOF
 
     START_TIME=$(date +%s)
 
-    BACKUP_DIR=""
-    if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
-        BACKUP_DIR="${RESULT_DIR}/source_backup"
-        echo "Creating backup of source directory for diff..."
-        cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
+# Record start time
+START_TIME=$(date +%s)
+
+# Create a backup of the source directory for diff comparison
+BACKUP_DIR=""
+if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+    BACKUP_DIR="${RESULT_DIR}/source_backup"
+    echo "Creating backup of source directory for diff..."
+    cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
+fi
+
+# Run the command and capture output
+set +e
+(
+    cd "$EXAMPLE_DIR_ABS"
+    NO_SPINNER=1 "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
+)
+EXIT_CODE=$?
+set -e
+
+# Record end time
+END_TIME=$(date +%s)
+RUN_TIME=$((END_TIME - START_TIME))
+
+# Create unified diff between backup and current state
+FILES_CHANGED=0
+DIFF_CONTENT=""
+if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+    echo "Generating diff of changes..."
+    # Use diff to compare, excluding .git and build directories
+    DIFF_CONTENT=$(diff -Nur \
+        --exclude=".git" \
+        --exclude="_build.*" \
+        --exclude="*.pyc" \
+        --exclude="__pycache__" \
+        --exclude=".pbuild" \
+        --exclude=".pai.context" \
+        "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
+
+    if [ -n "$DIFF_CONTENT" ]; then
+        # Count number of files changed - ensure single integer value
+        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
+        FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
+
+        # Replace absolute paths with relative paths to avoid exposing local paths
+        # Replace backup dir path with "source_backup" and source path with relative path from repo root
+        BACKUP_BASENAME=$(basename "$BACKUP_DIR")
+        # Make SOURCE_PATH relative to repo root (strip leading ../)
+        SOURCE_PATH_CLEAN=$(echo "$SOURCE_PATH" | sed 's|^\.\./||; s|^\.\./||')
+        DIFF_CONTENT_CLEAN=$(echo "$DIFF_CONTENT" | sed "s|$BACKUP_DIR|$BACKUP_BASENAME|g" | sed "s|$FULL_SOURCE_PATH|$SOURCE_PATH_CLEAN|g")
+
+        echo "$DIFF_CONTENT_CLEAN" > "${RESULT_DIR}/diff.patch"
+        echo "✓ Captured diff for $FILES_CHANGED file(s)"
     fi
 
     set +e

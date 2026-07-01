@@ -342,40 +342,58 @@ RESULTS_DIR = "results"
 config = {}
 
 def read_yaml_simple(path):
-    data = {}
-    current_model = None
+    """Parse YAML with hosts: and models: sections"""
+    data = {"hosts": {}, "models": {}}
+    current_section = None
+    current_key = None
+
     try:
         with open(path) as f:
             for line in f:
                 line = re.sub(r'#.*$', '', line).rstrip()
                 if not line:
                     continue
-                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
-                if m:
-                    current_model = m.group(1)
-                    data[current_model] = {}
+
+                # Top-level section: hosts: or models:
+                if line.startswith("hosts:"):
+                    current_section = "hosts"
                     continue
+                elif line.startswith("models:"):
+                    current_section = "models"
+                    continue
+
+                # Entry key: "  keyname:"
+                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                if m and current_section:
+                    current_key = m.group(1)
+                    data[current_section][current_key] = {}
+                    continue
+
+                # Property: "    propname: value"
                 m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
-                if m and current_model is not None:
+                if m and current_section and current_key:
                     val = m.group(2).strip()
                     if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
                         val = val[1:-1]
-                    data[current_model][m.group(1)] = val
+                    data[current_section][current_key][m.group(1)] = val
     except FileNotFoundError:
         pass
     return data
 
+# Merge models.yaml and models.yaml.local
+full_config = {"hosts": {}, "models": {}}
 for yaml_file in ['models.yaml', 'models.yaml.local']:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
-        for key, val in cfg.items():
-            if key not in config:
-                config[key] = {}
-            config[key].update(val)
+        for section in ["hosts", "models"]:
+            for key, val in cfg.get(section, {}).items():
+                if key not in full_config[section]:
+                    full_config[section][key] = {}
+                full_config[section][key].update(val)
 
 # Build models metadata
 models_meta = {"default": {"display": "Unknown Model"}}
-for key, val in config.items():
+for key, val in full_config.get("models", {}).items():
     models_meta[key] = {"display": val.get("display", key)}
 
 TIMESTAMP_RE = re.compile(r'^\d{8}_\d{6}$')
@@ -395,19 +413,89 @@ if os.path.isdir(RESULTS_DIR):
         example_path = os.path.join(RESULTS_DIR, example)
         example_models = []
 
-        # Read order from test.yaml if available
+        # Read order, source info, and metadata from test.yaml if available
         test_yaml_path = os.path.join("examples", example, "test.yaml")
         example_order = 9999  # Default to end if not specified
+        source_url = None
+        source_ref = None
+        example_name = None
+        example_description = None
+        example_command = None
+        example_options = []
         if os.path.exists(test_yaml_path):
             try:
+                in_source_section = False
+                in_options_section = False
                 with open(test_yaml_path) as f:
                     for line in f:
-                        line = re.sub(r'#.*$', '', line).strip()
-                        m = re.match(r'^order:\s*(\d+)', line)
-                        if m:
-                            example_order = int(m.group(1))
-                            break
-            except Exception:
+                        # Remove comments but keep indentation for section detection
+                        line_no_comment = re.sub(r'#.*$', '', line).rstrip()
+                        stripped = line_no_comment.strip()
+
+                        if not stripped:
+                            continue
+
+                        # Check for order (top-level)
+                        if line_no_comment.startswith('order:'):
+                            m = re.match(r'^order:\s*(\d+)', stripped)
+                            if m:
+                                example_order = int(m.group(1))
+                            continue
+
+                        # Check for name (top-level)
+                        if line_no_comment.startswith('name:'):
+                            m = re.match(r'^name:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_name = m.group(1).strip()
+                            continue
+
+                        # Check for description (top-level)
+                        if line_no_comment.startswith('description:'):
+                            m = re.match(r'^description:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_description = m.group(1).strip()
+                            continue
+
+                        # Check for command (top-level)
+                        if line_no_comment.startswith('command:'):
+                            m = re.match(r'^command:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_command = m.group(1).strip()
+                            continue
+
+                        # Check for options section (top-level)
+                        if line_no_comment.startswith('options:'):
+                            in_options_section = True
+                            continue
+
+                        # Check for source section (top-level)
+                        if line_no_comment.startswith('source:'):
+                            in_source_section = True
+                            in_options_section = False
+                            continue
+
+                        # End of sections when we hit another top-level key
+                        if line_no_comment and not line_no_comment.startswith(' '):
+                            in_source_section = False
+                            in_options_section = False
+
+                        # Extract options (array items under options:)
+                        if in_options_section and line_no_comment.startswith('  - '):
+                            opt = re.match(r'^\s*-\s*"?([^"]+)"?', stripped)
+                            if opt:
+                                example_options.append(opt.group(1).strip())
+
+                        # Extract source URL and ref (indented under source:)
+                        if in_source_section and line_no_comment.startswith('  '):
+                            if 'url:' in stripped:
+                                m = re.match(r'url:\s*"?([^"]+)"?', stripped)
+                                if m:
+                                    source_url = m.group(1).strip()
+                            if 'ref:' in stripped:
+                                m = re.match(r'ref:\s*"?([^"]+)"?', stripped)
+                                if m:
+                                    source_ref = m.group(1).strip()
+            except Exception as e:
                 pass
 
         for subdir in sorted(os.listdir(example_path)):
@@ -518,12 +606,16 @@ if os.path.isdir(RESULTS_DIR):
             # Read metadata for model_key if not already known
             meta_path = os.path.join(os.path.dirname(latest_bm_path), "metadata.json")
             meta_model_key = model_key
+            meta_host_name = None
+            meta_host_desc = None
             if os.path.exists(meta_path):
                 with open(meta_path, encoding="utf-8", errors="replace") as f:
                     try:
                         meta = json.loads(f.read())
                         if isinstance(meta, dict) and "model_key" in meta:
                             meta_model_key = meta["model_key"]
+                        meta_host_name = meta.get("model_host_name")
+                        meta_host_desc = meta.get("model_host_description")
                     except (json.JSONDecodeError, ValueError):
                         pass
 
@@ -547,6 +639,10 @@ if os.path.isdir(RESULTS_DIR):
                 "pbuild_time_seconds": pbuild_time,
                 "total_runtime_seconds": total_runtime,
                 "pbuild_ai_version": pbuild_ai_version if pbuild_ai_version else None,
+                "model_host_name": meta_host_name,
+                "model_host_description": meta_host_desc,
+                "source_url": source_url,
+                "source_ref": source_ref,
                 "trend_percent": trend_percent,
                 "first_run_time_seconds": first_run_time,
                 "run_count": len(all_bm_paths),
@@ -557,8 +653,24 @@ if os.path.isdir(RESULTS_DIR):
             example_models.append((meta_model_key, entry))
 
         if example_models:
+            # Build command string
+            cmd_str = example_command or "pbuild-ai"
+            if example_options:
+                # Quote arguments that contain spaces
+                quoted_opts = []
+                for opt in example_options:
+                    if ' ' in opt:
+                        quoted_opts.append(f'"{opt}"')
+                    else:
+                        quoted_opts.append(opt)
+                cmd_str += " " + " ".join(quoted_opts)
+            cmd_str += " <source-directory>"
+
             result["examples"][example] = {
                 "order": example_order,
+                "name": example_name,
+                "description": example_description,
+                "command": cmd_str,
                 "models": OrderedDict()
             }
             for mk, entry in example_models:

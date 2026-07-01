@@ -162,6 +162,138 @@
             font-weight: 700;
             color: var(--geeko-green);
         }
+
+        .diff-view {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .diff-view pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+
+        /* Diff Modal */
+        .diff-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diff-modal-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            max-width: 1600px;
+            width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .diff-modal-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .diff-modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .diff-content {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .diff-content pre {
+            margin: 0;
+            color: #d4d4d4;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            white-space: pre;
+        }
+
+        /* Info cards */
+        .info-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Info cards use styling from main style.css */
+
+        .modal-source {
+            margin: 0;
+            word-break: break-all;
+        }
+
+        .modal-source a {
+            color: var(--geeko-green);
+            text-decoration: none;
+        }
+
+        .modal-source a:hover {
+            text-decoration: underline;
+        }
+
+        .files-changed-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.2rem;
+            min-width: 4rem;
+            background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            gap: 0.2rem;
+        }
+
+        .files-changed-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .btn-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -265,6 +397,21 @@
         </div>
     </main>
 
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal" style="display:none;">
+        <div class="diff-modal-content">
+            <div class="diff-modal-header">
+                <h2 class="diff-modal-title">File Changes</h2>
+                <button class="diff-modal-close" onclick="closeDiffModal()">&times;</button>
+            </div>
+            <div class="diff-modal-body">
+                <div class="diff-content" id="diffModalContent">
+                    <pre>Loading diff...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Result Details Modal -->
     <div id="resultModal" class="modal" style="display:none;">
         <div class="modal-content">
@@ -273,6 +420,26 @@
                 <button class="modal-close" onclick="closeResultModal()">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Description</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Command</h3>
+                    <div class="modal-command">
+                        <code id="modalCommand"></code>
+                    </div>
+                </div>
+                <div class="modal-section info-row" id="infoRow" style="display:none;">
+                    <div class="info-card" id="sourceCard" style="display:none;">
+                        <h3>Used base source</h3>
+                        <p id="modalSource" class="modal-source"></p>
+                    </div>
+                    <div class="info-card" id="changesCard" style="display:none;">
+                        <h3>Generated Changes</h3>
+                        <div id="modalChanges"></div>
+                    </div>
+                </div>
                 <div class="modal-section">
                     <h3>Benchmark Results</h3>
                     <div class="benchmark-grid">
@@ -325,6 +492,7 @@
                 const matrix = {};
                 const models = new Set();
                 const examplesMap = new Map(); // Store examples with their order
+                const examplesMetadata = {}; // Store example metadata (description, etc.)
                 let totalRuns = 0;
                 let successfulRuns = 0;
 
@@ -338,6 +506,13 @@
 
                         examplesMap.set(exampleName, order);
                         matrix[exampleName] = {};
+
+                        // Store metadata from example data
+                        examplesMetadata[exampleName] = {
+                            name: exampleData.name || exampleName,
+                            description: exampleData.description || null,
+                            command: exampleData.command || null
+                        };
 
                         // Access the nested 'models' object
                         const modelsData = exampleData.models || {};
@@ -418,7 +593,7 @@
                             cellDiv.className = 'matrix-cell';
                             // Show result details in modal
                             cellDiv.onclick = () => {
-                                showResultModal(example, model, cell, modelsMeta[model]);
+                                showResultModal(example, model, cell, modelsMeta[model], examplesMetadata[example]);
                             };
 
                             // Status badge
@@ -496,9 +671,18 @@
         loadMatrix();
 
         // Modal functions
-        function showResultModal(exampleName, modelKey, result, modelMeta) {
+        function showResultModal(exampleName, modelKey, result, modelMeta, exampleMetadata) {
             const displayName = modelMeta?.display || modelKey;
-            document.getElementById('modalTitle').textContent = `${exampleName} - ${displayName}`;
+            const exampleTitle = exampleMetadata?.name || exampleName;
+            document.getElementById('modalTitle').textContent = `${exampleTitle} - ${displayName}`;
+
+            // Show description
+            const description = exampleMetadata?.description || 'No description available';
+            document.getElementById('modalDescription').textContent = description;
+
+            // Show command
+            const command = exampleMetadata?.command || 'pbuild-ai <source-directory>';
+            document.getElementById('modalCommand').textContent = command;
 
             // Status
             let statusText, statusColor;
@@ -558,6 +742,49 @@
             document.getElementById('modalFilesChanged').textContent =
                 (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : '-';
 
+            // Show info cards (source and changes)
+            const infoRow = document.getElementById('infoRow');
+            const sourceCard = document.getElementById('sourceCard');
+            const changesCard = document.getElementById('changesCard');
+            const modalSource = document.getElementById('modalSource');
+            const modalChanges = document.getElementById('modalChanges');
+
+            let hasInfoCards = false;
+
+            // Show source card if source URL is available
+            if (result.source_url) {
+                sourceCard.style.display = 'block';
+                hasInfoCards = true;
+
+                const displayUrl = result.source_ref
+                    ? `${result.source_url}@${result.source_ref.substring(0, 12)}...`
+                    : result.source_url;
+                modalSource.innerHTML = `<a href="${result.source_url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+            } else {
+                sourceCard.style.display = 'none';
+            }
+
+            // Show changes card if files were changed
+            const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
+            if (filesChanged > 0 && result.diff && result.diff.trim()) {
+                changesCard.style.display = 'block';
+                hasInfoCards = true;
+
+                // Create button to show diff
+                const buttonHtml = `<button class="files-changed-btn" onclick="showDiffInModal();return false;">
+                    <span class="btn-number">${filesChanged}</span>
+                    <span class="btn-label">show diff</span>
+                </button>`;
+                modalChanges.innerHTML = buttonHtml;
+
+                // Store diff for later display
+                window.currentMatrixDiff = result.diff;
+            } else {
+                changesCard.style.display = 'none';
+            }
+
+            infoRow.style.display = hasInfoCards ? 'flex' : 'none';
+
             // Show modal
             document.getElementById('resultModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -568,17 +795,52 @@
             document.body.style.overflow = 'auto';
         }
 
+        function showDiffInModal() {
+            const diffModal = document.getElementById('diffModal');
+            const diffContent = document.getElementById('diffModalContent');
+
+            if (window.currentMatrixDiff) {
+                if (typeof AnsiUp !== 'undefined') {
+                    const ansi_up = new AnsiUp();
+                    ansi_up.use_classes = true;
+                    const htmlDiff = ansi_up.ansi_to_html(window.currentMatrixDiff);
+                    diffContent.innerHTML = `<pre>${htmlDiff}</pre>`;
+                } else {
+                    diffContent.innerHTML = `<pre>${window.currentMatrixDiff}</pre>`;
+                }
+            } else {
+                diffContent.innerHTML = '<pre>No diff available</pre>';
+            }
+
+            diffModal.style.display = 'block';
+            // Keep body overflow hidden since main modal is still open
+        }
+
+        function closeDiffModal() {
+            document.getElementById('diffModal').style.display = 'none';
+            // Keep body scroll hidden since main modal is still open
+        }
+
         // Close modal on Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
-                closeResultModal();
+                const diffModal = document.getElementById('diffModal');
+                if (diffModal.style.display === 'block') {
+                    closeDiffModal();
+                } else {
+                    closeResultModal();
+                }
             }
         });
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('resultModal');
-            if (event.target === modal) {
+            const resultModal = document.getElementById('resultModal');
+            const diffModal = document.getElementById('diffModal');
+
+            if (event.target === diffModal) {
+                closeDiffModal();
+            } else if (event.target === resultModal) {
                 closeResultModal();
             }
         }
