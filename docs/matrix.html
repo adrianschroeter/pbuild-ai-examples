@@ -265,6 +265,56 @@
         </div>
     </main>
 
+    <!-- Result Details Modal -->
+    <div id="resultModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <button class="modal-close" onclick="closeResultModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Benchmark Results</h3>
+                    <div class="benchmark-grid">
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Status</span>
+                            <span class="benchmark-value" id="modalStatus">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Runtime</span>
+                            <span class="benchmark-value" id="modalRuntime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Calls</span>
+                            <span class="benchmark-value" id="modalAiCalls">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Time</span>
+                            <span class="benchmark-value" id="modalAiTime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Files Changed</span>
+                            <span class="benchmark-value" id="modalFilesChanged">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>Console Output</h3>
+                    <div class="retro-console">
+                        <div class="console-header">
+                            <span class="console-title">pbuild-ai terminal</span>
+                            <span class="console-status" id="modalConsoleStatus">● COMPLETE</span>
+                        </div>
+                        <div class="console-body">
+                            <pre id="modalConsoleOutput">Loading...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/ansi_up_setup.js" type="module"></script>
     <script>
         async function loadMatrix() {
             try {
@@ -366,12 +416,9 @@
                         if (cell) {
                             const cellDiv = document.createElement('div');
                             cellDiv.className = 'matrix-cell';
-                            // Open example popup with specific model selected
+                            // Show result details in modal
                             cellDiv.onclick = () => {
-                                // Store current scroll position before navigating
-                                sessionStorage.setItem('matrixScrollY', window.scrollY.toString());
-                                sessionStorage.setItem('matrixScrollX', window.scrollX.toString());
-                                window.location.href = `index.html#${example}:${model}?from=matrix`;
+                                showResultModal(example, model, cell, modelsMeta[model]);
                             };
 
                             // Status badge
@@ -448,23 +495,93 @@
         // Load matrix on page load
         loadMatrix();
 
-        // Restore scroll position if returning from example details
-        window.addEventListener('DOMContentLoaded', function() {
-            const scrollY = sessionStorage.getItem('matrixScrollY');
-            const scrollX = sessionStorage.getItem('matrixScrollX');
-            if (scrollY !== null || scrollX !== null) {
-                // Wait for content to load before scrolling
-                setTimeout(() => {
-                    window.scrollTo(
-                        scrollX !== null ? parseInt(scrollX) : 0,
-                        scrollY !== null ? parseInt(scrollY) : 0
-                    );
-                    // Clear stored position
-                    sessionStorage.removeItem('matrixScrollY');
-                    sessionStorage.removeItem('matrixScrollX');
-                }, 100);
+        // Modal functions
+        function showResultModal(exampleName, modelKey, result, modelMeta) {
+            const displayName = modelMeta?.display || modelKey;
+            document.getElementById('modalTitle').textContent = `${exampleName} - ${displayName}`;
+
+            // Status
+            let statusText, statusColor;
+            if (result.status === 'success') {
+                statusText = '✓ SUCCESS';
+                statusColor = 'var(--geeko-green)';
+            } else if (result.status === 'failed') {
+                statusText = '✗ FAILED';
+                statusColor = '#ff4444';
+            } else if (result.status === 'error') {
+                statusText = '⚠ ERROR';
+                statusColor = '#ff8800';
+            } else {
+                statusText = result.success ? '✓ SUCCESS' : '✗ FAILED';
+                statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            }
+            document.getElementById('modalStatus').innerHTML = `<span style="color: ${statusColor}">${statusText}</span>`;
+
+            // Console output with ANSI colors
+            const consoleOutput = document.getElementById('modalConsoleOutput');
+            if (result.output && typeof AnsiUp !== 'undefined') {
+                const ansi_up = new AnsiUp();
+                ansi_up.use_classes = true;
+                consoleOutput.innerHTML = ansi_up.ansi_to_html(result.output);
+            } else if (result.output) {
+                consoleOutput.textContent = result.output;
+            } else {
+                consoleOutput.textContent = 'No output available';
+            }
+
+            // Console status
+            const consoleStatus = document.getElementById('modalConsoleStatus');
+            if (result.success || result.status === 'success') {
+                consoleStatus.innerHTML = '● COMPLETE';
+                consoleStatus.style.color = 'var(--geeko-green)';
+            } else {
+                consoleStatus.innerHTML = '● FAILED';
+                consoleStatus.style.color = '#ff4444';
+            }
+
+            // Runtime
+            const runtime = result.run_time_seconds || result.total_runtime_seconds;
+            if (runtime) {
+                const minutes = Math.floor(runtime / 60);
+                const seconds = Math.round(runtime % 60);
+                document.getElementById('modalRuntime').textContent =
+                    minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+            } else {
+                document.getElementById('modalRuntime').textContent = '-';
+            }
+
+            // Other stats
+            document.getElementById('modalAiCalls').textContent =
+                (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
+            document.getElementById('modalAiTime').textContent =
+                result.ai_time_seconds ? `${result.ai_time_seconds}s` : '-';
+            document.getElementById('modalFilesChanged').textContent =
+                (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : '-';
+
+            // Show modal
+            document.getElementById('resultModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeResultModal() {
+            document.getElementById('resultModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeResultModal();
             }
         });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultModal');
+            if (event.target === modal) {
+                closeResultModal();
+            }
+        }
     </script>
 </body>
 </html>

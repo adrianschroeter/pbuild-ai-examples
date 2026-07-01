@@ -545,8 +545,8 @@
                         <a href="https://github.com/adrianschroeter/pbuild-ai-examples" class="btn btn-secondary btn-large">
                             Contribute Examples
                         </a>
-                        <a href="benchmark-report.html" class="btn btn-outline btn-large">
-                            View Benchmarks
+                        <a href="matrix.html" class="btn btn-outline btn-large">
+                            View Model Benchmarks
                         </a>
                     </div>
                 </div>
@@ -713,15 +713,8 @@
         function closeModal() {
             document.getElementById('exampleModal').style.display = 'none';
             document.body.style.overflow = 'auto';
-
-            // If came from matrix page, return there with scroll position
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('from') === 'matrix') {
-                window.location.href = 'matrix.html';
-            } else {
-                // Just clear the hash to close modal
-                history.replaceState(null, null, ' ');
-            }
+            // Clear the hash to close modal
+            history.replaceState(null, null, ' ');
         }
 
         function showDiffModal() {
