@@ -219,9 +219,11 @@ if [ "$SOURCE_TYPE" = "none" ]; then
         RELATIVE_PATH="${SOURCE_PATH#../../}"
         FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
 
-        # Create empty directory for generated files
+        # Clean and create empty directory for generated files
+        # Remove any existing content to ensure clean state
+        rm -rf "$FULL_SOURCE_PATH"
         mkdir -p "$FULL_SOURCE_PATH"
-        echo "Creating directory for generated package: $FULL_SOURCE_PATH"
+        echo "Creating clean directory for generated package: $FULL_SOURCE_PATH"
         echo ""
     else
         echo "Error: --generate mode requires a path field in test.yaml"
