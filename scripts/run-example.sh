@@ -4,9 +4,14 @@
 set -e
 
 usage() {
-    echo "Usage: $0 [--model <key>] <example-directory>"
+    echo "Usage: $0 [--model <key>|--all-models] <example-directory>"
     echo "Example: $0 examples/basic-analyze"
     echo "         $0 --model qwen35 examples/basic-analyze"
+    echo "         $0 --all-models examples/basic-analyze"
+    echo ""
+    echo "Options:"
+    echo "  --model <key>     Run with specific model from models.yaml"
+    echo "  --all-models      Run with all models defined in models.yaml"
     echo ""
     echo "Environment variables:"
     echo "  PBUILD_AI_CMD  Path to pbuild-ai executable (default: from test.yaml)"
@@ -15,8 +20,9 @@ usage() {
     exit 1
 }
 
-# Parse optional --model argument
+# Parse optional --model or --all-models argument
 MODEL_KEY=""
+ALL_MODELS=false
 POSITIONAL_ARGS=()
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -27,6 +33,10 @@ while [[ $# -gt 0 ]]; do
             fi
             MODEL_KEY="$2"
             shift 2
+            ;;
+        --all-models)
+            ALL_MODELS=true
+            shift
             ;;
         -h|--help)
             usage
@@ -54,9 +64,6 @@ fi
 # Store absolute paths
 REPO_ROOT=$(pwd)
 EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
-
-echo "Running example: $EXAMPLE_DIR"
-echo "----------------------------------------"
 
 # Read model configurations from models.yaml + models.yaml.local
 MODELS_JSON=$(python3 << 'PYEOF' 2>/dev/null || echo "{}")
@@ -102,6 +109,51 @@ for yaml_file in ['models.yaml', 'models.yaml.local']:
 print(json.dumps(config))
 PYEOF
 
+# Handle --all-models: run for each model key
+if [ "$ALL_MODELS" = true ]; then
+    # Get all model keys
+    MODEL_KEYS=$(python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+if not d:
+    print('default')
+else:
+    print(' '.join(sorted(d.keys())))
+" <<< "$MODELS_JSON" 2>/dev/null || echo "default")
+
+    echo "Running example: $EXAMPLE_DIR"
+    echo "Models: $MODEL_KEYS"
+    echo "========================================"
+    echo ""
+
+    EXIT_CODE=0
+    for model in $MODEL_KEYS; do
+        echo ""
+        echo "========================================"
+        echo "Starting run with model: $model"
+        echo "========================================"
+        echo ""
+
+        # Recursively call this script with --model
+        if ! "$0" --model "$model" "$EXAMPLE_DIR"; then
+            echo "⚠ Model $model failed!"
+            EXIT_CODE=1
+        fi
+
+        echo ""
+        echo "========================================"
+        echo "Completed run with model: $model"
+        echo "========================================"
+        echo ""
+    done
+
+    echo ""
+    echo "========================================"
+    echo "All models completed"
+    echo "========================================"
+    exit $EXIT_CODE
+fi
+
 # Determine model key
 if [ -z "$MODEL_KEY" ]; then
     MODEL_KEY=$(python3 -c "
@@ -144,6 +196,9 @@ fi
 if [ -n "$MODEL_NAME" ]; then
     export OLLAMA_MODEL="$MODEL_NAME"
 fi
+
+echo "Running example: $EXAMPLE_DIR"
+echo "----------------------------------------"
 
 echo "  Model key: $MODEL_KEY"
 [ -n "$MODEL_NAME" ] && echo "  AI model: $MODEL_NAME"
