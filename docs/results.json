@@ -1,6 +1,7 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "generated": "2026-06-30T21:59:45+02:00",
 =======
   "generated": "2026-07-01T07:30:09+02:00",
@@ -8,6 +9,9 @@
 =======
   "generated": "2026-07-01T07:56:24+02:00",
 >>>>>>> 7142313 (Improve benchmark page)
+=======
+  "generated": "2026-07-01T08:03:11+02:00",
+>>>>>>> a76bdc8 (Current state)
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -142,19 +146,83 @@
           "result_path": "../results/basic-analyze/20260629_165709"
         },
 <<<<<<< HEAD
+<<<<<<< HEAD
         "gemma4": {
           "timestamp": "20260630_192055",
           "run_time_seconds": 64,
+=======
+        "gemma4": {
+          "timestamp": "20260701_075030",
+          "run_time_seconds": 378,
+          "status": "success",
+>>>>>>> a76bdc8 (Current state)
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
           "ai_model": "default",
           "ai_calls": 1,
+<<<<<<< HEAD
           "ai_time_seconds": 63.5,
           "pbuild_calls": 0,
           "pbuild_time_seconds": 0.0,
           "total_runtime_seconds": 63.5,
 =======
+=======
+          "ai_time_seconds": 377.0,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 377.2,
+          "pbuild_ai_version": "0.1.6",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(default) says:\n- **Remove `%changelog`**: Per openSUSE conventions, the changelog must be in the `PACKAGE.changes` file, not the `.spec` file.\n- **Invalid Macro**: The `sed` command uses `%{nil}`, which is not a standard RPM macro and will likely result in an empty string or a build warning/error.\n- **Wildcards in `%files`**: Avoid using wildcards (`%{_mandir}/man1/*`). List the files explicitly or use the directory path.\n- **Use `%autosetup`**: Replace `%setup -q` with `%autosetup` for modern openSUSE packaging.\n- **Install Script**: Relying on a custom `install.sh` is discouraged. If possible, manually install files using `install(7)` or `cp` to ensure permissions and paths are handled predictably.\n\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 377.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 377.2s\n",
+          "diff": "",
+          "result_path": "../results/basic-analyze/gemma4/20260701_075030"
+        },
+        "ornith35b": {
+          "timestamp": "20260701_075648",
+          "run_time_seconds": 29,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "ornith:35b",
+          "ai_calls": 1,
+          "ai_time_seconds": 28.2,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 28.3,
+          "pbuild_ai_version": "0.1.6",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(ornith:35b) says:\nHere are the issues I found:\n\n### Errors / Build Risks\n\n1. **Empty `%changelog` section** — OPENSUSE.md explicitly forbids it. Remove it entirely; changelog goes in `PACKAGE.changes`.\n\n2. **Source URL may be dead** — `http://nog.net/~tony/warez/` has been down for years. Verify the tarball is reachable, or switch to a mirror/archival source (e.g., CPAN).\n\n3. **Fragile install logic in `%install`** — The `sed` in `%prep` hardcodes `%{_prefix}` (expands to `/usr`) into `install.sh`, but then you pass `%{buildroot}%{_prefix}` as an argument. If the script concatenates its own prefix with the passed path, you'll get double-prefixing (`${buildroot}/usr/usr`). Verify what `install.sh` actually does with its first argument before shipping this.\n\n### Best Practice Violations\n\n4. **Deprecated `%defattr(-,root,root)`** — Default behavior in modern RPM; remove it.\n\n5. **Deprecated `Group:` tag** — Remove the `Group: Amusements/Toys/Other` line (deprecated since RPM 4.x).\n\n6. **License field has a leading tab** — Cosmetic but breaks spec-cleaner formatting. Change to `License:        GPL-1.0+ or Artistic-1.0`.\n\n7. **No `%check` section** — If upstream tests exist, add one (disabling network-dependent ones per the build env rules).\n\n### Minor Notes\n\n- Consider using `%autosetup` instead of `%setup -q` for consistency with modern spec-cleaner output.\n- `BuildRequires: bash` is fine since you invoke the script with `bash`, but if the shebang in `install.sh` is already `#!/bin/bash`, it could be dropped.\n\n[STATS] AI model: ornith:35b  |  AI calls: 1  |  AI time: 28.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 28.3s\n",
+          "diff": "",
+          "result_path": "../results/basic-analyze/ornith35b/20260701_075648"
+        },
+        "qwen27": {
+          "timestamp": "20260701_075718",
+          "run_time_seconds": 331,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "qwen3.6:27b",
+          "ai_calls": 1,
+          "ai_time_seconds": 330.2,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 330.4,
+          "pbuild_ai_version": "0.1.6",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(qwen3.6:27b) says:\n- **Remove `%changelog`**: Explicitly forbidden by openSUSE policy. Track changes in `cowsay.changes` instead.\n- **Add `%fdupes %{buildroot}`**: Mandated in guidelines; place at the end of `%install`.\n- **Replace `rm -f` with `%files` exclusion**: Never remove files during `%install`. Exclude `mech-and-cow` directly in `%files` using `-excludes` or refine the glob pattern.\n- **Fix typo**: `%description`: `\"and it written\"` → `\"and it is written\"`.\n- **Prefer patching over inline `sed`**: Modifying `install.sh` via `sed` in `%prep` is fragile. Convert to a proper `.patch` and apply with `%autosetup`.\n- **Update License to SPDX**: Change `GPL-1.0+ or Artistic-1.0` to `GPL-1.0-or-later OR Artistic-1.0` per modern openSUSE standards.\n\n[STATS] AI model: qwen3.6:27b  |  AI calls: 1  |  AI time: 330.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 330.4s\n",
+          "diff": "",
+          "result_path": "../results/basic-analyze/qwen27/20260701_075718"
+        },
+>>>>>>> a76bdc8 (Current state)
         "qwen36": {
           "timestamp": "20260630_224015",
           "run_time_seconds": 98,
