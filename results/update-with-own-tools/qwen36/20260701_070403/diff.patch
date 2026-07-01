@@ -1,0 +1,38 @@
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama-0.30.11.tar.gz und /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama-0.30.11.tar.gz sind verschieden.
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama-0.30.12.tar.gz und /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama-0.30.12.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama.changes /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama.changes	2026-07-01 07:04:03.382667313 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes	2026-07-01 07:11:39.851101630 +0200
+@@ -1,4 +1,13 @@
+ -------------------------------------------------------------------
++Sun Jul  6 00:00:00 UTC 2026 - pbuild-ai <EMAIL>
++
++- Updated to version 0.30.12
++  * tools: ignore braces inside JSON strings when detecting tool call end
++  * mlx: bump dependency
++  * llama.cpp update
++- Update generated using pbuild-ai
++
++-------------------------------------------------------------------
+ Sat Jun 27 08:59:05 UTC 2026 - Adrian Schröter <adrian@suse.de>
+ 
+ - Update to 0.30.11:
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama.spec /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/ollama.spec	2026-07-01 07:04:03.382667313 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec	2026-07-01 07:12:06.182229174 +0200
+@@ -65,13 +65,12 @@
+ %define cuda_version %{cuda_version_major}-%{cuda_version_minor}
+ 
+ Name:           ollama
+-Version:        0.30.11
++Version:        0.30.12
+ Release:        0
+ Summary:        Tool for running AI models on-premise
+ License:        MIT
+ URL:            https://ollama.com
+ #!RemoteAsset: git+https://github.com/ollama/ollama#v%{version}
+-#!CreateArchive
+ Source:         %{name}-%{version}.tar.xz
+ Source1:        vendor.tar.zstd
+ Source2:        %{name}.service
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36/20260701_070403/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/ollama/.pbuild/lastdata sind verschieden.

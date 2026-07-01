@@ -1,0 +1,60 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36/20260630_235036/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/simple-modification/qwen36/20260630_235036/source_backup/python-Glances.spec	2026-06-30 23:50:37.383514987 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec	2026-06-30 23:53:49.248575792 +0200
+@@ -45,6 +45,16 @@
+ BuildArch:      noarch
+ %python_subpackages
+ 
++%package common
++Summary:        A cross-platform curses-based monitoring tool (common files)
++Group:          System/Management
++Requires:       %{name} = %{version}
++Provides:       glances-server-service = 1
++
++%description common
++This package contains common files for Glances, including the systemd
++service file for the web server mode.
++
+ %description
+ Glances is a cross-platform monitoring tool which presents a
+ large amount of monitoring information through a curses or Web
+@@ -55,6 +65,18 @@
+ %setup -q -n glances-%{version}
+ %autopatch -p1
+ 
++cat > glances-server.service <<'EOF'
++[Unit]
++Description=Glances Server Web Interface
++After=network.target
++
++[Service]
++ExecStart=/usr/bin/glances -w
++
++[Install]
++WantedBy=multi-user.target
++EOF
++
+ %build
+ %python_build
+ 
+@@ -67,6 +89,10 @@
+ %install
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
++%ifpython3
++mkdir -p %{buildroot}%{_unitdir}
++cp glances-server.service %{buildroot}%{_unitdir}/glances-server.service
++%endif
+ 
+ %files %{python_files}
+ %license COPYING
+@@ -75,4 +101,9 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
++%files glances-common
++%ifpython3
++%{_unitdir}/glances-server.service
++%endif
++
+ %changelog

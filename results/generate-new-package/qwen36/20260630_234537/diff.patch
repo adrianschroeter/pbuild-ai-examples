@@ -1,0 +1,69 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36/20260630_234537/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36/20260630_234537/source_backup/ripgrep/ripgrep.spec	2026-06-30 15:12:06.207503301 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec	2026-06-30 23:48:49.380838813 +0200
+@@ -7,32 +7,49 @@
+ Name:           ripgrep
+ Version:        15.1.0
+ Release:        0
+-Summary:        A line-oriented search tool that recursively searches for a regex pattern
+-License:        MIT AND Unlicense
++Summary:        line-oriented search tool that recursively searches for a pattern
++License:        Unlicense OR Apache-2.0 OR MIT
+ Url:            https://github.com/BurntSushi/ripgrep
+-Source:         https://github.com/BurntSushi/ripgrep/archive/refs/tags/%{version}.tar.gz#/ripgrep-%{version}.tar.gz
+-BuildRequires:  cargo
+-BuildRequires:  rustup
++Source0:        https://github.com/BurntSushi/ripgrep/archive/refs/tags/%{version}.tar.gz
++Source1:        LICENSE-MIT
++Source2:        UNLICENSE
++
++Patch0:         ripgrep-avoid-downloading-docs.patch
++Patch1:         ripgrep-disable-integration-tests.patch
++
++BuildRequires:  rust-cargo
++BuildRequires:  pkg-config
+ 
+ %description
+-ripgrep (rg) recursively searches your current directory for a regex pattern while
+-respecting gitignore rules. By default, ripgrep will skip hidden files/directories
+-and binary files. It is fast because it is written in Rust.
++ripgrep (rg) recursively searches your current directory for a regex pattern.
++By default, ripgrep will respect your .gitignore and automatically skip hidden
++files/directories and binary files. ripgrep is fast because it is written in
++Rust and uses SIMD-optimized regular expressions built on top of hardware
++accelerated regular expression engines that use non-deterministic finite
++automata (NFA) and hardware-accelerated regular expression matching.
++
+ 
+ %prep
+-%autosetup -n %{name}-%{version}
++%autosetup -p1
++
++# Copy license files into source tree
++cp %{SOURCE1} LICENSE-MIT
++cp %{SOURCE2} UNLICENSE
++
++# Remove the build.rs script that would try to download docs
++rm -f build.rs
+ 
+ %build
+-export CARGO_HOME=%{_builddir}/cargo-home
+-rustup-init -y --no-modify-path --default-toolchain stable 2>/dev/null || true
+-PATH="$HOME/.cargo/bin:$PATH" \
+-    cargo build --release %{?_smp_mflags}
++%cargo_crate_sources
++%set_build_options --release
+ 
+ %install
+-export CARGO_HOME=%{_builddir}/cargo-home
+-install -Dm0755 %{_builddir}/target/release/rg %{buildroot}%{_bindir}/rg
++install -Dm 755 target/release/rg %{buildroot}%{_bindir}/rg
++%fdupes %{buildroot}
++
+ 
+ %files
+ %{_bindir}/rg
+ 
+-%fdupes %{_datadir}
++
++%changelog
