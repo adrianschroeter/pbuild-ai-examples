@@ -1,0 +1,11 @@
+{
+  "example": "generate-new-package",
+  "model_key": "qwen36",
+  "model_name": "qwen3.6:35b-a3b",
+  "model_host_name": "AMD Strix Halo",
+  "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+  "timestamp": "2026-07-01T11:14:03+02:00",
+  "hostname": "reiser.suse.de",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}

@@ -413,19 +413,50 @@ if os.path.isdir(RESULTS_DIR):
         example_path = os.path.join(RESULTS_DIR, example)
         example_models = []
 
-        # Read order from test.yaml if available
+        # Read order and source info from test.yaml if available
         test_yaml_path = os.path.join("examples", example, "test.yaml")
         example_order = 9999  # Default to end if not specified
+        source_url = None
+        source_ref = None
         if os.path.exists(test_yaml_path):
             try:
+                in_source_section = False
                 with open(test_yaml_path) as f:
                     for line in f:
-                        line = re.sub(r'#.*$', '', line).strip()
-                        m = re.match(r'^order:\s*(\d+)', line)
-                        if m:
-                            example_order = int(m.group(1))
-                            break
-            except Exception:
+                        # Remove comments but keep indentation for section detection
+                        line_no_comment = re.sub(r'#.*$', '', line).rstrip()
+                        stripped = line_no_comment.strip()
+
+                        if not stripped:
+                            continue
+
+                        # Check for order (top-level)
+                        if line_no_comment.startswith('order:'):
+                            m = re.match(r'^order:\s*(\d+)', stripped)
+                            if m:
+                                example_order = int(m.group(1))
+                            continue
+
+                        # Check for source section (top-level)
+                        if line_no_comment.startswith('source:'):
+                            in_source_section = True
+                            continue
+
+                        # End of source section when we hit another top-level key
+                        if in_source_section and line_no_comment and not line_no_comment.startswith(' '):
+                            in_source_section = False
+
+                        # Extract source URL and ref (indented under source:)
+                        if in_source_section and line_no_comment.startswith('  '):
+                            if 'url:' in stripped:
+                                m = re.match(r'url:\s*"?([^"]+)"?', stripped)
+                                if m:
+                                    source_url = m.group(1).strip()
+                            if 'ref:' in stripped:
+                                m = re.match(r'ref:\s*"?([^"]+)"?', stripped)
+                                if m:
+                                    source_ref = m.group(1).strip()
+            except Exception as e:
                 pass
 
         for subdir in sorted(os.listdir(example_path)):
@@ -564,6 +595,8 @@ if os.path.isdir(RESULTS_DIR):
                 "pbuild_ai_version": pbuild_ai_version if pbuild_ai_version else None,
                 "model_host_name": meta_host_name,
                 "model_host_description": meta_host_desc,
+                "source_url": source_url,
+                "source_ref": source_ref,
                 "trend_percent": trend_percent,
                 "first_run_time_seconds": first_run_time,
                 "run_count": len(all_bm_paths),

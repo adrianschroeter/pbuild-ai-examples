@@ -1,8 +1,8 @@
 {
   "example": "generate-new-package",
-  "model_key": "qwen36",
-  "model_name": "qwen3.6:35b-a3b",
-  "timestamp": "2026-07-01T08:45:06+02:00",
+  "model_key": "ornith35b",
+  "model_name": "ornith:35b",
+  "timestamp": "2026-07-01T10:16:04+02:00",
   "hostname": "reiser.suse.de",
   "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
   "pbuild_ai_bin": "/usr/bin/pbuild-ai"

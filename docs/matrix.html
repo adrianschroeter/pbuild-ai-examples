@@ -248,22 +248,7 @@
             flex-wrap: wrap;
         }
 
-        .info-card {
-            flex: 1;
-            min-width: 250px;
-            background: var(--surface-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .info-card h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        /* Info cards use styling from main style.css */
 
         .modal-source {
             margin: 0;
@@ -739,9 +724,18 @@
 
             let hasInfoCards = false;
 
-            // TODO: Get source info from example metadata
-            // For now, hide source card
-            sourceCard.style.display = 'none';
+            // Show source card if source URL is available
+            if (result.source_url) {
+                sourceCard.style.display = 'block';
+                hasInfoCards = true;
+
+                const displayUrl = result.source_ref
+                    ? `${result.source_url}@${result.source_ref.substring(0, 12)}...`
+                    : result.source_url;
+                modalSource.innerHTML = `<a href="${result.source_url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+            } else {
+                sourceCard.style.display = 'none';
+            }
 
             // Show changes card if files were changed
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;

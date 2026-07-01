@@ -1,0 +1,69 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/gemma4/20260701_101137/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/gemma4/20260701_101137/source_backup/ripgrep/ripgrep.spec	1970-01-01 01:00:00.000000000 +0100
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec	2026-07-01 10:15:21.868822436 +0200
+@@ -0,0 +1,64 @@
++#
++# spec file for package ripgrep
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           ripgrep
++Version:        15.1.0
++Release:        0
++Summary:        A line-oriented search tool that recursively searches the current directory for a regex pattern
++License:        MIT
++Group:          Utilities/TextProcessing
++URL:            https://github.com/BurntSushi/ripgrep
++Source0:        https://github.com/BurntSushi/ripgrep/archive/refs/tags/%{version}.tar.gz
++
++BuildRequires:  cargo
++BuildRequires:  pcre2-devel
++BuildRequires:  rust
++
++%prep
++%autosetup -n ripgrep-%{version}
++
++%build
++export CARGO_HOME=%{_builddir}/cargo
++cargo build --release --features pcre2
++
++%install
++install -Dm755 target/release/rg %{buildroot}%{_bindir}/rg
++
++# Generate man page using the built binary
++target/release/rg --man > %{buildroot}%{_mandir}/man1/rg.1
++
++install -Dm644 COPYING %{buildroot}%{_docdir}/ripgrep/COPYING
++install -Dm644 LICENSE-MIT %{buildroot}%{_docdir}/ripgrep/LICENSE-MIT
++install -Dm644 UNLICENSE %{buildroot}%{_docdir}/ripgrep/UNLICENSE
++install -Dm644 README.md %{buildroot}%{_docdir}/ripgrep/README.md
++install -Dm644 FAQ.md %{buildroot}%{_docdir}/ripgrep/FAQ.md
++
++%files
++%defattr(-,root,root)
++%{_bindir}/rg
++%{_mandir}/man1/rg.1
++%{_docdir}/ripgrep/COPYING
++%{_docdir}/ripgrep/LICENSE-MIT
++%{_docdir}/ripgrep/UNLICENSE
++%{_docdir}/ripgrep/README.md
++%{_docdir}/ripgrep/FAQ.md
++
++%set_permissions
++%fdupes
++
++%changelog
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/gemma4/20260701_101137/source_backup/ripgrep-15.1.0.tar.gz und /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep-15.1.0.tar.gz sind verschieden.
