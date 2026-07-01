@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Comparison Matrix - pbuild-ai Examples</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .matrix-container {
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .matrix-table th {
+            background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .matrix-table th:first-child {
+            width: 200px;
+            min-width: 200px;
+        }
+
+        .matrix-table th.model-header {
+            text-align: center;
+            min-width: 150px;
+            writing-mode: horizontal-tb;
+        }
+
+        .matrix-table td {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .matrix-table td:first-child {
+            font-weight: 500;
+            background: var(--surface-bg);
+        }
+
+        .matrix-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+            min-height: 60px;
+            justify-content: center;
+        }
+
+        .matrix-status {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .matrix-status.success {
+            background: var(--geeko-green);
+            color: white;
+        }
+
+        .matrix-status.failed {
+            background: #ff4444;
+            color: white;
+        }
+
+        .matrix-status.error {
+            background: #ff8800;
+            color: white;
+        }
+
+        .matrix-status.not-run {
+            background: #666;
+            color: #ccc;
+        }
+
+        .matrix-runtime {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .matrix-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .matrix-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .matrix-cell:hover {
+            background: rgba(115, 186, 37, 0.1);
+            cursor: pointer;
+        }
+
+        .legend {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--surface-bg);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--geeko-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h1 class="site-title">pbuild-ai Examples</h1>
+                </div>
+                <div class="alpha-badge">
+                    This page is as alpha as pbuild-ai is
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Examples</a>
+                    <a href="matrix.html" class="nav-link active">Model Benchmarks</a>
+                    <a href="https://github.com/adrianschroeter/pbuild-ai" class="nav-link">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Model Comparison Matrix</h2>
+                <p class="hero-subtitle">
+                    Compare performance across all AI models and examples at a glance.
+                    Colors indicate relative runtime - lighter is faster.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Stats Summary -->
+            <div class="stats-summary" id="statsSummary">
+                <div class="stat-card">
+                    <div class="stat-label">Total Examples</div>
+                    <div class="stat-value" id="totalExamples">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Models</div>
+                    <div class="stat-value" id="totalModels">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Runs</div>
+                    <div class="stat-value" id="totalRuns">-</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-value" id="successRate">-</div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--geeko-green);"></div>
+                    <span>Success</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff4444;"></div>
+                    <span>Failed</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ff8800;"></div>
+                    <span>Error</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #666;"></div>
+                    <span>Not Run</span>
+                </div>
+                <div class="legend-item" style="margin-left: auto;">
+                    <span><strong>Bar color:</strong> Lighter = Faster, Darker = Slower</span>
+                </div>
+            </div>
+
+            <!-- Matrix Table -->
+            <div class="matrix-container">
+                <table class="matrix-table" id="matrixTable">
+                    <thead>
+                        <tr>
+                            <th>Example</th>
+                            <!-- Model headers will be populated by JS -->
+                        </tr>
+                    </thead>
+                    <tbody id="matrixBody">
+                        <!-- Matrix cells will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Result Details Modal -->
+    <div id="resultModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <button class="modal-close" onclick="closeResultModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Benchmark Results</h3>
+                    <div class="benchmark-grid">
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Status</span>
+                            <span class="benchmark-value" id="modalStatus">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Runtime</span>
+                            <span class="benchmark-value" id="modalRuntime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Calls</span>
+                            <span class="benchmark-value" id="modalAiCalls">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">AI Time</span>
+                            <span class="benchmark-value" id="modalAiTime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Files Changed</span>
+                            <span class="benchmark-value" id="modalFilesChanged">-</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h3>Console Output</h3>
+                    <div class="retro-console">
+                        <div class="console-header">
+                            <span class="console-title">pbuild-ai terminal</span>
+                            <span class="console-status" id="modalConsoleStatus">● COMPLETE</span>
+                        </div>
+                        <div class="console-body">
+                            <pre id="modalConsoleOutput">Loading...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/ansi_up_setup.js" type="module"></script>
+    <script>
+        async function loadMatrix() {
+            try {
+                const response = await fetch('results.json');
+                const data = await response.json();
+
+                // Build matrix data structure
+                const matrix = {};
+                const models = new Set();
+                const examplesMap = new Map(); // Store examples with their order
+                let totalRuns = 0;
+                let successfulRuns = 0;
+
+                // Process results - handle nested structure: examples → models → model_key → data
+                if (data.examples) {
+                    for (const [exampleName, exampleData] of Object.entries(data.examples)) {
+                        const order = exampleData.order !== undefined ? exampleData.order : 9999;
+
+                        // Skip examples without explicit order (order >= 9999)
+                        if (order >= 9999) continue;
+
+                        examplesMap.set(exampleName, order);
+                        matrix[exampleName] = {};
+
+                        // Access the nested 'models' object
+                        const modelsData = exampleData.models || {};
+                        for (const [modelKey, modelData] of Object.entries(modelsData)) {
+                            if (!modelData.timestamp) continue;
+
+                            models.add(modelKey);
+                            matrix[exampleName][modelKey] = modelData;
+                            totalRuns++;
+
+                            if (modelData.status === 'success' || modelData.success) {
+                                successfulRuns++;
+                            }
+                        }
+                    }
+                }
+
+                const modelsList = Array.from(models).sort();
+                // Sort examples by order, then by name
+                const examplesList = Array.from(examplesMap.entries())
+                    .sort((a, b) => {
+                        if (a[1] !== b[1]) return a[1] - b[1]; // Sort by order
+                        return a[0].localeCompare(b[0]); // Then by name
+                    })
+                    .map(entry => entry[0]);
+
+                // Calculate runtime statistics for color scaling
+                const allRuntimes = [];
+                for (const example of examplesList) {
+                    for (const model of modelsList) {
+                        const cell = matrix[example]?.[model];
+                        if (cell?.run_time_seconds) {
+                            allRuntimes.push(cell.run_time_seconds);
+                        }
+                    }
+                }
+                const minRuntime = Math.min(...allRuntimes);
+                const maxRuntime = Math.max(...allRuntimes);
+
+                // Update stats
+                document.getElementById('totalExamples').textContent = examplesList.length;
+                document.getElementById('totalModels').textContent = modelsList.length;
+                document.getElementById('totalRuns').textContent = totalRuns;
+                document.getElementById('successRate').textContent =
+                    totalRuns > 0 ? `${Math.round(successfulRuns / totalRuns * 100)}%` : '-';
+
+                // Get model display names from metadata
+                const modelsMeta = data.models || {};
+
+                // Build table header
+                const thead = document.querySelector('#matrixTable thead tr');
+                for (const modelKey of modelsList) {
+                    const th = document.createElement('th');
+                    th.className = 'model-header';
+                    // Use display name if available, otherwise use key
+                    const displayName = modelsMeta[modelKey]?.display || modelKey;
+                    th.textContent = displayName;
+                    thead.appendChild(th);
+                }
+
+                // Build table body
+                const tbody = document.getElementById('matrixBody');
+                for (const example of examplesList) {
+                    const tr = document.createElement('tr');
+
+                    // Example name cell
+                    const tdName = document.createElement('td');
+                    tdName.textContent = example;
+                    tr.appendChild(tdName);
+
+                    // Model cells
+                    for (const model of modelsList) {
+                        const td = document.createElement('td');
+                        const cell = matrix[example]?.[model];
+
+                        if (cell) {
+                            const cellDiv = document.createElement('div');
+                            cellDiv.className = 'matrix-cell';
+                            // Show result details in modal
+                            cellDiv.onclick = () => {
+                                showResultModal(example, model, cell, modelsMeta[model]);
+                            };
+
+                            // Status badge
+                            const status = cell.status || (cell.success ? 'success' : 'failed');
+                            const statusDiv = document.createElement('div');
+                            statusDiv.className = `matrix-status ${status}`;
+                            statusDiv.textContent = status === 'success' ? '✓' : status === 'failed' ? '✗' : '⚠';
+                            cellDiv.appendChild(statusDiv);
+
+                            // Runtime
+                            if (cell.run_time_seconds !== null && cell.run_time_seconds !== undefined) {
+                                const runtimeDiv = document.createElement('div');
+                                runtimeDiv.className = 'matrix-runtime';
+                                const minutes = Math.floor(cell.run_time_seconds / 60);
+                                const seconds = Math.round(cell.run_time_seconds % 60);
+                                runtimeDiv.textContent = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+                                cellDiv.appendChild(runtimeDiv);
+
+                                // Visual bar with color gradient
+                                const barContainer = document.createElement('div');
+                                barContainer.className = 'matrix-bar-container';
+                                const bar = document.createElement('div');
+                                bar.className = 'matrix-bar';
+
+                                // Normalize runtime to 0-1 scale
+                                const normalized = (cell.run_time_seconds - minRuntime) / (maxRuntime - minRuntime);
+
+                                // Color gradient: green (fast) to yellow to red (slow)
+                                let color;
+                                if (normalized < 0.5) {
+                                    // Green to yellow
+                                    const r = Math.round(115 + normalized * 2 * 140);
+                                    const g = 186;
+                                    const b = 37;
+                                    color = `rgb(${r}, ${g}, ${b})`;
+                                } else {
+                                    // Yellow to red
+                                    const r = 255;
+                                    const g = Math.round(186 - (normalized - 0.5) * 2 * 118);
+                                    const b = Math.round(37 - (normalized - 0.5) * 2 * 37);
+                                    color = `rgb(${r}, ${g}, ${b})`;
+                                }
+
+                                bar.style.background = color;
+                                bar.style.width = '100%';
+                                barContainer.appendChild(bar);
+                                cellDiv.appendChild(barContainer);
+                            }
+
+                            td.appendChild(cellDiv);
+                        } else {
+                            const cellDiv = document.createElement('div');
+                            cellDiv.className = 'matrix-cell';
+                            const statusDiv = document.createElement('div');
+                            statusDiv.className = 'matrix-status not-run';
+                            statusDiv.textContent = '-';
+                            cellDiv.appendChild(statusDiv);
+                            td.appendChild(cellDiv);
+                        }
+
+                        tr.appendChild(td);
+                    }
+
+                    tbody.appendChild(tr);
+                }
+
+            } catch (error) {
+                console.error('Error loading matrix:', error);
+                document.getElementById('matrixBody').innerHTML =
+                    '<tr><td colspan="100">Error loading results. Please run generate-report.sh first.</td></tr>';
+            }
+        }
+
+        // Load matrix on page load
+        loadMatrix();
+
+        // Modal functions
+        function showResultModal(exampleName, modelKey, result, modelMeta) {
+            const displayName = modelMeta?.display || modelKey;
+            document.getElementById('modalTitle').textContent = `${exampleName} - ${displayName}`;
+
+            // Status
+            let statusText, statusColor;
+            if (result.status === 'success') {
+                statusText = '✓ SUCCESS';
+                statusColor = 'var(--geeko-green)';
+            } else if (result.status === 'failed') {
+                statusText = '✗ FAILED';
+                statusColor = '#ff4444';
+            } else if (result.status === 'error') {
+                statusText = '⚠ ERROR';
+                statusColor = '#ff8800';
+            } else {
+                statusText = result.success ? '✓ SUCCESS' : '✗ FAILED';
+                statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            }
+            document.getElementById('modalStatus').innerHTML = `<span style="color: ${statusColor}">${statusText}</span>`;
+
+            // Console output with ANSI colors
+            const consoleOutput = document.getElementById('modalConsoleOutput');
+            if (result.output && typeof AnsiUp !== 'undefined') {
+                const ansi_up = new AnsiUp();
+                ansi_up.use_classes = true;
+                consoleOutput.innerHTML = ansi_up.ansi_to_html(result.output);
+            } else if (result.output) {
+                consoleOutput.textContent = result.output;
+            } else {
+                consoleOutput.textContent = 'No output available';
+            }
+
+            // Console status
+            const consoleStatus = document.getElementById('modalConsoleStatus');
+            if (result.success || result.status === 'success') {
+                consoleStatus.innerHTML = '● COMPLETE';
+                consoleStatus.style.color = 'var(--geeko-green)';
+            } else {
+                consoleStatus.innerHTML = '● FAILED';
+                consoleStatus.style.color = '#ff4444';
+            }
+
+            // Runtime
+            const runtime = result.run_time_seconds || result.total_runtime_seconds;
+            if (runtime) {
+                const minutes = Math.floor(runtime / 60);
+                const seconds = Math.round(runtime % 60);
+                document.getElementById('modalRuntime').textContent =
+                    minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+            } else {
+                document.getElementById('modalRuntime').textContent = '-';
+            }
+
+            // Other stats
+            document.getElementById('modalAiCalls').textContent =
+                (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
+            document.getElementById('modalAiTime').textContent =
+                result.ai_time_seconds ? `${result.ai_time_seconds}s` : '-';
+            document.getElementById('modalFilesChanged').textContent =
+                (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : '-';
+
+            // Show modal
+            document.getElementById('resultModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeResultModal() {
+            document.getElementById('resultModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeResultModal();
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultModal');
+            if (event.target === modal) {
+                closeResultModal();
+            }
+        }
+    </script>
+</body>
+</html>

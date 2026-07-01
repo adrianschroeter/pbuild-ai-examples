@@ -134,7 +134,7 @@
                 </div>
                 <nav class="nav">
                     <a href="#examples" class="nav-link">Examples</a>
-                    <a href="benchmark-report.html" class="nav-link">Benchmarks</a>
+                    <a href="matrix.html" class="nav-link">Model Benchmarks</a>
                     <a href="https://github.com/adrianschroeter/pbuild-ai" class="nav-link">GitHub</a>
                 </nav>
             </div>
@@ -545,8 +545,8 @@
                         <a href="https://github.com/adrianschroeter/pbuild-ai-examples" class="btn btn-secondary btn-large">
                             Contribute Examples
                         </a>
-                        <a href="benchmark-report.html" class="btn btn-outline btn-large">
-                            View Benchmarks
+                        <a href="matrix.html" class="btn btn-outline btn-large">
+                            View Model Benchmarks
                         </a>
                     </div>
                 </div>
@@ -677,7 +677,7 @@
             }
         };
 
-        function showExample(exampleId) {
+        function showExample(exampleId, modelKey) {
             const example = examples[exampleId];
             if (!example) return;
 
@@ -702,8 +702,8 @@
             document.getElementById('changesCard').style.display = 'none';
             document.getElementById('infoRow').style.display = hasSource ? 'flex' : 'none';
 
-            // Load actual results if available
-            loadExampleResults(example.exampleDir);
+            // Load actual results if available (pass modelKey to pre-select it)
+            loadExampleResults(example.exampleDir, modelKey);
 
             // Show modal
             document.getElementById('exampleModal').style.display = 'flex';
@@ -713,6 +713,8 @@
         function closeModal() {
             document.getElementById('exampleModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+            // Clear the hash to close modal
+            history.replaceState(null, null, ' ');
         }
 
         function showDiffModal() {
@@ -761,7 +763,7 @@
         let currentModelsMeta = {};
         let activeModelKey = null;
 
-        async function loadExampleResults(exampleDir) {
+        async function loadExampleResults(exampleDir, preferredModelKey) {
             // Try to load actual results from generated manifest
             try {
                 const response = await fetch('results.json');
@@ -783,7 +785,12 @@
                         if (!currentModelsMeta.default) {
                             currentModelsMeta.default = { display: 'Unknown Model' };
                         }
-                        activeModelKey = currentModelKeys[0];
+                        // Use preferred model if specified and available, otherwise first model
+                        if (preferredModelKey && currentModelKeys.includes(preferredModelKey)) {
+                            activeModelKey = preferredModelKey;
+                        } else {
+                            activeModelKey = currentModelKeys[0];
+                        }
                         showActualResults();
                         return;
                     }
@@ -848,10 +855,30 @@
                 consoleStatus.style.color = '#ff4444';
             }
 
-            // Show actual benchmarks
-            const statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            // Show actual benchmarks - use status field if available, otherwise derive from success/exit_code
+            let statusText, statusColor;
+            if (result.status) {
+                // Use explicit status field: "success", "failed", or "error"
+                if (result.status === 'success') {
+                    statusText = '✓ SUCCESS';
+                    statusColor = 'var(--geeko-green)';
+                } else if (result.status === 'failed') {
+                    statusText = '✗ FAILED';
+                    statusColor = '#ff4444';
+                } else if (result.status === 'error') {
+                    statusText = '⚠ ERROR';
+                    statusColor = '#ff8800';
+                } else {
+                    statusText = result.status.toUpperCase();
+                    statusColor = '#888';
+                }
+            } else {
+                // Fallback for old results without status field
+                statusText = result.success ? '✓ SUCCESS' : '✗ FAILED';
+                statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            }
             document.getElementById('modalStatus').innerHTML =
-                `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
+                `<span style="color: ${statusColor}">${statusText}</span>`;
 
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
             const filesChangedEl = document.getElementById('modalFilesChanged');
@@ -947,6 +974,22 @@ Run the example to see:
                 closeModal();
             }
         });
+
+        // Handle hash navigation: #example or #example:model
+        function handleHash() {
+            const hash = window.location.hash.slice(1); // Remove #
+            if (!hash) return;
+
+            // Parse format: "example" or "example:model"
+            const [exampleId, modelKey] = hash.split(':');
+            if (exampleId && examples[exampleId]) {
+                showExample(exampleId, modelKey);
+            }
+        }
+
+        // Handle hash on page load and hash changes
+        window.addEventListener('DOMContentLoaded', handleHash);
+        window.addEventListener('hashchange', handleHash);
     </script>
 </body>
 </html>
