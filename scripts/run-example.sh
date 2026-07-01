@@ -66,8 +66,7 @@ REPO_ROOT=$(pwd)
 EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 
 # Read model configurations from models.yaml + models.yaml.local
-MODELS_JSON=$(python3 << 'PYEOF' 2>/dev/null || echo "{}")
-import json, os, re
+MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
     data = {}
@@ -75,22 +74,18 @@ def read_yaml_simple(path):
     try:
         with open(path) as f:
             for line in f:
-                # Strip comments
-                line = re.sub(r'#.*$', '', line).rstrip()
+                line = re.sub(r"#.*$", "", line).rstrip()
                 if not line:
                     continue
-                # Model key line: "  gemma4:"
-                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
                 if m:
                     current_model = m.group(1)
                     data[current_model] = {}
                     continue
-                # Key-value line: "    host: "value"" or "    model: value"
-                m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
+                m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
                 if m and current_model is not None:
                     val = m.group(2).strip()
-                    # Strip surrounding quotes
-                    if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
                         val = val[1:-1]
                     data[current_model][m.group(1)] = val
     except FileNotFoundError:
@@ -98,7 +93,7 @@ def read_yaml_simple(path):
     return data
 
 config = {}
-for yaml_file in ['models.yaml', 'models.yaml.local']:
+for yaml_file in ["models.yaml", "models.yaml.local"]:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
         for key, val in cfg.items():
@@ -107,7 +102,7 @@ for yaml_file in ['models.yaml', 'models.yaml.local']:
             config[key].update(val)
 
 print(json.dumps(config))
-PYEOF
+' 2>/dev/null || echo "{}")
 
 # Handle --all-models: run for each model key
 if [ "$ALL_MODELS" = true ]; then
