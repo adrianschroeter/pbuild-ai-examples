@@ -848,10 +848,30 @@
                 consoleStatus.style.color = '#ff4444';
             }
 
-            // Show actual benchmarks
-            const statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            // Show actual benchmarks - use status field if available, otherwise derive from success/exit_code
+            let statusText, statusColor;
+            if (result.status) {
+                // Use explicit status field: "success", "failed", or "error"
+                if (result.status === 'success') {
+                    statusText = '✓ SUCCESS';
+                    statusColor = 'var(--geeko-green)';
+                } else if (result.status === 'failed') {
+                    statusText = '✗ FAILED';
+                    statusColor = '#ff4444';
+                } else if (result.status === 'error') {
+                    statusText = '⚠ ERROR';
+                    statusColor = '#ff8800';
+                } else {
+                    statusText = result.status.toUpperCase();
+                    statusColor = '#888';
+                }
+            } else {
+                // Fallback for old results without status field
+                statusText = result.success ? '✓ SUCCESS' : '✗ FAILED';
+                statusColor = result.success ? 'var(--geeko-green)' : '#ff4444';
+            }
             document.getElementById('modalStatus').innerHTML =
-                `<span style="color: ${statusColor}">${result.success ? '✓ SUCCESS' : '✗ FAILED'}</span>`;
+                `<span style="color: ${statusColor}">${statusText}</span>`;
 
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
             const filesChangedEl = document.getElementById('modalFilesChanged');

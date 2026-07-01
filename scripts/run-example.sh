@@ -427,11 +427,25 @@ if [ -f "${RESULT_DIR}/output.log" ]; then
 fi
 
 # Save benchmark results
+# Determine status based on exit code
+# 0 = success, 1 = failed (build or AI error), >=2 = error (usage/internal error)
+if [ $EXIT_CODE -eq 0 ]; then
+    STATUS="\"success\""
+    SUCCESS="true"
+elif [ $EXIT_CODE -eq 1 ]; then
+    STATUS="\"failed\""
+    SUCCESS="false"
+else
+    STATUS="\"error\""
+    SUCCESS="false"
+fi
+
 cat > "${RESULT_DIR}/benchmark.json" <<EOF
 {
   "run_time_seconds": $RUN_TIME,
   "exit_code": $EXIT_CODE,
-  "success": $([ $EXIT_CODE -eq 0 ] && echo "true" || echo "false"),
+  "status": $STATUS,
+  "success": $SUCCESS,
   "files_changed": $FILES_CHANGED,
   "pbuild_ai_version": $PBUILD_AI_VERSION,
   "ai_model": $AI_MODEL,

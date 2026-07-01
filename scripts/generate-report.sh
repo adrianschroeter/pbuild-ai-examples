@@ -165,8 +165,19 @@ if [ -d "$RESULTS_DIR" ]; then
 
             # Parse latest benchmark JSON
             RUN_TIME=$(grep "run_time_seconds" "$LATEST_BENCHMARK" | grep -oE '[0-9.]+' || echo "0")
-            SUCCESS=$(grep "\"success\"" "$LATEST_BENCHMARK" | grep -o "true\|false" || echo "false")
             EXIT_CODE=$(grep "exit_code" "$LATEST_BENCHMARK" | grep -oE '[0-9]+' || echo "1")
+
+            # Get status field if available, otherwise derive from success/exit_code
+            STATUS=$(grep "\"status\"" "$LATEST_BENCHMARK" | sed 's/.*"status": *"\([^"]*\)".*/\1/' 2>/dev/null || echo "")
+            if [ -z "$STATUS" ]; then
+                # Fallback: derive from success field for backwards compatibility
+                SUCCESS=$(grep "\"success\"" "$LATEST_BENCHMARK" | grep -o "true\|false" || echo "false")
+                if [ "$SUCCESS" = "true" ]; then
+                    STATUS="success"
+                else
+                    STATUS="failed"
+                fi
+            fi
 
             # Extract AI model from benchmark or metadata
             AI_MODEL=$(grep "\"ai_model\"" "$LATEST_BENCHMARK" | sed 's/.*"ai_model": *//; s/[,"]//g' || echo "?")
@@ -186,12 +197,16 @@ if [ -d "$RESULTS_DIR" ]; then
             fi
             [ -z "$MODEL_DISPLAY" ] && MODEL_DISPLAY="$AI_MODEL"
 
-            if [ "$SUCCESS" = "true" ]; then
+            # Determine display based on status: success (exit 0), failed (exit 1), error (exit >=2)
+            if [ "$STATUS" = "success" ]; then
                 STATUS_CLASS="status-success"
                 STATUS_TEXT="✓ PASSED"
-            else
+            elif [ "$STATUS" = "failed" ]; then
                 STATUS_CLASS="status-failed"
                 STATUS_TEXT="✗ FAILED"
+            else
+                STATUS_CLASS="status-failed"
+                STATUS_TEXT="⚠ ERROR"
             fi
 
             # Calculate trend if we have multiple results
@@ -420,8 +435,20 @@ if os.path.isdir(RESULTS_DIR):
                 bm = json.load(f)
 
             run_time = bm.get("run_time_seconds", 0)
-            success = bm.get("success", False)
             exit_code = bm.get("exit_code", 1)
+
+            # Get status field if available, otherwise derive from success/exit_code
+            status = bm.get("status", None)
+            if status is None:
+                # Fallback for backwards compatibility
+                success = bm.get("success", False)
+                if success:
+                    status = "success"
+                else:
+                    status = "failed"
+            else:
+                # Derive success from status for compatibility
+                success = (status == "success")
             files_changed = bm.get("files_changed", 0)
             ai_model = bm.get("ai_model", None) or ""
             ai_calls = bm.get("ai_calls", None)
@@ -487,6 +514,7 @@ if os.path.isdir(RESULTS_DIR):
             entry = {
                 "timestamp": latest_ts,
                 "run_time_seconds": run_time,
+                "status": status,
                 "success": success,
                 "exit_code": exit_code,
                 "files_changed": files_changed,
