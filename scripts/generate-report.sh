@@ -395,6 +395,21 @@ if os.path.isdir(RESULTS_DIR):
         example_path = os.path.join(RESULTS_DIR, example)
         example_models = []
 
+        # Read order from test.yaml if available
+        test_yaml_path = os.path.join("examples", example, "test.yaml")
+        example_order = 9999  # Default to end if not specified
+        if os.path.exists(test_yaml_path):
+            try:
+                with open(test_yaml_path) as f:
+                    for line in f:
+                        line = re.sub(r'#.*$', '', line).strip()
+                        m = re.match(r'^order:\s*(\d+)', line)
+                        if m:
+                            example_order = int(m.group(1))
+                            break
+            except Exception:
+                pass
+
         for subdir in sorted(os.listdir(example_path)):
             subpath = os.path.join(example_path, subdir)
             if not os.path.isdir(subpath):
@@ -535,7 +550,10 @@ if os.path.isdir(RESULTS_DIR):
             example_models.append((meta_model_key, entry))
 
         if example_models:
-            result["examples"][example] = {"models": OrderedDict()}
+            result["examples"][example] = {
+                "order": example_order,
+                "models": OrderedDict()
+            }
             for mk, entry in example_models:
                 result["examples"][example]["models"][mk] = entry
 

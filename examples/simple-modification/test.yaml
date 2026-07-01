@@ -1,5 +1,6 @@
 name: "Simple Modification"
 description: "Demonstrates using --modify flag to make targeted changes with a custom prompt"
+order: 2
 
 source:
   # Using cowsay as a simple example package
@@ -21,12 +22,6 @@ expected:
     - "*.service"
   build_result: ""
 
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: null
 
 tags:
   - "basic"

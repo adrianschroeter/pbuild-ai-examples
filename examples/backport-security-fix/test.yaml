@@ -1,5 +1,6 @@
 name: "Backport Security Fix"
 description: "Apply a security fix from upstream using AI-guided patching with --prompt and --fix"
+order: 5
 
 source:
   # Type: "remote" = clone at runtime, "inline" = included in example dir, "manual" = user provides
@@ -23,13 +24,6 @@ expected:
     - "libarchive.spec"
     - "*.patch"
   build_result: "succeeded"  # succeeded, failed, skipped
-
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: null
 
 tags:
   - "security"

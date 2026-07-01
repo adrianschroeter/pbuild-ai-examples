@@ -1,5 +1,6 @@
 name: "Update to Latest Upstream"
 description: "Automatically update package to latest upstream version and update spec file to new standards"
+order: 3
 
 source:
   type: remote
@@ -19,12 +20,6 @@ expected:
     - "sysstat.changes"  # Changelog
   build_result: "not_built"
 
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "basic"

@@ -1,5 +1,6 @@
 name: "Update to Latest Upstream"
 description: "Automatically update package to latest upstream version and fix compatibility issues"
+order: 4
 
 source:
   type: remote
@@ -21,12 +22,6 @@ expected:
     - "gawk.changes"  # Changelog
   build_result: "succeeded"
 
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "intermediate"

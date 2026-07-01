@@ -1,5 +1,6 @@
 name: "Inline Source Example"
 description: "Demonstrates using inline sources instead of remote cloning"
+# order: 99   # no order means hidden
 
 source:
   type: inline  # Sources included directly in this directory
@@ -14,11 +15,6 @@ expected:
   files_modified: []
   build_result: "not_built"
 
-benchmarks:
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "basic"

@@ -713,6 +713,15 @@
         function closeModal() {
             document.getElementById('exampleModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+
+            // If came from matrix page, return there with scroll position
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('from') === 'matrix') {
+                window.location.href = 'matrix.html';
+            } else {
+                // Just clear the hash to close modal
+                history.replaceState(null, null, ' ');
+            }
         }
 
         function showDiffModal() {

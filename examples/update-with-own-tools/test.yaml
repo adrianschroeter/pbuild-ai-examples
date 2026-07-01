@@ -1,5 +1,6 @@
 name: "Update Ollama with own tools"
 description: "An example how to hook in own scripts, provided by the package."
+order: 5
 
 source:
   type: remote
@@ -18,12 +19,6 @@ expected:
   files_modified: []
   build_result: "succeeded"  # succeeded, failed, skipped
 
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "advanced"  # Tags: basic, advanced, fix, update, generate, analysis

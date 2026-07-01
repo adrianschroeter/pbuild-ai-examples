@@ -1,6 +1,7 @@
 name: "Generate New Package"
 description: "Generate a complete package from scratch without any source files"
 category: "generation"
+order: 3
 
 # No source needed for --generate mode, but specify where to create the generated files
 source:

@@ -1,5 +1,6 @@
 name: "Basic Package Analysis"
 description: "Demonstrates basic package source analysis without modifications"
+order: 1
 
 source:
   type: remote  # Cloned at runtime (not submodule due to SHA-256 incompatibility)
@@ -15,13 +16,6 @@ expected:
   changes: false
   files_modified: []
   build_result: "not_built"  # Analysis only, no build
-
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "basic"

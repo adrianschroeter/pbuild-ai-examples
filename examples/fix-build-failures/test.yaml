@@ -1,5 +1,6 @@
 name: "Fix Build Failures"
 description: "Automatically detect and fix package build failures"
+order: 2
 
 source:
   type: local
@@ -17,13 +18,6 @@ expected:
     - "*.spec"
     - "*.patch"
   build_result: "succeeded"
-
-benchmarks:
-  # Fill in after running the test
-  run_time_seconds: null
-  build_time_seconds: null
-  ai_time_seconds: null
-  model: "gemma4"
 
 tags:
   - "intermediate"

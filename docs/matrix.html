@@ -274,14 +274,19 @@
                 // Build matrix data structure
                 const matrix = {};
                 const models = new Set();
-                const examples = new Set();
+                const examplesMap = new Map(); // Store examples with their order
                 let totalRuns = 0;
                 let successfulRuns = 0;
 
                 // Process results - handle nested structure: examples → models → model_key → data
                 if (data.examples) {
                     for (const [exampleName, exampleData] of Object.entries(data.examples)) {
-                        examples.add(exampleName);
+                        const order = exampleData.order !== undefined ? exampleData.order : 9999;
+
+                        // Skip examples without explicit order (order >= 9999)
+                        if (order >= 9999) continue;
+
+                        examplesMap.set(exampleName, order);
                         matrix[exampleName] = {};
 
                         // Access the nested 'models' object
@@ -301,7 +306,13 @@
                 }
 
                 const modelsList = Array.from(models).sort();
-                const examplesList = Array.from(examples).sort();
+                // Sort examples by order, then by name
+                const examplesList = Array.from(examplesMap.entries())
+                    .sort((a, b) => {
+                        if (a[1] !== b[1]) return a[1] - b[1]; // Sort by order
+                        return a[0].localeCompare(b[0]); // Then by name
+                    })
+                    .map(entry => entry[0]);
 
                 // Calculate runtime statistics for color scaling
                 const allRuntimes = [];
@@ -356,7 +367,12 @@
                             const cellDiv = document.createElement('div');
                             cellDiv.className = 'matrix-cell';
                             // Open example popup with specific model selected
-                            cellDiv.onclick = () => window.location.href = `index.html#${example}:${model}`;
+                            cellDiv.onclick = () => {
+                                // Store current scroll position before navigating
+                                sessionStorage.setItem('matrixScrollY', window.scrollY.toString());
+                                sessionStorage.setItem('matrixScrollX', window.scrollX.toString());
+                                window.location.href = `index.html#${example}:${model}?from=matrix`;
+                            };
 
                             // Status badge
                             const status = cell.status || (cell.success ? 'success' : 'failed');
@@ -431,6 +447,24 @@
 
         // Load matrix on page load
         loadMatrix();
+
+        // Restore scroll position if returning from example details
+        window.addEventListener('DOMContentLoaded', function() {
+            const scrollY = sessionStorage.getItem('matrixScrollY');
+            const scrollX = sessionStorage.getItem('matrixScrollX');
+            if (scrollY !== null || scrollX !== null) {
+                // Wait for content to load before scrolling
+                setTimeout(() => {
+                    window.scrollTo(
+                        scrollX !== null ? parseInt(scrollX) : 0,
+                        scrollY !== null ? parseInt(scrollY) : 0
+                    );
+                    // Clear stored position
+                    sessionStorage.removeItem('matrixScrollY');
+                    sessionStorage.removeItem('matrixScrollX');
+                }, 100);
+            }
+        });
     </script>
 </body>
 </html>
