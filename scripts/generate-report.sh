@@ -446,8 +446,12 @@ if os.path.isdir(RESULTS_DIR):
                 continue
 
             # Parse benchmark JSON
-            with open(latest_bm_path) as f:
-                bm = json.load(f)
+            try:
+                with open(latest_bm_path) as f:
+                    bm = json.load(f)
+            except json.JSONDecodeError:
+                print(f"[WARN] Corrupt benchmark.json, skipping: {latest_bm_path}", flush=True)
+                continue
 
             run_time = bm.get("run_time_seconds", 0)
             exit_code = bm.get("exit_code", 1)
@@ -487,8 +491,11 @@ if os.path.isdir(RESULTS_DIR):
             first_run_time = None
             if len(all_bm_paths) > 1:
                 first_ts, first_bm = all_bm_paths[0]
-                with open(first_bm) as f:
-                    first_bm_data = json.load(f)
+                try:
+                    with open(first_bm) as f:
+                        first_bm_data = json.load(f)
+                except json.JSONDecodeError:
+                    first_bm_data = {}
                 first_run_time_val = first_bm_data.get("run_time_seconds", 0)
                 if first_run_time_val and float(first_run_time_val) > 0:
                     first_run_time = float(first_run_time_val)
@@ -512,12 +519,12 @@ if os.path.isdir(RESULTS_DIR):
             meta_path = os.path.join(os.path.dirname(latest_bm_path), "metadata.json")
             meta_model_key = model_key
             if os.path.exists(meta_path):
-                with open(meta_path) as f:
+                with open(meta_path, encoding="utf-8", errors="replace") as f:
                     try:
-                        meta = json.load(f)
-                        if "model_key" in meta:
+                        meta = json.loads(f.read())
+                        if isinstance(meta, dict) and "model_key" in meta:
                             meta_model_key = meta["model_key"]
-                    except json.JSONDecodeError:
+                    except (json.JSONDecodeError, ValueError):
                         pass
 
             # Build result_path (old format: example/timestamp, new: example/model/timestamp)

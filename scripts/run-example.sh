@@ -392,7 +392,7 @@ EOF
             PBUILD_AI_VERSION=$(echo "$VERSION_LINE" | sed -n 's/.*Version \([0-9.]*\).*/\1/p')
             [ -n "$PBUILD_AI_VERSION" ] && PBUILD_AI_VERSION="\"$PBUILD_AI_VERSION\"" || PBUILD_AI_VERSION="null"
         fi
-        STATS_LINE=$(grep "\[STATS\]" "${RESULT_DIR}/output.log" || echo "")
+        STATS_LINE=$(grep "\[STATS\]" "${RESULT_DIR}/output.log" | tail -1 || echo "")
         if [ -n "$STATS_LINE" ]; then
             AI_MODEL=$(echo "$STATS_LINE" | sed -n 's/.*AI model: \([^ |]*\).*/\1/p' | tr -d ' ')
             AI_CALLS=$(echo "$STATS_LINE" | sed -n 's/.*AI calls: \([0-9]*\).*/\1/p')
