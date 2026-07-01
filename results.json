@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-01T07:10:57+00:00",
+  "generated": "2026-07-01T10:52:23+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -24,30 +24,119 @@
     "backport-security-fix": {
       "order": 5,
       "models": {
-        "default": {
-          "timestamp": "20260630_134100",
-          "run_time_seconds": 595,
+        "gemma4": {
+          "timestamp": "20260701_115818",
+          "run_time_seconds": 256,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": "gemma4:31b-it-qat-q4_0-it-256k",
+          "ai_model": "default",
           "ai_calls": 1,
-          "ai_time_seconds": 235.5,
+          "ai_time_seconds": 47.6,
           "pbuild_calls": 1,
-          "pbuild_time_seconds": 358.5,
-          "total_runtime_seconds": 594.3,
-          "pbuild_ai_version": null,
+          "pbuild_time_seconds": 208.6,
+          "total_runtime_seconds": 256.3,
+          "pbuild_ai_version": "0.1.7",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(default) says:\n**Errors & Best Practice Violations:**\n\n1.  **Forbidden `%changelog`:** The `%changelog` section must be removed from the `.spec` file and moved to `PACKAGE.changes`.\n2.  **Deprecated Patching:** `%autopatch -p1` is discouraged. Use explicit `%patch -PX` syntax for each patch.\n3.  **Missing Security Fix:** The requested security fix (commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`) is not implemented.\n\n**Required Changes:**\n\n*   **Add Patch:**\n    ```spec\n    Patch4: security-fix.patch\n    ```\n*   **Update `%prep`:**\n    ```spec\n    %prep\n    %setup -q\n    %patch -P1 -p1\n    %patch -P2 -p1\n    %patch -P3 -p1\n    %patch -P4 -p1\n    ```\n*   **Remove:** The `%changelog` section at the end of the file.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 47.6s  |  pbuild calls: 1  |  pbuild time: 208.6s  |  total runtime: 256.3s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/gemma4/20260701_115818/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/gemma4/20260701_115818"
+        },
+        "ornith35b": {
+          "timestamp": "20260701_120235",
+          "run_time_seconds": 239,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "ornith:35b",
+          "ai_calls": 1,
+          "ai_time_seconds": 28.3,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 210.7,
+          "total_runtime_seconds": 239.1,
+          "pbuild_ai_version": "0.1.7",
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.5\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(gemma4:31b-it-qat-q4_0-it-256k) says:\n**Errors & Best Practice Violations:**\n\n1.  **Remove `%changelog`**: Per SUSE conventions, the `%changelog` section must not exist in the `.spec` file; entries belong in `PACKAGE.changes`.\n2.  **Security Fix**: To apply commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`, add a new patch:\n    *   Add `Patch4: security-fix.patch` to the source list.\n    *   Since `%autopatch -p1` is used in `%prep`, it will be applied automatically once defined.\n\n**Summary of changes needed:**\n*   Delete line: `%changelog`\n*   Insert line: `Patch4: security-fix.patch` (and provide the corresponding patch file).\n\n[EXEC] pbuild --result\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: gemma4:31b-it-qat-q4_0-it-256k  |  AI calls: 1  |  AI time: 235.5s  |  pbuild calls: 1  |  pbuild time: 358.5s  |  total runtime: 594.3s\n",
-          "diff": "",
-          "result_path": "../results/backport-security-fix/20260630_134100"
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(ornith:35b) says:\nLet me first get the security fix patch from that commit, then review the spec file.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: ornith:35b  |  AI calls: 1  |  AI time: 28.3s  |  pbuild calls: 1  |  pbuild time: 210.7s  |  total runtime: 239.1s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/ornith35b/20260701_120235/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/ornith35b/20260701_120235"
         },
+        "qwen27": {
+          "timestamp": "20260701_120635",
+          "run_time_seconds": 621,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "qwen3.6:27b",
+          "ai_calls": 1,
+          "ai_time_seconds": 411.4,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 208.8,
+          "total_runtime_seconds": 620.2,
+          "pbuild_ai_version": "0.1.7",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:27b) says:\n### Issues Found\n1. **Empty `%changelog`**: Violates openSUSE policy (`%changelog` belongs in `.changes`). Remove entirely.\n2. **Incorrect BR name**: `libopenssl-devel` does not exist in openSUSE Tumbleweed. Use `openssl-devel`.\n3. **Conditional package mismatch**: `%package static-devel` and its description are unconditional, but `%files static-devel` is wrapped in `%if %{with static_libs}`. This causes RPM spec warnings/failures on modern RPM. Wrap the entire package declaration block in the conditional.\n\n### Required Spec Modifications\n```diff\n- BuildRequires:  libopenssl-devel\n+ BuildRequires:  openssl-devel\n\n+ Patch4:        CVE-2024-29149.patch  # <-- fetch via git show 020c40df > CVE-2024-29149.patch\n\n %package static-devel\n Summary:        Static library for libarchive\n Group:          Development/Libraries/C and C++\n Requires:       %{name}-devel = %{version}\n\n %description static-devel\n Static library for libarchive\n\n+ # ... move to after %files section or wrap entire block with %if %{with static_libs}\n\n- %changelog\n```\n\n### Patch Application Note\nThe commit `020c40df` fixes CVE-2024-29149 (OOB write in USTAR format). It modifies `libarchive/archive_write_set_format_ustar.c`. Since your spec already uses `%autopatch -p1`, adding `Patch4:` is sufficient. The patch applies cleanly against the 3.7.4 source tree without fuzz or manual adjustments.\n\nApply the above changes, fetch the commit as a `.patch` file into `SOURCES/`, and rebuild. All other macros, build flags, and `%cmake` usage conform to current openSUSE standards.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:27b  |  AI calls: 1  |  AI time: 411.4s  |  pbuild calls: 1  |  pbuild time: 208.8s  |  total runtime: 620.2s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen27/20260701_120635/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/qwen27/20260701_120635"
+        },
+        "qwen36": {
+          "timestamp": "20260701_121657",
+          "run_time_seconds": 293,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "qwen3.6:35b-a3b",
+          "ai_calls": 1,
+          "ai_time_seconds": 87.1,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 205.9,
+          "total_runtime_seconds": 293.0,
+          "pbuild_ai_version": "0.1.7",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b) says:\n### Mandatory Corrections (Guideline Violations)\n- **Remove `%changelog` section.** Use `PACKAGE.changes` instead. rpmbuild ignores it in modern packaging workflows.\n- **Shift patch numbering to 0-based.** Guidelines mandate `Patch0:` as the start. Rename `Patch1→Patch0`, `Patch2→Patch1`, `Patch3→Patch2`.\n- **Remove deprecated `Group:` tags.** Spec-cleaner and RPM v4.17+ ignore/strip them. Omit from all `%package` definitions.\n- **Drop `%autopatch -p1`.** Modern rpmbuild auto-applies `PatchN` entries in order. The line is redundant and can cause double-application warnings.\n\n### Build & Packaging Adjustments\n- **Remove `libtool` from `BuildRequires`.** Pure CMake+ninja builds do not invoke libtool; it's only needed for autotools/LT_INIT workflows.\n- **Manual `.la`/`.a` stripping in `%install` is redundant.** CMake ≥3.7 already removes static libs on install and sets `-fPIC` automatically. The `find ... -delete` and `rm` commands can be safely removed to prevent breakage on newer CMake versions that don't produce them.\n- **Omit `%post`/`%postun` ldconfig triggers.** Modern RPM handles library cache updates automatically via package manager hooks.\n\n### Security Fix Integration\n1. **Fetch & verify the patch:**\n   ```bash\n   curl -sL https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch > fix-security-fix.patch\n   cd libarchive-3.7.4  # actual extracted dir\n   git apply --check ../fix-security-fix.patch\n   ```\n   *If `--check` fails, context lines are missing/shifted due to upstream formatting differences. Manually adjust or generate a unified diff against the exact source tree.*\n\n2. **Update spec file:**\n   ```spec\n   Patch0:         fix-security-fix.patch\n   Patch1:         lib-suffix.patch\n   Patch2:         fix-soversion.patch\n   Patch3:         fix-bsdunzip-test.patch\n   ```\n\n3. **Log in `PACKAGE.changes`:**\n   ```text\n   - Apply upstream security fix from commit 020c40df (CVE-XXXX-XXXX if assigned)\n   ```\n\n### Minor Notes\n- `libopenssl-devel` may need to be `libopenssl-3-devel` on openSUSE/tumbleweed. Verify with `zypper what-provides */ssl.h`.\n- `exclude=\"\" %ifarch ...` in `%check` is an arch-specific test skip workaround; acceptable but consider upstreaming a fix or using CMake's `--exclude-test` flag if available.\n- `baselibs.conf` (Source1000) is OBS-specific; keep only for SUSE/openSUSE builds.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 87.1s  |  pbuild calls: 1  |  pbuild time: 205.9s  |  total runtime: 293.0s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36/20260701_121657/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/qwen36/20260701_121657"
+        },
+        "qwen36bf16": {
+          "timestamp": "20260701_122151",
+          "run_time_seconds": 393,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "qwen3.6:35b-a3b-bf16",
+          "ai_calls": 1,
+          "ai_time_seconds": 184.4,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 208.6,
+          "total_runtime_seconds": 393.0,
+          "pbuild_ai_version": "0.1.7",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\n**Critical Errors**\n- `%changelog` section present but empty. Per SUSE guidelines, remove it entirely (use `PACKAGE.changes`).\n- `rm \"%{buildroot}%{_libdir}/libarchive.a\"` runs unconditionally in `%install`, deleting the static library even when `static_libs` is enabled (`%bcond_with static_libs`). Wrap in `%if %{without static_libs} ... %endif`.\n- `%ctest $exclude` → unquoted variable risks word splitting. Use `\"$exclude\"`.\n\n**Best Practice Violations**\n- Patch numbering starts at 1. SUSE requires zero-indexed: `Patch0:`, `Patch1:`, `Patch2:`.\n- `%ifarch %ix86` uses deprecated macro. Replace with `i586 i686`.\n- `find ... -delete -print` → `-print` is redundant with `-delete`.\n- `BuildRequires` uses `%{with ext2fs}`/`%{with openssl}` which is fine, but ensure conditional patch definitions match new zero-indexing.\n\n**Security Fix Integration (`020c40df...`)**\n1. Download & convert to patch:  \n   `git fetch origin 020c40df9e31ec727201a8e3ddf1f94093f8fc02 && git format-patch -1 --stdout > fix-security-buf-overflow.patch`\n2. Place in `SOURCES/` (build env is air-gapped).\n3. Add to spec & apply explicitly before `%autopatch` to guarantee order:\n```spec\nPatch0: lib-suffix.patch\nPatch1: fix-soversion.patch\nPatch2: fix-bsdunzip-test.patch\nPatch3: fix-security-buf-overflow.patch\n\n%prep\n%setup -q\n# Apply security patch first, then others via autopatch if desired, or let %autopatch -p1 handle 0-3 sequentially.\n%patch -P3 -p1\n%autopatch -p1 -R\n```\n*(Note: `%autopatch -R` resets the `.rej/.orig` state after explicit applies.)*\n\n**Quick Fixes Summary**\n- Remove empty `%changelog` block.\n- Fix static lib deletion condition.\n- Reindex patches `Patch0/1/2`.\n- Quote `$exclude`, replace `%ix86`, remove `-print` from `find`.\n- Ensure `fix-security-buf-overflow.patch` applies cleanly via `cd $RPM_BUILD_DIR/%{name}-%{version} && patch -p1 < ../fix-security-buf-overflow.patch` before build.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 184.4s  |  pbuild calls: 1  |  pbuild time: 208.6s  |  total runtime: 393.0s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36bf16/20260701_122151/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/qwen36bf16/20260701_122151"
+        }
+      }
+    },
+    "basic-analyze": {
+      "order": 1,
+      "models": {
         "gemma4": {
-          "timestamp": "20260701_071016",
-          "run_time_seconds": 1,
+          "timestamp": "20260701_105146",
+          "run_time_seconds": 0,
           "status": "success",
           "success": true,
           "exit_code": 0,
@@ -60,79 +149,11 @@
           "total_runtime_seconds": null,
           "pbuild_ai_version": null,
           "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 4,
-          "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
-          "diff": "",
-          "result_path": "../results/backport-security-fix/gemma4/20260701_071016"
-        },
-        "qwen36": {
-          "timestamp": "20260630_223341",
-          "run_time_seconds": 392,
-          "status": "success",
-          "success": true,
-          "exit_code": 0,
-          "files_changed": 0,
-          "ai_model": "qwen3.6:35b-a3b",
-          "ai_calls": 1,
-          "ai_time_seconds": 97.7,
-          "pbuild_calls": 1,
-          "pbuild_time_seconds": 294.3,
-          "total_runtime_seconds": 392.0,
-          "pbuild_ai_version": "0.1.6",
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b) says:\n**Critical Fixes & Guideline Violations:**\n- **Remove `%changelog`**: Per SUSE conventions, this section must be omitted entirely. Use `PACKAGE.changes` instead.\n- **Drop deprecated `Group:` fields**: Modern RPM/spec-cleaner ignores them. Remove all instances.\n- **Fix invalid `%check` syntax**: `exclude=\"\"` is not valid spec/bash syntax. Use explicit `%ctest --exclude=` flags.\n- **Standardize patch numbering**: Per guidelines, use `Patch0:`, `Patch1:`, etc., and apply via `%patch -P<N> -p1`.\n- **Remove `%define __builder ninja`**: Non-standard. `%cmake` handles Ninja automatically when `ninja-build` is in `BuildRequires`.\n\n**Security Patch Integration:**\nAdd the commit as a patch source and apply it first in `%prep`:\n```spec\nSource1001: https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch\n...\nPatch4:         020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch\n...\n%prep\n%setup -q\n%patch -P4 -p1\n%autopatch -p1\n```\n\n**Required Drop-in Replacements:**\n`%build` (add ninja dependency, remove macro)\n```spec\nBuildRequires:  ninja-build\n%cmake\n%cmake_build\n```\n\n`%check` (fix invalid variable syntax)\n```spec\n%check\n%ifarch %arm %ix86 ppc s390\n  %ctest --exclude=test_write_filter\n%else\n  %ctest\n%endif\n```\n\n**Additional Notes:**\n- `Source1000: baselibs.conf` is obsolete. OBS manages baselibs via `_service`. Remove unless explicitly required by a maintainer.\n- Manual `.la`/`.a` removal in `%install` is often redundant with modern `%cmake_install`. Verify if still needed for your target distro.\n- `Requires: %{libname} >= %{version}` in `bsdtar` should be `=` for precise dependency tracking, though `>=` won't break the build.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 97.7s  |  pbuild calls: 1  |  pbuild time: 294.3s  |  total runtime: 392.0s\n",
-          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36/20260630_223341/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
-          "result_path": "../results/backport-security-fix/qwen36/20260630_223341"
-        },
-        "qwen36bf16": {
-          "timestamp": "20260630_223513",
-          "run_time_seconds": 431,
-          "status": "success",
-          "success": true,
-          "exit_code": 0,
-          "files_changed": 0,
-          "ai_model": "qwen3.6:35b-a3b-bf16",
-          "ai_calls": 1,
-          "ai_time_seconds": 197.5,
-          "pbuild_calls": 1,
-          "pbuild_time_seconds": 232.2,
-          "total_runtime_seconds": 429.8,
-          "pbuild_ai_version": "0.1.6",
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b-bf16) says:\n### Critical Errors (Build Breaking)\n\n1.  **`rm libarchive.a` conflicts with packaging:**\n    *   The `%install` section removes the static library (`rm ... libarchive.a`), but SUSE defaults enable it via `bcond_with static_libs`.\n    *   Result: `%files static-devel` will reference a missing file, causing a build failure.\n    *   **Fix:** Remove the `rm` command or wrap it in `%if !%{with static_libs}`.\n\n2.  **`rm man pages` conflicts with `%files`:**\n    *   The `%install` section deletes man pages (`rm ... man5/{tar,cpio,mtree}.5*`), but these are listed in `%files -n bsdtar`.\n    *   Result: Build failure due to missing files in the file list.\n    *   **Fix:** Remove the `rm` command for man pages.\n\n3.  **Syntax Error in Conditional:**\n    *   Line: `%if 0%{?rhel_version <= 700}`\n    *   Error: Missing closing brace for macro expansion.\n    *   **Fix:** Change to `%if 0%{?rhel_version} <= 700`.\n\n### Best Practices & Logic Issues\n\n*   **OpenSSL Disabled by Default on SUSE:**\n    *   The `bcond` logic disables OpenSSL on SUSE (`bcond_without openssl`) but enables it on RHEL. This likely removes TLS/HTTPS support from the SUSE package unnecessarily.\n    *   **Recommendation:** Verify if OpenSSL should be enabled; usually, `bcond_with openssl` is appropriate for SUSE given standard dependencies.\n*   **Empty `%changelog`:**\n    *   SUSE convention requires omitting empty changelogs entirely. Remove the trailing `%changelog` section.\n*   **Security Fix Required:**\n    *   Apply the security fix from commit `020c40df...`. Add as a new patch or inline change ensuring it applies cleanly to v3.7.4.\n\n### Summary of Actions\n1.  Fix macro syntax error (`rhel_version`).\n2.  Restore static library and man pages in `%install`.\n3.  Remove empty `%changelog`.\n4.  Review/enable OpenSSL support for SUSE.\n5.  Integrate security patch from specified commit.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 197.5s  |  pbuild calls: 1  |  pbuild time: 232.2s  |  total runtime: 429.8s\n",
-          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36bf16/20260630_223513/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
-          "result_path": "../results/backport-security-fix/qwen36bf16/20260630_223513"
-        }
-      }
-    },
-    "basic-analyze": {
-      "order": 1,
-      "models": {
-        "gemma4": {
-          "timestamp": "20260701_075030",
-          "run_time_seconds": 378,
-          "status": "success",
-          "success": true,
-          "exit_code": 0,
-          "files_changed": 0,
-          "ai_model": "default",
-          "ai_calls": 1,
-          "ai_time_seconds": 377.0,
-          "pbuild_calls": 0,
-          "pbuild_time_seconds": 0.0,
-          "total_runtime_seconds": 377.2,
-          "pbuild_ai_version": "0.1.6",
-          "trend_percent": 490.6,
           "first_run_time_seconds": 64.0,
           "run_count": 3,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(default) says:\n- **Remove `%changelog`**: Per openSUSE conventions, the changelog must be in the `PACKAGE.changes` file, not the `.spec` file.\n- **Invalid Macro**: The `sed` command uses `%{nil}`, which is not a standard RPM macro and will likely result in an empty string or a build warning/error.\n- **Wildcards in `%files`**: Avoid using wildcards (`%{_mandir}/man1/*`). List the files explicitly or use the directory path.\n- **Use `%autosetup`**: Replace `%setup -q` with `%autosetup` for modern openSUSE packaging.\n- **Install Script**: Relying on a custom `install.sh` is discouraged. If possible, manually install files using `install(7)` or `cp` to ensure permissions and paths are handled predictably.\n\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 377.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 377.2s\n",
+          "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/gemma4/20260701_075030"
+          "result_path": "../results/basic-analyze/gemma4/20260701_105146"
         },
         "ornith35b": {
           "timestamp": "20260701_075648",
@@ -224,7 +245,7 @@
       "order": 4,
       "models": {
         "gemma4": {
-          "timestamp": "20260701_071026",
+          "timestamp": "20260701_105150",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -242,7 +263,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/cleanup-source/gemma4/20260701_071026"
+          "result_path": "../results/cleanup-source/gemma4/20260701_105150"
         }
       }
     },
@@ -271,7 +292,7 @@
           "result_path": "../results/fix-build-failures/20260629_175422"
         },
         "gemma4": {
-          "timestamp": "20260701_071033",
+          "timestamp": "20260701_105157",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -289,7 +310,7 @@
           "run_count": 2,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/fix-build-failures/gemma4/20260701_071033"
+          "result_path": "../results/fix-build-failures/gemma4/20260701_105157"
         },
         "qwen36bf16": {
           "timestamp": "20260630_224457",
@@ -318,8 +339,8 @@
       "order": 3,
       "models": {
         "gemma4": {
-          "timestamp": "20260701_080754",
-          "run_time_seconds": 1828,
+          "timestamp": "20260701_105157",
+          "run_time_seconds": 0,
           "status": "success",
           "success": true,
           "exit_code": 0,
@@ -330,13 +351,13 @@
           "pbuild_calls": null,
           "pbuild_time_seconds": null,
           "total_runtime_seconds": null,
-          "pbuild_ai_version": "0.1.6",
+          "pbuild_ai_version": null,
           "trend_percent": null,
-          "first_run_time_seconds": null,
+          "first_run_time_seconds": 1828.0,
           "run_count": 2,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[GENERATE] Creating new package from prompt: package ripgrep CLI tool\n[TOOL] web_fetch: https://api.github.com/repos/BurntSushi/ripgrep/releases/latest (50551 bytes -> 50549 stripped)\n[GENERATE] [Fetched 50551 bytes]\n[TOOL] web_fetch: https://github.com/BurntSushi/ripgrep/blob/master/README.md (392527 bytes -> 145005 stripped)\n[GENERATE] [Fetched 392527 bytes]\nScript aborted: list index out of range\n",
+          "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/gemma4/20260701_080754"
+          "result_path": "../results/generate-new-package/gemma4/20260701_105157"
         },
         "ornith35b": {
           "timestamp": "20260701_083822",
@@ -428,7 +449,7 @@
       "order": 9999,
       "models": {
         "gemma4": {
-          "timestamp": "20260701_071033",
+          "timestamp": "20260701_105157",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -446,7 +467,7 @@
           "run_count": 2,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/inline-example/gemma4/20260701_071033"
+          "result_path": "../results/inline-example/gemma4/20260701_105157"
         },
         "qwen36": {
           "timestamp": "20260630_234903",
@@ -517,7 +538,7 @@
           "result_path": "../results/simple-modification/20260630_113342"
         },
         "gemma4": {
-          "timestamp": "20260701_071033",
+          "timestamp": "20260701_105157",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -535,7 +556,7 @@
           "run_count": 2,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/simple-modification/gemma4/20260701_071033"
+          "result_path": "../results/simple-modification/gemma4/20260701_105157"
         },
         "qwen36": {
           "timestamp": "20260630_235036",
@@ -585,7 +606,7 @@
       "order": 3,
       "models": {
         "gemma4": {
-          "timestamp": "20260701_071039",
+          "timestamp": "20260701_105204",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -603,7 +624,7 @@
           "run_count": 2,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-only/gemma4/20260701_071039"
+          "result_path": "../results/update-only/gemma4/20260701_105204"
         },
         "qwen36": {
           "timestamp": "20260630_235409",
@@ -674,7 +695,7 @@
           "result_path": "../results/update-upstream/20260630_100436"
         },
         "gemma4": {
-          "timestamp": "20260701_071045",
+          "timestamp": "20260701_105210",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -692,7 +713,7 @@
           "run_count": 2,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-upstream/gemma4/20260701_071045"
+          "result_path": "../results/update-upstream/gemma4/20260701_105210"
         },
         "qwen36": {
           "timestamp": "20260701_000215",
@@ -742,8 +763,8 @@
       "order": 5,
       "models": {
         "gemma4": {
-          "timestamp": "20260701_071050",
-          "run_time_seconds": 1,
+          "timestamp": "20260701_105216",
+          "run_time_seconds": 0,
           "status": "success",
           "success": true,
           "exit_code": 0,
@@ -760,7 +781,7 @@
           "run_count": 5,
           "output": "./scripts/run-example.sh: line 402: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-with-own-tools/gemma4/20260701_071050"
+          "result_path": "../results/update-with-own-tools/gemma4/20260701_105216"
         },
         "qwen36": {
           "timestamp": "20260701_070403",
