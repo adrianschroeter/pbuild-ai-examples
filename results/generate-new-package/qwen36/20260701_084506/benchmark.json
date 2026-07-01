@@ -1,9 +1,10 @@
 {
-  "run_time_seconds": 3824,
+  "run_time_seconds": 475,
   "exit_code": 0,
+  "status": "success",
   "success": true,
   "files_changed": 1,
-  "pbuild_ai_version": null,
+  "pbuild_ai_version": "0.1.6",
   "ai_model": null,
   "ai_calls": null,
   "ai_time_seconds": null,

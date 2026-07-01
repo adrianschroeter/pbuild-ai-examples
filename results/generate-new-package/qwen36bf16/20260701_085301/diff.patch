@@ -1,0 +1,81 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_085301/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_085301/source_backup/ripgrep/ripgrep.spec	2026-07-01 08:47:14.284125051 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec	2026-07-01 09:07:29.639601550 +0200
+@@ -8,29 +8,66 @@
+ Version:        15.1.0
+ Release:        0
+ Summary:        A fast, portable regex search tool that recursively searches for a pattern
+-License:        Unlicense OR Apache-2.0 OR MIT
++License:        Unlicense OR MIT
+ Url:            https://github.com/BurntSushi/ripgrep
+-Source0:        https://github.com/BurntSushi/ripgrep/releases/download/%{version}/ripgrep-%{version}-x86_64-unknown-linux-musl.tar.gz
++Source0:        https://github.com/BurntSushi/ripgrep/releases/download/%{version}/ripgrep-%{version}.tar.gz
+ 
+-BuildRequires:  file
++BuildRequires:  rust-packaging
++BuildRequires:  cargo
++BuildRequires:  rust
+ 
+ %description
+ ripgrep (rg) recursively searches your current directory for a regex pattern.
+ By default, ripgrep will respect your .gitignore and automatically skip hidden
+-files/directories and binary files. ripgrep is fast because it is written in
+-Rust and uses SIMD-optimized regular expressions built on top of hardware
+-accelerated regular expression engines that use non-deterministic finite
+-automata (NFA) and hardware-accelerated regular expression matching.
++files/directories and binary files.
++
++ripgrep is fast because it is written in Rust and uses SIMD-optimized regular
++expressions built on top of hardware accelerated regular expression engines
++that use non-deterministic finite automata (NFA).
+ 
+ %prep
++%autosetup -n ripgrep-%{version}
+ 
+ %build
+-
+-%check
++cargo build --release %__rust_build_flags
+ 
+ %install
+-tar xf %{S:0} -C %{buildroot}%{_bindir}/
++# Install the binary
++install -Dpm 0755 target/release/rg %{buildroot}%{_bindir}/rg
++
++# Generate and install man page
++mkdir -p %{buildroot}%{_mandir}/man1
++target/release/rg --man > %{buildroot}%{_mandir}/man1/rg.1 2>/dev/null || true
++
++# Install shell completions
++mkdir -p %{buildroot}%{_sysconfdir}/bash_completion.d
++target/release/rg --completion bash > %{buildroot}%{_sysconfdir}/bash_completion.d/rg 2>/dev/null || true
++
++mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
++target/release/rg --completion fish > %{buildroot}%{_datadir}/fish/vendor_completions.d/rg.fish 2>/dev/null || true
++
++mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
++target/release/rg --completion zsh > %{buildroot}%{_datadir}/zsh/site-functions/_rg 2>/dev/null || true
++
++# Install documentation files
++install -Dpm 0644 COPYING %{buildroot}%{_docdir}/%{name}/COPYING
++install -Dpm 0644 LICENSE-MIT %{buildroot}%{_docdir}/%{name}/LICENSE-MIT
++install -Dpm 0644 UNLICENSE %{buildroot}%{_docdir}/%{name}/UNLICENSE
++install -Dpm 0644 README.md %{buildroot}%{_docdir}/%{name}/README
++install -Dpm 0644 FAQ.md %{buildroot}%{_docdir}/%{name}/FAQ
++install -Dpm 0644 CHANGELOG.md %{buildroot}%{_docdir}/%{name}/CHANGELOG
++
++# Create ripgrep symlink for convenience (rg is the actual binary name)
++ln -sf rg %{buildroot}%{_bindir}/ripgrep
+ 
+ %files
+ %{_bindir}/rg
++%{_bindir}/ripgrep
++%{_mandir}/man1/rg.1*
++%config(noreplace) %{_sysconfdir}/bash_completion.d/rg
++%{_datadir}/fish/vendor_completions.d/rg.fish
++%{_datadir}/zsh/site-functions/_rg
++%dir %attr(0755, root, root) %{_docdir}/%{name}
++%doc %{_docdir}/%{name}/*
+ 
++%changelog
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_085301/source_backup/ripgrep-15.1.0.tar.gz und /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep-15.1.0.tar.gz sind verschieden.

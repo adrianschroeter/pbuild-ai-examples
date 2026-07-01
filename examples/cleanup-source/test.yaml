@@ -1,0 +1,28 @@
+name: "Cleanup Source"
+description: "Demonstrates using --modify flag just how to cleanup an existing source"
+order: 4
+
+source:
+  # Using cowsay as a simple example package
+  type: remote
+  path: "../../sources/glances.cleanup_source"
+  url: "https://src.opensuse.org/pool/python-Glances"
+  ref: "45791911e811b009feff71974b1851581bdbf90b63b54ebe1c133ea99b3cc5a3"
+
+command: "pbuild-ai"
+options:
+  - "--modify"
+  - "Cleanup the source according to current rules"
+
+expected:
+  success: true
+  changes: true  # --modify will create/modify files
+  files_modified:
+    - "python-Glances.spec"
+  build_result: ""
+
+
+tags:
+  - "basic"
+  - "modify"
+  - "simple"

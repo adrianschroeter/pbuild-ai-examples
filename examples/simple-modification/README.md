@@ -23,14 +23,13 @@ The `--modify` flag tells pbuild-ai to:
 1. Understand the requested modification from the text prompt
 2. Create or modify necessary files (in this case, a systemd service file)
 3. Update the spec file to include the new files
-4. Verify the package still builds correctly
-5. Apply the changes without requiring additional flags
+4. Apply the changes without requiring additional flags
 
 ## Use Cases
 
 The `--modify` flag is perfect for:
 - **Quick additions**: Add systemd units, config files, or scripts
-- **Targeted changes**: Modify specific sections without full rebuild cycles
+- **Targeted changes**: Modify specific sections without loosing time with building
 - **Simple enhancements**: Add documentation, examples, or helper files
 - **Prototyping**: Quickly test ideas before committing
 
@@ -39,7 +38,7 @@ The `--modify` flag is perfect for:
 | Flag | Purpose | Requires Other Flags | When to Use |
 |------|---------|---------------------|-------------|
 | `--modify` | Make specific modifications | No | Quick, targeted changes |
-| `--prompt` | Provide custom instructions | Yes (--fix, --update, etc.) | Complex workflows |
+| `--prompt` | Provide custom instructions | Yes (--fix, --update, etc.) | Includes build test and possible follow-up fixes |
 
 ## Example Scenarios
 
@@ -78,11 +77,4 @@ For this example, pbuild-ai will:
 - The AI will try to follow package best practices
 - Works best with clear, specific modification requests
 - Typical run time: 1-3 minutes depending on complexity
-
-## Source Package
-
-**owntone** is used as a simple example because:
-- Small server process
-- Simple enough to demonstrate modifications clearly
-- Quick build verification
 

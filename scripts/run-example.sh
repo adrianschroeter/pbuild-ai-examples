@@ -112,14 +112,14 @@ PYEOF
 # Handle --all-models: run for each model key
 if [ "$ALL_MODELS" = true ]; then
     # Get all model keys
-    MODEL_KEYS=$(python3 -c "
+    MODEL_KEYS=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 if not d:
     print('default')
 else:
     print(' '.join(sorted(d.keys())))
-" <<< "$MODELS_JSON" 2>/dev/null || echo "default")
+" 2>/dev/null || echo "default")
 
     echo "Running example: $EXAMPLE_DIR"
     echo "Models: $MODEL_KEYS"
@@ -156,7 +156,7 @@ fi
 
 # Determine model key
 if [ -z "$MODEL_KEY" ]; then
-    MODEL_KEY=$(python3 -c "
+    MODEL_KEY=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys, os
 d = json.loads(sys.stdin.read())
 if not d:
@@ -171,23 +171,23 @@ if env_model:
             sys.exit(0)
 # Fall back to first model key
 print(next(iter(d.keys())))
-" <<< "$MODELS_JSON" 2>/dev/null || echo "default")
+" 2>/dev/null || echo "default")
 fi
 
 # Get model config values
-MODEL_HOST=$(python3 -c "
+MODEL_HOST=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
 print(d.get(key, {}).get('host', '') or '')
-" <<< "$MODELS_JSON" "$MODEL_KEY" 2>/dev/null || echo "")
+" "$MODEL_KEY" 2>/dev/null || echo "")
 
-MODEL_NAME=$(python3 -c "
+MODEL_NAME=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
 print(d.get(key, {}).get('model', '') or '')
-" <<< "$MODELS_JSON" "$MODEL_KEY" 2>/dev/null || echo "")
+" "$MODEL_KEY" 2>/dev/null || echo "")
 
 # Export model environment for pbuild-ai
 if [ -n "$MODEL_HOST" ]; then

@@ -1,0 +1,31 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(ornith:35b) says:
+Here are the issues I found:
+
+### Errors / Build Risks
+
+1. **Empty `%changelog` section** — OPENSUSE.md explicitly forbids it. Remove it entirely; changelog goes in `PACKAGE.changes`.
+
+2. **Source URL may be dead** — `http://nog.net/~tony/warez/` has been down for years. Verify the tarball is reachable, or switch to a mirror/archival source (e.g., CPAN).
+
+3. **Fragile install logic in `%install`** — The `sed` in `%prep` hardcodes `%{_prefix}` (expands to `/usr`) into `install.sh`, but then you pass `%{buildroot}%{_prefix}` as an argument. If the script concatenates its own prefix with the passed path, you'll get double-prefixing (`${buildroot}/usr/usr`). Verify what `install.sh` actually does with its first argument before shipping this.
+
+### Best Practice Violations
+
+4. **Deprecated `%defattr(-,root,root)`** — Default behavior in modern RPM; remove it.
+
+5. **Deprecated `Group:` tag** — Remove the `Group: Amusements/Toys/Other` line (deprecated since RPM 4.x).
+
+6. **License field has a leading tab** — Cosmetic but breaks spec-cleaner formatting. Change to `License:        GPL-1.0+ or Artistic-1.0`.
+
+7. **No `%check` section** — If upstream tests exist, add one (disabling network-dependent ones per the build env rules).
+
+### Minor Notes
+
+- Consider using `%autosetup` instead of `%setup -q` for consistency with modern spec-cleaner output.
+- `BuildRequires: bash` is fine since you invoke the script with `bash`, but if the shebang in `install.sh` is already `#!/bin/bash`, it could be dropped.
+
+[STATS] AI model: ornith:35b  |  AI calls: 1  |  AI time: 28.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 28.3s

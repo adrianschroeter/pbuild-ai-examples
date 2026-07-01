@@ -1,0 +1,13 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:27b) says:
+- **Remove `%changelog`**: Explicitly forbidden by openSUSE policy. Track changes in `cowsay.changes` instead.
+- **Add `%fdupes %{buildroot}`**: Mandated in guidelines; place at the end of `%install`.
+- **Replace `rm -f` with `%files` exclusion**: Never remove files during `%install`. Exclude `mech-and-cow` directly in `%files` using `-excludes` or refine the glob pattern.
+- **Fix typo**: `%description`: `"and it written"` → `"and it is written"`.
+- **Prefer patching over inline `sed`**: Modifying `install.sh` via `sed` in `%prep` is fragile. Convert to a proper `.patch` and apply with `%autosetup`.
+- **Update License to SPDX**: Change `GPL-1.0+ or Artistic-1.0` to `GPL-1.0-or-later OR Artistic-1.0` per modern openSUSE standards.
+
+[STATS] AI model: qwen3.6:27b  |  AI calls: 1  |  AI time: 330.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 330.4s

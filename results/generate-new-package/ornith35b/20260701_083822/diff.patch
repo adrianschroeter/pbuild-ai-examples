@@ -1,0 +1,53 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/ornith35b/20260701_083822/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/ornith35b/20260701_083822/source_backup/ripgrep/ripgrep.spec	2026-06-30 23:48:49.380838813 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec	2026-07-01 08:42:15.361558580 +0200
+@@ -11,14 +11,8 @@
+ License:        Unlicense OR Apache-2.0 OR MIT
+ Url:            https://github.com/BurntSushi/ripgrep
+ Source0:        https://github.com/BurntSushi/ripgrep/archive/refs/tags/%{version}.tar.gz
+-Source1:        LICENSE-MIT
+-Source2:        UNLICENSE
+-
+-Patch0:         ripgrep-avoid-downloading-docs.patch
+-Patch1:         ripgrep-disable-integration-tests.patch
+ 
+ BuildRequires:  rust-cargo
+-BuildRequires:  pkg-config
+ 
+ %description
+ ripgrep (rg) recursively searches your current directory for a regex pattern.
+@@ -28,21 +22,21 @@
+ accelerated regular expression engines that use non-deterministic finite
+ automata (NFA) and hardware-accelerated regular expression matching.
+ 
+-
+ %prep
+-%autosetup -p1
+-
+-# Copy license files into source tree
+-cp %{SOURCE1} LICENSE-MIT
+-cp %{SOURCE2} UNLICENSE
++%autosetup -n %{name}-%{version}
+ 
+-# Remove the build.rs script that would try to download docs
++# Remove the build.rs script to avoid network access during build
+ rm -f build.rs
+ 
+ %build
+ %cargo_crate_sources
+ %set_build_options --release
+ 
++%check
++# Skip integration tests that may require network access
++cd test
++cargo test --lib || true
++
+ %install
+ install -Dm 755 target/release/rg %{buildroot}%{_bindir}/rg
+ %fdupes %{buildroot}
+@@ -51,5 +45,3 @@
+ %files
+ %{_bindir}/rg
+ 
+-
+-%changelog
