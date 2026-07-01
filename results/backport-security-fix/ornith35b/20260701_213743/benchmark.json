@@ -1,0 +1,20 @@
+{
+  "run_time_seconds": 269,
+  "exit_code": 0,
+  "status": "success",
+  "success": true,
+  "files_changed": 1,
+  "pbuild_ai_version": "0.1.8",
+  "ai_model": "ornith:35b
+ornith:35b",
+  "ai_calls": 5
+0,
+  "ai_time_seconds": 38.4
+0.0,
+  "pbuild_calls": 0
+1,
+  "pbuild_time_seconds": 0.0
+227.9,
+  "total_runtime_seconds": 40.7
+268.6
+}

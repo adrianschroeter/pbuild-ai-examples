@@ -1,9 +1,0 @@
-{
-  "example": "backport-security-fix",
-  "model_key": "qwen27",
-  "model_name": "qwen3.6:27b",
-  "timestamp": "2026-07-01T12:06:36+02:00",
-  "hostname": "rio",
-  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
-  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
-}
