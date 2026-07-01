@@ -912,8 +912,13 @@
             }
 
             document.getElementById('modalTotalRuntime').textContent = formatTime(result.total_runtime_seconds);
-            document.getElementById('modalAiModel').textContent =
-                (result.ai_model !== null && result.ai_model !== undefined && result.ai_model !== '') ? result.ai_model : '-';
+
+            // Show AI model with host description if available
+            let aiModelText = (result.ai_model !== null && result.ai_model !== undefined && result.ai_model !== '') ? result.ai_model : '-';
+            if (result.model_host_description && result.model_host_description.trim()) {
+                aiModelText += ` (${result.model_host_description})`;
+            }
+            document.getElementById('modalAiModel').textContent = aiModelText;
             document.getElementById('modalAiCalls').textContent =
                 (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
             document.getElementById('modalAiTime').textContent = formatTime(result.ai_time_seconds);

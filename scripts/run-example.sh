@@ -69,37 +69,68 @@ EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
-    data = {}
-    current_model = None
+    """Parse YAML with hosts: and models: sections"""
+    data = {"hosts": {}, "models": {}}
+    current_section = None
+    current_key = None
+
     try:
         with open(path) as f:
             for line in f:
                 line = re.sub(r"#.*$", "", line).rstrip()
                 if not line:
                     continue
-                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
-                if m:
-                    current_model = m.group(1)
-                    data[current_model] = {}
+
+                # Top-level section: hosts: or models:
+                if line.startswith("hosts:"):
+                    current_section = "hosts"
                     continue
+                elif line.startswith("models:"):
+                    current_section = "models"
+                    continue
+
+                # Entry key: "  keyname:"
+                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
+                if m and current_section:
+                    current_key = m.group(1)
+                    data[current_section][current_key] = {}
+                    continue
+
+                # Property: "    propname: value"
                 m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
-                if m and current_model is not None:
+                if m and current_section and current_key:
                     val = m.group(2).strip()
                     if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
                         val = val[1:-1]
-                    data[current_model][m.group(1)] = val
+                    data[current_section][current_key][m.group(1)] = val
     except FileNotFoundError:
         pass
     return data
 
-config = {}
+# Merge models.yaml and models.yaml.local
+config = {"hosts": {}, "models": {}}
 for yaml_file in ["models.yaml", "models.yaml.local"]:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
-        for key, val in cfg.items():
-            if key not in config:
-                config[key] = {}
-            config[key].update(val)
+        for section in ["hosts", "models"]:
+            for key, val in cfg.get(section, {}).items():
+                if key not in config[section]:
+                    config[section][key] = {}
+                config[section][key].update(val)
+
+# Resolve host references in models
+for model_key, model_data in config["models"].items():
+    host_key = model_data.get("host", "")
+    if host_key and host_key in config["hosts"]:
+        # Replace host key with actual URL and metadata
+        model_data["host_url"] = config["hosts"][host_key].get("url", "")
+        model_data["host_name"] = config["hosts"][host_key].get("name", host_key)
+        model_data["host_description"] = config["hosts"][host_key].get("description", "")
+    else:
+        # No host or unknown host - use empty/fallback
+        model_data["host_url"] = ""
+        model_data["host_name"] = ""
+        model_data["host_description"] = ""
 
 print(json.dumps(config))
 ' 2>/dev/null || echo "{}")
@@ -110,10 +141,11 @@ if [ "$ALL_MODELS" = true ]; then
     MODEL_KEYS=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
-if not d:
+models = d.get('models', {})
+if not models:
     print('default')
 else:
-    print(' '.join(sorted(d.keys())))
+    print(' '.join(sorted(models.keys())))
 " 2>/dev/null || echo "default")
 
     echo "Running example: $EXAMPLE_DIR"
@@ -154,34 +186,53 @@ if [ -z "$MODEL_KEY" ]; then
     MODEL_KEY=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys, os
 d = json.loads(sys.stdin.read())
-if not d:
+models = d.get('models', {})
+if not models:
     print('default')
     sys.exit(0)
 # Try to match existing OLLAMA_MODEL env var
 env_model = os.environ.get('OLLAMA_MODEL', '')
 if env_model:
-    for k, v in d.items():
+    for k, v in models.items():
         if v.get('model') == env_model:
             print(k)
             sys.exit(0)
 # Fall back to first model key
-print(next(iter(d.keys())))
+print(next(iter(models.keys())))
 " 2>/dev/null || echo "default")
 fi
 
-# Get model config values
+# Get model config values (use host_url which has the resolved URL)
 MODEL_HOST=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
-print(d.get(key, {}).get('host', '') or '')
+models = d.get('models', {})
+print(models.get(key, {}).get('host_url', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
 MODEL_NAME=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
 key = sys.argv[1]
-print(d.get(key, {}).get('model', '') or '')
+models = d.get('models', {})
+print(models.get(key, {}).get('model', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_HOST_NAME=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+print(models.get(key, {}).get('host_name', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_HOST_DESC=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+print(models.get(key, {}).get('host_description', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
 # Export model environment for pbuild-ai
@@ -337,6 +388,8 @@ cat > "${RESULT_DIR}/metadata.json" <<EOF
   "example": "$(basename "$EXAMPLE_DIR")",
   "model_key": "${MODEL_KEY}",
   "model_name": "${MODEL_NAME}",
+  "model_host_name": "${MODEL_HOST_NAME}",
+  "model_host_description": "${MODEL_HOST_DESC}",
   "timestamp": "$(date -Iseconds)",
   "hostname": "$(hostname)",
   "repo_root": "${REPO_ROOT}",

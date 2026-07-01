@@ -1,24 +1,37 @@
 # AI model configurations for pbuild-ai examples
 # Override any value by creating models.yaml.local in the same directory
 # (models.yaml.local is gitignored and won't be committed)
+
+# Define available OpenAI-compatible hosts
+hosts:
+  local:
+    url: "http://localhost:11434"
+    name: "Local Ollama"
+    description: "Local Ollama instance on default port"
+  remote1:
+    url: "http://example.com:11434"
+    name: "Remote Server 1"
+    description: "Example remote Ollama server"
+
+# Model configurations
 models:
   gemma4:
     display: "Gemma 4 31B"
-    host: ""
+    host: "remote1"
     model: "default"
   qwen36:
     display: "Qwen3.6:35B-a3b"
-    host: ""
+    host: "local"
     model: "qwen3.6:35b-a3b"
   qwen36bf16:
     display: "Qwen3.6:35B-a3b-bf16"
-    host: ""
+    host: "local"
     model: "qwen3.6:35b-a3b-bf16"
   qwen27:
     display: "Qwen 3.5 27B"
-    host: ""
+    host: "local"
     model: "qwen3.6:27b"
   ornith35b:
     display: "Ornith 1.0 35B"
-    host: ""
+    host: "local"
     model: "ornith:35b"

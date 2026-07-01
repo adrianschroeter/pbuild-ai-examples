@@ -342,40 +342,58 @@ RESULTS_DIR = "results"
 config = {}
 
 def read_yaml_simple(path):
-    data = {}
-    current_model = None
+    """Parse YAML with hosts: and models: sections"""
+    data = {"hosts": {}, "models": {}}
+    current_section = None
+    current_key = None
+
     try:
         with open(path) as f:
             for line in f:
                 line = re.sub(r'#.*$', '', line).rstrip()
                 if not line:
                     continue
-                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
-                if m:
-                    current_model = m.group(1)
-                    data[current_model] = {}
+
+                # Top-level section: hosts: or models:
+                if line.startswith("hosts:"):
+                    current_section = "hosts"
                     continue
+                elif line.startswith("models:"):
+                    current_section = "models"
+                    continue
+
+                # Entry key: "  keyname:"
+                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                if m and current_section:
+                    current_key = m.group(1)
+                    data[current_section][current_key] = {}
+                    continue
+
+                # Property: "    propname: value"
                 m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
-                if m and current_model is not None:
+                if m and current_section and current_key:
                     val = m.group(2).strip()
                     if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
                         val = val[1:-1]
-                    data[current_model][m.group(1)] = val
+                    data[current_section][current_key][m.group(1)] = val
     except FileNotFoundError:
         pass
     return data
 
+# Merge models.yaml and models.yaml.local
+full_config = {"hosts": {}, "models": {}}
 for yaml_file in ['models.yaml', 'models.yaml.local']:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
-        for key, val in cfg.items():
-            if key not in config:
-                config[key] = {}
-            config[key].update(val)
+        for section in ["hosts", "models"]:
+            for key, val in cfg.get(section, {}).items():
+                if key not in full_config[section]:
+                    full_config[section][key] = {}
+                full_config[section][key].update(val)
 
 # Build models metadata
 models_meta = {"default": {"display": "Unknown Model"}}
-for key, val in config.items():
+for key, val in full_config.get("models", {}).items():
     models_meta[key] = {"display": val.get("display", key)}
 
 TIMESTAMP_RE = re.compile(r'^\d{8}_\d{6}$')
@@ -511,12 +529,16 @@ if os.path.isdir(RESULTS_DIR):
             # Read metadata for model_key if not already known
             meta_path = os.path.join(os.path.dirname(latest_bm_path), "metadata.json")
             meta_model_key = model_key
+            meta_host_name = None
+            meta_host_desc = None
             if os.path.exists(meta_path):
                 with open(meta_path) as f:
                     try:
                         meta = json.load(f)
                         if "model_key" in meta:
                             meta_model_key = meta["model_key"]
+                        meta_host_name = meta.get("model_host_name")
+                        meta_host_desc = meta.get("model_host_description")
                     except json.JSONDecodeError:
                         pass
 
@@ -540,6 +562,8 @@ if os.path.isdir(RESULTS_DIR):
                 "pbuild_time_seconds": pbuild_time,
                 "total_runtime_seconds": total_runtime,
                 "pbuild_ai_version": pbuild_ai_version if pbuild_ai_version else None,
+                "model_host_name": meta_host_name,
+                "model_host_description": meta_host_desc,
                 "trend_percent": trend_percent,
                 "first_run_time_seconds": first_run_time,
                 "run_count": len(all_bm_paths),
