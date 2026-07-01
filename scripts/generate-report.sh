@@ -649,7 +649,14 @@ if os.path.isdir(RESULTS_DIR):
             # Build command string
             cmd_str = example_command or "pbuild-ai"
             if example_options:
-                cmd_str += " " + " ".join(example_options)
+                # Quote arguments that contain spaces
+                quoted_opts = []
+                for opt in example_options:
+                    if ' ' in opt:
+                        quoted_opts.append(f'"{opt}"')
+                    else:
+                        quoted_opts.append(opt)
+                cmd_str += " " + " ".join(quoted_opts)
             cmd_str += " <source-directory>"
 
             result["examples"][example] = {

@@ -484,6 +484,8 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
         --exclude="_build.*" \
         --exclude="*.pyc" \
         --exclude="__pycache__" \
+        --exclude=".pbuild" \
+        --exclude=".pai.context" \
         "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
 
     if [ -n "$DIFF_CONTENT" ]; then
