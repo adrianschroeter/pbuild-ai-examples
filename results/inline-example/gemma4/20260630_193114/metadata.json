@@ -1,9 +1,0 @@
-{
-  "example": "inline-example",
-  "model_key": "gemma4",
-  "model_name": "default",
-  "timestamp": "2026-06-30T19:31:14+02:00",
-  "hostname": "rio",
-  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
-  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
-}
