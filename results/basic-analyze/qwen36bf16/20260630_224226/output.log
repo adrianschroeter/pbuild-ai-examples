@@ -1,0 +1,15 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+**Required Fixes:**
+- Remove empty `%changelog` section (OpenSUSE policy mandates changelog entries in `.changes`, not `.spec`).
+- Replace deprecated `%defattr(-,root,root)` with `%defattr(~,root,root)` or omit it.
+- Add `%fdupes %buildroot` at the end of `%install` to properly handle hardlinked man/info pages per SUSE standards.
+
+**Best Practice Notes:**
+- Fix the hidden tab in `License:` (`GPL-1.0+ or Artistic-1.0`) for `spec-cleaner` whitespace compliance.
+- Avoid patching `install.sh` via `sed` in `%prep`; pass `%{_prefix}` directly to the script or apply a standard source patch. (Omitted per “avoid unnecessary changes” policy unless it triggers build failures.)
+
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 149.8s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 149.8s

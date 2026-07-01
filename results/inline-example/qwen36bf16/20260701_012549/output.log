@@ -1,0 +1,12 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: hello.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+- **Changelog violation**: OPENSUSE.md explicitly forbids `%changelog` in `.spec` files. Remove it; maintain entries in `hello-example.changes` instead.
+- **Deprecated tag**: `Group: Invalid` is obsolete in modern RPM/openSUSE. Delete the line entirely.
+- **Missing header**: Policy requires a license/copyright comment block at the top. Add standard SPDX metadata (e.g., `# SPDX-License-Identifier: MIT`).
+- **Empty `%files`/`%doc` mismatch**: `%files` lists only `%doc` while `%install` produces zero files. RPM will warn on unresolved/empty file lists. Remove `%files` until actual files are packaged, or replace with `%license %{_licensedir}/...`.
+- **Pre-build normalization**: Run `/usr/lib/obs/service/format_spec_file` to normalize macros and enforce `spec-cleaner` compliance before any build attempt.
+
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 96.9s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 97.0s

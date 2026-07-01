@@ -1,0 +1,74 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_011956/source_backup/ripgrep/ripgrep.changes /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.changes
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_011956/source_backup/ripgrep/ripgrep.changes	1970-01-01 01:00:00.000000000 +0100
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.changes	2026-07-01 01:25:24.400508564 +0200
+@@ -0,0 +1,2 @@
++
++- Initial package creation for ripgrep 15.1.0
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_011956/source_backup/ripgrep/ripgrep.spec /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_011956/source_backup/ripgrep/ripgrep.spec	2026-06-30 22:15:49.099901632 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep/ripgrep.spec	2026-07-01 01:24:58.876764075 +0200
+@@ -9,7 +9,6 @@
+ License:        Unlicense OR MIT
+ Url:            https://github.com/BurntSushi/ripgrep
+ Source0:        https://github.com/BurntSushi/ripgrep/releases/download/%{version}/ripgrep-%{version}-x86_64-unknown-linux-musl.tar.gz
+-BuildRoot:      %{_tmppath}/%{name}-%{version}-buildroot
+ 
+ %description
+ ripgrep is a line-oriented search tool that recursively searches the
+@@ -27,14 +26,50 @@
+ %build
+ 
+ %install
+-mkdir -p %{buildroot}/%{_bindir}
++mkdir -p %{buildroot}%{_bindir}
++mkdir -p %{buildroot}%{_mandir}/man1
++mkdir -p %{buildroot}%{_datadir}/bash-completion/completions
++mkdir -p %{buildroot}%{_datadir}/fish/vendor_completions.d
++mkdir -p %{buildroot}%{_datadir}/zsh/site-functions
++mkdir -p %{buildroot}%{_datadir}/doc/%{name}
++
+ tar xf %{_sourcedir}/ripgrep-%{version}-x86_64-unknown-linux-musl.tar.gz
+-chmod 0755 rg
+-install -m 0755 rg %{buildroot}/%{_bindir}/rg
+ 
+-rm -f rg
++install -D -m 0755 ripgrep-%{version}-x86_64-unknown-linux-musl/rg \
++                  %{buildroot}%{_bindir}/rg
++
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/doc/rg.1 \
++                  %{buildroot}%{_mandir}/man1/rg.1
++
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/complete/rg.bash \
++                  %{buildroot}%{_datadir}/bash-completion/completions/rg
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/complete/rg.fish \
++                  %{buildroot}%{_datadir}/fish/vendor_completions.d/rg.fish
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/complete/_rg \
++                  %{buildroot}%{_datadir}/zsh/site-functions/_rg
++
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/COPYING \
++                  %{buildroot}%{_datadir}/doc/%{name}/COPYING
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/LICENSE-MIT \
++                  %{buildroot}%{_datadir}/doc/%{name}/LICENSE-MIT
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/UNLICENSE \
++                  %{buildroot}%{_datadir}/doc/%{name}/UNLICENSE
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/README.md \
++                  %{buildroot}%{_datadir}/doc/%{name}/README
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/doc/CHANGELOG.md \
++                  %{buildroot}%{_datadir}/doc/%{name}/CHANGELOG
++install -D -m 0644 ripgrep-%{version}-x86_64-unknown-linux-musl/doc/FAQ.md \
++                  %{buildroot}%{_datadir}/doc/%{name}/FAQ
+ 
+ %files
+ %{_bindir}/rg
++%{_mandir}/man1/rg.1*
++%{_datadir}/bash-completion/completions/rg
++%{_datadir}/fish/vendor_completions.d/rg.fish
++%{_datadir}/zsh/site-functions/_rg
++%doc %{_datadir}/doc/%{name}
++
++%check
++%{buildroot}%{_bindir}/rg --version
+ 
+-%changelog
++%fdupes -s %{buildroot}
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/generate-new-package/qwen36bf16/20260701_011956/source_backup/ripgrep-check.tar.gz und /home/adrian/opencode/pbuild-ai-examples/sources/ripgrep/ripgrep-check.tar.gz sind verschieden.

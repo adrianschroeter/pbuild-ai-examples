@@ -1,0 +1,9 @@
+{
+  "example": "simple-modification",
+  "model_key": "qwen36bf16",
+  "model_name": "qwen3.6:35b-a3b-bf16",
+  "timestamp": "2026-07-01T01:27:30+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}

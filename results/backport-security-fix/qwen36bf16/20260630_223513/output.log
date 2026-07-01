@@ -1,0 +1,44 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: libarchive.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+### Critical Errors (Build Breaking)
+
+1.  **`rm libarchive.a` conflicts with packaging:**
+    *   The `%install` section removes the static library (`rm ... libarchive.a`), but SUSE defaults enable it via `bcond_with static_libs`.
+    *   Result: `%files static-devel` will reference a missing file, causing a build failure.
+    *   **Fix:** Remove the `rm` command or wrap it in `%if !%{with static_libs}`.
+
+2.  **`rm man pages` conflicts with `%files`:**
+    *   The `%install` section deletes man pages (`rm ... man5/{tar,cpio,mtree}.5*`), but these are listed in `%files -n bsdtar`.
+    *   Result: Build failure due to missing files in the file list.
+    *   **Fix:** Remove the `rm` command for man pages.
+
+3.  **Syntax Error in Conditional:**
+    *   Line: `%if 0%{?rhel_version <= 700}`
+    *   Error: Missing closing brace for macro expansion.
+    *   **Fix:** Change to `%if 0%{?rhel_version} <= 700`.
+
+### Best Practices & Logic Issues
+
+*   **OpenSSL Disabled by Default on SUSE:**
+    *   The `bcond` logic disables OpenSSL on SUSE (`bcond_without openssl`) but enables it on RHEL. This likely removes TLS/HTTPS support from the SUSE package unnecessarily.
+    *   **Recommendation:** Verify if OpenSSL should be enabled; usually, `bcond_with openssl` is appropriate for SUSE given standard dependencies.
+*   **Empty `%changelog`:**
+    *   SUSE convention requires omitting empty changelogs entirely. Remove the trailing `%changelog` section.
+*   **Security Fix Required:**
+    *   Apply the security fix from commit `020c40df...`. Add as a new patch or inline change ensuring it applies cleanly to v3.7.4.
+
+### Summary of Actions
+1.  Fix macro syntax error (`rhel_version`).
+2.  Restore static library and man pages in `%install`.
+3.  Remove empty `%changelog`.
+4.  Review/enable OpenSSL support for SUSE.
+5.  Integrate security patch from specified commit.
+
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096
+
+[OK] Build for libarchive.spec succeeded.
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 197.5s  |  pbuild calls: 1  |  pbuild time: 232.2s  |  total runtime: 429.8s

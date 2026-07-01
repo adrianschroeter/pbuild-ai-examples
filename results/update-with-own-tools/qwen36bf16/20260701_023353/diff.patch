@@ -1,0 +1,32 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36bf16/20260701_023353/source_backup/ollama.changes /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36bf16/20260701_023353/source_backup/ollama.changes	2026-07-01 02:33:54.282253342 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.changes	2026-07-01 03:01:10.007162024 +0200
+@@ -1,4 +1,10 @@
+ -------------------------------------------------------------------
++Wed Jul  1 01:01:10 UTC 2026 - pbuild-ai <Your Name>
++
++- Updated to version 0.30.12
++- Update generated using pbuild-ai
++
++-------------------------------------------------------------------
+ Sat Jun 27 08:59:05 UTC 2026 - Adrian Schröter <adrian@suse.de>
+ 
+ - Update to 0.30.11:
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36bf16/20260701_023353/source_backup/ollama.spec /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/update-with-own-tools/qwen36bf16/20260701_023353/source_backup/ollama.spec	2026-07-01 02:33:54.282253342 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/ollama/ollama.spec	2026-07-01 03:01:10.006161995 +0200
+@@ -65,13 +65,12 @@
+ %define cuda_version %{cuda_version_major}-%{cuda_version_minor}
+ 
+ Name:           ollama
+-Version:        0.30.11
++Version:        0.30.12
+ Release:        0
+ Summary:        Tool for running AI models on-premise
+ License:        MIT
+ URL:            https://ollama.com
+ #!RemoteAsset: git+https://github.com/ollama/ollama#v%{version}
+-#!CreateArchive
+ Source:         %{name}-%{version}.tar.xz
+ Source1:        vendor.tar.zstd
+ Source2:        %{name}.service
