@@ -420,6 +420,16 @@
                 <button class="modal-close" onclick="closeResultModal()">&times;</button>
             </div>
             <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Description</h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Command</h3>
+                    <div class="modal-command">
+                        <code id="modalCommand"></code>
+                    </div>
+                </div>
                 <div class="modal-section info-row" id="infoRow" style="display:none;">
                     <div class="info-card" id="sourceCard" style="display:none;">
                         <h3>Used base source</h3>
@@ -482,6 +492,7 @@
                 const matrix = {};
                 const models = new Set();
                 const examplesMap = new Map(); // Store examples with their order
+                const examplesMetadata = {}; // Store example metadata (description, etc.)
                 let totalRuns = 0;
                 let successfulRuns = 0;
 
@@ -495,6 +506,13 @@
 
                         examplesMap.set(exampleName, order);
                         matrix[exampleName] = {};
+
+                        // Store metadata from example data
+                        examplesMetadata[exampleName] = {
+                            name: exampleData.name || exampleName,
+                            description: exampleData.description || null,
+                            command: exampleData.command || null
+                        };
 
                         // Access the nested 'models' object
                         const modelsData = exampleData.models || {};
@@ -575,7 +593,7 @@
                             cellDiv.className = 'matrix-cell';
                             // Show result details in modal
                             cellDiv.onclick = () => {
-                                showResultModal(example, model, cell, modelsMeta[model]);
+                                showResultModal(example, model, cell, modelsMeta[model], examplesMetadata[example]);
                             };
 
                             // Status badge
@@ -653,9 +671,18 @@
         loadMatrix();
 
         // Modal functions
-        function showResultModal(exampleName, modelKey, result, modelMeta) {
+        function showResultModal(exampleName, modelKey, result, modelMeta, exampleMetadata) {
             const displayName = modelMeta?.display || modelKey;
-            document.getElementById('modalTitle').textContent = `${exampleName} - ${displayName}`;
+            const exampleTitle = exampleMetadata?.name || exampleName;
+            document.getElementById('modalTitle').textContent = `${exampleTitle} - ${displayName}`;
+
+            // Show description
+            const description = exampleMetadata?.description || 'No description available';
+            document.getElementById('modalDescription').textContent = description;
+
+            // Show command
+            const command = exampleMetadata?.command || 'pbuild-ai <source-directory>';
+            document.getElementById('modalCommand').textContent = command;
 
             // Status
             let statusText, statusColor;

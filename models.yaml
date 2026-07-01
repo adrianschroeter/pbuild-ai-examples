@@ -2,6 +2,9 @@
 # Override any value by creating models.yaml.local in the same directory
 # (models.yaml.local is gitignored and won't be committed)
 
+# Default model to use when no --model is specified
+default: "qwen36"
+
 # Define available OpenAI-compatible hosts
 hosts:
   local:

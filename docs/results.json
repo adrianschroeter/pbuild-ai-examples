@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-01T11:21:06+02:00",
+  "generated": "2026-07-01T09:40:47+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -23,6 +23,9 @@
   "examples": {
     "backport-security-fix": {
       "order": 5,
+      "name": "Backport Security Fix",
+      "description": "Apply a security fix from upstream using AI-guided patching with --prompt and --fix",
+      "command": "pbuild-ai --prompt Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 --fix --vm-memory 8096 <source-directory>",
       "models": {
         "default": {
           "timestamp": "20260630_134100",
@@ -50,54 +53,54 @@
           "result_path": "../results/backport-security-fix/20260630_134100"
         },
         "gemma4": {
-          "timestamp": "20260630_190643",
-          "run_time_seconds": 850,
+          "timestamp": "20260701_112612",
+          "run_time_seconds": 400,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
           "ai_model": "default",
           "ai_calls": 1,
-          "ai_time_seconds": 448.9,
-          "pbuild_calls": 2,
-          "pbuild_time_seconds": 401.0,
-          "total_runtime_seconds": 849.9,
-          "pbuild_ai_version": "0.1.6",
-          "model_host_name": null,
-          "model_host_description": null,
+          "ai_time_seconds": 52.3,
+          "pbuild_calls": 1,
+          "pbuild_time_seconds": 347.6,
+          "total_runtime_seconds": 400.0,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "nvidia",
+          "model_host_description": "A NVidia Cuda based SUSE-AI server",
           "source_url": "https://src.opensuse.org/pool/libarchive",
           "source_ref": "da539241ef7df83d772531fe3f9fe57038ef850d61aaa059d27dfe3021509f88",
           "trend_percent": null,
           "first_run_time_seconds": null,
-          "run_count": 3,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(default) says:\n### Analysis & Fixes\n\n1.  **Security Fix**: Added `Patch4` to implement the security fix from commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`.\n2.  **Best Practice**: Removed the `%changelog` section, as per openSUSE conventions (changelogs belong in `PACKAGE.changes`).\n3.  **Best Practice**: Maintained single-line `BuildRequires`.\n\n```rpm\n#\n# spec file for package libarchive\n#\n# Copyright (c) 2024 SUSE LLC\n#\n# All modifications and additions to the file contributed by third parties\n# remain the property of their copyright owners, unless otherwise agreed\n# upon. The license for this file, and modifications and additions to the\n# file, is the same license as for the pristine package itself (unless the\n# license for the pristine package is not an Open Source License, in which\n# case the license is the MIT License). An \"Open Source License\" is a\n# license that conforms to the Open Source Definition (Version 1.9)\n# published by the Open Source Initiative.\n\n# Please submit bugfixes or comments via https://bugs.opensuse.org/\n#\n\n%define somajor 13\n%define libname libarchive%{somajor}\n%if 0%{?centos_version} || 0%{?rhel_version}\n%if 0%{?centos_version} <= 600 || 0%{?rhel_version <= 700}\n%bcond_without\tstatic_libs\n%bcond_with\topenssl\n%bcond_with\text2fs\n%endif\n%else\n%bcond_with\tstatic_libs\n%bcond_without\topenssl\n%bcond_without\text2fs\n%endif\nName:           libarchive\nVersion:        3.7.4\nRelease:        0\nSummary:        Utility and C library to create and read several streaming archive formats\nLicense:        BSD-2-Clause\nGroup:          Productivity/Archiving/Compression\nURL:            https://www.libarchive.org/\nSource0:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz\nSource1:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz.asc\nSource2:        libarchive.keyring\nSource1000:     baselibs.conf\nPatch1:         lib-suffix.patch\nPatch2:         fix-soversion.patch\n# PATCH-FIX-SUSE danilo.spinella@suse.com\n# bsdunzip test fails because of a locale issue, set locale properly to fix it\n# It will be fixed in the next release\nPatch3:         fix-bsdunzip-test.patch\nPatch4:         security-fix-020c40df.patch\nBuildRequires:  cmake\nBuildRequires:  libacl-devel\nBuildRequires:  libbz2-devel\nBuildRequires:  liblz4-devel\nBuildRequires:  libtool\nBuildRequires:  libxml2-devel\nBuildRequires:  libzstd-devel\nBuildRequires:  ninja\nBuildRequires:  pkgconfig\nBuildRequires:  xz-devel\nBuildRequires:  zlib-devel\n%if %{with ext2fs}\nBuildRequires:  libext2fs-devel\n%endif\n%if %{with openssl}\nBuildRequires:  libopenssl-devel\n%endif\n\n%description\nLibarchive is a programming library that can create and read several\ndifferent streaming archive formats, including most popular tar\nvariants and several cpio formats. It can also write shar archives and\nread ISO-9660 CDROM images. The bsdtar program is an implementation of\ntar(1) that is built on top of libarchive. It started as a test\nharness, but has grown and is now the standard system tar for FreeBSD 5\nand 6.\n\nThis package contains the bsdtar cmdline utility.\n\n%package -n bsdtar\nSummary:        Utility to read several different streaming archive formats\nGroup:          Productivity/Archiving/Compression\nRequires:       %{libname} >= %{version}\n\n%description -n bsdtar\nThis package contains the bsdtar cmdline utility.\n\n%package -n %{libname}\nSummary:        Library to work with several different streaming archive formats\nGroup:          System/Libraries\n\n%description -n %{libname}\nLibarchive is a programming library that can create and read several\ndifferent streaming archive formats, including most popular tar\nvariants and several cpio formats. It can also write shar archives and\nread ISO-9660 CDROM images. The bsdtar program is an implementation of\ntar(1) that is built on top of libarchive. It started as a test\nharness, but has grown and is now the standard system tar for FreeBSD 5\nand 6.\n\nThe libarchive library offers a number of features that make it both\nvery flexible and very powerful.\n\n- Automatic format detection: libarchive can automatically determine\n   both the compression and the archive format, regardless of the\n   data source. Most tar implementations do not automatically detect\n   the compression format, few implementation that can correctly do\n   this when reading from stdin or a socket. (The tar program\n   included with Gunnar Ritter's heirloom collection also does full\n   automatic format detection.)\n\n- Writes POSIX formats: libarchive writes POSIX-standard formats,\n   including \"ustar,\" \"pax interchange format,\" and the POSIX \"cpio\"\n   format.\n\n- Supports pax interchange format: Pax interchange format (which,\n   despite the name, is really an extended tar format) eliminates\n   almost all limitations of historic tar formats and provides a\n   standard method for incorporating vendor-specific extensions.\n   libarchive exploits this extension mechanism to support ACLs and\n   file flags, for example. (Joerg Schilling's star archiver is\n   another open-source tar program that supports pax interchange\n   format.)\n\n- Reads popular formats: libarchive can read GNU tar, ustar, pax\n   interchange format, cpio, and older tar variants. The internal\n   architecture is easily extensible. The only requirement for\n   support is that it be possible to read the format without seeking\n   in the file. (For example, a format that includes a compressed\n   size field before the data cannot be correctly written without\n   seeking.)\n\n- High-Level API: the libarchive API makes it fairly simple to build\n   an archive from a list of filenames or to extract the entries\n   from an archive. However, the API also provides extreme\n   flexibility with regards to data sources. For example, there are\n   generic hooks that allow you to write an archive to a socket or\n   read an archive entry into a memory buffer.\n\n- Extensible. The internal design uses generic interfaces for\ncompression, archive format detection and decoding, and archive data\nI/O. It should be very easy to add new formats, new compression\nmethods, or new ways of reading/writing archives.\n\n%package -n libarchive-devel\nSummary:        Development files for libarchive\nGroup:          Development/Libraries/C and C++\nRequires:       %{libname} = %{version}\nRequires:       glibc-devel\n\n%description -n libarchive-devel\nLibarchive is a programming library that can create and read several\ndifferent streaming archive formats, including most popular tar\nvariants and several cpio formats. It can also write shar archives and\nread ISO-9660 CDROM images. The bsdtar program is an implementation of\ntar(1) that is built on top of libarchive. It started as a test\nharness, but has grown and is now the standard system tar for FreeBSD 5\nand 6.\n\nThis package contains the development files.\n\n%package static-devel\nSummary:        Static library for libarchive\nGroup:          Development/Libraries/C and C++\nRequires:       %{name}-devel = %{version}\n\n%description static-devel\nStatic library for libarchive\n\n%prep\n%setup -q\n%autopatch -p1\n\n%build\n%define __builder ninja\n%cmake\n%cmake_build\n\n%check\nexclude=\"\"\n%ifarch %arm %ix86 ppc s390\nexclude=\"-E test_write_filter\"\n%endif\n%ctest $exclude\n\n%install\n%cmake_install\n\nfind %{buildroot} -type f -name \"*.la\" -delete -print\nrm \"%{buildroot}%{_libdir}/libarchive.a\"\nrm \"%{buildroot}%{_mandir}/man5/\"{tar,cpio,mtree}.5*\nsed -i -e '/Libs.private/d' %{buildroot}%{_libdir}/pkgconfig/libarchive.pc\n\n%post   -n %{libname} -p /sbin/ldconfig\n%postun -n %{libname} -p /sbin/ldconfig\n\n%files -n bsdtar\n%{_bindir}/bsdcat\n%{_bindir}/bsdcpio\n%{_bindir}/bsdtar\n%{_bindir}/bsdunzip\n%{_mandir}/man1/*\n%{_mandir}/man5/*\n\n%files -n %{libname}\n%license COPYING\n%doc NEWS\n%{_libdir}/libarchive.so.*\n\n%files -n libarchive-devel\n%doc examples/\n%{_mandir}/man3/*\n%{_libdir}/libarchive.so\n%{_includedir}/archive*\n%{_libdir}/pkgconfig/libarchive.pc\n\n%if %{with static_libs}\n%files static-devel\n%{_libdir}/%{name}.a\n%endif\n```\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n[RETRY] Build did not reach build phase. Retrying with --clean...\n[EXEC] pbuild --orphan --release 0 --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded after --clean retry.\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 448.9s  |  pbuild calls: 2  |  pbuild time: 401.0s  |  total runtime: 849.9s\n",
-          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/gemma4/20260630_190643/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
-          "result_path": "../results/backport-security-fix/gemma4/20260630_190643"
+          "run_count": 4,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(default) says:\n### Errors & Missing Best Practices\n\n1.  **Remove `%changelog`**: Per openSUSE guidelines, the `%changelog` section must be removed from the `.spec` file and moved to `PACKAGE.changes`.\n2.  **Patch Syntax**: Replace `%autopatch -p1` with explicit `%patch -PX` syntax (e.g., `%patch -P1 -p1`).\n3.  **Security Fix**: Add the requested security patch (commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`) as `Patch4`.\n\n### Recommended Changes\n\n**1. Add the security patch definition:**\n```spec\nPatch4:         security-fix-020c40df.patch\n```\n\n**2. Update `%prep` section:**\n```spec\n%prep\n%setup -q\n%patch -P1 -p1\n%patch -P2 -p1\n%patch -P3 -p1\n%patch -P4 -p1\n```\n\n**3. Delete the final line:**\n```spec\n%changelog  <-- REMOVE THIS\n```\n\n**4. (Optional/Cleanup)**: The logic for `centos_version` and `rhel_version` at the top is non-standard for pure openSUSE packages; consider removing it if this is exclusively for SUSE.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 52.3s  |  pbuild calls: 1  |  pbuild time: 347.6s  |  total runtime: 400.0s\n",
+          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/gemma4/20260701_112612/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
+          "result_path": "../results/backport-security-fix/gemma4/20260701_112612"
         },
         "qwen36": {
-          "timestamp": "20260630_223341",
-          "run_time_seconds": 392,
+          "timestamp": "20260701_112408",
+          "run_time_seconds": 1,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": "qwen3.6:35b-a3b",
-          "ai_calls": 1,
-          "ai_time_seconds": 97.7,
-          "pbuild_calls": 1,
-          "pbuild_time_seconds": 294.3,
-          "total_runtime_seconds": 392.0,
-          "pbuild_ai_version": "0.1.6",
-          "model_host_name": null,
-          "model_host_description": null,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
           "source_url": "https://src.opensuse.org/pool/libarchive",
           "source_ref": "da539241ef7df83d772531fe3f9fe57038ef850d61aaa059d27dfe3021509f88",
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n-> AI(qwen3.6:35b-a3b) says:\n**Critical Fixes & Guideline Violations:**\n- **Remove `%changelog`**: Per SUSE conventions, this section must be omitted entirely. Use `PACKAGE.changes` instead.\n- **Drop deprecated `Group:` fields**: Modern RPM/spec-cleaner ignores them. Remove all instances.\n- **Fix invalid `%check` syntax**: `exclude=\"\"` is not valid spec/bash syntax. Use explicit `%ctest --exclude=` flags.\n- **Standardize patch numbering**: Per guidelines, use `Patch0:`, `Patch1:`, etc., and apply via `%patch -P<N> -p1`.\n- **Remove `%define __builder ninja`**: Non-standard. `%cmake` handles Ninja automatically when `ninja-build` is in `BuildRequires`.\n\n**Security Patch Integration:**\nAdd the commit as a patch source and apply it first in `%prep`:\n```spec\nSource1001: https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch\n...\nPatch4:         020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch\n...\n%prep\n%setup -q\n%patch -P4 -p1\n%autopatch -p1\n```\n\n**Required Drop-in Replacements:**\n`%build` (add ninja dependency, remove macro)\n```spec\nBuildRequires:  ninja-build\n%cmake\n%cmake_build\n```\n\n`%check` (fix invalid variable syntax)\n```spec\n%check\n%ifarch %arm %ix86 ppc s390\n  %ctest --exclude=test_write_filter\n%else\n  %ctest\n%endif\n```\n\n**Additional Notes:**\n- `Source1000: baselibs.conf` is obsolete. OBS manages baselibs via `_service`. Remove unless explicitly required by a maintainer.\n- Manual `.la`/`.a` removal in `%install` is often redundant with modern `%cmake_install`. Verify if still needed for your target distro.\n- `Requires: %{libname} >= %{version}` in `bsdtar` should be `=` for precise dependency tracking, though `>=` won't break the build.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096\n\n[OK] Build for libarchive.spec succeeded.\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 97.7s  |  pbuild calls: 1  |  pbuild time: 294.3s  |  total runtime: 392.0s\n",
-          "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/backport-security-fix/qwen36/20260630_223341/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/libarchive/.pbuild/lastdata sind verschieden.\n",
-          "result_path": "../results/backport-security-fix/qwen36/20260630_223341"
+          "trend_percent": -99.7,
+          "first_run_time_seconds": 392.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: libarchive.spec...\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
+          "diff": "",
+          "result_path": "../results/backport-security-fix/qwen36/20260701_112408"
         },
         "qwen36bf16": {
           "timestamp": "20260630_223513",
@@ -128,31 +131,34 @@
     },
     "basic-analyze": {
       "order": 1,
+      "name": "Basic Package Analysis",
+      "description": "Demonstrates basic package source analysis without modifications",
+      "command": "pbuild-ai <source-directory>",
       "models": {
         "gemma4": {
-          "timestamp": "20260701_075030",
-          "run_time_seconds": 378,
+          "timestamp": "20260701_113254",
+          "run_time_seconds": 43,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
           "ai_model": "default",
           "ai_calls": 1,
-          "ai_time_seconds": 377.0,
+          "ai_time_seconds": 42.4,
           "pbuild_calls": 0,
           "pbuild_time_seconds": 0.0,
-          "total_runtime_seconds": 377.2,
-          "pbuild_ai_version": "0.1.6",
-          "model_host_name": null,
-          "model_host_description": null,
+          "total_runtime_seconds": 42.4,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "nvidia",
+          "model_host_description": "A NVidia Cuda based SUSE-AI server",
           "source_url": "https://src.opensuse.org/pool/cowsay",
           "source_ref": "852d1df910bf97567adb4a1989a4e3939e6bd5242a5c6fd46dc5d39da78c30c5",
-          "trend_percent": 490.6,
+          "trend_percent": -32.8,
           "first_run_time_seconds": 64.0,
-          "run_count": 2,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(default) says:\n- **Remove `%changelog`**: Per openSUSE conventions, the changelog must be in the `PACKAGE.changes` file, not the `.spec` file.\n- **Invalid Macro**: The `sed` command uses `%{nil}`, which is not a standard RPM macro and will likely result in an empty string or a build warning/error.\n- **Wildcards in `%files`**: Avoid using wildcards (`%{_mandir}/man1/*`). List the files explicitly or use the directory path.\n- **Use `%autosetup`**: Replace `%setup -q` with `%autosetup` for modern openSUSE packaging.\n- **Install Script**: Relying on a custom `install.sh` is discouraged. If possible, manually install files using `install(7)` or `cp` to ensure permissions and paths are handled predictably.\n\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 377.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 377.2s\n",
+          "run_count": 3,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(default) says:\n- **Remove `%changelog`**: Per openSUSE conventions, the `%changelog` section must be removed from the `.spec` file; changes belong in the `PACKAGE.changes` file.\n- **Fix `sed` command**: `%{nil}` is not a standard RPM macro. This will likely fail to match the target string in `install.sh`. Verify the correct variable name in the source.\n- **Remove empty `%build`**: While not explicitly forbidden like `%post`, an empty `%build` section is unnecessary.\n- **Files section**: Avoid using wildcards like `%{_mandir}/man1/*`. List the specific files or the directory to ensure better package tracking.\n\n[STATS] AI model: default  |  AI calls: 1  |  AI time: 42.4s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 42.4s\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/gemma4/20260701_075030"
+          "result_path": "../results/basic-analyze/gemma4/20260701_113254"
         },
         "ornith35b": {
           "timestamp": "20260701_075648",
@@ -205,29 +211,29 @@
           "result_path": "../results/basic-analyze/qwen27/20260701_075718"
         },
         "qwen36": {
-          "timestamp": "20260701_080250",
-          "run_time_seconds": 64,
+          "timestamp": "20260701_112410",
+          "run_time_seconds": 1,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": "qwen3.6:35b-a3b",
-          "ai_calls": 1,
-          "ai_time_seconds": 63.4,
-          "pbuild_calls": 0,
-          "pbuild_time_seconds": 0.0,
-          "total_runtime_seconds": 63.5,
-          "pbuild_ai_version": "0.1.6",
-          "model_host_name": null,
-          "model_host_description": null,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
           "source_url": "https://src.opensuse.org/pool/cowsay",
           "source_ref": "852d1df910bf97567adb4a1989a4e3939e6bd5242a5c6fd46dc5d39da78c30c5",
-          "trend_percent": -34.7,
+          "trend_percent": -99.0,
           "first_run_time_seconds": 98.0,
-          "run_count": 2,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(qwen3.6:35b-a3b) says:\n**Critical Fixes**\n- Remove the empty `%changelog` section entirely per policy. Maintain entries in `PACKAGE.changes`.\n- Fix man page path mismatch: `mv -T .../man/ %{buildroot}%{_mandir}` places files directly in `%{_mandir}`, but `%files` expects `%{_mandir}/man1/*`. Change `mv` to `mv -T %{buildroot}%{_prefix}/man/ %{buildroot}%{_mandir}/man1/` or update `%files` to `%{_mandir}/*`.\n\n**Deprecations & Compliance**\n- Remove `%defattr(-,root,root)`; deprecated in modern RPM and stripped by `spec-cleaner`.\n- Drop `Group:` field; legacy metadata, incompatible with `spec-cleaner` normalization.\n- Add `%set_permissions 755 %{_bindir}/*` in `%install` for SUSE macro compliance (Perl binaries already get executable mode via `install.sh`, but explicit macro satisfies audit rules).\n\n**Best Practices**\n- Add `BuildRequires: perl` (explicit build-time dependency, standard for Perl packages).\n- Ensure no external macros are used in `BuildRequires/Requires` (compliant).\n- Run `/usr/lib/obs/service/format_spec_file` before submission to auto-normalize whitespace/macro spacing per openSUSE standards.\n\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 63.4s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 63.5s\n",
+          "run_count": 3,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/qwen36/20260701_080250"
+          "result_path": "../results/basic-analyze/qwen36/20260701_112410"
         },
         "qwen36bf16": {
           "timestamp": "20260701_080355",
@@ -256,8 +262,69 @@
         }
       }
     },
+    "cleanup-source": {
+      "order": 4,
+      "name": "Cleanup Source",
+      "description": "Demonstrates using --modify flag just how to cleanup an existing source",
+      "command": "pbuild-ai --modify Cleanup the source according to current rules <source-directory>",
+      "models": {
+        "gemma4": {
+          "timestamp": "20260701_113337",
+          "run_time_seconds": 253,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 1,
+          "ai_model": "default",
+          "ai_calls": 4,
+          "ai_time_seconds": 252.7,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 253.0,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "nvidia",
+          "model_host_description": "A NVidia Cuda based SUSE-AI server",
+          "source_url": "https://src.opensuse.org/pool/python-Glances",
+          "source_ref": "45791911e811b009feff71974b1851581bdbf90b63b54ebe1c133ea99b3cc5a3",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] cleanup_skill.py (prompt match)\n[SKILL ACTIVE] python_skill.py for python-Glances.spec\n[INFO] Using skill profile: cleanup_skill\n[INFO] Using skill profile: python_skill\n\n[MODIFY] Sending python-Glances.spec sources to default...\n[TOOL] list_files: . (8 entries)\n[MODIFY] OK\n[MODIFY] .git/\n.gitattributes\n.gitignore\nadjust-data-files.patch\npython-Glances.changes\npython-Glances.spec\nremove-shebang.patch\nv3.1.0.tar.gz\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -58,15 +58,15 @@\n\u001b[0m[TOOL]  %build\n[TOOL]  %python_build\n[TOOL]  \n\u001b[32m[TOOL]\u001b[0m \u001b[32m+%install\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%python_install\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%python_expand %fdupes %{buildroot}%{$python_sitelib}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m[TOOL]  %check\n[TOOL]  export LANG=en_US.UTF-8\n[TOOL]  %python_exec unitest.py\n[TOOL]  %python_exec unitest-restful.py\n[TOOL]  %python_exec unitest-xmlrpc.py\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%install\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%python_install\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%python_expand %fdupes %{buildroot}%{$python_sitelib}\n\u001b[0m[TOOL]  \n[TOOL]  %files %{python_files}\n[TOOL]  %license COPYING\n[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -75,4 +75,3 @@\n\u001b[0m[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz\n[TOOL]  %{python_sitelib}/*\n[TOOL]  \n\u001b[31m[TOOL]\u001b[0m \u001b[31m-%changelog\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[MODIFY] OK: Edited python-Glances.spec\n[TOOL] list_archive: v3.1.0.tar.gz (415 entries)\n[MODIFY] glances-3.1.0\nglances-3.1.0/.ci\nglances-3.1.0/.ci/appveyor\nglances-3.1.0/.ci/appveyor/README.rst\nglances-3.1.0/.ci/appveyor/download_exes.py\nglances-3.1.0/.ci/appveyor/install.ps1\nglances-3.1.0/.ci/appveyor/run_with_compiler.cmd\nglances-3.1.0/.coveragerc\nglances-3.1.0/.gitattributes\nglances-3.1.0/.github\nglances-3.1.0/.github/ISSUE_TEMPLATE.md\nglances-3.1.0/.github/PULL_REQUEST_TEMPLATE.md\nglances-3.1.0/.gitignore\nglances-3.1.0/.mailmap\nglances-3.1.0/.travis.yml\nglances-3.1.0/AUTHORS\nglances-3.1...\n\n[MODIFY] Ollama:\nThe spec file has been cleaned up according to openSUSE packaging conventions. I have normalized the formatting, reordered the `%install` and `%check` sections to follow the standard tag order, and removed the empty `%changelog` section. No `_service` file was found, so no `RemoteAsset` conversion was necessary.\n\n[MODIFY] Changes confirmed.\n[MODIFY] Downloading https://github.com/nicolargo/glances/archive/v%{version}.tar.gz -> v%{version}.tar.gz\n[MODIFY] Failed to download https://github.com/nicolargo/glances/archive/v%{version}.tar.gz: HTTP Error 400: Bad Request\n[STATS] AI model: default  |  AI calls: 4  |  AI time: 252.7s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 253.0s\n",
+          "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/cleanup-source/gemma4/20260701_113337/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n--- /home/adrian/opencode/pbuild-ai-examples/results/cleanup-source/gemma4/20260701_113337/source_backup/python-Glances.spec\t2026-07-01 11:33:38.013141771 +0200\n+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\t2026-07-01 11:34:57.720642836 +0200\n@@ -58,16 +58,16 @@\n %build\n %python_build\n \n+%install\n+%python_install\n+%python_expand %fdupes %{buildroot}%{$python_sitelib}\n+\n %check\n export LANG=en_US.UTF-8\n %python_exec unitest.py\n %python_exec unitest-restful.py\n %python_exec unitest-xmlrpc.py\n \n-%install\n-%python_install\n-%python_expand %fdupes %{buildroot}%{$python_sitelib}\n-\n %files %{python_files}\n %license COPYING\n %doc NEWS README.rst\n@@ -75,4 +75,3 @@\n %python3_only %{_mandir}/man1/glances.1.gz\n %{python_sitelib}/*\n \n-%changelog\n",
+          "result_path": "../results/cleanup-source/gemma4/20260701_113337"
+        },
+        "qwen36": {
+          "timestamp": "20260701_112411",
+          "run_time_seconds": 0,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+          "source_url": "https://src.opensuse.org/pool/python-Glances",
+          "source_ref": "45791911e811b009feff71974b1851581bdbf90b63b54ebe1c133ea99b3cc5a3",
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] cleanup_skill.py (prompt match)\n[SKILL ACTIVE] python_skill.py for python-Glances.spec\n[INFO] Using skill profile: cleanup_skill\n[INFO] Using skill profile: python_skill\n\n[MODIFY] Sending python-Glances.spec sources to qwen3.6:35b-a3b...\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
+          "diff": "",
+          "result_path": "../results/cleanup-source/qwen36/20260701_112411"
+        }
+      }
+    },
     "fix-build-failures": {
       "order": 2,
+      "name": "Fix Build Failures",
+      "description": "Automatically detect and fix package build failures",
+      "command": "pbuild-ai --fix <source-directory>",
       "models": {
         "default": {
           "timestamp": "20260629_175422",
@@ -309,6 +376,31 @@
           "diff": "Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/fix-build-failures/gemma4/20260630_192200/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/.pbuild/lastdata sind verschieden.\n",
           "result_path": "../results/fix-build-failures/gemma4/20260630_192200"
         },
+        "qwen36": {
+          "timestamp": "20260701_112412",
+          "run_time_seconds": 0,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+          "source_url": null,
+          "source_ref": null,
+          "trend_percent": null,
+          "first_run_time_seconds": 4280.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] python_skill.py for python-adb-shell.spec\n[INFO] Using skill profile: python_skill\n[AI] Analyzing Spec-file: python-adb-shell.spec...\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
+          "diff": "",
+          "result_path": "../results/fix-build-failures/qwen36/20260701_112412"
+        },
         "qwen36bf16": {
           "timestamp": "20260630_224457",
           "run_time_seconds": 9299,
@@ -338,6 +430,9 @@
     },
     "generate-new-package": {
       "order": 3,
+      "name": "Generate New Package",
+      "description": "Generate a complete package from scratch without any source files",
+      "command": "pbuild-ai --generate package ripgrep CLI tool <source-directory>",
       "models": {
         "gemma4": {
           "timestamp": "20260701_101137",
@@ -415,7 +510,7 @@
           "result_path": "../results/generate-new-package/qwen27/20260701_102453"
         },
         "qwen36": {
-          "timestamp": "20260701_111403",
+          "timestamp": "20260701_112413",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -434,10 +529,10 @@
           "source_ref": null,
           "trend_percent": null,
           "first_run_time_seconds": null,
-          "run_count": 1,
+          "run_count": 2,
           "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[GENERATE] Creating new package from prompt: package ripgrep CLI tool\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/qwen36/20260701_111403"
+          "result_path": "../results/generate-new-package/qwen36/20260701_112413"
         },
         "qwen36bf16": {
           "timestamp": "20260701_111404",
@@ -468,6 +563,9 @@
     },
     "inline-example": {
       "order": 9999,
+      "name": "Inline Source Example",
+      "description": "Demonstrates using inline sources instead of remote cloning",
+      "command": "pbuild-ai <source-directory>",
       "models": {
         "gemma4": {
           "timestamp": "20260630_193114",
@@ -495,29 +593,29 @@
           "result_path": "../results/inline-example/gemma4/20260630_193114"
         },
         "qwen36": {
-          "timestamp": "20260630_234903",
-          "run_time_seconds": 93,
+          "timestamp": "20260701_112413",
+          "run_time_seconds": 1,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 0,
-          "ai_model": "qwen3.6:35b-a3b",
-          "ai_calls": 1,
-          "ai_time_seconds": 92.8,
-          "pbuild_calls": 0,
-          "pbuild_time_seconds": 0.0,
-          "total_runtime_seconds": 92.9,
-          "pbuild_ai_version": "0.1.6",
-          "model_host_name": null,
-          "model_host_description": null,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
+          "pbuild_ai_version": "0.1.7",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
           "source_url": null,
           "source_ref": null,
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.6\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: hello.spec...\n-> AI(qwen3.6:35b-a3b) says:\n**Errors & Violations:**\n- `Group: Invalid` is deprecated/removed in RPM 4.13+. Remove it.\n- `%changelog` section explicitly forbidden by your rules; move entries to `PACKAGE.changes`.\n- `%build` contains `echo`, which serves no purpose and violates RPM phase expectations. Omit for dummy/no-source packages.\n- Missing standard copyright header (required by convention).\n- Formatting does not align with `spec-cleaner` standards (spacing/alignment).\n\n**Corrected Spec:**\n```rpm\n# Copyright (c) 2026 pbuild-ai examples\n\nName:           hello-example\nVersion:        1.0\nRelease:        1\nSummary:        Hello world example package\nLicense:        MIT\nURL:            https://example.com\n\n%description\nA minimal hello world package for demonstrating inline sources\nin pbuild-ai examples.\n\n%files\n%doc\n```\n\n**Compliance Notes:**\n- Removed deprecated `Group` and forbidden `%changelog` per rules.\n- Omitted empty `%prep`/`%build`/`%install`; RPM handles dummy packages without them.\n- Aligned to `spec-cleaner` formatting (standard tag spacing, no trailing whitespace).\n- Changelog entry belongs in `PACKAGE.changes`, not `.spec`.\n- Added standard copyright header; preserved exact user text elsewhere per \"avoid unnecessary changes\" constraint.\n\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 92.8s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 92.9s\n",
+          "trend_percent": -98.9,
+          "first_run_time_seconds": 93.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.7\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: hello.spec...\n[OLLAMA ERROR] <urlopen error [Errno 111] Connection refused>\n",
           "diff": "",
-          "result_path": "../results/inline-example/qwen36/20260630_234903"
+          "result_path": "../results/inline-example/qwen36/20260701_112413"
         },
         "qwen36bf16": {
           "timestamp": "20260701_012549",
@@ -548,6 +646,9 @@
     },
     "simple-modification": {
       "order": 2,
+      "name": "Simple Modification",
+      "description": "Demonstrates using --modify flag to make targeted changes with a custom prompt",
+      "command": "pbuild-ai --modify Add a systemd service file for glances server and package it in the glances-common package. <source-directory>",
       "models": {
         "default": {
           "timestamp": "20260630_113342",
@@ -653,6 +754,9 @@
     },
     "update-only": {
       "order": 3,
+      "name": "Update to Latest Upstream",
+      "description": "Automatically update package to latest upstream version and update spec file to new standards",
+      "command": "pbuild-ai --update-only <source-directory>",
       "models": {
         "gemma4": {
           "timestamp": "20260630_193728",
@@ -733,6 +837,9 @@
     },
     "update-upstream": {
       "order": 4,
+      "name": "Update to Latest Upstream",
+      "description": "Automatically update package to latest upstream version and fix compatibility issues",
+      "command": "pbuild-ai --update --email localhero@opensuse.org <source-directory>",
       "models": {
         "default": {
           "timestamp": "20260630_100436",
@@ -838,6 +945,9 @@
     },
     "update-with-own-tools": {
       "order": 5,
+      "name": "Update Ollama with own tools",
+      "description": "An example how to hook in own scripts, provided by the package.",
+      "command": "pbuild-ai --update --update-version=0.30.12 --allow-tool-scripts <source-directory>",
       "models": {
         "gemma4": {
           "timestamp": "20260630_215104",
@@ -918,6 +1028,9 @@
     },
     "version-update-single-package": {
       "order": 9999,
+      "name": null,
+      "description": null,
+      "command": "pbuild-ai <source-directory>",
       "models": {
         "default": {
           "timestamp": "20260629_080910",

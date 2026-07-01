@@ -413,14 +413,19 @@ if os.path.isdir(RESULTS_DIR):
         example_path = os.path.join(RESULTS_DIR, example)
         example_models = []
 
-        # Read order and source info from test.yaml if available
+        # Read order, source info, and metadata from test.yaml if available
         test_yaml_path = os.path.join("examples", example, "test.yaml")
         example_order = 9999  # Default to end if not specified
         source_url = None
         source_ref = None
+        example_name = None
+        example_description = None
+        example_command = None
+        example_options = []
         if os.path.exists(test_yaml_path):
             try:
                 in_source_section = False
+                in_options_section = False
                 with open(test_yaml_path) as f:
                     for line in f:
                         # Remove comments but keep indentation for section detection
@@ -437,14 +442,48 @@ if os.path.isdir(RESULTS_DIR):
                                 example_order = int(m.group(1))
                             continue
 
+                        # Check for name (top-level)
+                        if line_no_comment.startswith('name:'):
+                            m = re.match(r'^name:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_name = m.group(1).strip()
+                            continue
+
+                        # Check for description (top-level)
+                        if line_no_comment.startswith('description:'):
+                            m = re.match(r'^description:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_description = m.group(1).strip()
+                            continue
+
+                        # Check for command (top-level)
+                        if line_no_comment.startswith('command:'):
+                            m = re.match(r'^command:\s*"?([^"]+)"?', stripped)
+                            if m:
+                                example_command = m.group(1).strip()
+                            continue
+
+                        # Check for options section (top-level)
+                        if line_no_comment.startswith('options:'):
+                            in_options_section = True
+                            continue
+
                         # Check for source section (top-level)
                         if line_no_comment.startswith('source:'):
                             in_source_section = True
+                            in_options_section = False
                             continue
 
-                        # End of source section when we hit another top-level key
-                        if in_source_section and line_no_comment and not line_no_comment.startswith(' '):
+                        # End of sections when we hit another top-level key
+                        if line_no_comment and not line_no_comment.startswith(' '):
                             in_source_section = False
+                            in_options_section = False
+
+                        # Extract options (array items under options:)
+                        if in_options_section and line_no_comment.startswith('  - '):
+                            opt = re.match(r'^\s*-\s*"?([^"]+)"?', stripped)
+                            if opt:
+                                example_options.append(opt.group(1).strip())
 
                         # Extract source URL and ref (indented under source:)
                         if in_source_section and line_no_comment.startswith('  '):
@@ -607,8 +646,17 @@ if os.path.isdir(RESULTS_DIR):
             example_models.append((meta_model_key, entry))
 
         if example_models:
+            # Build command string
+            cmd_str = example_command or "pbuild-ai"
+            if example_options:
+                cmd_str += " " + " ".join(example_options)
+            cmd_str += " <source-directory>"
+
             result["examples"][example] = {
                 "order": example_order,
+                "name": example_name,
+                "description": example_description,
+                "command": cmd_str,
                 "models": OrderedDict()
             }
             for mk, entry in example_models:

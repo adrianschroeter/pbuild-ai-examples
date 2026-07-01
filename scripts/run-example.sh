@@ -69,8 +69,8 @@ EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
-    """Parse YAML with hosts: and models: sections"""
-    data = {"hosts": {}, "models": {}}
+    """Parse YAML with default:, hosts:, and models: sections"""
+    data = {"default": None, "hosts": {}, "models": {}}
     current_section = None
     current_key = None
 
@@ -79,6 +79,13 @@ def read_yaml_simple(path):
             for line in f:
                 line = re.sub(r"#.*$", "", line).rstrip()
                 if not line:
+                    continue
+
+                # Top-level default: key
+                if line.startswith("default:"):
+                    m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                    if m:
+                        data["default"] = m.group(1)
                     continue
 
                 # Top-level section: hosts: or models:
@@ -108,10 +115,13 @@ def read_yaml_simple(path):
     return data
 
 # Merge models.yaml and models.yaml.local
-config = {"hosts": {}, "models": {}}
+config = {"default": None, "hosts": {}, "models": {}}
 for yaml_file in ["models.yaml", "models.yaml.local"]:
     if os.path.exists(yaml_file):
         cfg = read_yaml_simple(yaml_file)
+        # Last file wins for default
+        if cfg.get("default"):
+            config["default"] = cfg["default"]
         for section in ["hosts", "models"]:
             for key, val in cfg.get(section, {}).items():
                 if key not in config[section]:
@@ -197,6 +207,11 @@ if env_model:
         if v.get('model') == env_model:
             print(k)
             sys.exit(0)
+# Use configured default if available
+default_model = d.get('default')
+if default_model and default_model in models:
+    print(default_model)
+    sys.exit(0)
 # Fall back to first model key
 print(next(iter(models.keys())))
 " 2>/dev/null || echo "default")
@@ -475,7 +490,15 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
         # Count number of files changed - ensure single integer value
         FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
         FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
-        echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
+
+        # Replace absolute paths with relative paths to avoid exposing local paths
+        # Replace backup dir path with "source_backup" and source path with relative path from repo root
+        BACKUP_BASENAME=$(basename "$BACKUP_DIR")
+        # Make SOURCE_PATH relative to repo root (strip leading ../)
+        SOURCE_PATH_CLEAN=$(echo "$SOURCE_PATH" | sed 's|^\.\./||; s|^\.\./||')
+        DIFF_CONTENT_CLEAN=$(echo "$DIFF_CONTENT" | sed "s|$BACKUP_DIR|$BACKUP_BASENAME|g" | sed "s|$FULL_SOURCE_PATH|$SOURCE_PATH_CLEAN|g")
+
+        echo "$DIFF_CONTENT_CLEAN" > "${RESULT_DIR}/diff.patch"
         echo "✓ Captured diff for $FILES_CHANGED file(s)"
     fi
 
