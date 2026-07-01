@@ -1,0 +1,33 @@
+[PBUILD-AI] Version 0.1.7
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: libarchive.spec...
+-> AI(default) says:
+**Errors & Best Practice Violations:**
+
+1.  **Forbidden `%changelog`:** The `%changelog` section must be removed from the `.spec` file and moved to `PACKAGE.changes`.
+2.  **Deprecated Patching:** `%autopatch -p1` is discouraged. Use explicit `%patch -PX` syntax for each patch.
+3.  **Missing Security Fix:** The requested security fix (commit `020c40df9e31ec727201a8e3ddf1f94093f8fc02`) is not implemented.
+
+**Required Changes:**
+
+*   **Add Patch:**
+    ```spec
+    Patch4: security-fix.patch
+    ```
+*   **Update `%prep`:**
+    ```spec
+    %prep
+    %setup -q
+    %patch -P1 -p1
+    %patch -P2 -p1
+    %patch -P3 -p1
+    %patch -P4 -p1
+    ```
+*   **Remove:** The `%changelog` section at the end of the file.
+
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096
+
+[OK] Build for libarchive.spec succeeded.
+[STATS] AI model: default  |  AI calls: 1  |  AI time: 47.6s  |  pbuild calls: 1  |  pbuild time: 208.6s  |  total runtime: 256.3s

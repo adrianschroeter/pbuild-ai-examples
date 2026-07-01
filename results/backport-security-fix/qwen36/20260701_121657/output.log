@@ -1,0 +1,48 @@
+[PBUILD-AI] Version 0.1.7
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: libarchive.spec...
+-> AI(qwen3.6:35b-a3b) says:
+### Mandatory Corrections (Guideline Violations)
+- **Remove `%changelog` section.** Use `PACKAGE.changes` instead. rpmbuild ignores it in modern packaging workflows.
+- **Shift patch numbering to 0-based.** Guidelines mandate `Patch0:` as the start. Rename `Patch1→Patch0`, `Patch2→Patch1`, `Patch3→Patch2`.
+- **Remove deprecated `Group:` tags.** Spec-cleaner and RPM v4.17+ ignore/strip them. Omit from all `%package` definitions.
+- **Drop `%autopatch -p1`.** Modern rpmbuild auto-applies `PatchN` entries in order. The line is redundant and can cause double-application warnings.
+
+### Build & Packaging Adjustments
+- **Remove `libtool` from `BuildRequires`.** Pure CMake+ninja builds do not invoke libtool; it's only needed for autotools/LT_INIT workflows.
+- **Manual `.la`/`.a` stripping in `%install` is redundant.** CMake ≥3.7 already removes static libs on install and sets `-fPIC` automatically. The `find ... -delete` and `rm` commands can be safely removed to prevent breakage on newer CMake versions that don't produce them.
+- **Omit `%post`/`%postun` ldconfig triggers.** Modern RPM handles library cache updates automatically via package manager hooks.
+
+### Security Fix Integration
+1. **Fetch & verify the patch:**
+   ```bash
+   curl -sL https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02.patch > fix-security-fix.patch
+   cd libarchive-3.7.4  # actual extracted dir
+   git apply --check ../fix-security-fix.patch
+   ```
+   *If `--check` fails, context lines are missing/shifted due to upstream formatting differences. Manually adjust or generate a unified diff against the exact source tree.*
+
+2. **Update spec file:**
+   ```spec
+   Patch0:         fix-security-fix.patch
+   Patch1:         lib-suffix.patch
+   Patch2:         fix-soversion.patch
+   Patch3:         fix-bsdunzip-test.patch
+   ```
+
+3. **Log in `PACKAGE.changes`:**
+   ```text
+   - Apply upstream security fix from commit 020c40df (CVE-XXXX-XXXX if assigned)
+   ```
+
+### Minor Notes
+- `libopenssl-devel` may need to be `libopenssl-3-devel` on openSUSE/tumbleweed. Verify with `zypper what-provides */ssl.h`.
+- `exclude="" %ifarch ...` in `%check` is an arch-specific test skip workaround; acceptable but consider upstreaming a fix or using CMake's `--exclude-test` flag if available.
+- `baselibs.conf` (Source1000) is OBS-specific; keep only for SUSE/openSUSE builds.
+
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed --vm-memory 8096
+
+[OK] Build for libarchive.spec succeeded.
+[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 87.1s  |  pbuild calls: 1  |  pbuild time: 205.9s  |  total runtime: 293.0s
