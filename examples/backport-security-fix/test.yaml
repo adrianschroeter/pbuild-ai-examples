@@ -1,5 +1,5 @@
 name: "Backport Security Fix"
-description: "Apply a security fix from upstream using AI-guided patching with --prompt and --fix"
+description: "Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it get applied during build."
 order: 5
 
 source:
@@ -11,8 +11,8 @@ source:
 
 command: "pbuild-ai"
 options:
-  - "--prompt"
-  - "Apply the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02"
+  - "--modify"
+  - "Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it applies cleanly to the code."
   - "--fix"
   - "--vm-memory"
   - "8096"

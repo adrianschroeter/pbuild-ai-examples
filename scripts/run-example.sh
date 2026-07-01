@@ -47,23 +47,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
-set -- "${POSITIONAL_ARGS[@]}"
-
-if [ -z "$1" ]; then
+if [ ${#POSITIONAL_ARGS[@]} -eq 0 ]; then
     usage
 fi
 
-EXAMPLE_DIR="$1"
-TEST_YAML="${EXAMPLE_DIR}/test.yaml"
-
-if [ ! -f "$TEST_YAML" ]; then
-    echo "Error: Test file not found: $TEST_YAML"
-    exit 1
-fi
-
-# Store absolute paths
 REPO_ROOT=$(pwd)
-EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 
 # Read model configurations from models.yaml + models.yaml.local
 MODELS_JSON=$(python3 -c 'import json, os, re
@@ -147,7 +135,6 @@ print(json.dumps(config))
 
 # Handle --all-models: run for each model key
 if [ "$ALL_MODELS" = true ]; then
-    # Get all model keys
     MODEL_KEYS=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
@@ -158,37 +145,25 @@ else:
     print(' '.join(sorted(models.keys())))
 " 2>/dev/null || echo "default")
 
-    echo "Running example: $EXAMPLE_DIR"
-    echo "Models: $MODEL_KEYS"
-    echo "========================================"
-    echo ""
-
-    EXIT_CODE=0
-    for model in $MODEL_KEYS; do
-        echo ""
-        echo "========================================"
-        echo "Starting run with model: $model"
-        echo "========================================"
-        echo ""
-
-        # Recursively call this script with --model
-        if ! "$0" --model "$model" "$EXAMPLE_DIR"; then
-            echo "⚠ Model $model failed!"
-            EXIT_CODE=1
-        fi
-
-        echo ""
-        echo "========================================"
-        echo "Completed run with model: $model"
-        echo "========================================"
-        echo ""
+    OVERALL_EXIT=0
+    for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do
+        for model in $MODEL_KEYS; do
+            echo ""
+            echo "========================================"
+            echo "Starting run: $(basename "$EXAMPLE_DIR") with model: $model"
+            echo "========================================"
+            if ! "$0" --model "$model" "$EXAMPLE_DIR"; then
+                echo "⚠ $(basename "$EXAMPLE_DIR") with $model failed!"
+                OVERALL_EXIT=1
+            fi
+        done
     done
 
     echo ""
     echo "========================================"
     echo "All models completed"
     echo "========================================"
-    exit $EXIT_CODE
+    exit $OVERALL_EXIT
 fi
 
 # Determine model key
@@ -200,7 +175,6 @@ models = d.get('models', {})
 if not models:
     print('default')
     sys.exit(0)
-# Try to match existing OLLAMA_MODEL env var
 env_model = os.environ.get('OLLAMA_MODEL', '')
 if env_model:
     for k, v in models.items():
@@ -217,7 +191,6 @@ print(next(iter(models.keys())))
 " 2>/dev/null || echo "default")
 fi
 
-# Get model config values (use host_url which has the resolved URL)
 MODEL_HOST=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
@@ -250,7 +223,6 @@ models = d.get('models', {})
 print(models.get(key, {}).get('host_description', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
-# Export model environment for pbuild-ai
 if [ -n "$MODEL_HOST" ]; then
     export OLLAMA_HOST="$MODEL_HOST"
 fi
@@ -258,147 +230,126 @@ if [ -n "$MODEL_NAME" ]; then
     export OLLAMA_MODEL="$MODEL_NAME"
 fi
 
-echo "Running example: $EXAMPLE_DIR"
-echo "----------------------------------------"
-
 echo "  Model key: $MODEL_KEY"
 [ -n "$MODEL_NAME" ] && echo "  AI model: $MODEL_NAME"
 [ -n "$MODEL_HOST" ] && echo "  AI host: $MODEL_HOST"
 echo ""
 
-# Create results directory with per-model nesting
-RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/${MODEL_KEY}/$(date +%Y%m%d_%H%M%S)"
-mkdir -p "$RESULT_DIR"
+# Loop over all example directories
+OVERALL_EXIT=0
+for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do
+    TEST_YAML="${EXAMPLE_DIR}/test.yaml"
+    if [ ! -f "$TEST_YAML" ]; then
+        echo "Error: Test file not found: $TEST_YAML"
+        OVERALL_EXIT=1
+        continue
+    fi
 
-# Check if source needs to be cloned
-# Extract values and remove YAML comments
-SOURCE_TYPE=$(grep -E "^\s+type:" "$TEST_YAML" | sed 's/.*type:\s*//' | sed 's/#.*//' | tr -d '"' | tr -d ' ')
-SOURCE_URL=$(grep -E "^\s+url:" "$TEST_YAML" | sed 's/.*url:\s*//' | sed 's/#.*//' | tr -d '"' | tr -d ' ')
-SOURCE_PATH=$(grep -E "^\s+path:" "$TEST_YAML" | sed 's/.*path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
-SOURCE_REF=$(grep -E "^\s+ref:" "$TEST_YAML" | sed 's/.*ref:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
+    EXAMPLE_DIR_ABS="${REPO_ROOT}/${EXAMPLE_DIR}"
 
-if [ "$SOURCE_TYPE" = "none" ]; then
-    # For --generate mode, create an empty directory where pbuild-ai will generate the package
+    echo "========================================"
+    echo "Running example: $EXAMPLE_DIR"
+    echo "========================================"
+    echo ""
+
+    RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/${MODEL_KEY}/$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$RESULT_DIR"
+
+    SOURCE_TYPE=$(grep -E "^\s+type:" "$TEST_YAML" | sed 's/.*type:\s*//' | sed 's/#.*//' | tr -d '"' | tr -d ' ')
+    SOURCE_URL=$(grep -E "^\s+url:" "$TEST_YAML" | sed 's/.*url:\s*//' | sed 's/#.*//' | tr -d '"' | tr -d ' ')
     SOURCE_PATH=$(grep -E "^\s+path:" "$TEST_YAML" | sed 's/.*path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
-    if [ -n "$SOURCE_PATH" ]; then
-        # Convert relative path to absolute from repo root
-        RELATIVE_PATH="${SOURCE_PATH#../../}"
-        FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+    SOURCE_REF=$(grep -E "^\s+ref:" "$TEST_YAML" | sed 's/.*ref:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
 
-        # Clean and create empty directory for generated files
-        # Remove any existing content to ensure clean state
-        rm -rf "$FULL_SOURCE_PATH"
-        mkdir -p "$FULL_SOURCE_PATH"
-        echo "Creating clean directory for generated package: $FULL_SOURCE_PATH"
-        echo ""
-    else
-        echo "Error: --generate mode requires a path field in test.yaml"
-        exit 1
-    fi
-elif [ "$SOURCE_TYPE" = "inline" ]; then
-    # For inline sources, path is relative to example directory
-    if [ -n "$SOURCE_PATH" ]; then
-        FULL_SOURCE_PATH="${EXAMPLE_DIR_ABS}/${SOURCE_PATH}"
-        echo "Using inline source at: $FULL_SOURCE_PATH"
-        echo ""
-    fi
-elif [ "$SOURCE_TYPE" = "local" ]; then
-    # For local sources, copy from a local directory to sources/ to avoid committing changes
-    if [ -n "$SOURCE_PATH" ]; then
-        # Parse the local_path field (where to copy from)
-        LOCAL_PATH=$(grep -E "^\s+local_path:" "$TEST_YAML" | sed 's/.*local_path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
-
-        if [ -z "$LOCAL_PATH" ]; then
-            echo "Error: local mode requires local_path field in test.yaml"
-            exit 1
-        fi
-
-        # Expand ~ to home directory if present
-        LOCAL_PATH="${LOCAL_PATH/#\~/$HOME}"
-
-        # Handle relative paths - make them relative to the example directory
-        if [[ "$LOCAL_PATH" != /* ]]; then
-            # Relative path - resolve from example directory
-            LOCAL_PATH="${EXAMPLE_DIR_ABS}/${LOCAL_PATH}"
-            # Normalize the path (resolve .. and .)
-            LOCAL_PATH=$(cd "$(dirname "$LOCAL_PATH")" 2>/dev/null && pwd)/$(basename "$LOCAL_PATH") || LOCAL_PATH=""
-        fi
-
-        if [ -z "$LOCAL_PATH" ] || [ ! -d "$LOCAL_PATH" ]; then
-            echo "Error: Local source path does not exist: $LOCAL_PATH"
-            exit 1
-        fi
-
-        # Convert relative path to absolute from repo root
-        RELATIVE_PATH="${SOURCE_PATH#../../}"
-        FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
-
-        # Always refresh the copy to ensure clean state
-        echo "Copying local source to temporary location..."
-        echo "  From: $LOCAL_PATH"
-        echo "  To: $FULL_SOURCE_PATH"
-
-        # Remove existing copy and create fresh one
-        rm -rf "$FULL_SOURCE_PATH"
-        mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
-        cp -a "$LOCAL_PATH" "$FULL_SOURCE_PATH"
-
-        echo "✓ Local source copied to clean state"
-        echo ""
-    fi
-elif [ "$SOURCE_TYPE" = "remote" ] || [ "$SOURCE_TYPE" = "clone" ]; then
-    if [ -n "$SOURCE_URL" ] && [ -n "$SOURCE_PATH" ]; then
-        # Convert relative path to absolute from repo root
-        # Remove leading ../../ and prepend repo root
-        RELATIVE_PATH="${SOURCE_PATH#../../}"
-        FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
-
-        if [ -d "$FULL_SOURCE_PATH" ]; then
-            echo "Removing existing source at: $FULL_SOURCE_PATH"
-            rm -rf "$FULL_SOURCE_PATH"
-        fi
-
-        echo "Cloning source package..."
-        echo "  URL: $SOURCE_URL"
-        echo "  Path: $FULL_SOURCE_PATH"
-        if [ -n "$SOURCE_REF" ]; then
-            echo "  Ref: $SOURCE_REF (pinned for reproducibility)"
-        fi
-
-        mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
-        git clone "$SOURCE_URL" "$FULL_SOURCE_PATH" || {
-            echo "Warning: git clone failed, source may need manual setup"
+    FULL_SOURCE_PATH=""
+    if [ "$SOURCE_TYPE" = "none" ]; then
+        SOURCE_PATH=$(grep -E "^\s+path:" "$TEST_YAML" | sed 's/.*path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
+        if [ -n "$SOURCE_PATH" ]; then
+            RELATIVE_PATH="${SOURCE_PATH#../../}"
+            FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+            mkdir -p "$FULL_SOURCE_PATH"
+            echo "Creating directory for generated package: $FULL_SOURCE_PATH"
             echo ""
-            exit 1
-        }
-
-        # Checkout specific ref if specified
-        if [ -n "$SOURCE_REF" ]; then
-            echo "Checking out ref: $SOURCE_REF"
-            (cd "$FULL_SOURCE_PATH" && git checkout "$SOURCE_REF" 2>&1) || {
-                echo "Warning: failed to checkout ref $SOURCE_REF"
-            }
+        else
+            echo "Error: --generate mode requires a path field in test.yaml"
+            OVERALL_EXIT=1
+            continue
         fi
-        echo ""
+    elif [ "$SOURCE_TYPE" = "inline" ]; then
+        if [ -n "$SOURCE_PATH" ]; then
+            FULL_SOURCE_PATH="${EXAMPLE_DIR_ABS}/${SOURCE_PATH}"
+            echo "Using inline source at: $FULL_SOURCE_PATH"
+            echo ""
+        fi
+    elif [ "$SOURCE_TYPE" = "local" ]; then
+        if [ -n "$SOURCE_PATH" ]; then
+            LOCAL_PATH=$(grep -E "^\s+local_path:" "$TEST_YAML" | sed 's/.*local_path:\s*//' | sed 's/#.*//' | tr -d '"' | xargs)
+            if [ -z "$LOCAL_PATH" ]; then
+                echo "Error: local mode requires local_path field in test.yaml"
+                OVERALL_EXIT=1
+                continue
+            fi
+            LOCAL_PATH="${LOCAL_PATH/#\~/$HOME}"
+            if [[ "$LOCAL_PATH" != /* ]]; then
+                LOCAL_PATH="${EXAMPLE_DIR_ABS}/${LOCAL_PATH}"
+                LOCAL_PATH=$(cd "$(dirname "$LOCAL_PATH")" 2>/dev/null && pwd)/$(basename "$LOCAL_PATH") || LOCAL_PATH=""
+            fi
+            if [ -z "$LOCAL_PATH" ] || [ ! -d "$LOCAL_PATH" ]; then
+                echo "Error: Local source path does not exist: $LOCAL_PATH"
+                OVERALL_EXIT=1
+                continue
+            fi
+            RELATIVE_PATH="${SOURCE_PATH#../../}"
+            FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+            echo "Copying local source to temporary location..."
+            echo "  From: $LOCAL_PATH"
+            echo "  To: $FULL_SOURCE_PATH"
+            rm -rf "$FULL_SOURCE_PATH"
+            mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
+            cp -a "$LOCAL_PATH" "$FULL_SOURCE_PATH"
+            echo "✓ Local source copied to clean state"
+            echo ""
+        fi
+    elif [ "$SOURCE_TYPE" = "remote" ] || [ "$SOURCE_TYPE" = "clone" ]; then
+        if [ -n "$SOURCE_URL" ] && [ -n "$SOURCE_PATH" ]; then
+            RELATIVE_PATH="${SOURCE_PATH#../../}"
+            FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+            if [ -d "$FULL_SOURCE_PATH" ]; then
+                echo "Removing existing source at: $FULL_SOURCE_PATH"
+                rm -rf "$FULL_SOURCE_PATH"
+            fi
+            echo "Cloning source package..."
+            echo "  URL: $SOURCE_URL"
+            echo "  Path: $FULL_SOURCE_PATH"
+            if [ -n "$SOURCE_REF" ]; then
+                echo "  Ref: $SOURCE_REF (pinned for reproducibility)"
+            fi
+            mkdir -p "$(dirname "$FULL_SOURCE_PATH")"
+            git clone "$SOURCE_URL" "$FULL_SOURCE_PATH" || {
+                echo "Warning: git clone failed, source may need manual setup"
+                echo ""
+                OVERALL_EXIT=1
+                continue
+            }
+            if [ -n "$SOURCE_REF" ]; then
+                echo "Checking out ref: $SOURCE_REF"
+                (cd "$FULL_SOURCE_PATH" && git checkout "$SOURCE_REF" 2>&1) || {
+                    echo "Warning: failed to checkout ref $SOURCE_REF"
+                }
+            fi
+            echo ""
+        fi
     fi
-fi
 
-# Parse test.yaml to get command and options
-COMMAND=$(grep "^command:" "$TEST_YAML" | sed 's/command: *//' | tr -d '"')
+    COMMAND=$(grep "^command:" "$TEST_YAML" | sed 's/command: *//' | tr -d '"')
+    if [ -z "$COMMAND" ]; then
+        COMMAND="pbuild-ai"
+    fi
+    if [ -n "$PBUILD_AI_CMD" ]; then
+        COMMAND="$PBUILD_AI_CMD"
+    fi
 
-# Default to pbuild-ai if no command specified
-if [ -z "$COMMAND" ]; then
-    COMMAND="pbuild-ai"
-fi
-
-# Allow override via PBUILD_AI_CMD environment variable
-if [ -n "$PBUILD_AI_CMD" ]; then
-    COMMAND="$PBUILD_AI_CMD"
-fi
-
-# Log test metadata
-PBUILD_AI_PATH=$(command -v "$COMMAND" 2>/dev/null || echo "$COMMAND")
-cat > "${RESULT_DIR}/metadata.json" <<EOF
+    PBUILD_AI_PATH=$(command -v "$COMMAND" 2>/dev/null || echo "$COMMAND")
+    cat > "${RESULT_DIR}/metadata.json" <<EOF
 {
   "example": "$(basename "$EXAMPLE_DIR")",
   "model_key": "${MODEL_KEY}",
@@ -412,42 +363,38 @@ cat > "${RESULT_DIR}/metadata.json" <<EOF
 }
 EOF
 
-# Parse options - only lines between "options:" and the next section (expected:)
-# Build as array to preserve multi-word arguments properly
-OPTIONS_ARRAY=()
-while IFS= read -r line; do
-    # Remove leading "- " and outer YAML quotes if present
-    option=$(echo "$line" | sed 's/^  - *//' | sed 's/^"\(.*\)"$/\1/')
-    if [ -n "$option" ]; then
-        OPTIONS_ARRAY+=("$option")
+    OPTIONS_ARRAY=()
+    while IFS= read -r line; do
+        option=$(echo "$line" | sed 's/^  - *//' | sed 's/^"\(.*\)"$/\1/' | sed "s/^'\(.*\)'$/\1/")
+        if [ -n "$option" ]; then
+            OPTIONS_ARRAY+=("$option")
+        fi
+    done < <(awk '/^options:/,/^expected:/ {if ($0 ~ /^  - /) print}' "$TEST_YAML")
+
+    FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}")
+    if [ -n "$FULL_SOURCE_PATH" ]; then
+        FULL_COMMAND_ARRAY+=("$FULL_SOURCE_PATH")
     fi
-done < <(awk '/^options:/,/^expected:/ {if ($0 ~ /^  - /) print}' "$TEST_YAML")
 
-# Build full command array with source directory path
-FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}")
-if [ -n "$FULL_SOURCE_PATH" ]; then
-    FULL_COMMAND_ARRAY+=("$FULL_SOURCE_PATH")
-fi
-
-# Display command for logging (quote multi-word args)
-DISPLAY_CMD="$COMMAND"
-for opt in "${OPTIONS_ARRAY[@]}"; do
-    if [[ "$opt" =~ [[:space:]] ]]; then
-        DISPLAY_CMD="$DISPLAY_CMD \"$opt\""
+    DISPLAY_CMD="$COMMAND"
+    for opt in "${OPTIONS_ARRAY[@]}"; do
+        if [[ "$opt" =~ [[:space:]] ]]; then
+            DISPLAY_CMD="$DISPLAY_CMD \"$opt\""
+        else
+            DISPLAY_CMD="$DISPLAY_CMD $opt"
+        fi
+    done
+    if [ -n "$FULL_SOURCE_PATH" ]; then
+        DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
+    fi
+    if [ -n "$PBUILD_AI_CMD" ]; then
+        echo "Command: $DISPLAY_CMD  (via PBUILD_AI_CMD=$PBUILD_AI_CMD)"
     else
-        DISPLAY_CMD="$DISPLAY_CMD $opt"
+        echo "Command: $DISPLAY_CMD"
     fi
-done
-if [ -n "$FULL_SOURCE_PATH" ]; then
-    DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
-fi
+    echo ""
 
-if [ -n "$PBUILD_AI_CMD" ]; then
-    echo "Command: $DISPLAY_CMD  (via PBUILD_AI_CMD=$PBUILD_AI_CMD)"
-else
-    echo "Command: $DISPLAY_CMD"
-fi
-echo ""
+    START_TIME=$(date +%s)
 
 # Record start time
 START_TIME=$(date +%s)
@@ -504,73 +451,88 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
         echo "✓ Captured diff for $FILES_CHANGED file(s)"
     fi
 
-    # Clean up backup directory to save space
-    rm -rf "$BACKUP_DIR"
-fi
+    set +e
+    (
+        cd "$EXAMPLE_DIR_ABS"
+        NO_SPINNER=1 "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
+    )
+    EXIT_CODE=$?
+    set -e
 
-# If diff didn't capture changes, try counting from pbuild-ai output as fallback
-if [ "$FILES_CHANGED" -eq 0 ] 2>/dev/null && [ -f "${RESULT_DIR}/output.log" ]; then
-    # Count "[TOOL] --- Diff for" lines which indicate file modifications
-    OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "${RESULT_DIR}/output.log" 2>/dev/null || echo "0")
-    # Ensure it's a single integer
-    OUTPUT_FILES=$(echo "$OUTPUT_FILES" | head -1 | tr -d '\n')
-    if [ -n "$OUTPUT_FILES" ] && [ "$OUTPUT_FILES" -gt 0 ] 2>/dev/null; then
-        FILES_CHANGED=$OUTPUT_FILES
-        echo "✓ Counted $FILES_CHANGED file modification(s) from output"
-    fi
-fi
+    END_TIME=$(date +%s)
+    RUN_TIME=$((END_TIME - START_TIME))
 
-# Parse statistics from output.log if available
-AI_MODEL="null"
-AI_CALLS="null"
-AI_TIME="null"
-PBUILD_CALLS="null"
-PBUILD_TIME="null"
-TOTAL_RUNTIME="null"
-PBUILD_AI_VERSION="null"
-
-if [ -f "${RESULT_DIR}/output.log" ]; then
-    # Extract pbuild-ai version from [PBUILD-AI] Version line
-    VERSION_LINE=$(grep "^\[PBUILD-AI\] Version" "${RESULT_DIR}/output.log" | head -1 || echo "")
-    if [ -n "$VERSION_LINE" ]; then
-        PBUILD_AI_VERSION=$(echo "$VERSION_LINE" | sed -n 's/.*Version \([0-9.]*\).*/\1/p')
-        [ -n "$PBUILD_AI_VERSION" ] && PBUILD_AI_VERSION="\"$PBUILD_AI_VERSION\"" || PBUILD_AI_VERSION="null"
+    FILES_CHANGED=0
+    DIFF_CONTENT=""
+    if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+        echo "Generating diff of changes..."
+        DIFF_CONTENT=$(diff -Nur \
+            --exclude=".git" \
+            --exclude="_build.*" \
+            --exclude="*.pyc" \
+            --exclude="__pycache__" \
+            "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
+        if [ -n "$DIFF_CONTENT" ]; then
+            FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
+            FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
+            echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
+            echo "✓ Captured diff for $FILES_CHANGED file(s)"
+        fi
+        rm -rf "$BACKUP_DIR"
     fi
 
-    STATS_LINE=$(grep "\[STATS\]" "${RESULT_DIR}/output.log" || echo "")
-    if [ -n "$STATS_LINE" ]; then
-        AI_MODEL=$(echo "$STATS_LINE" | sed -n 's/.*AI model: \([^ |]*\).*/\1/p' | tr -d ' ')
-        AI_CALLS=$(echo "$STATS_LINE" | sed -n 's/.*AI calls: \([0-9]*\).*/\1/p')
-        AI_TIME=$(echo "$STATS_LINE" | sed -n 's/.*AI time: \([0-9.]*\)s.*/\1/p')
-        PBUILD_CALLS=$(echo "$STATS_LINE" | sed -n 's/.*pbuild calls: \([0-9]*\).*/\1/p')
-        PBUILD_TIME=$(echo "$STATS_LINE" | sed -n 's/.*pbuild time: \([0-9.]*\)s.*/\1/p')
-        TOTAL_RUNTIME=$(echo "$STATS_LINE" | sed -n 's/.*total runtime: \([0-9.]*\)s.*/\1/p')
-
-        # Only set values if they were successfully parsed
-        [ -n "$AI_MODEL" ] && AI_MODEL="\"$AI_MODEL\"" || AI_MODEL="null"
-        [ -z "$AI_CALLS" ] && AI_CALLS="null"
-        [ -z "$AI_TIME" ] && AI_TIME="null"
-        [ -z "$PBUILD_CALLS" ] && PBUILD_CALLS="null"
-        [ -z "$PBUILD_TIME" ] && PBUILD_TIME="null"
-        [ -z "$TOTAL_RUNTIME" ] && TOTAL_RUNTIME="null"
+    if [ "$FILES_CHANGED" -eq 0 ] 2>/dev/null && [ -f "${RESULT_DIR}/output.log" ]; then
+        OUTPUT_FILES=$(grep -c "\[TOOL\] --- Diff for" "${RESULT_DIR}/output.log" 2>/dev/null || echo "0")
+        OUTPUT_FILES=$(echo "$OUTPUT_FILES" | head -1 | tr -d '\n')
+        if [ -n "$OUTPUT_FILES" ] && [ "$OUTPUT_FILES" -gt 0 ] 2>/dev/null; then
+            FILES_CHANGED=$OUTPUT_FILES
+            echo "✓ Counted $FILES_CHANGED file modification(s) from output"
+        fi
     fi
-fi
 
-# Save benchmark results
-# Determine status based on exit code
-# 0 = success, 1 = failed (build or AI error), >=2 = error (usage/internal error)
-if [ $EXIT_CODE -eq 0 ]; then
-    STATUS="\"success\""
-    SUCCESS="true"
-elif [ $EXIT_CODE -eq 1 ]; then
-    STATUS="\"failed\""
-    SUCCESS="false"
-else
-    STATUS="\"error\""
-    SUCCESS="false"
-fi
+    AI_MODEL="null"
+    AI_CALLS="null"
+    AI_TIME="null"
+    PBUILD_CALLS="null"
+    PBUILD_TIME="null"
+    TOTAL_RUNTIME="null"
+    PBUILD_AI_VERSION="null"
 
-cat > "${RESULT_DIR}/benchmark.json" <<EOF
+    if [ -f "${RESULT_DIR}/output.log" ]; then
+        VERSION_LINE=$(grep "^\[PBUILD-AI\] Version" "${RESULT_DIR}/output.log" | head -1 || echo "")
+        if [ -n "$VERSION_LINE" ]; then
+            PBUILD_AI_VERSION=$(echo "$VERSION_LINE" | sed -n 's/.*Version \([0-9.]*\).*/\1/p')
+            [ -n "$PBUILD_AI_VERSION" ] && PBUILD_AI_VERSION="\"$PBUILD_AI_VERSION\"" || PBUILD_AI_VERSION="null"
+        fi
+        STATS_LINE=$(grep "\[STATS\]" "${RESULT_DIR}/output.log" || echo "")
+        if [ -n "$STATS_LINE" ]; then
+            AI_MODEL=$(echo "$STATS_LINE" | sed -n 's/.*AI model: \([^ |]*\).*/\1/p' | tr -d ' ')
+            AI_CALLS=$(echo "$STATS_LINE" | sed -n 's/.*AI calls: \([0-9]*\).*/\1/p')
+            AI_TIME=$(echo "$STATS_LINE" | sed -n 's/.*AI time: \([0-9.]*\)s.*/\1/p')
+            PBUILD_CALLS=$(echo "$STATS_LINE" | sed -n 's/.*pbuild calls: \([0-9]*\).*/\1/p')
+            PBUILD_TIME=$(echo "$STATS_LINE" | sed -n 's/.*pbuild time: \([0-9.]*\)s.*/\1/p')
+            TOTAL_RUNTIME=$(echo "$STATS_LINE" | sed -n 's/.*total runtime: \([0-9.]*\)s.*/\1/p')
+            [ -n "$AI_MODEL" ] && AI_MODEL="\"$AI_MODEL\"" || AI_MODEL="null"
+            [ -z "$AI_CALLS" ] && AI_CALLS="null"
+            [ -z "$AI_TIME" ] && AI_TIME="null"
+            [ -z "$PBUILD_CALLS" ] && PBUILD_CALLS="null"
+            [ -z "$PBUILD_TIME" ] && PBUILD_TIME="null"
+            [ -z "$TOTAL_RUNTIME" ] && TOTAL_RUNTIME="null"
+        fi
+    fi
+
+    if [ $EXIT_CODE -eq 0 ]; then
+        STATUS="\"success\""
+        SUCCESS="true"
+    elif [ $EXIT_CODE -eq 1 ]; then
+        STATUS="\"failed\""
+        SUCCESS="false"
+    else
+        STATUS="\"error\""
+        SUCCESS="false"
+    fi
+
+    cat > "${RESULT_DIR}/benchmark.json" <<EOF
 {
   "run_time_seconds": $RUN_TIME,
   "exit_code": $EXIT_CODE,
@@ -587,10 +549,15 @@ cat > "${RESULT_DIR}/benchmark.json" <<EOF
 }
 EOF
 
-echo ""
-echo "----------------------------------------"
-echo "Test completed in ${RUN_TIME}s with exit code ${EXIT_CODE}"
-echo "Results saved to: $RESULT_DIR"
-# TODO: Compare with expected results from test.yaml
+    echo ""
+    echo "----------------------------------------"
+    echo "Test completed in ${RUN_TIME}s with exit code ${EXIT_CODE}"
+    echo "Results saved to: $RESULT_DIR"
 
-exit $EXIT_CODE
+    if [ $EXIT_CODE -ne 0 ]; then
+        OVERALL_EXIT=1
+    fi
+    echo ""
+done
+
+exit $OVERALL_EXIT
