@@ -1,0 +1,11 @@
+{
+  "example": "cleanup-source",
+  "model_key": "qwen3.6:27b",
+  "model_name": "",
+  "model_host_name": "",
+  "model_host_description": "",
+  "timestamp": "2026-07-02T10:20:11+02:00",
+  "hostname": "reiser.suse.de",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}
