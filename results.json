@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-02T12:00:45+00:00",
+  "generated": "2026-07-02T12:20:45+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -13,7 +13,7 @@
       "command": "pbuild-ai --modify \"Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it applies cleanly to the code.\" --fix --vm-memory 8096 <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_115945",
+          "timestamp": "20260702_121943",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -34,9 +34,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/backport-security-fix/default/20260702_115945"
+          "result_path": "../results/backport-security-fix/default/20260702_121943"
         },
         "gemma4": {
           "timestamp": "20260701_125859",
@@ -73,7 +73,7 @@
       "command": "pbuild-ai <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_115953",
+          "timestamp": "20260702_121948",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -94,9 +94,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/default/20260702_115953"
+          "result_path": "../results/basic-analyze/default/20260702_121948"
         },
         "gemma4": {
           "timestamp": "20260701_075030",
@@ -237,7 +237,7 @@
       "command": "pbuild-ai --modify \"Cleanup the source according to current rules\" <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120002",
+          "timestamp": "20260702_122003",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -258,9 +258,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/cleanup-source/default/20260702_120002"
+          "result_path": "../results/cleanup-source/default/20260702_122003"
         },
         "qwen27": {
           "timestamp": "20260702_102010",
@@ -329,7 +329,7 @@
       "command": "pbuild-ai --fix <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120012",
+          "timestamp": "20260702_122015",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -350,9 +350,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/fix-build-failures/default/20260702_120012"
+          "result_path": "../results/fix-build-failures/default/20260702_122015"
         },
         "gemma4": {
           "timestamp": "20260701_113751",
@@ -389,7 +389,7 @@
       "command": "pbuild-ai --generate \"package ripgrep CLI tool\" <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120012",
+          "timestamp": "20260702_122015",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -410,9 +410,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/default/20260702_120012"
+          "result_path": "../results/generate-new-package/default/20260702_122015"
         },
         "gemma4_12b": {
           "timestamp": "20260702_110921",
@@ -561,7 +561,7 @@
       "command": "pbuild-ai --generate https://cran.r-project.org/src/contrib/ggplot2_3.4.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122016",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -582,9 +582,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-R/default/20260702_120013"
+          "result_path": "../results/generate-spec-R/default/20260702_122016"
         },
         "qwen27": {
           "timestamp": "20260702_091103",
@@ -623,7 +623,7 @@
       "command": "pbuild-ai --generate https://github.com/atom/atom/archive/refs/tags/v1.60.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122016",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -644,9 +644,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-electron/default/20260702_120013"
+          "result_path": "../results/generate-spec-electron/default/20260702_122016"
         },
         "qwen27": {
           "timestamp": "20260702_074230",
@@ -688,7 +688,7 @@
       "command": "pbuild-ai --generate https://github.com/ninenines/cowboy/archive/refs/tags/2.10.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122016",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -709,9 +709,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-erlang/default/20260702_120013"
+          "result_path": "../results/generate-spec-erlang/default/20260702_122016"
         },
         "qwen27": {
           "timestamp": "20260702_080756",
@@ -750,7 +750,7 @@
       "command": "pbuild-ai --generate https://github.com/googlefonts/roboto/releases/download/v2.138/roboto-unhinted.zip <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122016",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -771,9 +771,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-font/default/20260702_120013"
+          "result_path": "../results/generate-spec-font/default/20260702_122016"
         },
         "qwen27": {
           "timestamp": "20260702_081905",
@@ -812,8 +812,8 @@
       "command": "pbuild-ai --generate https://github.com/spf13/cobra/archive/refs/tags/v1.8.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
-          "run_time_seconds": 0,
+          "timestamp": "20260702_122016",
+          "run_time_seconds": 1,
           "status": "success",
           "success": true,
           "exit_code": 0,
@@ -833,9 +833,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-go/default/20260702_120013"
+          "result_path": "../results/generate-spec-go/default/20260702_122016"
         },
         "qwen27": {
           "timestamp": "20260702_083057",
@@ -872,7 +872,7 @@
       "command": "pbuild-ai --generate https://github.com/FasterXML/jackson-core/archive/refs/tags/jackson-core-2.15.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122017",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -893,9 +893,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-java/default/20260702_120013"
+          "result_path": "../results/generate-spec-java/default/20260702_122017"
         },
         "qwen27": {
           "timestamp": "20260702_083823",
@@ -932,7 +932,7 @@
       "command": "pbuild-ai --generate https://github.com/dlowe-net/local-time/archive/refs/tags/v1.0.6.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120013",
+          "timestamp": "20260702_122017",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -953,9 +953,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lisp/default/20260702_120013"
+          "result_path": "../results/generate-spec-lisp/default/20260702_122017"
         },
         "qwen27": {
           "timestamp": "20260702_084415",
@@ -994,7 +994,7 @@
       "command": "pbuild-ai --generate https://github.com/lunarmodules/luafilesystem/archive/refs/tags/v1_8_0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122017",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1015,9 +1015,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lua/default/20260702_120014"
+          "result_path": "../results/generate-spec-lua/default/20260702_122017"
         },
         "qwen27": {
           "timestamp": "20260702_085008",
@@ -1056,7 +1056,7 @@
       "command": "pbuild-ai --generate https://registry.npmjs.org/chalk/-/chalk-5.3.0.tgz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122017",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1077,9 +1077,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-nodejs/default/20260702_120014"
+          "result_path": "../results/generate-spec-nodejs/default/20260702_122017"
         },
         "qwen27": {
           "timestamp": "20260702_105343",
@@ -1116,7 +1116,7 @@
       "command": "pbuild-ai --generate https://cpan.metacpan.org/authors/id/E/ET/ETHER/Module-Runtime-0.016.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122017",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1137,9 +1137,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-perl/default/20260702_120014"
+          "result_path": "../results/generate-spec-perl/default/20260702_122017"
         },
         "qwen27": {
           "timestamp": "20260702_085610",
@@ -1178,7 +1178,7 @@
       "command": "pbuild-ai --generate https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122018",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1199,9 +1199,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-php/default/20260702_120014"
+          "result_path": "../results/generate-spec-php/default/20260702_122018"
         },
         "qwen27": {
           "timestamp": "20260702_105554",
@@ -1240,7 +1240,7 @@
       "command": "pbuild-ai --generate https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122018",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1261,9 +1261,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-pyqt-sip/default/20260702_120014"
+          "result_path": "../results/generate-spec-pyqt-sip/default/20260702_122018"
         },
         "qwen27": {
           "timestamp": "20260702_090715",
@@ -1303,7 +1303,7 @@
       "command": "pbuild-ai --generate https://pypi.io/packages/source/o/ollama/ollama-0.3.3.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122018",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1324,9 +1324,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-python/default/20260702_120014"
+          "result_path": "../results/generate-spec-python/default/20260702_122018"
         },
         "qwen27": {
           "timestamp": "20260702_103807",
@@ -1365,7 +1365,7 @@
       "command": "pbuild-ai --generate https://rubygems.org/downloads/rake-13.0.6.gem <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122018",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1386,9 +1386,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-ruby/default/20260702_120014"
+          "result_path": "../results/generate-spec-ruby/default/20260702_122018"
         },
         "qwen27": {
           "timestamp": "20260702_093307",
@@ -1427,7 +1427,7 @@
       "command": "pbuild-ai --generate https://github.com/rust-lang/cargo/archive/refs/tags/0.75.0.tar.gz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120014",
+          "timestamp": "20260702_122018",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1448,9 +1448,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-rust/default/20260702_120014"
+          "result_path": "../results/generate-spec-rust/default/20260702_122018"
         },
         "qwen27": {
           "timestamp": "20260702_094155",
@@ -1489,7 +1489,7 @@
       "command": "pbuild-ai --generate https://download.gnome.org/sources/libpeas/1.36/libpeas-1.36.0.tar.xz <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120015",
+          "timestamp": "20260702_122019",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1510,9 +1510,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-typelibs/default/20260702_120015"
+          "result_path": "../results/generate-spec-typelibs/default/20260702_122019"
         },
         "qwen27": {
           "timestamp": "20260702_100413",
@@ -1551,7 +1551,7 @@
       "command": "pbuild-ai <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120015",
+          "timestamp": "20260702_122019",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1572,9 +1572,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/inline-example/default/20260702_120015"
+          "result_path": "../results/inline-example/default/20260702_122019"
         }
       }
     },
@@ -1585,7 +1585,7 @@
       "command": "pbuild-ai --modify \"Add a systemd service file for glances server and package it in the glances-common package.\" <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120015",
+          "timestamp": "20260702_122019",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1606,9 +1606,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/simple-modification/default/20260702_120015"
+          "result_path": "../results/simple-modification/default/20260702_122019"
         },
         "gemma4": {
           "timestamp": "20260702_092041",
@@ -1764,7 +1764,7 @@
       "command": "pbuild-ai --update-only <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120025",
+          "timestamp": "20260702_122030",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1785,9 +1785,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-only/default/20260702_120025"
+          "result_path": "../results/update-only/default/20260702_122030"
         },
         "gemma4": {
           "timestamp": "20260630_193728",
@@ -1902,7 +1902,7 @@
       "command": "pbuild-ai --update --email localhero@opensuse.org <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120031",
+          "timestamp": "20260702_122034",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -1923,9 +1923,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-to-upstream-version/default/20260702_120031"
+          "result_path": "../results/update-to-upstream-version/default/20260702_122034"
         },
         "gemma4": {
           "timestamp": "20260630_195712",
@@ -2014,7 +2014,7 @@
       "command": "pbuild-ai --update --update-version=0.30.12 --allow-tool-scripts <source-directory>",
       "models": {
         "default": {
-          "timestamp": "20260702_120038",
+          "timestamp": "20260702_122039",
           "run_time_seconds": 0,
           "status": "success",
           "success": true,
@@ -2035,9 +2035,9 @@
           "trend_percent": null,
           "first_run_time_seconds": null,
           "run_count": 1,
-          "output": "./scripts/run-example.sh: line 485: pbuild-ai: command not found\n",
+          "output": "./scripts/run-example.sh: line 481: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-with-own-tools/default/20260702_120038"
+          "result_path": "../results/update-with-own-tools/default/20260702_122039"
         },
         "gemma4": {
           "timestamp": "20260630_215104",
