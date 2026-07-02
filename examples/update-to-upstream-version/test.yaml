@@ -4,7 +4,7 @@ order: 4
 
 source:
   type: remote
-  path: "../../sources/gawk.update-only"
+  path: "../../sources/gawk.update-to-upstream"
   url: "https://src.opensuse.org/pool/gawk"
   ref: "c30cc95a4861c123bd2f75f4ec913ffe64592ea11f7bf1a3d39c9b21c12403d5" # our oldest version
 
