@@ -396,61 +396,15 @@ EOF
 
     START_TIME=$(date +%s)
 
-# Record start time
-START_TIME=$(date +%s)
-
-# Create a backup of the source directory for diff comparison
-BACKUP_DIR=""
-if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
-    BACKUP_DIR="${RESULT_DIR}/source_backup"
-    echo "Creating backup of source directory for diff..."
-    cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
-fi
-
-# Run the command and capture output
-set +e
-(
-    cd "$EXAMPLE_DIR_ABS"
-    NO_SPINNER=1 "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
-)
-EXIT_CODE=$?
-set -e
-
-# Record end time
-END_TIME=$(date +%s)
-RUN_TIME=$((END_TIME - START_TIME))
-
-# Create unified diff between backup and current state
-FILES_CHANGED=0
-DIFF_CONTENT=""
-if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; then
-    echo "Generating diff of changes..."
-    # Use diff to compare, excluding .git and build directories
-    DIFF_CONTENT=$(diff -Nur \
-        --exclude=".git" \
-        --exclude="_build.*" \
-        --exclude="*.pyc" \
-        --exclude="__pycache__" \
-        --exclude=".pbuild" \
-        --exclude=".pai.context" \
-        "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
-
-    if [ -n "$DIFF_CONTENT" ]; then
-        # Count number of files changed - ensure single integer value
-        FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
-        FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
-
-        # Replace absolute paths with relative paths to avoid exposing local paths
-        # Replace backup dir path with "source_backup" and source path with relative path from repo root
-        BACKUP_BASENAME=$(basename "$BACKUP_DIR")
-        # Make SOURCE_PATH relative to repo root (strip leading ../)
-        SOURCE_PATH_CLEAN=$(echo "$SOURCE_PATH" | sed 's|^\.\./||; s|^\.\./||')
-        DIFF_CONTENT_CLEAN=$(echo "$DIFF_CONTENT" | sed "s|$BACKUP_DIR|$BACKUP_BASENAME|g" | sed "s|$FULL_SOURCE_PATH|$SOURCE_PATH_CLEAN|g")
-
-        echo "$DIFF_CONTENT_CLEAN" > "${RESULT_DIR}/diff.patch"
-        echo "✓ Captured diff for $FILES_CHANGED file(s)"
+    # Create a backup of the source directory for diff comparison
+    BACKUP_DIR=""
+    if [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+        BACKUP_DIR="${RESULT_DIR}/source_backup"
+        echo "Creating backup of source directory for diff..."
+        cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
     fi
 
+    # Run the command and capture output
     set +e
     (
         cd "$EXAMPLE_DIR_ABS"
@@ -459,9 +413,11 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
     EXIT_CODE=$?
     set -e
 
+    # Record end time
     END_TIME=$(date +%s)
     RUN_TIME=$((END_TIME - START_TIME))
 
+    # Create unified diff between backup and current state
     FILES_CHANGED=0
     DIFF_CONTENT=""
     if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; then
@@ -471,13 +427,23 @@ if [ -n "$BACKUP_DIR" ] && [ -d "$BACKUP_DIR" ] && [ -d "$FULL_SOURCE_PATH" ]; t
             --exclude="_build.*" \
             --exclude="*.pyc" \
             --exclude="__pycache__" \
+            --exclude=".pbuild" \
+            --exclude=".pai.context" \
             "$BACKUP_DIR" "$FULL_SOURCE_PATH" 2>/dev/null || true)
+
         if [ -n "$DIFF_CONTENT" ]; then
             FILES_CHANGED=$(echo "$DIFF_CONTENT" | grep -c "^diff -Nur" 2>/dev/null || echo "0")
             FILES_CHANGED=$(echo "$FILES_CHANGED" | head -1 | tr -d '\n')
-            echo "$DIFF_CONTENT" > "${RESULT_DIR}/diff.patch"
+
+            # Make paths relative to avoid exposing local paths
+            BACKUP_BASENAME=$(basename "$BACKUP_DIR")
+            SOURCE_PATH_CLEAN=$(echo "$SOURCE_PATH" | sed 's|^\.\./||; s|^\.\./||')
+            DIFF_CONTENT_CLEAN=$(echo "$DIFF_CONTENT" | sed "s|$BACKUP_DIR|$BACKUP_BASENAME|g" | sed "s|$FULL_SOURCE_PATH|$SOURCE_PATH_CLEAN|g")
+
+            echo "$DIFF_CONTENT_CLEAN" > "${RESULT_DIR}/diff.patch"
             echo "✓ Captured diff for $FILES_CHANGED file(s)"
         fi
+
         rm -rf "$BACKUP_DIR"
     fi
 
