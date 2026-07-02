@@ -227,6 +227,31 @@ print(next(iter(models.keys())))
 " 2>/dev/null || echo "default")
 fi
 
+# Validate that the model key exists in models.yaml
+if [ "$MODEL_KEY" != "default" ]; then
+    VALID_MODEL=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+if key in models:
+    print('yes')
+else:
+    print('no')
+" "$MODEL_KEY" 2>/dev/null || echo "no")
+
+    if [ "$VALID_MODEL" = "no" ]; then
+        echo "Error: Model key '$MODEL_KEY' not found in models.yaml"
+        echo "Available model keys: $(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+models = d.get('models', {})
+print(', '.join(sorted(models.keys())) if models else 'default')
+" 2>/dev/null || echo 'default')"
+        exit 1
+    fi
+fi
+
 MODEL_HOST=$(echo "$MODELS_JSON" | python3 -c "
 import json, sys
 d = json.loads(sys.stdin.read())
