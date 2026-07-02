@@ -739,11 +739,35 @@
                 return; // Example not found
             }
 
-            // Handle hardcoded example
-            // Populate modal with example data
-            document.getElementById('modalTitle').textContent = example.title;
-            document.getElementById('modalDescription').textContent = example.description;
-            document.getElementById('modalCommand').textContent = example.command;
+            // Handle hardcoded example - but try to get metadata from results.json first
+            try {
+                const response = await fetch('results.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.examples && data.examples[example.exampleDir]) {
+                        const exampleData = data.examples[example.exampleDir];
+                        // Use data from results.json if available, otherwise use hardcoded
+                        document.getElementById('modalTitle').textContent = exampleData.name || example.title;
+                        document.getElementById('modalDescription').textContent = exampleData.description || example.description;
+                        document.getElementById('modalCommand').textContent = exampleData.command || example.command;
+                    } else {
+                        // Fallback to hardcoded data
+                        document.getElementById('modalTitle').textContent = example.title;
+                        document.getElementById('modalDescription').textContent = example.description;
+                        document.getElementById('modalCommand').textContent = example.command;
+                    }
+                } else {
+                    // Fallback to hardcoded data
+                    document.getElementById('modalTitle').textContent = example.title;
+                    document.getElementById('modalDescription').textContent = example.description;
+                    document.getElementById('modalCommand').textContent = example.command;
+                }
+            } catch (e) {
+                // Fallback to hardcoded data
+                document.getElementById('modalTitle').textContent = example.title;
+                document.getElementById('modalDescription').textContent = example.description;
+                document.getElementById('modalCommand').textContent = example.command;
+            }
 
             // Show source link if defined
             const sourceCard = document.getElementById('sourceCard');
@@ -864,7 +888,7 @@
             // Build model selector tabs
             const modelSelector = document.getElementById('modelSelector');
             const modelTabs = document.getElementById('modelTabs');
-            if (currentModelKeys.length > 1) {
+            if (currentModelKeys.length > 0) {
                 modelSelector.style.display = 'block';
                 modelTabs.innerHTML = currentModelKeys.map(key => {
                     const meta = currentModelsMeta[key] || {};
