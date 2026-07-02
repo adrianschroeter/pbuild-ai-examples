@@ -1,0 +1,23 @@
+name: "Generate Node.js Package Spec"
+description: "Generate a spec file for a Node.js package from scratch using Node.js-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/nodejs-example"
+
+options:
+  - "--generate"
+  - "https://registry.npmjs.org/chalk/-/chalk-5.3.0.tgz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "nodejs"
+  - "generate"
+  - "advanced"

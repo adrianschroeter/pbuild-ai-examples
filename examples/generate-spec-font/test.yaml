@@ -1,0 +1,23 @@
+name: "Generate Font Package Spec"
+description: "Generate a spec file for a font package from scratch using font-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/font-example"
+
+options:
+  - "--generate"
+  - "https://github.com/googlefonts/roboto/releases/download/v2.138/roboto-unhinted.zip"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "font"
+  - "generate"
+  - "advanced"

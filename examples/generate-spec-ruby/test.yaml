@@ -1,0 +1,23 @@
+name: "Generate Ruby Package Spec"
+description: "Generate a spec file for a Ruby gem from scratch using Ruby-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/ruby-example"
+
+options:
+  - "--generate"
+  - "https://rubygems.org/downloads/rake-13.0.6.gem"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "ruby"
+  - "generate"
+  - "advanced"

@@ -1,0 +1,81 @@
+[PBUILD-AI] Version 0.1.7
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] cleanup_skill.py (prompt match)
+[SKILL ACTIVE] python_skill.py for python-Glances.spec
+[INFO] Using skill profile: cleanup_skill
+[INFO] Using skill profile: python_skill
+
+[MODIFY] Sending python-Glances.spec sources to default...
+[TOOL] list_files: . (8 entries)
+[MODIFY] OK
+[MODIFY] .git/
+.gitattributes
+.gitignore
+adjust-data-files.patch
+python-Glances.changes
+python-Glances.spec
+remove-shebang.patch
+v3.1.0.tar.gz
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -58,15 +58,15 @@
+[0m[TOOL]  %build
+[TOOL]  %python_build
+[TOOL]  
+[32m[TOOL][0m [32m+%install
+[0m[32m[TOOL][0m [32m+%python_install
+[0m[32m[TOOL][0m [32m+%python_expand %fdupes %{buildroot}%{$python_sitelib}
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %check
+[TOOL]  export LANG=en_US.UTF-8
+[TOOL]  %python_exec unitest.py
+[TOOL]  %python_exec unitest-restful.py
+[TOOL]  %python_exec unitest-xmlrpc.py
+[31m[TOOL][0m [31m-
+[0m[31m[TOOL][0m [31m-%install
+[0m[31m[TOOL][0m [31m-%python_install
+[0m[31m[TOOL][0m [31m-%python_expand %fdupes %{buildroot}%{$python_sitelib}
+[0m[TOOL]  
+[TOOL]  %files %{python_files}
+[TOOL]  %license COPYING
+[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -75,4 +75,3 @@
+[0m[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz
+[TOOL]  %{python_sitelib}/*
+[TOOL]  
+[31m[TOOL][0m [31m-%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[MODIFY] OK: Edited python-Glances.spec
+[MODIFY] OK: Edited python-Glances.spec
+[TOOL] list_archive: v3.1.0.tar.gz (415 entries)
+[MODIFY] glances-3.1.0
+glances-3.1.0/.ci
+glances-3.1.0/.ci/appveyor
+glances-3.1.0/.ci/appveyor/README.rst
+glances-3.1.0/.ci/appveyor/download_exes.py
+glances-3.1.0/.ci/appveyor/install.ps1
+glances-3.1.0/.ci/appveyor/run_with_compiler.cmd
+glances-3.1.0/.coveragerc
+glances-3.1.0/.gitattributes
+glances-3.1.0/.github
+glances-3.1.0/.github/ISSUE_TEMPLATE.md
+glances-3.1.0/.github/PULL_REQUEST_TEMPLATE.md
+glances-3.1.0/.gitignore
+glances-3.1.0/.mailmap
+glances-3.1.0/.travis.yml
+glances-3.1.0/AUTHORS
+glances-3.1...
+
+[MODIFY] Ollama:
+The spec file has been cleaned up according to openSUSE packaging conventions. I have normalized the formatting, reordered the `%install` and `%check` sections to follow the standard tag order, and removed the empty `%changelog` section. No `_service` file was found, so no `RemoteAsset` conversion was necessary.
+
+[MODIFY] Changes confirmed.
+[MODIFY] Downloading https://github.com/nicolargo/glances/archive/v%{version}.tar.gz -> v%{version}.tar.gz
+[MODIFY] Failed to download https://github.com/nicolargo/glances/archive/v%{version}.tar.gz: HTTP Error 400: Bad Request
+[STATS] AI model: default  |  AI calls: 4  |  AI time: 252.7s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 253.0s

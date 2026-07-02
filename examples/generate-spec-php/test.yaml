@@ -1,0 +1,23 @@
+name: "Generate PHP Package Spec"
+description: "Generate a spec file for a PHP package from scratch using PHP-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/php-example"
+
+options:
+  - "--generate"
+  - "https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "php"
+  - "generate"
+  - "advanced"

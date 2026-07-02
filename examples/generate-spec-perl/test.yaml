@@ -1,0 +1,23 @@
+name: "Generate Perl Package Spec"
+description: "Generate a spec file for a Perl module from scratch using Perl-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/perl-example"
+
+options:
+  - "--generate"
+  - "https://cpan.metacpan.org/authors/id/E/ET/ETHER/Module-Runtime-0.016.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "perl"
+  - "generate"
+  - "advanced"

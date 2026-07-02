@@ -1,0 +1,23 @@
+name: "Generate Lisp Package Spec"
+description: "Generate a spec file for a Common Lisp package from scratch using Lisp-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/lisp-example"
+
+options:
+  - "--generate"
+  - "https://github.com/dlowe-net/local-time/archive/refs/tags/v1.0.6.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "lisp"
+  - "generate"
+  - "advanced"

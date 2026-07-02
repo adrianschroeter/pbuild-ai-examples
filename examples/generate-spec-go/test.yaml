@@ -1,0 +1,24 @@
+name: "Generate Go Package Spec"
+description: "Generate a spec file for a Go package from scratch using Go-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/go-example"
+
+options:
+  - "--generate"
+  - "https://github.com/spf13/cobra/archive/refs/tags/v1.8.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "go"
+  - "golang"
+  - "generate"
+  - "advanced"

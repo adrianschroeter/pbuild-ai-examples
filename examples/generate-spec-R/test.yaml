@@ -1,0 +1,23 @@
+name: "Generate R Package Spec"
+description: "Generate a spec file for an R package from scratch using R-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/R-example"
+
+options:
+  - "--generate"
+  - "https://cran.r-project.org/src/contrib/ggplot2_3.4.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "R"
+  - "generate"
+  - "advanced"

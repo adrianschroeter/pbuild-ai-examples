@@ -1,0 +1,23 @@
+name: "Generate Rust Package Spec"
+description: "Generate a spec file for a Rust crate from scratch using Rust-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/rust-example"
+
+options:
+  - "--generate"
+  - "https://github.com/rust-lang/cargo/archive/refs/tags/0.75.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "rust"
+  - "generate"
+  - "advanced"

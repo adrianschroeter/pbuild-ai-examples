@@ -1,0 +1,24 @@
+name: "Generate PyQt/SIP Package Spec"
+description: "Generate a spec file for a PyQt/SIP package from scratch using PyQt-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/pyqt-sip-example"
+
+options:
+  - "--generate"
+  - "https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "pyqt"
+  - "sip"
+  - "generate"
+  - "advanced"

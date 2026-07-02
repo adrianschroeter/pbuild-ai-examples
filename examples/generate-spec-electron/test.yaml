@@ -1,0 +1,23 @@
+name: "Generate Electron Package Spec"
+description: "Generate a spec file for an Electron application from scratch using Electron-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/electron-example"
+
+options:
+  - "--generate"
+  - "https://github.com/atom/atom/archive/refs/tags/v1.60.0.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "electron"
+  - "generate"
+  - "advanced"

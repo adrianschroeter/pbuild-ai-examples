@@ -1,0 +1,24 @@
+name: "Generate Typelibs Package Spec"
+description: "Generate a spec file for a GObject Introspection typelib package from scratch using typelibs-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/typelibs-example"
+
+options:
+  - "--generate"
+  - "https://download.gnome.org/sources/libpeas/1.36/libpeas-1.36.0.tar.xz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "typelibs"
+  - "gobject"
+  - "generate"
+  - "advanced"

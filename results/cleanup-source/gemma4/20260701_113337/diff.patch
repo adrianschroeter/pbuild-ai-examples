@@ -1,0 +1,29 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/cleanup-source/gemma4/20260701_113337/source_backup/python-Glances.spec /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/cleanup-source/gemma4/20260701_113337/source_backup/python-Glances.spec	2026-07-01 11:33:38.013141771 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec	2026-07-01 11:34:57.720642836 +0200
+@@ -58,16 +58,16 @@
+ %build
+ %python_build
+ 
++%install
++%python_install
++%python_expand %fdupes %{buildroot}%{$python_sitelib}
++
+ %check
+ export LANG=en_US.UTF-8
+ %python_exec unitest.py
+ %python_exec unitest-restful.py
+ %python_exec unitest-xmlrpc.py
+ 
+-%install
+-%python_install
+-%python_expand %fdupes %{buildroot}%{$python_sitelib}
+-
+ %files %{python_files}
+ %license COPYING
+ %doc NEWS README.rst
+@@ -75,4 +75,3 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
+-%changelog

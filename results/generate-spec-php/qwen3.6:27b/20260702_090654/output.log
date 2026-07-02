@@ -1,0 +1,16 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[GENERATE] Creating new package from prompt: https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz
+[TOOL] web_fetch: https://api.github.com/repos/phpstan/phpstan/releases/latest (20325 bytes -> 20318 stripped)
+[TOOL] download_file: https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz -> phpstan-1.10.0.tar.gz (3404866 bytes)
+[GENERATE] [Fetched 20325 bytes]
+[GENERATE] OK: Downloaded 3404866 bytes to phpstan-1.10.0.tar.gz
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/site-packages/pbuild_ai/pbuild_ai.py", line 1266, in <module>
+    run_generate_mode(ctx)
+    ~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/site-packages/pbuild_ai/generate_mode.py", line 260, in run_generate_mode
+    final_results.append(round_results[cache_idx])
+                         ~~~~~~~~~~~~~^^^^^^^^^^^
+IndexError: list index out of range
+Script aborted: list index out of range
