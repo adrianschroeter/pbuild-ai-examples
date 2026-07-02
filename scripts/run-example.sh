@@ -53,7 +53,7 @@ fi
 
 REPO_ROOT=$(pwd)
 
-# Read model configurations from models.yaml + models.yaml.local
+# Read model configurations from models.yaml
 MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
@@ -102,19 +102,8 @@ def read_yaml_simple(path):
         pass
     return data
 
-# Merge models.yaml and models.yaml.local
-config = {"default": None, "hosts": {}, "models": {}}
-for yaml_file in ["models.yaml", "models.yaml.local"]:
-    if os.path.exists(yaml_file):
-        cfg = read_yaml_simple(yaml_file)
-        # Last file wins for default
-        if cfg.get("default"):
-            config["default"] = cfg["default"]
-        for section in ["hosts", "models"]:
-            for key, val in cfg.get(section, {}).items():
-                if key not in config[section]:
-                    config[section][key] = {}
-                config[section][key].update(val)
+# Read models.yaml only
+config = read_yaml_simple("models.yaml")
 
 # Resolve host references in models
 for model_key, model_data in config["models"].items():
@@ -133,17 +122,64 @@ for model_key, model_data in config["models"].items():
 print(json.dumps(config))
 ' 2>/dev/null || echo "{}")
 
-# Handle --all-models: run for each model key
+# Handle --all-models: run for each model key (from models.yaml only, not .local)
 if [ "$ALL_MODELS" = true ]; then
-    MODEL_KEYS=$(echo "$MODELS_JSON" | python3 -c "
-import json, sys
-d = json.loads(sys.stdin.read())
-models = d.get('models', {})
+    MODEL_KEYS=$(python3 -c 'import json, os, re
+
+def read_yaml_simple(path):
+    """Parse YAML with default:, hosts:, and models: sections"""
+    data = {"default": None, "hosts": {}, "models": {}}
+    current_section = None
+    current_key = None
+
+    try:
+        with open(path) as f:
+            for line in f:
+                line = re.sub(r"#.*$", "", line).rstrip()
+                if not line:
+                    continue
+
+                # Top-level default: key
+                if line.startswith("default:"):
+                    m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                    if m:
+                        data["default"] = m.group(1)
+                    continue
+
+                # Top-level section: hosts: or models:
+                if line.startswith("hosts:"):
+                    current_section = "hosts"
+                    continue
+                elif line.startswith("models:"):
+                    current_section = "models"
+                    continue
+
+                # Entry key: "  keyname:"
+                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
+                if m and current_section:
+                    current_key = m.group(1)
+                    data[current_section][current_key] = {}
+                    continue
+
+                # Property: "    propname: value"
+                m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
+                if m and current_section and current_key:
+                    val = m.group(2).strip()
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
+                        val = val[1:-1]
+                    data[current_section][current_key][m.group(1)] = val
+    except FileNotFoundError:
+        pass
+    return data
+
+# Read only models.yaml, not .local
+config = read_yaml_simple("models.yaml")
+models = config.get("models", {})
 if not models:
-    print('default')
+    print("default")
 else:
-    print(' '.join(sorted(models.keys())))
-" 2>/dev/null || echo "default")
+    print(" ".join(sorted(models.keys())))
+' 2>/dev/null || echo "default")
 
     OVERALL_EXIT=0
     for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do

@@ -11,8 +11,8 @@ __pycache__/
 *.pyc
 .venv/
 
-# Local model config overrides (may contain secrets like host URLs)
-models.yaml.local
+# Local model config file
+models.yaml
 
 # Editor files
 *.swp
