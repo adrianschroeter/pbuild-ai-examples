@@ -438,7 +438,7 @@ EOF
 
     # Add --build-log parameter to capture build logs separately
     # pbuild-ai will replace _NUMBER_ with an auto-incrementing counter
-    BUILD_LOG_FILE="${RESULT_DIR}/build_NUMBER_.log"
+    BUILD_LOG_FILE="${RESULT_DIR}/build-_NUMBER_.log"
 
     FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}" "--build-log" "$BUILD_LOG_FILE")
     if [ -n "$FULL_SOURCE_PATH" ]; then
