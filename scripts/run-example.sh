@@ -437,12 +437,8 @@ EOF
     done < <(awk '/^options:/,/^expected:/ {if ($0 ~ /^  - /) print}' "$TEST_YAML")
 
     # Add --build-log parameter to capture build logs separately
-    # Find next available build log number
-    BUILD_LOG_COUNTER=1
-    while [ -f "${RESULT_DIR}/build_${BUILD_LOG_COUNTER}.log" ]; do
-        BUILD_LOG_COUNTER=$((BUILD_LOG_COUNTER + 1))
-    done
-    BUILD_LOG_FILE="${RESULT_DIR}/build_${BUILD_LOG_COUNTER}.log"
+    # pbuild-ai will replace _NUMBER_ with an auto-incrementing counter
+    BUILD_LOG_FILE="${RESULT_DIR}/build_NUMBER_.log"
 
     FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}" "--build-log" "$BUILD_LOG_FILE")
     if [ -n "$FULL_SOURCE_PATH" ]; then
