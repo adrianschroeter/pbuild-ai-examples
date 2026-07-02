@@ -1,0 +1,41 @@
+Binärdateien /home/adrian/opencode/pbuild-ai-examples/results/fix-build-failures/gemma4/20260701_113751/source_backup/.pbuild/lastdata und /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/.pbuild/lastdata sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' /home/adrian/opencode/pbuild-ai-examples/results/fix-build-failures/gemma4/20260701_113751/source_backup/python-adb-shell.spec /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/python-adb-shell.spec
+--- /home/adrian/opencode/pbuild-ai-examples/results/fix-build-failures/gemma4/20260701_113751/source_backup/python-adb-shell.spec	2026-06-29 16:36:34.212838443 +0200
++++ /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/python-adb-shell.spec	2026-07-01 11:58:35.019285509 +0200
+@@ -25,6 +25,14 @@
+ Source:         adb_shell-%{version}.tar.gz
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  %{python_module build}
++BuildRequires:  %{python_module wheel}
++BuildRequires:  %{python_module pip}
++BuildRequires:  %{python_module setuptools}
++BuildRequires:  %{python_module aiofiles}
++BuildRequires:  %{python_module cryptography}
++BuildRequires:  %{python_module pyasn1}
++BuildRequires:  %{python_module rsa}
+ BuildRoot: /tmp/old
+ Requires:  python-aiofiles >= 0.4.0
+ Requires:  python-cryptography
+@@ -39,16 +47,17 @@
+  https://github.com/google/python-adb/tree/master/adb
+ 
+ %prep
+-%setup -q -n adb-shell-%{version}
++%setup -q -n adb_shell-%{version}
+ 
+ %build
+-%python_build
++%pyproject_wheel
+ 
+ %install
+-%python_install
++%pyproject_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
+ 
+ %files %{python_files}
++%{python_sitelib}/adb_shell
++%{python_sitelib}/adb_shell-*.dist-info
+ %doc README.rst
+-/does/not/exist
+ 
