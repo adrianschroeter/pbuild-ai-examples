@@ -439,6 +439,10 @@
                         <h3>Generated Changes</h3>
                         <div id="modalChanges"></div>
                     </div>
+                    <div class="info-card" id="skillsCard" style="display:none;">
+                        <h3>Skills Used</h3>
+                        <div id="modalSkills"></div>
+                    </div>
                 </div>
                 <div class="modal-section">
                     <h3>Benchmark Results</h3>
@@ -782,6 +786,19 @@
             } else {
                 changesCard.style.display = 'none';
             }
+
+            // Display skills used from results data
+            const skillsCard = document.getElementById('skillsCard');
+            const modalSkills = document.getElementById('modalSkills');
+            if (result.skills_used && result.skills_used.length > 0) {
+                modalSkills.innerHTML = result.skills_used.map(skill =>
+                    `<span class="skill-tag">${skill}</span>`
+                ).join('');
+            } else {
+                modalSkills.innerHTML = '<span class="text-muted">No skills used</span>';
+            }
+            skillsCard.style.display = 'block';
+            hasInfoCards = true;
 
             infoRow.style.display = hasInfoCards ? 'flex' : 'none';
 

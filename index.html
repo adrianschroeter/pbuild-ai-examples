@@ -39,6 +39,10 @@
                         <h3>Generated Changes</h3>
                         <div id="modalChanges"></div>
                     </div>
+                    <div class="info-card" id="skillsCard" style="display:none;">
+                        <h3>Skills Used</h3>
+                        <div id="modalSkills"></div>
+                    </div>
                 </div>
                 <div class="modal-section">
                     <h3>Benchmark Results</h3>
@@ -547,6 +551,20 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Language-Specific Generation Examples -->
+            <section class="section" id="language-examples">
+                <div class="section-header">
+                    <h2 class="section-title">Language-Specific Package Generation</h2>
+                    <p class="section-subtitle">
+                        These examples verify language-specific skills for generating packages from scratch.
+                        They test pbuild-ai's ability to apply language conventions and best practices, and verify that the appropriate language-specific skills are automatically loaded and used.
+                    </p>
+                </div>
+                <div id="languageExamplesContainer" class="examples-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </section>
         </div>
     </main>
 
@@ -673,10 +691,55 @@
             }
         };
 
-        function showExample(exampleId, modelKey) {
+        async function showExample(exampleId, modelKey) {
             const example = examples[exampleId];
-            if (!example) return;
 
+            // If not in hardcoded examples, try to load from results.json
+            if (!example) {
+                try {
+                    const response = await fetch('results.json');
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.examples && data.examples[exampleId]) {
+                            const exampleData = data.examples[exampleId];
+                            // Populate modal with data from results.json
+                            document.getElementById('modalTitle').textContent = exampleData.name || exampleId;
+                            document.getElementById('modalDescription').textContent = exampleData.description || 'No description available';
+                            document.getElementById('modalCommand').textContent = exampleData.command || 'pbuild-ai <source-directory>';
+
+                            // Check if there's source info from any model result
+                            const firstModel = Object.values(exampleData.models || {})[0];
+                            const sourceCard = document.getElementById('sourceCard');
+                            const modalSource = document.getElementById('modalSource');
+                            if (firstModel && firstModel.source_url) {
+                                const displayUrl = firstModel.source_ref ?
+                                    `${firstModel.source_url}@${firstModel.source_ref}` : firstModel.source_url;
+                                modalSource.innerHTML = `<a href="${firstModel.source_url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+                                sourceCard.style.display = 'block';
+                            } else {
+                                sourceCard.style.display = 'none';
+                            }
+
+                            // Reset changes card
+                            document.getElementById('changesCard').style.display = 'none';
+                            document.getElementById('infoRow').style.display = firstModel && firstModel.source_url ? 'flex' : 'none';
+
+                            // Load results
+                            loadExampleResults(exampleId, modelKey);
+
+                            // Show modal
+                            document.getElementById('exampleModal').style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.log('Could not load example from results.json:', e);
+                }
+                return; // Example not found
+            }
+
+            // Handle hardcoded example
             // Populate modal with example data
             document.getElementById('modalTitle').textContent = example.title;
             document.getElementById('modalDescription').textContent = example.description;
@@ -907,6 +970,19 @@
                 filesChangedEl.textContent = '-';
             }
 
+            // Display skills used from results data
+            const skillsCard = document.getElementById('skillsCard');
+            const modalSkills = document.getElementById('modalSkills');
+            if (result.skills_used && result.skills_used.length > 0) {
+                modalSkills.innerHTML = result.skills_used.map(skill =>
+                    `<span class="skill-tag">${skill}</span>`
+                ).join('');
+            } else {
+                modalSkills.innerHTML = '<span class="text-muted">No skills used</span>';
+            }
+            skillsCard.style.display = 'block';
+            document.getElementById('infoRow').style.display = 'flex';
+
             document.getElementById('modalTotalRuntime').textContent = formatTime(result.total_runtime_seconds);
             document.getElementById('modalAiCalls').textContent =
                 (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
@@ -980,8 +1056,57 @@ Run the example to see:
             }
         }
 
+        // Load and display language-specific examples
+        async function loadLanguageExamples() {
+            try {
+                const response = await fetch('results.json');
+                if (!response.ok) return;
+
+                const data = await response.json();
+                const container = document.getElementById('languageExamplesContainer');
+
+                // Filter examples that start with "generate-spec-"
+                const languageExamples = Object.entries(data.examples || {})
+                    .filter(([name, _]) => name.startsWith('generate-spec-'))
+                    .sort((a, b) => a[0].localeCompare(b[0]));
+
+                if (languageExamples.length === 0) {
+                    container.innerHTML = '<p class="text-muted">No language-specific examples available yet.</p>';
+                    return;
+                }
+
+                // Create example cards
+                container.innerHTML = languageExamples.map(([exampleName, exampleData]) => {
+                    const displayName = exampleData.name || exampleName;
+                    const description = exampleData.description || 'No description available';
+
+                    // Count results across all models
+                    const modelCount = Object.keys(exampleData.models || {}).length;
+                    const successCount = Object.values(exampleData.models || {})
+                        .filter(m => m.status === 'success').length;
+
+                    return `
+                        <div class="example-card" onclick="showExample('${exampleName}')">
+                            <h3 class="example-title">${displayName}</h3>
+                            <p class="example-description">${description}</p>
+                            <div class="example-meta">
+                                <span class="example-tag">${modelCount} model${modelCount !== 1 ? 's' : ''} tested</span>
+                                ${successCount > 0 ? `<span class="example-tag success-tag">${successCount} passed</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (e) {
+                console.log('Could not load language examples:', e);
+            }
+        }
+
         // Handle hash on page load and hash changes
-        window.addEventListener('DOMContentLoaded', handleHash);
+        window.addEventListener('DOMContentLoaded', () => {
+            handleHash();
+            loadLanguageExamples();
+        });
         window.addEventListener('hashchange', handleHash);
     </script>
 </body>
