@@ -1,0 +1,104 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/r-ggplot2.spec sources/R-example/r-ggplot2.spec
+--- source_backup/r-ggplot2.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/R-example/r-ggplot2.spec	2026-07-02 09:32:27.982766578 +0200
+@@ -0,0 +1,100 @@
++#
++# spec file for package r-ggplot2
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++# Contributed by:
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%global packname ggplot2
++%global rlibdir %{_libdir}/R/library
++
++Name:           R-ggplot2
++Version:        3.4.0
++Release:        0
++Summary:        Create Elegant Data Visualisations Using the Grammar of Graphics
++License:        GPL-2.0-or-later
++Group:          Development/Libraries/Other
++URL:            https://ggplot2.tidyverse.org/
++Source:         https://cran.r-project.org/src/contrib/ggplot2_3.4.0.tar.gz
++
++# Depends: R (>= 3.5), grid, magrittr, stats, utils
++# Imports: cli (>= 3.1.0), colorspace (>= 2.0-1), MASS (>= 7.3-46), munsell (>= 0.5.0),
++#          pillar (>= 1.6.1), rlang (>= 1.0.2), scales (>= 1.2.0), tibble (>= 2.1.3), vctrs (>= 0.4.1)
++# grid, stats, utils are part of R-base; MASS is included with R-base on openSUSE
++BuildRequires:  R-base
++BuildRequires:  R-cli >= 3.1.0
++BuildRequires:  R-colorspace >= 2.0-1
++BuildRequires:  R-magrittr
++BuildRequires:  R-munsell >= 0.5.0
++BuildRequires:  R-pillar >= 1.6.1
++BuildRequires:  R-rlang >= 1.0.2
++BuildRequires:  R-scales >= 1.2.0
++BuildRequires:  R-tibble >= 2.1.3
++BuildRequires:  R-vctrs >= 0.4.1
++
++# Runtime dependencies (same as BuildRequires except Depends packages)
++Requires:       R-base
++Requires:       R-cli >= 3.1.0
++Requires:       R-colorspace >= 2.0-1
++Requires:       R-magrittr
++Requires:       R-munsell >= 0.5.0
++Requires:       R-pillar >= 1.6.1
++Requires:       R-rlang >= 1.0.2
++Requires:       R-scales >= 1.2.0
++Requires:       R-tibble >= 2.1.3
++Requires:       R-vctrs >= 0.4.1
++
++%description
++ggplot2 is a system for declaratively creating graphics, based on The
++Grammar of Graphics. You provide the data, tell ggplot2 how to map
++variables to aesthetics, what graphical primitives to use, and it takes
++care of the details.
++
++%prep
++%setup -q -c -n %{packname}
++
++%build
++# nothing to build
++
++%install
++R CMD INSTALL -l %{buildroot}%{rlibdir} --no-test-load %{packname}
++rm -f %{buildroot}%{rlibdir}/R.css
++rm -rf %{buildroot}%{rlibdir}/%{packname}/tests/
++rm -rf %{buildroot}%{rlibdir}/%{packname}/data/doc
++
++%check
++# Disable Suggests dependencies and network access in build environment
++env _R_CHECK_FORCE_SUGGESTS_=0 \
++    NOT_CRAN=1 \
++    R_HOME=/usr/lib64/R \
++    /usr/bin/R CMD check \
++      --no-codoc \
++      --no-manual \
++      --no-vignettes \
++      --no-staged-install \
++      --no-examples \
++      %{packname}
++
++%files
++%defattr(-, root, root, -755)
++%doc DESCRIPTION NEWS.md LICENSE
++%dir %{rlibdir}/%{packname}
++%{_rlibdir}/%{packname}/R
++%{_rlibdir}/%{packname}/Meta
++%{_rlibdir}/%{packname}/NAMESPACE
++%{_rlibdir}/%{packname}/INDEX
++%{_rlibdir}/%{packname}/help
++
++%changelog

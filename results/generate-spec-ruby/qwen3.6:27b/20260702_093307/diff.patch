@@ -1,0 +1,44 @@
+Binärdateien source_backup/rake-13.0.6.gem und sources/ruby-example/rake-13.0.6.gem sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/rubygem-rake.spec sources/ruby-example/rubygem-rake.spec
+--- source_backup/rubygem-rake.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ruby-example/rubygem-rake.spec	2026-07-02 09:41:02.725540781 +0200
+@@ -0,0 +1,39 @@
++# SPDX-FileCopyrightText: none
++# SPDX-License-Identifier: MIT
++
++Name:           rubygem-rake
++Version:        13.0.6
++Release:        0
++Summary:        Ruby make program like make but written in Ruby
++License:        MIT
++URL:            https://github.com/ruby/rake
++Source0:        https://rubygems.org/downloads/rake-13.0.6.gem
++BuildRequires:  ruby >= %{min_ruby_version}
++BuildRequires:  ruby-macros >= 5
++
++%description
++Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
++specified in standard Ruby syntax. Rake has the following features:
++
++* Rakefiles (rake's version of Makefiles) are completely defined in
++  standard Ruby syntax. No XML files to edit. No quirky Makefile syntax
++  to worry about.
++* Users can specify tasks with prerequisites.
++* Rake supports rule patterns to synthesize implicit tasks.
++* Flexible FileLists that act like arrays but know about manipulating
++  file names and paths.
++* Supports parallel execution of tasks.
++
++%prep
++%setup -q -n rake-13.0.6
++
++%build
++# no build step required for pure Ruby gem
++
++%install
++%gem_install -f
++
++%check
++# tests require external dependencies and network access, disabled per packaging rules
++
++%files %{_rubygem_files}
