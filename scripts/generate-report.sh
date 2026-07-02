@@ -592,9 +592,18 @@ if os.path.isdir(RESULTS_DIR):
 
             # Read output log
             output_content = ""
+            skills_used = []
             if os.path.exists(output_log):
                 with open(output_log, encoding="utf-8", errors="replace") as f:
                     output_content = f.read()
+
+                # Extract skills from output log
+                import re
+                skills_match = re.search(r'\[STATS\] Skills used:\s*(.+?)(?:\n|$)', output_content)
+                if skills_match:
+                    skills_str = skills_match.group(1).strip()
+                    if skills_str:
+                        skills_used = [s.strip() for s in skills_str.split(',') if s.strip()]
 
             # Read diff
             diff_path = os.path.join(os.path.dirname(latest_bm_path), "diff.patch")
@@ -643,6 +652,7 @@ if os.path.isdir(RESULTS_DIR):
                 "model_host_description": meta_host_desc,
                 "source_url": source_url,
                 "source_ref": source_ref,
+                "skills_used": skills_used,
                 "trend_percent": trend_percent,
                 "first_run_time_seconds": first_run_time,
                 "run_count": len(all_bm_paths),

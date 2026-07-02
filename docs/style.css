@@ -562,6 +562,47 @@ body::before {
     gap: 0.5rem;
 }
 
+.example-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.example-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.example-tag.success-tag {
+    background: rgba(115, 186, 37, 0.2);
+    color: var(--geeko-green);
+    font-weight: 600;
+}
+
+.skill-tag {
+    display: inline-block;
+    padding: 0.4rem 0.75rem;
+    margin: 0.25rem;
+    background: rgba(115, 186, 37, 0.15);
+    border: 1px solid rgba(115, 186, 37, 0.4);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--geeko-green);
+    font-weight: 500;
+}
+
+#modalSkills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
 /* ============================================
    Tags - Pixel Style
    ============================================ */
