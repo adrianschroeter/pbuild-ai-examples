@@ -1,9 +1,0 @@
-{
-  "example": "fix-build-failures",
-  "model_key": "ornith35b",
-  "model_name": "ornith:35b",
-  "timestamp": "2026-07-01T20:38:44+02:00",
-  "hostname": "rio",
-  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
-  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
-}

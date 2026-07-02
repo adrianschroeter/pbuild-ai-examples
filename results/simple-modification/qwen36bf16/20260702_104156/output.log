@@ -1,0 +1,111 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] systemd (prompt match)
+[SKILL ACTIVE] python_skill.py for python-Glances.spec
+[INFO] Using skill profile: systemd_skill
+[INFO] Using skill profile: python_skill
+
+[MODIFY] Sending python-Glances.spec sources to qwen3.6:35b-a3b-bf16...
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -27,12 +27,14 @@
+[0m[TOOL]  Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
+[TOOL]  Patch0:         adjust-data-files.patch
+[TOOL]  Patch1:         remove-shebang.patch
+[32m[TOOL][0m [32m+Source1:        glances-server.service
+[0m[TOOL]  BuildRequires:  %{python_module bottle}
+[TOOL]  BuildRequires:  %{python_module psutil >= 5.3.0}
+[TOOL]  BuildRequires:  %{python_module requests}
+[TOOL]  BuildRequires:  %{python_module setuptools}
+[TOOL]  BuildRequires:  fdupes
+[TOOL]  BuildRequires:  python-rpm-macros
+[32m[TOOL][0m [32m+BuildRequires:  systemd-rpm-macros
+[0m[TOOL]  Requires:       python-bottle
+[TOOL]  Requires:       python-curses
+[TOOL]  Requires:       python-psutil >= 5.3.0
+[36m[TOOL][0m [36m@@ -51,6 +53,15 @@
+[0m[TOOL]  based interface. The information dynamically adapts depending on the
+[TOOL]  size of the user interface.
+[TOOL]  
+[32m[TOOL][0m [32m+%package common
+[0m[32m[TOOL][0m [32m+Summary:        A cross-platform curses-based monitoring tool - Systemd unit files
+[0m[32m[TOOL][0m [32m+Group:          System/Daemon
+[0m[32m[TOOL][0m [32m+Requires:       %{name} = %{version}
+[0m[32m[TOOL][0m [32m+BuildArch:      noarch
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description common
+[0m[32m[TOOL][0m [32m+Glances systemd service files for server mode.
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %prep
+[TOOL]  %setup -q -n glances-%{version}
+[TOOL]  %autopatch -p1
+[36m[TOOL][0m [36m@@ -67,6 +78,17 @@
+[0m[TOOL]  %install
+[TOOL]  %python_install
+[TOOL]  %python_expand %fdupes %{buildroot}%{$python_sitelib}
+[32m[TOOL][0m [32m+%service_add_pre glances-server.service
+[0m[32m[TOOL][0m [32m+install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%post common
+[0m[32m[TOOL][0m [32m+%service_add_post glances-server.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%preun common
+[0m[32m[TOOL][0m [32m+%service_del_preun glances-server.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%postun common
+[0m[32m[TOOL][0m [32m+%service_del_postun glances-server.service
+[0m[TOOL]  
+[TOOL]  %files %{python_files}
+[TOOL]  %license COPYING
+[36m[TOOL][0m [36m@@ -75,4 +97,7 @@
+[0m[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz
+[TOOL]  %{python_sitelib}/*
+[TOOL]  
+[32m[TOOL][0m [32m+%files common
+[0m[32m[TOOL][0m [32m+%{_unitdir}/glances-server.service
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %changelog
+[TOOL] --- End diff ---
+[TOOL] write_file: python-Glances.spec
+[MODIFY] OK: Wrote python-Glances.spec
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/glances-server.service
+[0m[36m[TOOL][0m [36m@@ -0,0 +1,11 @@
+[0m[32m[TOOL][0m [32m+[Unit]
+[0m[32m[TOOL][0m [32m+Description=Glances Server Mode
+[0m[32m[TOOL][0m [32m+Documentation=https://glances.readthedocs.io/
+[0m[32m[TOOL][0m [32m+After=network.target
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+[Service]
+[0m[32m[TOOL][0m [32m+ExecStart=/usr/bin/glances --server
+[0m[32m[TOOL][0m [32m+Restart=on-failure
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+[Install]
+[0m[32m[TOOL][0m [32m+WantedBy=multi-user.target
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: glances-server.service
+[MODIFY] OK: Wrote glances-server.service
+
+[MODIFY] Ollama:
+I've made the following changes:
+
+1. **Modified `python-Glances.spec`**:
+   - Added `Source1: glances-server.service` to reference the new service file
+   - Added `BuildRequires: systemd-rpm-macros` for the systemctl macros
+   - Added a new `%package common` subpackage containing the systemd unit file (with `Group: System/Daemon` and a dependency on the main package)
+   - Added corresponding `%description common` section
+   - In `%install`, added `%service_add_pre glances-server.service` macro call and installed the service file to `%{_unitdir}`
+   - Added `%post common`, `%preun common`, and `%postun common` scriptlets using the appropriate `%service_add_*` macros
+
+2. **Created `glances-server.service`** with a standard systemd unit that:
+   - Starts Glances in server mode (`glances --server`)
+   - Restarts on failure
+   - Has proper `[Unit]`, `[Service]`, and `[Install]` sections
+
+[MODIFY] Changes confirmed.
+[MODIFY] v3.1.0.tar.gz already exists, skipping download.
+[MODIFY] Updated python-Glances.spec: 1 remote URL(s) resolved to local files.
+[STATS] Skills used: python_skill.py, systemd
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 3  |  AI time: 147.5s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 147.6s
