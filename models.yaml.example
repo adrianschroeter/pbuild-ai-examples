@@ -20,6 +20,10 @@ models:
     display: "Gemma 4 31B"
     host: "remote1"
     model: "default"
+  gemma4_12b:
+    display: "Gemma 4 12b QAT 256k"
+    host: "local"
+    model: "gemma4:12b-qat-256k"
   qwen36:
     display: "Qwen3.6:35B-a3b"
     host: "local"
