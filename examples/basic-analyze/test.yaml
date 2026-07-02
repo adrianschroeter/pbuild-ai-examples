@@ -1,5 +1,5 @@
 name: "Basic Package Analysis"
-description: "Demonstrates basic package source analysis without modifications"
+description: "Demonstrates basic package source analysis without modifications. It reports according to openSUSE style and policy."
 order: 1
 
 source:

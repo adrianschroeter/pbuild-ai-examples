@@ -288,7 +288,9 @@ for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do
     echo "========================================"
     echo ""
 
-    RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/${MODEL_KEY}/$(date +%Y%m%d_%H%M%S)"
+    # Sanitize MODEL_KEY for filesystem (replace : with -)
+    MODEL_KEY_SAFE=$(echo "$MODEL_KEY" | tr ':' '-')
+    RESULT_DIR="${REPO_ROOT}/results/$(basename "$EXAMPLE_DIR")/${MODEL_KEY_SAFE}/$(date +%Y%m%d_%H%M%S)"
     mkdir -p "$RESULT_DIR"
 
     SOURCE_TYPE=$(grep -E "^\s+type:" "$TEST_YAML" | sed 's/.*type:\s*//' | sed 's/#.*//' | tr -d '"' | tr -d ' ')

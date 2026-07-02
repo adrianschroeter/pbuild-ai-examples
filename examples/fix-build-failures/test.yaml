@@ -1,5 +1,6 @@
 name: "Fix Build Failures"
-description: "Automatically detect and fix package build failures"
+description: "Automatically detect and fix build failures. The AI analyzes build logs and applies appropriate patches. It may also decide to debug inside the build environment, where it is allowed to execute any command for harder cases."
+
 order: 2
 
 source:
