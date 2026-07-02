@@ -1,0 +1,84 @@
+Binärdateien source_backup/ripgrep-15.1.0.tar.gz und sources/ripgrep/ripgrep-15.1.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep.spec sources/ripgrep/ripgrep.spec
+--- source_backup/ripgrep.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep.spec	2026-07-02 11:26:28.158422668 +0200
+@@ -0,0 +1,79 @@
++# vim: set ts=8 sts=4 sw=4 ai tw=76 et ft=dosini :
++#
++# spec file for package ripgrep
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           ripgrep
++Version:        15.1.0
++Release:        ~0
++Summary:        line-oriented search tool that recursively searches the current directory for a regex pattern
++License:        MIT OR Unlicense
++URL:            https://github.com/BurntSushi/ripgrep
++Source0:        https://github.com/BurntSushi/ripgrep/archive/%{version}.tar.gz
++
++ExclusiveArch:  %{rust_tier1_arches}
++
++BuildRequires:  cargo
++BuildRequires:  cargo-packaging
++
++%description
++ripgrep (rg) recursively searches your current directory for a regex pattern.
++By default, ripgrep will respect your .gitignore and automatically skip hidden
++files/directories and binary files.
++
++%package -n     rg
++Summary:        line-oriented search tool that recursively searches the current directory for a regex pattern
++License:        MIT OR Unlicense
++
++%description -n rg
++ripgrep (rg) recursively searches your current directory for a regex pattern.
++By default, ripgrep will respect your .gitignore and automatically skip hidden
++files/directories and binary files.
++
++%package doc
++Summary:        Documentation for ripgrep
++License:        MIT OR Unlicense
++Group:          Documentation/Other
++
++%description doc
++Documentation files for ripgrep.
++
++%prep
++%autosetup -p1 -n rg-%{version}
++
++%build
++export CARGO_HOME=$PWD/.cargo
++%{cargo_build} --all
++
++%install
++export CARGO_HOME=$PWD/.cargo
++%{cargo_install} -p ripgrep
++
++%check
++export CARGO_HOME=$PWD/.cargo
++%{cargo_test}
++
++%files -n rg
++%{_bindir}/rg
++
++%files doc
++%doc CHANGELOG.md FAQ.md README.md RELEASE-CHECKLIST.md COPYING LICENSE-MIT UNLICENSE
++
++%post
++%fdupes %{_prefix}
++
++%changelog

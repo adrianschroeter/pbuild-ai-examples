@@ -1,0 +1,117 @@
+Binärdateien source_backup/atom-1.60.0-linux-x86_64.tar.gz und sources/electron-example/atom-1.60.0-linux-x86_64.tar.gz sind verschieden.
+Binärdateien source_backup/atom-1.60.0.tar.gz und sources/electron-example/atom-1.60.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.desktop sources/electron-example/atom.desktop
+--- source_backup/atom.desktop	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.desktop	2026-07-02 07:56:00.549627326 +0200
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Name=Atom
++Comment=A hackable text editor for the 21st Century
++GenericName=Text Editor
++Exec=/opt/atom/atom %F
++Icon=/opt/atom/resources/app.asar.unpacked/resources/atom.png
++Type=Application
++StartupNotify=true
++Categories=GTK;Utility;TextEditor;Development;
++MimeType=application/javascript;application/json;application/x-httpd-eruby;application/x-httpd-php;application/x-httpd-php3;application/x-httpd-php4;application/x-httpd-php5;application/x-ruby;application/x-bash;application/x-csh;application/x-sh;application/x-zsh;application/x-shellscript;application/x-sql;application/x-tcl;application/xhtml+xml;application/xml;application/xml-dtd;application/xslt+xml;text/coffeescript;text/css;text/html;text/plain;text/xml;text/xml-dtd;text/x-bash;text/x-c++;text/x-c++hdr;text/x-c++src;text/x-c;text/x-chdr;text/x-csh;text/x-csrc;text/x-dsrc;text/x-diff;text/x-go;text/x-java;text/x-java-source;text/x-makefile;text/x-markdown;text/x-objc;text/x-perl;text/x-php;text/x-python;text/x-ruby;text/x-sh;text/x-zsh;text/yaml;inode/directory
++StartupWMClass=atom
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.sh sources/electron-example/atom.sh
+--- source_backup/atom.sh	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.sh	2026-07-02 07:52:37.620471375 +0200
+@@ -0,0 +1,19 @@
++#!/bin/bash
++
++if [ "$(uname)" != 'Linux' ]; then
++  echo "Atom is only supported on Linux." >&2
++  exit 1
++fi
++
++ATOM_PATH="/opt/atom/atom"
++: ${TMPDIR:=/tmp}
++[ -x "$ATOM_PATH" ] || ATOM_PATH="$TMPDIR/atom-build/Atom/atom"
++
++ATOM_HOME="${ATOM_HOME:-$HOME/.atom}"
++mkdir -p "$ATOM_HOME"
++
++if [ -z "$ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT" ]; then
++  export ATOM_DISABLE_SHELLING_OUT_FOR_ENVIRONMENT=true
++fi
++
++exec "$ATOM_PATH" --executed-from="$(pwd)" --pid=$$ "$@"
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.spec sources/electron-example/atom.spec
+--- source_backup/atom.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.spec	2026-07-02 08:06:16.841132999 +0200
+@@ -0,0 +1,73 @@
++#
++# spec file for package atom
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           atom
++Version:        1.60.0
++Release:        0
++Summary:        A hackable text editor for the 21st Century
++License:        MIT
++URL:            https://atom.io/
++Source0:        https://github.com/atom/atom/releases/download/v%{version}/atom-amd64.tar.gz
++Source1:        atom.sh
++Source2:        atom.desktop
++Requires:       gtk3
++Requires:       libXScrnSaver
++Requires:       libasound2
++Requires:       libgbm1
++Requires:       libgcrypt20
++Requires:       libnss3
++Requires:       libxkbfile
++
++%description
++Atom is a hackable text editor for the 21st century, built on Electron,
++and based on everything we love about our favorite editors. It is designed
++to be deeply customizable, but still approachable using the default
++configuration. Atom supports fuzzy-finder, Git integration, and a rich
++package ecosystem.
++
++%prep
++# No source extraction needed - we use the pre-built binary tarball (Source0)
++
++%build
++# No build step - using pre-built binaries from upstream
++
++%install
++# Install the application directory
++mkdir -p %{buildroot}%{_libdir}/atom
++cp -r atom-1.60.0-amd64/* %{buildroot}%{_libdir}/atom/
++
++# Install wrapper script
++mkdir -p %{buildroot}%{_bindir}
++install -D -m 755 %{SOURCE1} %{buildroot}%{_bindir}/atom
++
++# Install desktop file
++mkdir -p %{buildroot}%{_datadir}/applications
++install -D -m 644 %{SOURCE2} %{buildroot}%{_datadir}/applications/atom.desktop
++
++%check
++# No tests to run for pre-built binaries
++
++%files
++%license atom-1.60.0-amd64/resources/LICENSE.md
++%doc README.md
++%dir %{_libdir}/atom
++%{_libdir}/atom/*
++%{_bindir}/atom
++%{_datadir}/applications/atom.desktop
++
++%changelog
