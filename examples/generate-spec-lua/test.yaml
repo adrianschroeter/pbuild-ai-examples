@@ -20,4 +20,4 @@ expected:
 tags:
   - "lua"
   - "generate"
-  - "advanced"
+  - "basic"

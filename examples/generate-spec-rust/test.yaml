@@ -20,4 +20,4 @@ expected:
 tags:
   - "rust"
   - "generate"
-  - "advanced"
+  - "basic"

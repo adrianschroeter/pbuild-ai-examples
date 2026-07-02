@@ -1,0 +1,23 @@
+name: "Generate Python Package Spec"
+description: "Generate a spec file for a Python package from scratch using Python-specific packaging rules"
+# No order field = hidden by default (order >= 9999)
+
+source:
+  type: none
+  path: "../../sources/python-example"
+
+options:
+  - "--generate"
+  - "https://pypi.io/packages/source/o/ollama/ollama-0.3.3.tar.gz"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "*.spec"
+  build_result: "succeeded"
+
+tags:
+  - "python"
+  - "generate"
+  - "basic"
