@@ -266,8 +266,10 @@ for EXAMPLE_DIR in "${POSITIONAL_ARGS[@]}"; do
         if [ -n "$SOURCE_PATH" ]; then
             RELATIVE_PATH="${SOURCE_PATH#../../}"
             FULL_SOURCE_PATH="${REPO_ROOT}/${RELATIVE_PATH}"
+            # Clean directory to ensure diff shows only new generated files
+            rm -rf "$FULL_SOURCE_PATH"
             mkdir -p "$FULL_SOURCE_PATH"
-            echo "Creating directory for generated package: $FULL_SOURCE_PATH"
+            echo "Creating clean directory for generated package: $FULL_SOURCE_PATH"
             echo ""
         else
             echo "Error: --generate mode requires a path field in test.yaml"
