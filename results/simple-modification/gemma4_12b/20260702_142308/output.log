@@ -1,0 +1,152 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] python_skill.py for python-Glances.spec
+[SKILL ACTIVE] systemd (prompt match)
+[INFO] Using skill profile: python_skill
+[INFO] Using skill profile: systemd_skill
+
+[MODIFY] Sending python-Glances.spec sources to gemma4:12b-qat-256k...
+[TOOL] list_files: . (8 entries)
+[MODIFY] .git/
+.gitattributes
+.gitignore
+adjust-data-files.patch
+python-Glances.changes
+python-Glances.spec
+remove-shebang.patch
+v3.1.0.tar.gz
+[MODIFY] glances-3.1.0
+glances-3.1.0/.ci
+glances-3.1.0/.ci/appveyor
+glances-3.1.0/.ci/appveyor/README.rst
+glances-3.1.0/.ci/appveyor/download_exes.py
+glances-3.1.0/.ci/appveyor/install.ps1
+glances-3.1.0/.ci/appveyor/run_with_compiler.cmd
+glances-3.1.0/.coveragerc
+glances-3.1.0/.gitattributes
+glances-3.1.0/.github
+glances-3.1.0/.github/ISSUE_TEMPLATE.md
+glances-3.1.0/.github/PULL_REQUEST_TEMPLATE.md
+glances-3.1.0/.gitignore
+glances-3.1.0/.mailmap
+glances-3.1.0/.travis.yml
+glances-3.1.0/AUTHORS
+glances-3.1...
+[MODIFY] glances-3.1.0/docs/_static/prometheus_server.png
+glances-3.1.0/glances/server.py
+glances-3.1.0/glances/stats_server.py
+glances-3.1.0/glances/webserver.py
+[TOOL] read_file_from_archive: v3.1.0.tar.gz/glances-3.1.0/glances/server.py (8671 chars)
+[MODIFY] # -*- coding: utf-8 -*-
+#
+# This file is part of Glances.
+#
+# Copyright (C) 2019 Nicolargo <nicolas@nicolargo.com>
+#
+# Glances is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Glances is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MER...
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -33,6 +33,7 @@
+[0m[TOOL]  BuildRequires:  %{python_module setuptools}
+[TOOL]  BuildRequires:  fdupes
+[TOOL]  BuildRequires:  python-rpm-macros
+[32m[TOOL][0m [32m+%systemd_requires
+[0m[TOOL]  Requires:       python-bottle
+[TOOL]  Requires:       python-curses
+[TOOL]  Requires:       python-psutil >= 5.3.0
+[TOOL] --- End diff ---
+[TOOL] write_file: python-Glances.spec
+[MODIFY] OK: Wrote python-Glances.spec
+[MODIFY] glances-3.1.0/glances/amps/glances_systemd.py
+[TOOL] read_file_from_archive: v3.1.0.tar.gz/glances-3.1.0/glances/amps/glances_systemd.py (3165 chars)
+[MODIFY] # -*- coding: utf-8 -*-
+#
+# This file is part of Glances.
+#
+# Copyright (C) 2019 Nicolargo <nicolas@nicolargo.com>
+#
+# Glances is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Glances is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MER...
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -33,6 +33,7 @@
+[0m[TOOL]  BuildRequires:  %{python_module setuptools}
+[TOOL]  BuildRequires:  fdupes
+[TOOL]  BuildRequires:  python-rpm-macros
+[32m[TOOL][0m [32m+BuildRequires:  systemd-rpm-macros
+[0m[TOOL]  %systemd_requires
+[TOOL]  Requires:       python-bottle
+[TOOL]  Requires:       python-curses
+[TOOL] --- End diff ---
+[TOOL] write_file: python-Glances.spec
+[MODIFY] OK: Wrote python-Glances.spec
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -70,11 +70,31 @@
+[0m[TOOL]  %python_install
+[TOOL]  %python_expand %fdupes %{buildroot}%{$python_sitelib}
+[TOOL]  
+[32m[TOOL][0m [32m+# Create the systemd service file
+[0m[32m[TOOL][0m [32m+cat <<EOF > %{buildroot}%{_unitdir}/glances.service
+[0m[32m[TOOL][0m [32m+[Unit]
+[0m[32m[TOOL][0m [32m+Description=Glances Server
+[0m[32m[TOOL][0m [32m+After=network.target
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+[Service]
+[0m[32m[TOOL][0m [32m+Type=simple
+[0m[32m[TOOL][0m [32m+User=%u
+[0m[32m[TOOL][0m [32m+ExecStart=/usr/bin/python3 -m glances.server --bind-address 0.0.0.0 --port 61209
+[0m[32m[TOOL][0m [32m+Restart=always
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+[Install]
+[0m[32m[TOOL][0m [32m+WantedBy=multi-user.target
+[0m[32m[TOOL][0m [32m+EOF
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%service_add_pre glances.service
+[0m[32m[TOOL][0m [32m+%service_add_post glances.service
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %files %{python_files}
+[TOOL]  %license COPYING
+[TOOL]  %doc NEWS README.rst
+[TOOL]  %python3_only %{_bindir}/glances
+[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz
+[TOOL]  %{python_sitelib}/*
+[32m[TOOL][0m [32m+%{_unitdir}/glances.service
+[0m[TOOL]  
+[TOOL]  %changelog
+[TOOL] --- End diff ---
+[TOOL] write_file: python-Glances.spec
+[MODIFY] OK: Wrote python-Glances.spec
+
+[MODIFY] Ollama:
+The systemd service file for the Glances server has been added to `python-Glances.spec`.
+
+I have:
+1. Added `BuildRequires: systemd-rpm-macros` and `%systemd_requires` to ensure proper integration with the systemd package manager.
+2. Updated the `%install` section to create a new `glances.service` file in `%{_unitdir}` (which resolves to `/usr/lib/systemd/system`).
+3. Configured the service using `%service_add_pre` and `%service_add_post` macros to handle starting, stopping, and reloading of the service during package operations.
+4. Added `%{_unitdir}/glances.service` to the `%files` section so it is correctly installed in the package.
+
+Note: I used `/usr/bin/python3` for the `ExecStart` command as per standard practices, but this can be adjusted if a specific python interpreter path is required.
+
+[MODIFY] Changes confirmed.
+[MODIFY] v3.1.0.tar.gz already exists, skipping download.
+[MODIFY] Updated python-Glances.spec: 1 remote URL(s) resolved to local files.
+[STATS] Skills used: python_skill.py, systemd
+[STATS] AI model: gemma4:12b-qat-256k  |  AI calls: 10  |  AI time: 758.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 758.7s

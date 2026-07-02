@@ -1,0 +1,26 @@
+name: "Generate New Package in franconian dialect"
+description: "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;)"
+category: "generation"
+#order: 3
+
+# No source needed for --generate mode, but specify where to create the generated files
+source:
+  type: none
+  path: "../../sources/franconian"
+
+options:
+  - "--generate"
+  - "Bagg mer amol a Open-Source-Schbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!"
+  - "--fix"
+
+expected:
+  should_succeed: true
+  files_modified:
+    - "ripgrep.spec"
+    - "ripgrep.changes"
+
+notes: |
+  This example demonstrates pbuild-ai's ability to understand dialects and 
+  give the desired software.
+
+  Des is fei subba!
