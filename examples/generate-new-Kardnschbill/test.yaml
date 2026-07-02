@@ -1,7 +1,7 @@
 name: "Generate New Package in franconian dialect"
-description: "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;)"
+description: "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;) Absolutly unreproducible, since nothing concrete is given and the AI need search for something to build."
 category: "generation"
-#order: 3
+order: 3
 
 # No source needed for --generate mode, but specify where to create the generated files
 source:
@@ -10,7 +10,7 @@ source:
 
 options:
   - "--generate"
-  - "Bagg mer amol a Open-Source-Schbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!"
+  - "Bagg mer amol a Open-Source-Kardnschbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!"
   - "--fix"
 
 expected:
