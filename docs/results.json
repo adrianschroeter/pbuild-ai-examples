@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-02T12:55:15+02:00",
+  "generated": "2026-07-02T13:59:09+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -231,7 +231,7 @@
           "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.cleanup_source/python-Glances.spec\n--- source_backup/python-Glances.spec\t2026-07-02 10:20:10.804162469 +0200\n+++ sources/glances.cleanup_source/python-Glances.spec\t2026-07-02 10:23:27.141251411 +0200\n@@ -1,7 +1,7 @@\n #\n # spec file for package python-Glances\n #\n-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.\n+# Copyright (c) 2026 SUSE LLC and contributors\n #\n # All modifications and additions to the file contributed by third parties\n # remain the property of their copyright owners, unless otherwise agreed\n@@ -24,8 +24,8 @@\n License:        LGPL-3.0-only\n Group:          Development/Languages/Python\n URL:            https://github.com/nicolargo/glances\n-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz\n-Patch0:         adjust-data-files.patch\n+Source0:      %{name}-%{version}.tar.gz\n+Patch0:\n Patch1:         remove-shebang.patch\n BuildRequires:  %{python_module bottle}\n BuildRequires:  %{python_module psutil >= 5.3.0}\n@@ -74,5 +74,3 @@\n %python3_only %{_bindir}/glances\n %python3_only %{_mandir}/man1/glances.1.gz\n %{python_sitelib}/*\n-\n-%changelog\n",
           "result_path": "../results/cleanup-source/qwen27/20260702_102010"
         },
-        "qwen3.6:35b-a3b-bf16": {
+        "qwen36bf16": {
           "timestamp": "20260702_102545",
           "run_time_seconds": 791,
           "status": "success",
@@ -258,7 +258,7 @@
           "run_count": 1,
           "output": "[PBUILD-AI] Version 0.1.8\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[SKILL ACTIVE] cleanup_skill.py (prompt match)\n[SKILL ACTIVE] python_skill.py for python-Glances.spec\n[INFO] Using skill profile: cleanup_skill\n[INFO] Using skill profile: python_skill\n\n[MODIFY] Sending python-Glances.spec sources to qwen3.6:35b-a3b...\n[MODIFY] OK\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (78 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -74,5 +74,3 @@\n\u001b[0m[TOOL]  %python3_only %{_bindir}/glances\n[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz\n[TOOL]  %{python_sitelib}/*\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%changelog\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] edit_file: python-Glances.spec (1 match replaced)\n[MODIFY] OK: Edited python-Glances.spec\n[MODIFY] Error: edit_file: old_string not found in python-Glances.spec\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (76 lines)\n[TOOL] read_file: python-Glances.spec\n[MODIFY] read_file: python-Glances.spec (76 lines)\n[MODIFY] No response from Ollama.\n[MODIFY] v3.1.0.tar.gz already exists, skipping download.\n[MODIFY] Updated python-Glances.spec: 1 remote URL(s) resolved to local files.\n[STATS] Skills used: cleanup_skill.py, python_skill.py\n[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 8  |  AI time: 790.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 790.2s\n",
           "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.cleanup_source/python-Glances.spec\n--- source_backup/python-Glances.spec\t2026-07-02 10:25:46.619887223 +0200\n+++ sources/glances.cleanup_source/python-Glances.spec\t2026-07-02 10:38:57.466947118 +0200\n@@ -24,7 +24,7 @@\n License:        LGPL-3.0-only\n Group:          Development/Languages/Python\n URL:            https://github.com/nicolargo/glances\n-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz\n+Source: v3.1.0.tar.gz\n Patch0:         adjust-data-files.patch\n Patch1:         remove-shebang.patch\n BuildRequires:  %{python_module bottle}\n@@ -74,5 +74,3 @@\n %python3_only %{_bindir}/glances\n %python3_only %{_mandir}/man1/glances.1.gz\n %{python_sitelib}/*\n-\n-%changelog\n",
-          "result_path": "../results/cleanup-source/qwen3.6-35b-a3b-bf16/20260702_102545"
+          "result_path": "../results/cleanup-source/qwen36bf16/20260702_102545"
         }
       }
     },

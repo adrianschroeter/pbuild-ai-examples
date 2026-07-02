@@ -1,6 +1,6 @@
 {
   "example": "cleanup-source",
-  "model_key": "qwen3.6:35b-a3b-bf16",
+  "model_key": "qwen36bf16",
   "model_name": "",
   "model_host_name": "",
   "model_host_description": "",
