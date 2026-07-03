@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T09:01:55+02:00",
+  "generated": "2026-07-03T10:02:15+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -24,9 +24,6 @@
     },
     "ornith9b": {
       "display": "Ornith-1.0:9B"
-    },
-    "mistral": {
-      "display": "Mistral Medium 2.5 128b Q4"
     }
   },
   "examples": {
@@ -384,7 +381,7 @@
       }
     },
     "generate-new-Kardnschbill": {
-      "order": 3,
+      "order": 4,
       "name": "Generate New Package in franconian dialect",
       "description": "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;) Absolutly unreproducible, since nothing concrete is given and the AI need search for something to build.",
       "command": "pbuild-ai --generate \"Bagg mer amol a Open-Source-Kardnschbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!\" --fix <source-directory>",

@@ -466,8 +466,12 @@
                             <span class="benchmark-value" id="modalStatus">-</span>
                         </div>
                         <div class="benchmark-item">
-                            <span class="benchmark-label">Runtime</span>
-                            <span class="benchmark-value" id="modalRuntime">-</span>
+                            <span class="benchmark-label">Files Changed</span>
+                            <span class="benchmark-value" id="modalFilesChanged">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Total Runtime</span>
+                            <span class="benchmark-value" id="modalTotalRuntime">-</span>
                         </div>
                         <div class="benchmark-item">
                             <span class="benchmark-label">AI Calls</span>
@@ -478,8 +482,20 @@
                             <span class="benchmark-value" id="modalAiTime">-</span>
                         </div>
                         <div class="benchmark-item">
-                            <span class="benchmark-label">Files Changed</span>
-                            <span class="benchmark-value" id="modalFilesChanged">-</span>
+                            <span class="benchmark-label">pbuild Calls</span>
+                            <span class="benchmark-value" id="modalPbuildCalls">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">pbuild Time</span>
+                            <span class="benchmark-value" id="modalPbuildTime">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">Timestamp</span>
+                            <span class="benchmark-value" id="modalTimestamp">-</span>
+                        </div>
+                        <div class="benchmark-item">
+                            <span class="benchmark-label">pbuild-ai Version</span>
+                            <span class="benchmark-value" id="modalPbuildAiVersion">-</span>
                         </div>
                     </div>
                 </div>
@@ -501,6 +517,17 @@
 
     <script src="vendor/ansi_up_setup.js" type="module"></script>
     <script>
+        function formatTime(seconds) {
+            if (seconds === null || seconds === undefined || seconds === '') return '-';
+            const s = Number(seconds);
+            if (s > 600) {
+                const m = Math.floor(s / 60);
+                const sec = Math.round(s % 60);
+                return `${m}:${sec.toString().padStart(2, '0')}`;
+            }
+            return `${s}s`;
+        }
+
         async function loadMatrix() {
             try {
                 const response = await fetch('results.json');
@@ -741,24 +768,19 @@
                 consoleStatus.style.color = '#ff4444';
             }
 
-            // Runtime
-            const runtime = result.run_time_seconds || result.total_runtime_seconds;
-            if (runtime) {
-                const minutes = Math.floor(runtime / 60);
-                const seconds = Math.round(runtime % 60);
-                document.getElementById('modalRuntime').textContent =
-                    minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
-            } else {
-                document.getElementById('modalRuntime').textContent = '-';
-            }
-
-            // Other stats
-            document.getElementById('modalAiCalls').textContent =
-                (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
-            document.getElementById('modalAiTime').textContent =
-                result.ai_time_seconds ? `${result.ai_time_seconds}s` : '-';
+            // Benchmark stats - use same format as examples.html
             document.getElementById('modalFilesChanged').textContent =
                 (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : '-';
+            document.getElementById('modalTotalRuntime').textContent = formatTime(result.total_runtime_seconds);
+            document.getElementById('modalAiCalls').textContent =
+                (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
+            document.getElementById('modalAiTime').textContent = formatTime(result.ai_time_seconds);
+            document.getElementById('modalPbuildCalls').textContent =
+                (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : '-';
+            document.getElementById('modalPbuildTime').textContent = formatTime(result.pbuild_time_seconds);
+            document.getElementById('modalTimestamp').textContent = result.timestamp || '-';
+            document.getElementById('modalPbuildAiVersion').textContent =
+                (result.pbuild_ai_version !== null && result.pbuild_ai_version !== undefined) ? result.pbuild_ai_version : '-';
 
             // Show info cards (source and changes)
             const infoRow = document.getElementById('infoRow');
@@ -774,31 +796,39 @@
                 sourceCard.style.display = 'block';
                 hasInfoCards = true;
 
-                const displayUrl = result.source_ref
-                    ? `${result.source_url}@${result.source_ref.substring(0, 12)}...`
-                    : result.source_url;
-                modalSource.innerHTML = `<a href="${result.source_url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+                let linkUrl = result.source_url;
+                let displayUrl = result.source_url;
+
+                if (result.source_ref) {
+                    // For src.opensuse.org, use /commit/ format; for others use @
+                    if (result.source_url.includes('src.opensuse.org')) {
+                        linkUrl = `${result.source_url}/commit/${result.source_ref}`;
+                        displayUrl = `${result.source_url}@${result.source_ref}`;
+                    } else {
+                        linkUrl = `${result.source_url}@${result.source_ref}`;
+                        displayUrl = linkUrl;
+                    }
+                }
+
+                modalSource.innerHTML = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
             } else {
                 sourceCard.style.display = 'none';
             }
 
-            // Show changes card if files were changed
+            // Show changes card - always display, either with button or "No changes" text
             const filesChanged = (result.files_changed !== null && result.files_changed !== undefined) ? result.files_changed : 0;
-            if (filesChanged > 0 && result.diff && result.diff.trim()) {
-                changesCard.style.display = 'block';
-                hasInfoCards = true;
-
-                // Create button to show diff
-                const buttonHtml = `<button class="files-changed-btn" onclick="showDiffInModal();return false;">
+            if (filesChanged > 0) {
+                modalChanges.innerHTML = `<button class="files-changed-btn" onclick="showDiffInModal();return false;">
                     <span class="btn-number">${filesChanged}</span>
                     <span class="btn-label">show diff</span>
                 </button>`;
-                modalChanges.innerHTML = buttonHtml;
-
-                // Store diff for later display
-                window.currentMatrixDiff = result.diff;
+                window.currentMatrixDiff = result.diff || result.output || 'No diff available';
+                changesCard.style.display = 'block';
+                hasInfoCards = true;
             } else {
-                changesCard.style.display = 'none';
+                modalChanges.innerHTML = '<span class="text-muted">No changes</span>';
+                changesCard.style.display = 'block';
+                hasInfoCards = true;
             }
 
             // Display skills used from results data

@@ -1,7 +1,7 @@
 name: "Generate New Package in franconian dialect"
 description: "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;) Absolutly unreproducible, since nothing concrete is given and the AI need search for something to build."
 category: "generation"
-order: 3
+order: 4
 
 # No source needed for --generate mode, but specify where to create the generated files
 source:
