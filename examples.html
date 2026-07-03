@@ -117,6 +117,21 @@
         </div>
     </div>
 
+    <!-- Build Logs Modal -->
+    <div id="buildLogsModal" class="diff-modal">
+        <div class="diff-modal-content">
+            <div class="diff-modal-header">
+                <h2 class="diff-modal-title">Build Logs & Analysis</h2>
+                <button class="diff-modal-close" onclick="closeBuildLogsModal()">&times;</button>
+            </div>
+            <div class="diff-modal-body">
+                <div class="diff-content" id="buildLogsContent">
+                    <pre>Loading build logs...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -293,6 +308,26 @@
                         </div>
                     </div>
 
+                    <!-- Example 5b -->
+                    <div class="example-card" onclick="showExample('cleanup-source')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Cleanup Source</h3>
+                        <p class="example-description">
+                            Use --modify to cleanup an existing source according to current packaging rules.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --modify "Cleanup the source"</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-green">basic</span>
+                            <span class="tag tag-purple">modify</span>
+                        </div>
+                    </div>
+
                     <!-- Example 6 -->
                     <div class="example-card" onclick="showExample('deep-analysis')">
                         <div class="example-icon">
@@ -335,7 +370,27 @@
                         </div>
                     </div>
 
-                    <!-- Example 7 -->
+                    <!-- Example 7b -->
+                    <div class="example-card" onclick="showExample('generate-new-Kardnschbill')">
+                        <div class="example-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                            </svg>
+                        </div>
+                        <h3 class="example-title">Vibe Packaging (Franconian Dialect)</h3>
+                        <p class="example-description">
+                            Enable any non-english speaker to vibe packaging. AI understands dialects and finds appropriate software packages.
+                        </p>
+                        <div class="example-command">
+                            <code>pbuild-ai --generate "Bagg mer amol a Kardnschbill..." --fix</code>
+                        </div>
+                        <div class="example-tags">
+                            <span class="tag tag-blue">generate</span>
+                            <span class="tag tag-purple">vibe</span>
+                        </div>
+                    </div>
+
+                    <!-- Example 8 -->
                     <div class="example-card" onclick="showExample('update-with-own-tools')">
                         <div class="example-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -533,6 +588,14 @@
                 sourceUrl: 'https://src.opensuse.org/pool/python-Glances',
                 sourceRef: '45791911e811b009feff71974b1851581bdbf90b63b54ebe1c133ea99b3cc5a3'
             },
+            'cleanup-source': {
+                title: 'Cleanup Source',
+                description: 'Demonstrates using --modify flag to cleanup an existing source according to current packaging rules.',
+                command: 'pbuild-ai --modify "Cleanup the source according to current rules" <source-directory>',
+                exampleDir: 'cleanup-source',
+                sourceUrl: 'https://src.opensuse.org/pool/python-Glances',
+                sourceRef: '45791911e811b009feff71974b1851581bdbf90b63b54ebe1c133ea99b3cc5a3'
+            },
             'deep-analysis': {
                 title: 'Deep Analysis Mode',
                 description: 'Interactive investigation session inside the build environment. Diagnose complex build failures step-by-step.',
@@ -544,6 +607,12 @@
                 description: 'Create a complete RPM package from scratch based on a description. AI researches upstream and generates spec files.',
                 command: 'pbuild-ai --generate "package ripgrep CLI tool"',
                 exampleDir: 'generate-new-package'
+            },
+            'generate-new-Kardnschbill': {
+                title: 'Generate New Package in franconian dialect',
+                description: 'Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;) Absolutly unreproducible, since nothing concrete is given and the AI need search for something to build.',
+                command: 'pbuild-ai --generate "Bagg mer amol a Open-Source-Kardnschbill, des wo\'s scho gibbd, als rpm zam. Aber fei a gans a glänns!" --fix',
+                exampleDir: 'generate-new-Kardnschbill'
             },
             'update-with-own-tools': {
                 title: 'Update Package with Own Tools',
@@ -715,11 +784,94 @@
             document.body.style.overflow = 'hidden'; // Keep body scroll hidden since main modal is still open
         }
 
-        // Close diff modal when clicking outside
+        async function showBuildLogsModal(resultPath) {
+            const buildLogsModal = document.getElementById('buildLogsModal');
+            const buildLogsContent = document.getElementById('buildLogsContent');
+
+            buildLogsContent.innerHTML = '<pre>Loading build logs...</pre>';
+            buildLogsModal.style.display = 'block';
+
+            try {
+                // Fetch list of build_*.log files from the result directory
+                const response = await fetch(resultPath + '/');
+                if (!response.ok) {
+                    buildLogsContent.innerHTML = '<pre>Error loading build logs</pre>';
+                    return;
+                }
+
+                // Parse directory listing (this won't work with simple file serving)
+                // Instead, we'll try to fetch build_1.log, build_2.log, etc. until we fail
+                let html = '<div style="font-family: monospace;">';
+                let buildNum = 1;
+                let foundAny = false;
+
+                while (buildNum <= 20) { // Max 20 build attempts
+                    const logPath = `${resultPath}/build_${buildNum}.log`;
+                    const analyzePath = `${resultPath}/build_${buildNum}.log.analyze`;
+
+                    try {
+                        const logResponse = await fetch(logPath);
+                        if (!logResponse.ok) break;
+
+                        foundAny = true;
+                        const logContent = await logResponse.text();
+
+                        html += `<div style="margin-bottom: 2rem; border: 1px solid var(--geeko-green); border-radius: 4px; padding: 1rem;">`;
+                        html += `<h3 style="color: var(--geeko-green); margin-top: 0;">Build Attempt ${buildNum}</h3>`;
+                        html += `<h4 style="color: #888;">Build Log:</h4>`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(logContent)}</pre>`;
+
+                        // Try to fetch analyze file
+                        try {
+                            const analyzeResponse = await fetch(analyzePath);
+                            if (analyzeResponse.ok) {
+                                const analyzeContent = await analyzeResponse.text();
+                                html += `<h4 style="color: #888; margin-top: 1rem;">Analysis:</h4>`;
+                                html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(analyzeContent)}</pre>`;
+                            }
+                        } catch (e) {
+                            // No analyze file, that's okay
+                        }
+
+                        html += `</div>`;
+                        buildNum++;
+                    } catch (e) {
+                        break;
+                    }
+                }
+
+                if (!foundAny) {
+                    html = '<pre>No build logs found</pre>';
+                } else {
+                    html += '</div>';
+                }
+
+                buildLogsContent.innerHTML = html;
+            } catch (error) {
+                buildLogsContent.innerHTML = '<pre>Error loading build logs: ' + error.message + '</pre>';
+            }
+        }
+
+        function closeBuildLogsModal() {
+            document.getElementById('buildLogsModal').style.display = 'none';
+            document.body.style.overflow = 'hidden'; // Keep body scroll hidden since main modal is still open
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Close modals when clicking outside
         window.onclick = function(event) {
             const diffModal = document.getElementById('diffModal');
+            const buildLogsModal = document.getElementById('buildLogsModal');
             if (event.target === diffModal) {
                 closeDiffModal();
+            }
+            if (event.target === buildLogsModal) {
+                closeBuildLogsModal();
             }
         }
 
@@ -905,8 +1057,19 @@
             document.getElementById('modalAiCalls').textContent =
                 (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
             document.getElementById('modalAiTime').textContent = formatTime(result.ai_time_seconds);
-            document.getElementById('modalPbuildCalls').textContent =
-                (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : '-';
+
+            // Make pbuild calls clickable if >= 1
+            const pbuildCalls = (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : 0;
+            const pbuildCallsEl = document.getElementById('modalPbuildCalls');
+            if (pbuildCalls >= 1) {
+                pbuildCallsEl.innerHTML = `<button class="files-changed-btn" onclick="showBuildLogsModal('${result.result_path}');return false;">
+                    <span class="btn-number">${pbuildCalls}</span>
+                    <span class="btn-label">view logs</span>
+                </button>`;
+            } else {
+                pbuildCallsEl.textContent = '-';
+            }
+
             document.getElementById('modalPbuildTime').textContent = formatTime(result.pbuild_time_seconds);
             document.getElementById('modalTimestamp').textContent = result.timestamp;
             document.getElementById('modalPbuildAiVersion').textContent =
@@ -1020,10 +1183,64 @@ Run the example to see:
             }
         }
 
+        async function loadTagsFromResults() {
+            try {
+                const response = await fetch('results.json');
+                if (!response.ok) return;
+
+                const data = await response.json();
+
+                // Map of tag names to their CSS classes
+                const tagColorMap = {
+                    'basic': 'tag-green',
+                    'intermediate': 'tag-blue',
+                    'advanced': 'tag-red',
+                    'fix': 'tag-orange',
+                    'build': 'tag-blue',
+                    'modify': 'tag-purple',
+                    'simple': 'tag-green',
+                    'security': 'tag-red',
+                    'backport': 'tag-blue',
+                    'update': 'tag-blue',
+                    'generate': 'tag-blue',
+                    'debugging': 'tag-orange',
+                    'vibe': 'tag-purple'
+                };
+
+                // Update tags for each hardcoded example card
+                document.querySelectorAll('.example-card').forEach(card => {
+                    const onclickAttr = card.getAttribute('onclick');
+                    if (!onclickAttr) return;
+
+                    // Extract example ID from onclick="showExample('example-id')"
+                    const match = onclickAttr.match(/showExample\('([^']+)'/);
+                    if (!match) return;
+
+                    const exampleId = match[1];
+                    const exampleData = data.examples[exampleId];
+                    if (!exampleData || !exampleData.tags) return;
+
+                    // Find the tags container in this card
+                    const tagsContainer = card.querySelector('.example-tags');
+                    if (!tagsContainer) return;
+
+                    // Clear existing tags and add new ones from results.json
+                    tagsContainer.innerHTML = exampleData.tags.map(tag => {
+                        const colorClass = tagColorMap[tag.toLowerCase()] || 'tag-blue';
+                        return `<span class="tag ${colorClass}">${tag}</span>`;
+                    }).join('');
+                });
+
+            } catch (e) {
+                console.log('Could not load tags from results:', e);
+            }
+        }
+
         // Handle hash on page load and hash changes
         window.addEventListener('DOMContentLoaded', () => {
             handleHash();
             loadLanguageExamples();
+            loadTagsFromResults();
         });
         window.addEventListener('hashchange', handleHash);
     </script>

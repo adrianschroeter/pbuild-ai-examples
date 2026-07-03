@@ -426,6 +426,21 @@
         </div>
     </div>
 
+    <!-- Build Logs Modal -->
+    <div id="buildLogsModal" class="diff-modal" style="display:none;">
+        <div class="diff-modal-content">
+            <div class="diff-modal-header">
+                <h2 class="diff-modal-title">Build Logs & Analysis</h2>
+                <button class="diff-modal-close" onclick="closeBuildLogsModal()">&times;</button>
+            </div>
+            <div class="diff-modal-body">
+                <div class="diff-content" id="buildLogsContent">
+                    <pre>Loading build logs...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Result Details Modal -->
     <div id="resultModal" class="modal" style="display:none;">
         <div class="modal-content">
@@ -775,8 +790,19 @@
             document.getElementById('modalAiCalls').textContent =
                 (result.ai_calls !== null && result.ai_calls !== undefined) ? result.ai_calls : '-';
             document.getElementById('modalAiTime').textContent = formatTime(result.ai_time_seconds);
-            document.getElementById('modalPbuildCalls').textContent =
-                (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : '-';
+
+            // Make pbuild calls clickable if >= 1
+            const pbuildCalls = (result.pbuild_calls !== null && result.pbuild_calls !== undefined) ? result.pbuild_calls : 0;
+            const pbuildCallsEl = document.getElementById('modalPbuildCalls');
+            if (pbuildCalls >= 1) {
+                pbuildCallsEl.innerHTML = `<button class="files-changed-btn" onclick="showBuildLogsModal('${result.result_path}');return false;">
+                    <span class="btn-number">${pbuildCalls}</span>
+                    <span class="btn-label">view logs</span>
+                </button>`;
+            } else {
+                pbuildCallsEl.textContent = '-';
+            }
+
             document.getElementById('modalPbuildTime').textContent = formatTime(result.pbuild_time_seconds);
             document.getElementById('modalTimestamp').textContent = result.timestamp || '-';
             document.getElementById('modalPbuildAiVersion').textContent =
@@ -882,11 +908,85 @@
             // Keep body scroll hidden since main modal is still open
         }
 
+        async function showBuildLogsModal(resultPath) {
+            const buildLogsModal = document.getElementById('buildLogsModal');
+            const buildLogsContent = document.getElementById('buildLogsContent');
+
+            buildLogsContent.innerHTML = '<pre>Loading build logs...</pre>';
+            buildLogsModal.style.display = 'block';
+
+            try {
+                // Try to fetch build_1.log, build_2.log, etc. until we fail
+                let html = '<div style="font-family: monospace;">';
+                let buildNum = 1;
+                let foundAny = false;
+
+                while (buildNum <= 20) { // Max 20 build attempts
+                    const logPath = `${resultPath}/build_${buildNum}.log`;
+                    const analyzePath = `${resultPath}/build_${buildNum}.log.analyze`;
+
+                    try {
+                        const logResponse = await fetch(logPath);
+                        if (!logResponse.ok) break;
+
+                        foundAny = true;
+                        const logContent = await logResponse.text();
+
+                        html += `<div style="margin-bottom: 2rem; border: 1px solid var(--geeko-green); border-radius: 4px; padding: 1rem;">`;
+                        html += `<h3 style="color: var(--geeko-green); margin-top: 0;">Build Attempt ${buildNum}</h3>`;
+                        html += `<h4 style="color: #888;">Build Log:</h4>`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(logContent)}</pre>`;
+
+                        // Try to fetch analyze file
+                        try {
+                            const analyzeResponse = await fetch(analyzePath);
+                            if (analyzeResponse.ok) {
+                                const analyzeContent = await analyzeResponse.text();
+                                html += `<h4 style="color: #888; margin-top: 1rem;">Analysis:</h4>`;
+                                html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(analyzeContent)}</pre>`;
+                            }
+                        } catch (e) {
+                            // No analyze file, that's okay
+                        }
+
+                        html += `</div>`;
+                        buildNum++;
+                    } catch (e) {
+                        break;
+                    }
+                }
+
+                if (!foundAny) {
+                    html = '<pre>No build logs found</pre>';
+                } else {
+                    html += '</div>';
+                }
+
+                buildLogsContent.innerHTML = html;
+            } catch (error) {
+                buildLogsContent.innerHTML = '<pre>Error loading build logs: ' + error.message + '</pre>';
+            }
+        }
+
+        function closeBuildLogsModal() {
+            document.getElementById('buildLogsModal').style.display = 'none';
+            // Keep body scroll hidden since main modal is still open
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
         // Close modal on Escape key
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 const diffModal = document.getElementById('diffModal');
-                if (diffModal.style.display === 'block') {
+                const buildLogsModal = document.getElementById('buildLogsModal');
+                if (buildLogsModal.style.display === 'block') {
+                    closeBuildLogsModal();
+                } else if (diffModal.style.display === 'block') {
                     closeDiffModal();
                 } else {
                     closeResultModal();
@@ -898,8 +998,11 @@
         window.onclick = function(event) {
             const resultModal = document.getElementById('resultModal');
             const diffModal = document.getElementById('diffModal');
+            const buildLogsModal = document.getElementById('buildLogsModal');
 
-            if (event.target === diffModal) {
+            if (event.target === buildLogsModal) {
+                closeBuildLogsModal();
+            } else if (event.target === diffModal) {
                 closeDiffModal();
             } else if (event.target === resultModal) {
                 closeResultModal();
