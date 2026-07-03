@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-03T10:02:15+02:00",
+  "generated": "2026-07-03T15:33:05+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -32,6 +32,12 @@
       "name": "Backport Security Fix",
       "description": "Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it get applied during build.",
       "command": "pbuild-ai --modify \"Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it applies cleanly to the code.\" --fix --vm-memory 8096 <source-directory>",
+      "tags": [
+        "security",
+        "fix",
+        "backport",
+        "advanced"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260701_125859",
@@ -66,6 +72,11 @@
       "name": "Basic Package Analysis",
       "description": "Demonstrates basic package source analysis without modifications. It reports according to openSUSE style and policy.",
       "command": "pbuild-ai <source-directory>",
+      "tags": [
+        "basic",
+        "analysis",
+        "read-only"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260701_075030",
@@ -256,6 +267,11 @@
       "name": "Cleanup Source",
       "description": "Demonstrates using --modify flag just how to cleanup an existing source",
       "command": "pbuild-ai --modify \"Cleanup the source according to current rules\" <source-directory>",
+      "tags": [
+        "basic",
+        "modify",
+        "simple"
+      ],
       "models": {
         "gemma4_12b": {
           "timestamp": "20260702_144706",
@@ -351,6 +367,11 @@
       "name": "Fix Build Failures",
       "description": "Automatically detect and fix build failures. The AI analyzes build logs and applies appropriate patches. It may also decide to debug inside the build environment, where it is allowed to execute any command for harder cases.",
       "command": "pbuild-ai --fix <source-directory>",
+      "tags": [
+        "intermediate",
+        "fix",
+        "build"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260701_113751",
@@ -385,32 +406,36 @@
       "name": "Generate New Package in franconian dialect",
       "description": "Enable any non-english speaker to vibe packaging. And even language wise special handicaped people;) Absolutly unreproducible, since nothing concrete is given and the AI need search for something to build.",
       "command": "pbuild-ai --generate \"Bagg mer amol a Open-Source-Kardnschbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!\" --fix <source-directory>",
+      "tags": [
+        "generate",
+        "intermediate"
+      ],
       "models": {
         "gemma4": {
-          "timestamp": "20260702_171702",
-          "run_time_seconds": 7165,
+          "timestamp": "20260703_141136",
+          "run_time_seconds": 2379,
           "status": "success",
           "success": true,
           "exit_code": 0,
           "files_changed": 1,
-          "ai_model": "default",
-          "ai_calls": 0,
-          "ai_time_seconds": 0.0,
-          "pbuild_calls": 0,
-          "pbuild_time_seconds": 0.0,
-          "total_runtime_seconds": 7164.3,
+          "ai_model": null,
+          "ai_calls": null,
+          "ai_time_seconds": null,
+          "pbuild_calls": null,
+          "pbuild_time_seconds": null,
+          "total_runtime_seconds": null,
           "pbuild_ai_version": "0.1.8",
           "model_host_name": "nvidia",
           "model_host_description": "A NVidia Cuda based SUSE-AI server",
           "source_url": null,
           "source_ref": null,
           "skills_used": [],
-          "trend_percent": null,
-          "first_run_time_seconds": null,
-          "run_count": 1,
-          "output": "[PBUILD-AI] Version 0.1.8\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[GENERATE] Creating new package from prompt: Bagg mer amol a Open-Source-Schbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!\n[GENERATE] Error fetching https://api.github.com/repos/gabriele-carbone/2048-cli/releases/latest: HTTP Error 404: Not Found\n[TOOL] web_fetch: https://api.github.com/search/repositories?q=2048+cli+language:C (155133 bytes -> 155133 stripped)\n[GENERATE] [Fetched 155133 bytes]\n[TOOL] web_fetch: https://api.github.com/repos/mevdschee/2048.c/tags (1649 bytes -> 1649 stripped)\n[GENERATE] [Fetched 1649 bytes]\n[TOOL] download_file: https://github.com/mevdschee/2048.c/archive/refs/tags/v1.0.3.tar.gz -> 2048.c-1.0.3.tar.gz (19190 bytes)\n[GENERATE] OK: Downloaded 19190 bytes to 2048.c-1.0.3.tar.gz\n[TOOL] read_file_from_archive: 2048.c-1.0.3.tar.gz/2048.c-1.0.3/Makefile (199 chars)\n[TOOL] read_file_from_archive: 2048.c-1.0.3.tar.gz/2048.c-1.0.3/2048.c (12415 chars)\n[TOOL] read_file_from_archive: 2048.c-1.0.3.tar.gz/2048.c-1.0.3/LICENSE (1088 chars)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -0,0 +1,37 @@\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# Copyright 2024 OpenSUSE Project\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+#\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# This package is based on the 2048.c project by Maurits van der Schee.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+#\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# License: MIT\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Name:           2048-cli\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Version:        1.0.3\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Release:        0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Summary:        A console version of the game 2048\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+License:        MIT\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Group:          Games/Puzzle\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+URL:            https://github.com/mevdschee/2048.c\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Source:         %{url}/archive/refs/tags/v%{version}.tar.gz\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+BuildRequires:  gcc\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%description\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+2048.c is a minimal, terminal-based clone of the popular game 2048.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%build\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%setup_macros\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%setup -n 2048.c-%{version}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+gcc -std=c99 -O2 -o 2048 2048.c\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%check\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+./2048 test\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%install\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+install -Dm755 2048 %{buildroot}%{_bindir}/2048\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%files\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{_bindir}/2048\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%set_permissions\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%fdupes\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] write_file: 2048-cli.spec\n[GENERATE] OK: Wrote 2048-cli.spec\n[TOOL] format_spec_file: normalized 1 spec(s)\n[GENERATE] OK\n[TOOL] read_file: 2048-cli.spec\n[GENERATE] read_file: 2048-cli.spec (55 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/2048-cli.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -51,5 +51,3 @@\n\u001b[0m[TOOL]  \n[TOOL]  %set_permissions\n[TOOL]  %fdupes\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%changelog\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] edit_file: 2048-cli.spec (1 match replaced)\n[GENERATE] OK: Edited 2048-cli.spec\n\n[GENERATE] Ollama:\nI have created a new openSUSE RPM package for 2048-cli, a minimal terminal-based clone of the game 2048 written in C.\n\nCreated files:\n- 2048-cli.spec: The RPM spec file.\n- 2048.c-1.0.3.tar.gz: The upstream source archive.\n\nThe package is very small, as requested, consisting of a single C source file. It includes a build process using gcc, a check section that runs the game's internal tests, and installs the resulting binary to /usr/bin/2048.\n\n[GENERATE] No pending questions or tool calls. Assuming complete.\n[GENERATE] format_spec_file: normalized 2048-cli.spec\n[STATS] AI model: default  |  AI calls: 0  |  AI time: 0.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 7164.3s\n",
-          "diff": "Binärdateien source_backup/2048.c-1.0.3.tar.gz und sources/franconian/2048.c-1.0.3.tar.gz sind verschieden.\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/2048-cli.spec sources/franconian/2048-cli.spec\n--- source_backup/2048-cli.spec\t1970-01-01 01:00:00.000000000 +0100\n+++ sources/franconian/2048-cli.spec\t2026-07-02 19:06:26.150791842 +0200\n@@ -0,0 +1,53 @@\n+#\n+# spec file for package 2048-cli\n+#\n+# Copyright (c) 2026 SUSE LLC and contributors\n+#\n+# All modifications and additions to the file contributed by third parties\n+# remain the property of their copyright owners, unless otherwise agreed\n+# upon. The license for this file, and modifications and additions to the\n+# file, is the same license as for the pristine package itself (unless the\n+# license for the pristine package is not an Open Source License, in which\n+# case the license is the MIT License). An \"Open Source License\" is a\n+# license that conforms to the Open Source Definition (Version 1.9)\n+# published by the Open Source Initiative.\n+\n+# Please submit bugfixes or comments via https://bugs.opensuse.org/\n+#\n+# Copyright 2024 OpenSUSE Project\n+#\n+# This package is based on the 2048.c project by Maurits van der Schee.\n+#\n+# License: MIT\n+\n+\n+Name:           2048-cli\n+Version:        1.0.3\n+Release:        0\n+Summary:        A console version of the game 2048\n+License:        MIT\n+Group:          Games/Puzzle\n+URL:            https://github.com/mevdschee/2048.c\n+Source:         %{url}/archive/refs/tags/v%{version}.tar.gz\n+\n+BuildRequires:  gcc\n+\n+%description\n+2048.c is a minimal, terminal-based clone of the popular game 2048.\n+\n+%build\n+%setup_macros\n+%setup -n 2048.c-%{version}\n+gcc -std=c99 -O2 -o 2048 2048.c\n+\n+%check\n+./2048 test\n+\n+%install\n+install -Dm755 2048 %{buildroot}%{_bindir}/2048\n+\n+%files\n+%{_bindir}/2048\n+\n+%set_permissions\n+%fdupes\n",
-          "result_path": "../results/generate-new-Kardnschbill/gemma4/20260702_171702"
+          "trend_percent": -66.8,
+          "first_run_time_seconds": 7165.0,
+          "run_count": 2,
+          "output": "[PBUILD-AI] Version 0.1.8\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[GENERATE] Creating new package from prompt: Bagg mer amol a Open-Source-Kardnschbill, des wo's scho gibbd, als rpm zam. Aber fei a gans a glänns!\n[TOOL] web_fetch: https://github.com/search?q=simple+card+game+language%3APython&type=repositories (271820 bytes -> 23946 stripped)\n[GENERATE] [Fetched 271820 bytes]\n[TOOL] web_fetch: https://api.github.com/repos/obestwalter/mau-mau/releases/latest (1893 bytes -> 1893 stripped)\n[GENERATE] [Fetched 1893 bytes]\n[TOOL] download_file: https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz -> mau-mau-4.0.0.tar.gz (135069 bytes)\n[GENERATE] OK: Downloaded 135069 bytes to mau-mau-4.0.0.tar.gz\n[TOOL] read_file_from_archive: mau-mau-4.0.0.tar.gz/mau-mau-4.0.0/setup.py (859 chars)\n[TOOL] read_file_from_archive: mau-mau-4.0.0.tar.gz/mau-mau-4.0.0/mau_mau/__init__.py (22 chars)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -0,0 +1,34 @@\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# Copyright: Oliver Bestwalter\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+#\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+# This package is licensed under the MIT License.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Name:           mau-mau\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Version:        4.0.0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Release:        0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Summary:        A simple Mau-Mau card game simulation\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+License:        MIT\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Group:          Games/Board\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+URL:            https://github.com/obestwalter/mau-mau\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Source:         https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+BuildRequires:  python3-setuptools\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%description\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Mau-Mau is a simple card game simulation written in Python.\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%prep\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%autosetup -n mau-mau-%{version}\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%build\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%py3_build\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%install\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%py3_install\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%files\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%defattr(-,root,root)\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{_bindir}/mau-mau\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{python3_sitepkgdir}/mau_mau\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{python3_sitepkgdir}/mau_mau.egg-info\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%license MIT\n\u001b[0m[TOOL] --- End diff ---\n[TOOL] write_file: mau-mau.spec\n[GENERATE] OK: Wrote mau-mau.spec\n[TOOL] read_file_from_archive: mau-mau-4.0.0.tar.gz/mau-mau-4.0.0/README.md (2370 chars)\n[TOOL] format_spec_file: normalized 1 spec(s)\n[GENERATE] OK\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -26,7 +26,7 @@\n\u001b[0m[TOOL]  License:        MIT\n[TOOL]  Group:          Games/Board\n[TOOL]  URL:            https://github.com/obestwalter/mau-mau\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-Source:         https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+Source0:       https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n\u001b[0m[TOOL]  \n[TOOL]  BuildRequires:  python3-setuptools\n[TOOL]  \n[TOOL] --- End diff ---\n[TOOL] edit_file: mau-mau.spec (1 match replaced)\n[GENERATE] OK: Edited mau-mau.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -46,8 +46,6 @@\n\u001b[0m[TOOL]  %defattr(-,root,root)\n[TOOL]  %{_bindir}/mau-mau\n[TOOL]  %{python3_sitepkgdir}/mau_mau\n\u001b[31m[TOOL]\u001b[0m \u001b[31m-%{python3_sitepkgdir}/mau_mau.egg-info\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-\n\u001b[0m\u001b[31m[TOOL]\u001b[0m \u001b[31m-%license MIT\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+%{python3_sitepkgdir}/mau_mau-*.egg-info\n\u001b[0m[TOOL]  \n[TOOL]  %changelog\n[TOOL] --- End diff ---\n[TOOL] edit_file: mau-mau.spec (1 match replaced)\n[GENERATE] OK: Edited mau-mau.spec\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -44,6 +44,7 @@\n\u001b[0m[TOOL]  \n[TOOL]  %files\n[TOOL]  %defattr(-,root,root)\n\u001b[32m[TOOL]\u001b[0m \u001b[32m+%license MIT\n\u001b[0m[TOOL]  %{_bindir}/mau-mau\n[TOOL]  %{python3_sitepkgdir}/mau_mau\n[TOOL]  %{python3_sitepkgdir}/mau_mau-*.egg-info\n[TOOL] --- End diff ---\n[TOOL] edit_file: mau-mau.spec (1 match replaced)\n[GENERATE] OK: Edited mau-mau.spec\n[TOOL] format_spec_file: normalized 1 spec(s)\n[GENERATE] OK\n\n[GENERATE] Ollama:\nI have created an RPM package for \"mau-mau\", a simple open-source Python implementation of the Mau-Mau card game, which matches your request for a small card game.\n\nThe package includes:\n- The mau-mau command-line tool.\n- The Python module and associated metadata.\n- Proper MIT license inclusion.\n\nFiles created:\n- mau-mau.spec: The RPM specification file.\n- mau-mau-4.0.0.tar.gz: The upstream source archive.\n\n[GENERATE] No pending questions or tool calls. Assuming complete.\n[GENERATE] format_spec_file: normalized mau-mau.spec\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: mau-mau.spec...\n-> AI(default) says:\n- **Remove `%changelog`**: Per guidelines, the `%changelog` section must not exist in the `.spec` file; entries belong in `PACKAGE.changes`.\n- **Source Handling**: For openSUSE, remote URLs in `Source0` should be replaced with `#!RemoteAsset: GIT_URL#TAG` and `#!CreateArchive` hints to be processed by the build service.\n- **Missing Runtime Dependencies**: Ensure `Requires: python3` (and any other runtime dependencies) are explicitly listed if not handled by the `%py3_install` macro.\n\n[INFO] Single package mode (no _manifest found). Running orphan build...\n[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed\n[BUILD LOG] Wrote 16000 bytes to /home/adrian/opencode/pbuild-ai-examples/results/generate-new-Kardnschbill/gemma4/20260703_141136/build-1.log\n\n[ERROR] Build for mau-mau.spec failed. Consulting default...\n\n[FIX MODE] Attempt 1/10 — Diagnosing build failure...\n[DIAG] Build log found. Analyzing...\n\n--- OLLAMA ERROR ANALYSIS ---\nThe build failed because the source tarball is missing from the `SOURCES` directory. Since the build environment has **no network access**, `rpmbuild` cannot download the `Source0` URL on the fly.\n\n### Root Cause\nThe spec file defines `Source0` as a remote URL, but the file was not pre-downloaded into the build environment.\n\n### Solution\nAdd the required openSUSE source hints to the `Source0` line. This tells the build service to fetch the source and create the archive before starting the build.\n\nModify the `Source0` section as follows:\n\n```spec\n#!RemoteAsset: https://github.com/obestwalter/mau-mau#4.0.0\n#!CreateArchive\nSource0:        https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n```\n-----------------------------\n\n[BUILD LOG] Wrote 717 bytes to /home/adrian/opencode/pbuild-ai-examples/results/generate-new-Kardnschbill/gemma4/20260703_141136/build-1.log.analyze\n[FIX MODE] Applying suggested changes via tool calls...\n[TOOL] read_file: mau-mau.spec\n[FIX] read_file: mau-mau.spec (52 lines)\n[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec ---\n\u001b[31m[TOOL]\u001b[0m \u001b[31m--- /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/franconian/mau-mau.spec\n\u001b[0m\u001b[36m[TOOL]\u001b[0m \u001b[36m@@ -26,6 +26,8 @@\n\u001b[0m[TOOL]  License:        MIT\n[TOOL]  Group:          Games/Board\n[TOOL]  URL:            https://github.com/obestwalter/mau-mau\n\u001b[32m[TOOL]\u001b[0m \u001b[32m+#!RemoteAsset: https://github.com/obestwalter/mau-mau#4.0.0\n\u001b[0m\u001b[32m[TOOL]\u001b[0m \u001b[32m+#!CreateArchive\n\u001b[0m[TOOL]  Source0:        https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n[TOOL]  \n[TOOL]  BuildRequires:  python3-setuptools\n[TOOL] --- End diff ---\n[TOOL] edit_file: mau-mau.spec (1 match replaced)\n[FIX] OK: Edited mau-mau.spec\n[FIX] read_file: (52 lines)\n[FIX] edit_file: OK: Edited mau-mau.spec\n[INFO] Only comment/whitespace changes — skipping rebuild.\n[FIX] Saved conversation context to .pai.context for restart.\n[FIX ERROR] All 10 fix attempts exhausted. Build still failing.\n[EXIT] Exiting with code 1.\n",
+          "diff": "Binärdateien source_backup/mau-mau-4.0.0.tar.gz und sources/franconian/mau-mau-4.0.0.tar.gz sind verschieden.\ndiff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/mau-mau.spec sources/franconian/mau-mau.spec\n--- source_backup/mau-mau.spec\t1970-01-01 01:00:00.000000000 +0100\n+++ sources/franconian/mau-mau.spec\t2026-07-03 14:51:14.963549142 +0200\n@@ -0,0 +1,54 @@\n+#\n+# spec file for package mau-mau\n+#\n+# Copyright (c) 2026 SUSE LLC and contributors\n+#\n+# All modifications and additions to the file contributed by third parties\n+# remain the property of their copyright owners, unless otherwise agreed\n+# upon. The license for this file, and modifications and additions to the\n+# file, is the same license as for the pristine package itself (unless the\n+# license for the pristine package is not an Open Source License, in which\n+# case the license is the MIT License). An \"Open Source License\" is a\n+# license that conforms to the Open Source Definition (Version 1.9)\n+# published by the Open Source Initiative.\n+\n+# Please submit bugfixes or comments via https://bugs.opensuse.org/\n+#\n+# Copyright: Oliver Bestwalter\n+#\n+# This package is licensed under the MIT License.\n+\n+\n+Name:           mau-mau\n+Version:        4.0.0\n+Release:        0\n+Summary:        A simple Mau-Mau card game simulation\n+License:        MIT\n+Group:          Games/Board\n+URL:            https://github.com/obestwalter/mau-mau\n+#!RemoteAsset: https://github.com/obestwalter/mau-mau#4.0.0\n+#!CreateArchive\n+Source0:        https://github.com/obestwalter/mau-mau/archive/refs/tags/4.0.0.tar.gz\n+\n+BuildRequires:  python3-setuptools\n+\n+%description\n+Mau-Mau is a simple card game simulation written in Python.\n+\n+%prep\n+%autosetup -n mau-mau-%{version}\n+\n+%build\n+%py3_build\n+\n+%install\n+%py3_install\n+\n+%files\n+%defattr(-,root,root)\n+%license MIT\n+%{_bindir}/mau-mau\n+%{python3_sitepkgdir}/mau_mau\n+%{python3_sitepkgdir}/mau_mau-*.egg-info\n+\n+%changelog\n",
+          "result_path": "../results/generate-new-Kardnschbill/gemma4/20260703_141136"
         }
       }
     },
@@ -419,6 +444,10 @@
       "name": "Generate New Package",
       "description": "Generate a complete package from scratch without any source files",
       "command": "pbuild-ai --generate \"package ripgrep CLI tool\" <source-directory>",
+      "tags": [
+        "generate",
+        "basic"
+      ],
       "models": {
         "gemma4_12b": {
           "timestamp": "20260702_110921",
@@ -565,6 +594,11 @@
       "name": "Generate R Package Spec",
       "description": "Generate a spec file for an R package from scratch using R-specific packaging rules",
       "command": "pbuild-ai --generate https://cran.r-project.org/src/contrib/ggplot2_3.4.0.tar.gz <source-directory>",
+      "tags": [
+        "R",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_091103",
@@ -601,6 +635,11 @@
       "name": "Generate Electron Package Spec",
       "description": "Generate a spec file for an Electron application from scratch using Electron-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/atom/atom/archive/refs/tags/v1.60.0.tar.gz <source-directory>",
+      "tags": [
+        "electron",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_074230",
@@ -640,6 +679,11 @@
       "name": "Generate Erlang Package Spec",
       "description": "Generate a spec file for an Erlang package from scratch using Erlang-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/ninenines/cowboy/archive/refs/tags/2.10.0.tar.gz <source-directory>",
+      "tags": [
+        "erlang",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_080756",
@@ -676,6 +720,11 @@
       "name": "Generate Font Package Spec",
       "description": "Generate a spec file for a font package from scratch using font-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/googlefonts/roboto/releases/download/v2.138/roboto-unhinted.zip <source-directory>",
+      "tags": [
+        "font",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_081905",
@@ -712,6 +761,12 @@
       "name": "Generate Go Package Spec",
       "description": "Generate a spec file for a Go package from scratch using Go-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/spf13/cobra/archive/refs/tags/v1.8.0.tar.gz <source-directory>",
+      "tags": [
+        "go",
+        "golang",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_083057",
@@ -746,6 +801,11 @@
       "name": "Generate Java Package Spec",
       "description": "Generate a spec file for a Java package from scratch using Java-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/FasterXML/jackson-core/archive/refs/tags/jackson-core-2.15.0.tar.gz <source-directory>",
+      "tags": [
+        "java",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_083823",
@@ -780,6 +840,11 @@
       "name": "Generate Lisp Package Spec",
       "description": "Generate a spec file for a Common Lisp package from scratch using Lisp-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/dlowe-net/local-time/archive/refs/tags/v1.0.6.tar.gz <source-directory>",
+      "tags": [
+        "lisp",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_084415",
@@ -816,6 +881,11 @@
       "name": "Generate Lua Package Spec",
       "description": "Generate a spec file for a Lua module from scratch using Lua-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/lunarmodules/luafilesystem/archive/refs/tags/v1_8_0.tar.gz <source-directory>",
+      "tags": [
+        "lua",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_085008",
@@ -852,6 +922,11 @@
       "name": "Generate Node.js Package Spec",
       "description": "Generate a spec file for a Node.js package from scratch using Node.js-specific packaging rules",
       "command": "pbuild-ai --generate https://registry.npmjs.org/chalk/-/chalk-5.3.0.tgz <source-directory>",
+      "tags": [
+        "nodejs",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_105343",
@@ -886,6 +961,11 @@
       "name": "Generate Perl Package Spec",
       "description": "Generate a spec file for a Perl module from scratch using Perl-specific packaging rules",
       "command": "pbuild-ai --generate https://cpan.metacpan.org/authors/id/E/ET/ETHER/Module-Runtime-0.016.tar.gz <source-directory>",
+      "tags": [
+        "perl",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_085610",
@@ -922,6 +1002,11 @@
       "name": "Generate PHP Package Spec",
       "description": "Generate a spec file for a PHP package from scratch using PHP-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz <source-directory>",
+      "tags": [
+        "php",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_105554",
@@ -958,6 +1043,12 @@
       "name": "Generate PyQt/SIP Package Spec",
       "description": "Generate a spec file for a PyQt/SIP package from scratch using PyQt-specific packaging rules",
       "command": "pbuild-ai --generate https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz <source-directory>",
+      "tags": [
+        "pyqt",
+        "sip",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_090715",
@@ -995,6 +1086,11 @@
       "name": "Generate Python Package Spec",
       "description": "Generate a spec file for a Python package from scratch using Python-specific packaging rules",
       "command": "pbuild-ai --generate https://pypi.io/packages/source/o/ollama/ollama-0.3.3.tar.gz <source-directory>",
+      "tags": [
+        "python",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_103807",
@@ -1031,6 +1127,11 @@
       "name": "Generate Ruby Package Spec",
       "description": "Generate a spec file for a Ruby gem from scratch using Ruby-specific packaging rules",
       "command": "pbuild-ai --generate https://rubygems.org/downloads/rake-13.0.6.gem <source-directory>",
+      "tags": [
+        "ruby",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_093307",
@@ -1067,6 +1168,11 @@
       "name": "Generate Rust Package Spec",
       "description": "Generate a spec file for a Rust crate from scratch using Rust-specific packaging rules",
       "command": "pbuild-ai --generate https://github.com/rust-lang/cargo/archive/refs/tags/0.75.0.tar.gz <source-directory>",
+      "tags": [
+        "rust",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_094155",
@@ -1103,6 +1209,12 @@
       "name": "Generate Typelibs Package Spec",
       "description": "Generate a spec file for a GObject Introspection typelib package from scratch using typelibs-specific packaging rules",
       "command": "pbuild-ai --generate https://download.gnome.org/sources/libpeas/1.36/libpeas-1.36.0.tar.xz <source-directory>",
+      "tags": [
+        "typelibs",
+        "gobject",
+        "generate",
+        "basic"
+      ],
       "models": {
         "qwen27": {
           "timestamp": "20260702_100413",
@@ -1139,6 +1251,11 @@
       "name": "Simple Modification",
       "description": "Demonstrates using --modify flag to make targeted changes with a custom prompt",
       "command": "pbuild-ai --modify \"Add a systemd service file for glances server and package it in the glances-common package.\" <source-directory>",
+      "tags": [
+        "basic",
+        "modify",
+        "simple"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260702_092041",
@@ -1321,6 +1438,10 @@
       "name": "Update to Latest Upstream",
       "description": "Automatically update package to latest upstream version and update spec file to new standards. Don't do a test build here.",
       "command": "pbuild-ai --update-only <source-directory>",
+      "tags": [
+        "basic",
+        "update"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260630_193728",
@@ -1459,6 +1580,10 @@
       "name": "Update to Latest Upstream",
       "description": "Automatically update package to latest upstream version and fix compatibility issues",
       "command": "pbuild-ai --update --email localhero@opensuse.org <source-directory>",
+      "tags": [
+        "intermediate",
+        "update"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260630_195712",
@@ -1545,6 +1670,10 @@
       "name": "Update Ollama with own tools",
       "description": "An example how to hook in own scripts, provided by the package.",
       "command": "pbuild-ai --update --update-version=0.30.12 --allow-tool-scripts <source-directory>",
+      "tags": [
+        "advanced",
+        "update"
+      ],
       "models": {
         "gemma4": {
           "timestamp": "20260630_215104",
@@ -1631,6 +1760,7 @@
       "name": null,
       "description": null,
       "command": "pbuild-ai <source-directory>",
+      "tags": [],
       "models": {
         "default": {
           "timestamp": "20260629_080910",

@@ -22,3 +22,7 @@ notes: |
   This example demonstrates pbuild-ai's ability to generate a complete package
   from scratch based on a natural language description. It doesn't require any
   existing source files - just a description of what package to create.
+
+tags:
+  - "generate"
+  - "basic"

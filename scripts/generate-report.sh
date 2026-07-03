@@ -422,10 +422,12 @@ if os.path.isdir(RESULTS_DIR):
         example_description = None
         example_command = None
         example_options = []
+        example_tags = []
         if os.path.exists(test_yaml_path):
             try:
                 in_source_section = False
                 in_options_section = False
+                in_tags_section = False
                 with open(test_yaml_path) as f:
                     for line in f:
                         # Remove comments but keep indentation for section detection
@@ -466,11 +468,20 @@ if os.path.isdir(RESULTS_DIR):
                         # Check for options section (top-level)
                         if line_no_comment.startswith('options:'):
                             in_options_section = True
+                            in_tags_section = False
                             continue
 
                         # Check for source section (top-level)
                         if line_no_comment.startswith('source:'):
                             in_source_section = True
+                            in_options_section = False
+                            in_tags_section = False
+                            continue
+
+                        # Check for tags section (top-level)
+                        if line_no_comment.startswith('tags:'):
+                            in_tags_section = True
+                            in_source_section = False
                             in_options_section = False
                             continue
 
@@ -478,12 +489,19 @@ if os.path.isdir(RESULTS_DIR):
                         if line_no_comment and not line_no_comment.startswith(' '):
                             in_source_section = False
                             in_options_section = False
+                            in_tags_section = False
 
                         # Extract options (array items under options:)
                         if in_options_section and line_no_comment.startswith('  - '):
                             opt = re.match(r'^\s*-\s*"?([^"]+)"?', stripped)
                             if opt:
                                 example_options.append(opt.group(1).strip())
+
+                        # Extract tags (array items under tags:)
+                        if in_tags_section and line_no_comment.startswith('  - '):
+                            tag = re.match(r'^\s*-\s*"?([^"]+)"?', stripped)
+                            if tag:
+                                example_tags.append(tag.group(1).strip())
 
                         # Extract source URL and ref (indented under source:)
                         if in_source_section and line_no_comment.startswith('  '):
@@ -681,6 +699,7 @@ if os.path.isdir(RESULTS_DIR):
                 "name": example_name,
                 "description": example_description,
                 "command": cmd_str,
+                "tags": example_tags,
                 "models": OrderedDict()
             }
             for mk, entry in example_models:
