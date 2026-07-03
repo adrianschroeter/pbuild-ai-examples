@@ -594,9 +594,21 @@
                             const sourceCard = document.getElementById('sourceCard');
                             const modalSource = document.getElementById('modalSource');
                             if (firstModel && firstModel.source_url) {
-                                const displayUrl = firstModel.source_ref ?
-                                    `${firstModel.source_url}@${firstModel.source_ref}` : firstModel.source_url;
-                                modalSource.innerHTML = `<a href="${firstModel.source_url}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
+                                let linkUrl = firstModel.source_url;
+                                let displayUrl = firstModel.source_url;
+
+                                if (firstModel.source_ref) {
+                                    // For src.opensuse.org, use /commit/ format; for others use @
+                                    if (firstModel.source_url.includes('src.opensuse.org')) {
+                                        linkUrl = `${firstModel.source_url}/commit/${firstModel.source_ref}`;
+                                        displayUrl = `${firstModel.source_url}@${firstModel.source_ref}`;
+                                    } else {
+                                        linkUrl = `${firstModel.source_url}@${firstModel.source_ref}`;
+                                        displayUrl = linkUrl;
+                                    }
+                                }
+
+                                modalSource.innerHTML = `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer">${displayUrl}</a>`;
                                 sourceCard.style.display = 'block';
                             } else {
                                 sourceCard.style.display = 'none';
