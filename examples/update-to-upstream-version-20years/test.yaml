@@ -1,0 +1,32 @@
+name: "Update to Latest Upstream"
+description: "Automatically update package to latest upstream version and fix compatibility issues.
+This is an esp. hard example, where we update from a very old version. The upstream source has changed
+a lot and also the policies of our distribution. We jump a 20 years time gap here..."
+order: 4
+
+source:
+  type: remote
+  path: "../../sources/gawk.update-to-upstream-20-years"
+  url: "https://src.opensuse.org/pool/gawk"
+  ref: "c30cc95a4861c123bd2f75f4ec913ffe64592ea11f7bf1a3d39c9b21c12403d5" # our oldest version
+
+command: "pbuild-ai"
+options:
+  - "--update"
+  - "--max-rounds"
+  - "20"
+  - "--email"
+  - "localhero@opensuse.org"
+
+expected:
+  success: true
+  changes: true
+  files_modified:
+    - "gawk.spec"  # Version updates
+    - "gawk.changes"  # Changelog
+  build_result: "succeeded"
+
+
+tags:
+  - "intermediate"
+  - "update"

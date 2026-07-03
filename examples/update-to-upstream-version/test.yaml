@@ -1,12 +1,12 @@
 name: "Update to Latest Upstream"
-description: "Automatically update package to latest upstream version and fix compatibility issues"
+description: "Automatically update package to latest upstream version and fix compatibility issues."
 order: 4
 
 source:
   type: remote
   path: "../../sources/gawk.update-to-upstream"
   url: "https://src.opensuse.org/pool/gawk"
-  ref: "c30cc95a4861c123bd2f75f4ec913ffe64592ea11f7bf1a3d39c9b21c12403d5" # our oldest version
+  ref: "7678d511fee2f2d979be9f6d192c95f852298835fc94876c7672fa47bf9a2580" # 5 year old version
 
 command: "pbuild-ai"
 options:
