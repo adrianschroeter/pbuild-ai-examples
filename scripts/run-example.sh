@@ -590,6 +590,14 @@ EOF
     echo "Test completed in ${RUN_TIME}s with exit code ${EXIT_CODE}"
     echo "Results saved to: $RESULT_DIR"
 
+    # Copy source directory on successful run
+    if [ $EXIT_CODE -eq 0 ] && [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
+        echo "Copying successful source to result directory..."
+        SOURCE_COPY_DIR="${RESULT_DIR}/source"
+        cp -r "$FULL_SOURCE_PATH" "$SOURCE_COPY_DIR"
+        echo "Source copied to: $SOURCE_COPY_DIR"
+    fi
+
     if [ $EXIT_CODE -ne 0 ]; then
         OVERALL_EXIT=1
     fi
