@@ -1,0 +1,3 @@
+[merge "replace"]
+    name = "Always keep incoming changes, will be replaced by next generate run anyway"
+    driver = cp %B %A

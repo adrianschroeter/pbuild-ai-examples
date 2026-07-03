@@ -143,3 +143,10 @@ Contributions of new examples are welcome! Please ensure:
 - Includes realistic benchmark data
 - Documents what the example demonstrates
 - Follows the test.yaml format
+
+Run this command for avoiding merge conflicts on results file.
+
+ # git config local include.path ../.gitconfig-shared
+
+That file will be anyway regenerated via the generate-report.sh script
+
