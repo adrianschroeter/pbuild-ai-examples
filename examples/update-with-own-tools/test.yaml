@@ -10,7 +10,7 @@ source:
 
 options:
   - "--update"
-  - "--update-version=0.30.12"
+  - "--update-version=0.30.12-rc0"
   - "--allow-tool-scripts"
 
 expected:

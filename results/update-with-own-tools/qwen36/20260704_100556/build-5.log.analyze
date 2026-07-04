@@ -1,0 +1,3 @@
+The build aborts during `%prep` because the upstream source tree no longer contains the `cmake/compat` directory. GNU `find` returns exit code 1 when given a non-existent starting path, and RPM's build scriptlets run with `set -e`, causing an immediate fatal error.
+
+Removing this obsolete workarounds resolves the failure. The patch context drift you encountered earlier was likely because upstream reorganized their cmake modules; the directory is gone, so mutating it inside `%prep` is no longer possible or necessary.

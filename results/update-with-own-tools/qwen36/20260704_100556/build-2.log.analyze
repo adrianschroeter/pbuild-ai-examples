@@ -1,0 +1,12 @@
+The build fails because RPM uses `-` as the mandatory separator between Epoch, Name, Version, and Release fields. A hyphen inside `0.30.12-rc0` is parsed as a release tag (`0.30.12` = version, `rc0` = release), causing `rpmbuild` to reject it with an illegal character error.
+
+**Fix:**
+Replace the hyphen with a tilde (`~`) in the `Version:` line. RPM natively supports `~` for pre-release suffixes (like `rc`), and it sorts correctly during dependency resolution.
+
+
+**Required Follow-up:**
+1. Apply the diff to `ollama.spec`.
+2. Run `./tool-scripts/update_references.sh` to update all vendored/derived references (e.g., hardcoded source URLs, `_service` tags, or lockfile checksums) as mandated by your project workflow.
+3. Rebuild.
+
+This resolves the immediate parser failure. If subsequent builds hit network/download errors during `%prep`, ensure `cargo_vendor` is active in your `_service` file and run `/usr/lib/obs/service/cargo_vendor` locally to regenerate `registry.tar.zst`.

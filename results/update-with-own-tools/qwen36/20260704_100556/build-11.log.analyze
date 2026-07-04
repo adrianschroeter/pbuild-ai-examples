@@ -1,0 +1,17 @@
+The build fails at the `%build` stage with:
+```
+go: cannot write multiple packages to non-directory ollama
+```
+This is a fundamental Go CLI rule: you cannot pass `-o <file>` when compiling more than one package (`.` and `./cmd/...`). Modern Ollama (v0.30+) unifies all CLI subcommands into the main binary, so the root package `. ` is sufficient.
+
+Apply this patch to your `%build` section:
+```diff
+- go build -trimpath -ldflags '-s -w' -o ollama . ./cmd/...
++ go build -trimpath -ldflags '-s -w' -o ollama .
+```
+
+**Why this fixes it:**
+- `go build` requires a single output file when targeting one package, or a directory when targeting multiple packages.
+- Ollama's upstream Go module structure bundles everything under the root package in recent releases. Removing `./cmd/...` stops the multi-package conflict while preserving `-trimpath` and stripping flags for reproducible builds.
+
+Retrigger the build with this change. No other spec modifications are needed for this specific failure.
