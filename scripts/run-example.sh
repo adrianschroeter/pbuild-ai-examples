@@ -474,13 +474,17 @@ EOF
         cp -a "$FULL_SOURCE_PATH" "$BACKUP_DIR"
     fi
 
-    # Run the command and capture output
+    # Run the command and capture output.
+    # Enable pipefail so $? reflects pbuild-ai's exit code rather than tee's,
+    # otherwise a failed pbuild-ai run would be reported as exit code 0.
     set +e
+    set -o pipefail
     (
         cd "$EXAMPLE_DIR_ABS"
         NO_SPINNER=1 "${FULL_COMMAND_ARRAY[@]}" 2>&1 | tee "${RESULT_DIR}/output.log"
     )
     EXIT_CODE=$?
+    set +o pipefail
     set -e
 
     # Record end time
