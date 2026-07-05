@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-05T06:37:26+00:00",
+  "generated": "2026-07-05T06:57:27+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -19,7 +19,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063645",
+          "timestamp": "20260705_065646",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -42,7 +42,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/backport-security-fix/default/20260705_063645"
+          "result_path": "../results/backport-security-fix/default/20260705_065646"
         },
         "gemma4": {
           "timestamp": "20260701_125859",
@@ -110,7 +110,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063650",
+          "timestamp": "20260705_065651",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -133,7 +133,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/default/20260705_063650"
+          "result_path": "../results/basic-analyze/default/20260705_065651"
         },
         "gemma4": {
           "timestamp": "20260701_075030",
@@ -331,8 +331,8 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063653",
-          "run_time_seconds": 1,
+          "timestamp": "20260705_065654",
+          "run_time_seconds": 0,
           "status": "error",
           "success": false,
           "exit_code": 127,
@@ -354,7 +354,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/cleanup-source/default/20260705_063653"
+          "result_path": "../results/cleanup-source/default/20260705_065654"
         },
         "gemma4_12b": {
           "timestamp": "20260702_144706",
@@ -486,7 +486,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063658",
+          "timestamp": "20260705_065659",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -509,7 +509,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/fix-build-failures/default/20260705_063658"
+          "result_path": "../results/fix-build-failures/default/20260705_065659"
         },
         "gemma4": {
           "timestamp": "20260701_113751",
@@ -576,7 +576,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063658",
+          "timestamp": "20260705_065659",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -599,7 +599,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-Kardnschbill/default/20260705_063658"
+          "result_path": "../results/generate-new-Kardnschbill/default/20260705_065659"
         },
         "gemma4": {
           "timestamp": "20260702_171702",
@@ -666,7 +666,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063658",
+          "timestamp": "20260705_065659",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -689,7 +689,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/default/20260705_063658"
+          "result_path": "../results/generate-new-package/default/20260705_065659"
         },
         "gemma4_12b": {
           "timestamp": "20260702_110921",
@@ -843,7 +843,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063658",
+          "timestamp": "20260705_065700",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -866,7 +866,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-R/default/20260705_063658"
+          "result_path": "../results/generate-spec-R/default/20260705_065700"
         },
         "ornith35b": {
           "timestamp": "20260704_162756",
@@ -939,7 +939,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063658",
+          "timestamp": "20260705_065700",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -962,7 +962,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-electron/default/20260705_063658"
+          "result_path": "../results/generate-spec-electron/default/20260705_065700"
         },
         "ornith35b": {
           "timestamp": "20260704_145811",
@@ -1040,7 +1040,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063659",
+          "timestamp": "20260705_065700",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1063,7 +1063,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-erlang/default/20260705_063659"
+          "result_path": "../results/generate-spec-erlang/default/20260705_065700"
         },
         "ornith35b": {
           "timestamp": "20260704_151657",
@@ -1135,7 +1135,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063659",
+          "timestamp": "20260705_065700",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1158,7 +1158,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-font/default/20260705_063659"
+          "result_path": "../results/generate-spec-font/default/20260705_065700"
         },
         "ornith35b": {
           "timestamp": "20260704_153322",
@@ -1231,7 +1231,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063659",
+          "timestamp": "20260705_065701",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1254,7 +1254,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-go/default/20260705_063659"
+          "result_path": "../results/generate-spec-go/default/20260705_065701"
         },
         "ornith35b": {
           "timestamp": "20260704_153740",
@@ -1322,7 +1322,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063659",
+          "timestamp": "20260705_065701",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1345,7 +1345,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-java/default/20260705_063659"
+          "result_path": "../results/generate-spec-java/default/20260705_065701"
         },
         "ornith35b": {
           "timestamp": "20260704_154530",
@@ -1415,7 +1415,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063700",
+          "timestamp": "20260705_065701",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1438,7 +1438,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lisp/default/20260705_063700"
+          "result_path": "../results/generate-spec-lisp/default/20260705_065701"
         },
         "ornith35b": {
           "timestamp": "20260704_155008",
@@ -1510,7 +1510,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063700",
+          "timestamp": "20260705_065701",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1533,7 +1533,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lua/default/20260705_063700"
+          "result_path": "../results/generate-spec-lua/default/20260705_065701"
         },
         "ornith35b": {
           "timestamp": "20260704_155305",
@@ -1605,7 +1605,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063700",
+          "timestamp": "20260705_065701",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1628,7 +1628,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-nodejs/default/20260705_063700"
+          "result_path": "../results/generate-spec-nodejs/default/20260705_065701"
         },
         "ornith35b": {
           "timestamp": "20260704_155627",
@@ -1696,7 +1696,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063700",
+          "timestamp": "20260705_065702",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1719,7 +1719,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-perl/default/20260705_063700"
+          "result_path": "../results/generate-spec-perl/default/20260705_065702"
         },
         "ornith35b": {
           "timestamp": "20260704_160924",
@@ -1789,7 +1789,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063700",
+          "timestamp": "20260705_065702",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1812,7 +1812,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-php/default/20260705_063700"
+          "result_path": "../results/generate-spec-php/default/20260705_065702"
         },
         "ornith35b": {
           "timestamp": "20260704_161449",
@@ -1885,7 +1885,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063701",
+          "timestamp": "20260705_065702",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1908,7 +1908,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-pyqt-sip/default/20260705_063701"
+          "result_path": "../results/generate-spec-pyqt-sip/default/20260705_065702"
         },
         "ornith35b": {
           "timestamp": "20260704_161734",
@@ -1982,7 +1982,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063701",
+          "timestamp": "20260705_065702",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2005,7 +2005,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-python/default/20260705_063701"
+          "result_path": "../results/generate-spec-python/default/20260705_065702"
         },
         "ornith35b": {
           "timestamp": "20260704_162546",
@@ -2075,7 +2075,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063701",
+          "timestamp": "20260705_065702",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2098,7 +2098,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-ruby/default/20260705_063701"
+          "result_path": "../results/generate-spec-ruby/default/20260705_065702"
         },
         "ornith35b": {
           "timestamp": "20260704_163340",
@@ -2170,7 +2170,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063701",
+          "timestamp": "20260705_065703",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2193,7 +2193,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-rust/default/20260705_063701"
+          "result_path": "../results/generate-spec-rust/default/20260705_065703"
         },
         "ornith35b": {
           "timestamp": "20260704_163745",
@@ -2266,7 +2266,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063701",
+          "timestamp": "20260705_065703",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2289,7 +2289,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-typelibs/default/20260705_063701"
+          "result_path": "../results/generate-spec-typelibs/default/20260705_065703"
         },
         "ornith35b": {
           "timestamp": "20260704_164255",
@@ -2359,7 +2359,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063702",
+          "timestamp": "20260705_065703",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2382,7 +2382,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/inline-example/default/20260705_063702"
+          "result_path": "../results/inline-example/default/20260705_065703"
         },
         "ornith35b": {
           "timestamp": "20260704_170608",
@@ -2424,7 +2424,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063702",
+          "timestamp": "20260705_065703",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2447,7 +2447,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/simple-modification/default/20260705_063702"
+          "result_path": "../results/simple-modification/default/20260705_065703"
         },
         "gemma4": {
           "timestamp": "20260702_092041",
@@ -2636,7 +2636,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063707",
+          "timestamp": "20260705_065708",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2659,7 +2659,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-only/default/20260705_063707"
+          "result_path": "../results/update-only/default/20260705_065708"
         },
         "gemma4": {
           "timestamp": "20260630_193728",
@@ -2804,7 +2804,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063711",
+          "timestamp": "20260705_065712",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2827,7 +2827,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-to-upstream-version/default/20260705_063711"
+          "result_path": "../results/update-to-upstream-version/default/20260705_065712"
         },
         "ornith35b": {
           "timestamp": "20260704_171628",
@@ -2868,7 +2868,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063715",
+          "timestamp": "20260705_065717",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2891,7 +2891,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-to-upstream-version-20years/default/20260705_063715"
+          "result_path": "../results/update-to-upstream-version-20years/default/20260705_065717"
         },
         "ornith35b": {
           "timestamp": "20260704_200913",
@@ -2932,7 +2932,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260705_063720",
+          "timestamp": "20260705_065721",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2955,7 +2955,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-with-own-tools/default/20260705_063720"
+          "result_path": "../results/update-with-own-tools/default/20260705_065721"
         },
         "ornith35b": {
           "timestamp": "20260704_215547",
