@@ -1,14 +1,11 @@
 {
-  "generated": "2026-07-04T13:19:31+02:00",
+  "generated": "2026-07-04T16:08:42+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
     },
     "gemma4": {
       "display": "Gemma 4 31B"
-    },
-    "gemma4_12b": {
-      "display": "Gemma 4 12b QAT 256k"
     },
     "qwen36": {
       "display": "Qwen3.6:35B-a3b"
@@ -21,9 +18,6 @@
     },
     "ornith35b": {
       "display": "Ornith-1.0:35B"
-    },
-    "ornith9b": {
-      "display": "Ornith-1.0:9B"
     }
   },
   "examples": {
