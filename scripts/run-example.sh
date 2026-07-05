@@ -598,7 +598,15 @@ EOF
     if [ $EXIT_CODE -eq 0 ] && [ -n "$FULL_SOURCE_PATH" ] && [ -d "$FULL_SOURCE_PATH" ]; then
         echo "Copying successful source to result directory..."
         SOURCE_COPY_DIR="${RESULT_DIR}/source"
-        cp -r "$FULL_SOURCE_PATH" "$SOURCE_COPY_DIR"
+        rsync -a --exclude=.git "$FULL_SOURCE_PATH/" "$SOURCE_COPY_DIR/"
+        # Replace larger binary/archive files with placeholder text
+        find "$SOURCE_COPY_DIR" -type f \( \
+            -name "*.tar" -o -name "*.tar.gz" -o -name "*.tgz" \
+            -o -name "*.tar.bz2" -o -name "*.tar.xz" \
+            -o -name "*.tar.zst" -o -name "*.zip" \
+            -o -name "*.rpm" -o -name "*.deb" -o -name "*.dsc" \
+            -o -name "*.iso" -o -name "*.img" \
+        \) -exec sh -c 'echo "Empty to save storage space in pbuild-ai-examples" > "$1"' _ {} \;
         echo "Source copied to: $SOURCE_COPY_DIR"
     fi
 
