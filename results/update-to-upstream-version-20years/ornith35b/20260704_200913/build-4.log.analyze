@@ -1,0 +1,9 @@
+## Error Analysis
+
+**Root cause:** The patch `dev-fd.diff` (from ~2006, for gawk **3.1.5**) tries to modify `io.c` in a directory named `gawk-3.1.5`. However, the source tarball `gawk-5.4.0.tar.xz` extracts to `gawk-5.4.0/`, and the actual `io.c` in gawk 5.4.0 is completely different from the 2006 version this patch was written against. The patch cannot find a matching context, so it fails:
+
+```
+can't find file to patch at input line 73
+17 out of 17 hunks ignored
+No file to patch.  Skipping patch.
+error: Bad exit status from ... (%prep)

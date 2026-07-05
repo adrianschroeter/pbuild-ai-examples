@@ -1,0 +1,108 @@
+#
+# spec file for package jackson-core
+#
+# Copyright (c) 2026 SUSE LLC and contributors
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
+#
+
+
+Name:           jackson-core
+Version:        2.15.0
+Release:        0
+Summary:        Core Jackson processing abstractions (aka Streaming API) for JSON
+License:        Apache-2.0 AND GPL-2.0-only
+Group:          Development/Libraries/Java
+BuildArch:      noarch
+Source0:        https://github.com/FasterXML/jackson-core/archive/%{name}-%{version}.tar.gz#/jackson-core-%{version}.tar.gz
+
+# Build dependencies
+BuildRequires:  java-devel >= 1.8
+BuildRequires:  javapackages-tools
+BuildRequires:  maven-local
+BuildRequires:  mvn(ch.randelshofer:fastdoubleparser)
+BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:)
+
+# Test dependencies (not used in build, but needed for test scope)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires:  mvn(org.junit.vintage:junit-vintage-engine)
+
+%description
+Core Jackson processing abstractions (aka Streaming API), implementation for JSON.
+This is the foundation of the Jackson project, providing the low-level streaming
+JSON parser and generator APIs.
+
+%package -n javalib-jackson-core.jar
+Summary:        Core Jackson processing abstractions (aka Streaming API) for JSON
+Group:          Development/Libraries/Java
+Requires:       javapackages-tools
+
+%description -n javalib-jackson-core.jar
+Core Jackson processing abstractions (aka Streaming API), implementation for JSON.
+This is the foundation of the Jackson project, providing the low-level streaming
+JSON parser and generator APIs.
+
+%package doc
+Summary:        Documentation for jackson-core
+Group:          Documentation/HTML
+Requires:       javalib-jackson-core.jar = %{version}-%{release}
+
+%description doc
+Documentation for jackson-core. This package contains the Javadoc API documentation
+for the Jackson core library.
+
+%prep
+%autosetup -q -n %{name}-%{name}-%{version}
+
+# Remove network-dependent test suite to avoid build failures in offline environment
+rm -rf src/test
+
+# Patch out repository declarations that may cause issues
+sed -i '/<repository>/,/<\/repository>/d' pom.xml
+
+%build
+mvn_build \
+    --offline \
+    -Dmaven.test.skip=true \
+    -P!gradle-module-metadata \
+    -DfindAndReplace.skip=true
+
+%install
+# Install Maven POM and artifact metadata
+%mvn_pom "pom.xml" "%{name}"
+%mvn_file ":%{name}" "%{name}"
+
+# Create version-agnostic symlinks
+ln -sf %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+# Install Javadoc if available
+if [ -d target/site/apidocs ]; then
+    mkdir -p %{buildroot}%{_javadocdir}/%{name}
+    cp -a target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
+fi
+
+%check
+# Tests are removed in %prep; nothing to check.
+
+%files -n javalib-jackson-core.jar
+%license LICENSE
+%doc README.md
+%jar pom.xml
+%{mavenpomdir}/*
+%{_javadir}/%{name}.jar
+%{_javadir}/%{name}-%{version}.jar
+%dir %{_javadir}
+
+%files doc
+%doc %{_javadocdir}/%{name}
+
+%changelog

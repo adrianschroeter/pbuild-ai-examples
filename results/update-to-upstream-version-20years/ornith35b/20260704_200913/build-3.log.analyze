@@ -1,0 +1,29 @@
+## Error Analysis
+
+The actual build failure (not the earlier warnings) is two lines from `rpmbuild`:
+
+```
+error: No patch number 9
+error: No patch number 10
+```
+
+This means `%patch9` and `%patch10` are referenced in the spec's `%prep` section, but no `Patch9:` or `Patch10:` definitions exist. The spec only defines two patches (Patch0 and Patch1), so referencing patch numbers 9 and 10 is nonsensical — likely a leftover from an incomplete conversion between old-style and new-style patch syntax.
+
+The earlier "can't find file to patch" for Patch #0 was non-fatal (RPM skipped it with `%patch -f`) and not the cause of failure, but it indicates Patch0 (`gawk-3.1.5.diff`) is also stale — it was generated against gawk 3.1.5 but the source being built is gawk 5.4.0.
+
+## Fix Required
+
+Three changes to `gawk.spec`:
+
+### 1. Remove bare `Patch:` line and number all patches
+Replace any unnumbered `Patch: ...` lines with sequential `Patch0:`, `Patch1:`, etc.:
+```
+- Patch:          gawk-3.1.5.diff
++ Patch0:         gawk-5.4.0-fixes.patch
++ Patch1:         another-fix.patch
+- %patch0 gawk-3.1.5.diff
++ %patch -P0 -p1
+- %patch9
++ <remove entirely — no Patch9 exists>
+- %patch10
++ <remove entirely — no Patch10 exists>

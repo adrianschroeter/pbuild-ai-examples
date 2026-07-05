@@ -1,0 +1,58 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] cleanup_skill.py (prompt match)
+[SKILL ACTIVE] lang_python for python-Glances.spec
+[INFO] Using skill profile: cleanup_skill
+[INFO] Using skill profile: lang_python_skill
+
+[MODIFY] Sending python-Glances.spec sources to ornith:35b...
+[TOOL] format_spec_file: normalized 1 spec(s)
+[MODIFY] OK
+[TOOL] read_file: python-Glances.spec
+[MODIFY] read_file: python-Glances.spec (78 lines)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -24,7 +24,7 @@
+[0m[TOOL]  License:        LGPL-3.0-only
+[TOOL]  Group:          Development/Languages/Python
+[TOOL]  URL:            https://github.com/nicolargo/glances
+[31m[TOOL][0m [31m-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
+[0m[32m[TOOL][0m [32m+Source0:        %{url}/archive/v%{version}.tar.gz
+[0m[TOOL]  Patch0:         adjust-data-files.patch
+[TOOL]  Patch1:         remove-shebang.patch
+[TOOL]  BuildRequires:  %{python_module bottle}
+[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[MODIFY] OK: Edited python-Glances.spec
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.cleanup_source/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -74,5 +74,3 @@
+[0m[TOOL]  %python3_only %{_bindir}/glances
+[TOOL]  %python3_only %{_mandir}/man1/glances.1.gz
+[TOOL]  %{python_sitelib}/*
+[31m[TOOL][0m [31m-
+[0m[31m[TOOL][0m [31m-%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[MODIFY] OK: Edited python-Glances.spec
+[TOOL] list_files: . (8 entries)
+[MODIFY] .git/
+.gitattributes
+.gitignore
+adjust-data-files.patch
+python-Glances.changes
+python-Glances.spec
+remove-shebang.patch
+v3.1.0.tar.gz
+
+[MODIFY] Ollama:
+Analysis summary:
+
+The spec file has been cleaned up following openSUSE conventions: Source renamed to Source0 with macro usage (%{url}), empty %changelog section removed, and URL uses proper macro expansion. No pyproject macros are used (per requirements), relying on legacy %python_build/%python_install instead. All BuildRequires follow single-dependency-per-line format with %{python_module} macros as specified.
+
+[MODIFY] Changes confirmed.
+[STATS] Skills used: cleanup_skill.py, lang_python
+[STATS] AI model: ornith:35b  |  AI calls: 6  |  AI time: 58.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 58.4s
+[EXIT] Exiting with code 0.

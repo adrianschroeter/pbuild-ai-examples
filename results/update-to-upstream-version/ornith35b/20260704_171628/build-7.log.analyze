@@ -1,0 +1,9 @@
+## Error Analysis
+
+The RPM build failed with **un-packaged file errors** during the %files phase:
+
+```
+error: File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/awk
+error: File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/gawk
+
+This creates `/usr/bin/awk → /usr/bin/gawk`, which is what the original spec did before that code was removed. The `%files` section can then legitimately list `%{_bindir}/awk` and `%{_bindir}/gawk`.

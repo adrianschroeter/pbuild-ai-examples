@@ -1,0 +1,72 @@
+From nobody Fri Oct  7 13:31:33 2005
+From: Aharon Robbins <arnold@skeeve.com>
+Subject: Re: gawk 3.1.5 FIELDWIDTHS bug - 1 off
+To: jeff93@silk.corp.fedex.com
+Cc: bug-gnu-utils@gnu.org
+Date: Fri, 07 Oct 2005 12:26:28 +0200
+
+Greetings. Re this:
+
+> Date: Fri, 30 Sep 2005 21:00:12 +0800 (SGT)
+> From: Jeff Chua <jeff93@silk.corp.fedex.com>
+> Subject: gawk 3.1.5 FIELDWIDTHS bug - 1 off
+> To: Awk Bug <bug-gawk@gnu.org>
+>
+> echo "a b b" | awk 'BEGIN {FIELDWIDTHS = "1 1 1 "} {print NF}'
+>
+> 3.1.5 returns 2
+> 3.1.4 returns 3
+> 3.1.3 returns 3
+>
+> Is this a new feature or a bug?
+>
+> Thanks,
+> Jeff.
+
+This is a bug. I'm adding a test to the test suite for it.
+Here is the fix.
+
+Thanks for reporting it.
+
+Arnold
+-----------------------------------------------------------------------
+Fri Oct  7 13:23:29 2005  Arnold D. Robbins  <arnold@skeeve.com>
+
+	* field.c (set_FIELDWIDTHS): Fix off-by-one error in assignment
+	of sentinel value at end of FIELDWIDTHS array.
+
+--- ../gawk-3.1.5/field.c	2005-05-11 18:28:15.000000000 +0300
++++ field.c	2005-10-07 12:22:05.566125547 +0200
+@@ -916,7 +916,7 @@
+ 
+ 	parse_field = fw_parse_field;
+ 	scan = force_string(FIELDWIDTHS_node->var_value)->stptr;
+-	end = scan + 1;
++
+ 	if (FIELDWIDTHS == NULL)
+ 		emalloc(FIELDWIDTHS, int *, fw_alloc * sizeof(int), "set_FIELDWIDTHS");
+ 	FIELDWIDTHS[0] = 0;
+@@ -941,7 +941,7 @@
+ 		errno = 0;
+ 		tmp = strtoul(scan, &end, 10);
+ 		if (errno != 0
+-		    || !(*end == '\0' || is_blank(*end))
++		    || (*end != '\0' && ! is_blank(*end))
+ 		    || !(0 < tmp && tmp <= INT_MAX))
+ 			fatal(_("invalid FIELDWIDTHS value, near `%s'"),
+ 			      scan);
+@@ -954,7 +954,7 @@
+ 		if (*scan == '\0')
+ 			break;
+ 	}
+-	FIELDWIDTHS[i] = -1;
++	FIELDWIDTHS[i+1] = -1;
+ 
+ 	update_PROCINFO("FS", "FIELDWIDTHS");
+ }
+
+
+_______________________________________________
+bug-gnu-utils@gnu.org
+http://lists.gnu.org/mailman/listinfo/bug-gnu-utils
+

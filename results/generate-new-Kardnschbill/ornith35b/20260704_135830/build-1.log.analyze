@@ -1,0 +1,13 @@
+The build fails because the source archive referenced by `Source:` doesn't exist:
+
+```
+error: File /home/abuild/rpmbuild/SOURCES/v1.0.0~beta.26.tar.gz: No such file or directory
+```
+
+This almost always means a `_service` file in the package directory wasn't run to generate the source archive. Run it first:
+
+```bash
+/usr/lib/build/runservices .
+```
+
+Then check that `v1.0.0~beta.26.tar.gz` appears in `~/rpmbuild/SOURCES/`. If a `_service` file uses `obs_scm`, you can also replace the service by adding the appropriate hint to the `Source:` line:

@@ -1,0 +1,18 @@
+**Error: Installed (but unpackaged) file(s) found.**
+
+The RPM build succeeded through `%install`, but during final packaging, rpmbuild detected files installed into `$RPM_BUILD_ROOT` that were not listed in any package's `%files` section. This is a classic "unpackaged files" error — the `%files` section needs to be updated to include all installed files.
+
+The unpackaged files fall into these categories:
+
+1. **Profile.d scripts**: `/etc/profile.d/gawk.csh`, `/etc/profile.d/gawk.sh`
+2. **Binary symlinks/versions**: `/usr/bin/gawk-5.4.0`, `/usr/bin/gawkbug`
+3. **Header file**: `/usr/include/gawkapi.h`
+4. **Debug files** under `/usr/lib/debug/...` — these are normally auto-discovered by debuginfo processing, but if they're still flagged, the spec may need a `%debugedit` or `%file_debuglist` directive
+5. **Shared library plugins**: all `.so` and `.a` files in `/usr/lib64/gawk/` (e.g., `filefuncs.so`, `fork.so`, etc.)
+6. **Helper utilities**: `/usr/libexec/awk/grcat`, `/usr/libexec/awk/pwcat`
+7. **AWK library scripts**: all `.awk` files in `/usr/share/awk/`
+8. **Info documentation**: `*.info.gz` and associated PNG figures under `/usr/share/info/`
+9. **Locale (i18n) files**: all `gawk.mo` files under `/usr/share/locale/*/LC_MESSAGES/`
+10. **Manual pages**: `man1/gawkbug.1.gz`, `man3/*.3am.gz`, etc.
+
+Since the list is very long, I need to see what's currently in the `%files` section and understand how the spec handles subpackages (debuginfo, debugsource) before proposing a fix. Let me investigate interactively.
