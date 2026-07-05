@@ -792,22 +792,14 @@
             buildLogsModal.style.display = 'block';
 
             try {
-                // Fetch list of build_*.log files from the result directory
-                const response = await fetch(resultPath + '/');
-                if (!response.ok) {
-                    buildLogsContent.innerHTML = '<pre>Error loading build logs</pre>';
-                    return;
-                }
-
-                // Parse directory listing (this won't work with simple file serving)
-                // Instead, we'll try to fetch build_1.log, build_2.log, etc. until we fail
+                // Try to fetch build-1.log, build-2.log, etc. until we fail
                 let html = '<div style="font-family: monospace;">';
                 let buildNum = 1;
                 let foundAny = false;
 
                 while (buildNum <= 20) { // Max 20 build attempts
-                    const logPath = `${resultPath}/build_${buildNum}.log`;
-                    const analyzePath = `${resultPath}/build_${buildNum}.log.analyze`;
+                    const logPath = `${resultPath}/build-${buildNum}.log`;
+                    const analyzePath = `${resultPath}/build-${buildNum}.log.analyze`;
 
                     try {
                         const logResponse = await fetch(logPath);
