@@ -1,0 +1,23 @@
+## Error Analysis
+
+The build failed with this error:
+
+```
+[  154s] + %suse_update_doc
+[  154s] /var/tmp/rpm-tmp.sfA5tt: line 38: fg: no job control
+>>> [  154s] error: Bad exit status from /var/tmp/rpm-tmp.sfA5tt (%install)
+```
+
+The RPM macro `%suse_update_doc` was **not expanded** — it appeared literally in the generated shell script. When bash encounters `fg` with no background job, it prints "no job control" and exits non-zero, causing the `%install` phase to fail.
+
+This matches the known pattern: a literal unexpanded macro followed by `fg: no job control`.
+
+## Fix Needed
+
+Add a BuildRequires for the package that provides `%suse_update_doc`:
+
+```
+BuildRequires:  glibc
+```
+
+The `%suse_update_doc` macro is provided by the **glibc** package (via `/usr/lib/rpm/glibc/macros.suse`). Without this BuildRequires in your spec, the build environment may not load the glibc RPM macros before parsing the spec file, causing `%suse_update_doc` to remain unexpanded.

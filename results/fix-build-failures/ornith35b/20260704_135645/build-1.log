@@ -1,0 +1,276 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+fetching 131 binaries from https://download.opensuse.org/tumbleweed/repo/oss
+building ./python-adb-shell.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+Reusing former build root
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    0s] 
+[    0s] reiser.suse.de started "build python-adb-shell.spec" at Sat Jul  4 11:57:26 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/python-adb-shell.spec ...
+[    1s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/python-adb-shell.spec
+[    1s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/python-adb-shell.spec ...
+[    1s] copying packages...
+[    1s] reordering...cycle: libncurses6 -> terminfo-base
+[    1s]   breaking dependency terminfo-base -> libncurses6
+[    1s] cycle: lua54 -> lua-interpreter
+[    1s]   breaking dependency lua54 -> lua-interpreter
+[    1s] cycle: binutils -> libctf0
+[    1s]   breaking dependency binutils -> libctf0
+[    1s] cycle: rpm-config-SUSE -> rpm
+[    1s]   breaking dependency rpm -> rpm-config-SUSE
+[    1s] done
+[    1s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64'
+[    1s] Detected virtio-serial support
+[    2s] booting kvm...
+[    2s] ### VM INTERACTION START ###
+[    2s] Using virtio-serial support
+[    2s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    6s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=1af86bc10f8b4383acdd163808ee9d7e;user=root;hostname=localhost;machineid=b22c7d71e169418c8026885a457ffe26;bootid=ef2cabc60558468c946bc0aedf84790c;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
+[    7s] ### VM INTERACTION END ###
+[    7s] 2nd stage started in virtual machine
+[    7s] machine type: x86_64
+[    7s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 2 05:05:55 UTC 2026 (992f18c)
+[    7s] Time: Sat Jul  4 11:57:33 UTC 2026
+[    7s] Increasing log level from now on...
+[    7s] [    3.870229][  T450] sysrq: Changing Loglevel
+[    7s] [    3.870271][  T450] sysrq: Loglevel set to 4
+[    7s] Enable sysrq operations
+[    7s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    7s] no label, UUID=2cfc8066-5ba5-4646-9b1d-2a9073d084ec
+[    7s] logging output to //.build.log...
+[    7s] processing recipe //.build-srcdir/python-adb-shell.spec ...
+[    7s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/python-adb-shell.spec ...
+[    7s] initializing rpm db...
+[    7s] querying package ids...
+[    7s] deleting autoconf
+[    7s] deleting automake
+[    7s] deleting cmake
+[    7s] deleting cmake-mini
+[    7s] deleting jitterentropy-devel
+[    7s] deleting libacl-devel
+[    8s] deleting libbz2-devel
+[    8s] deleting libcom_err-devel
+[    8s] deleting libcom_err2
+[    8s] deleting libexpat1
+[    8s] deleting libext2fs-devel
+[    8s] deleting libext2fs2
+[    8s] deleting libffi8
+[    8s] deleting libltdl7
+[    8s] deleting liblz4-devel
+[    8s] deleting libmpdec4
+[    8s] deleting libopenssl-3-devel
+[    8s] deleting libopenssl-devel
+[    8s] deleting libpython3_13-1_0
+[    8s] deleting librhash1
+[    8s] deleting libtool
+[    8s] deleting libuv1
+[    8s] deleting libxml2-devel
+[    8s] deleting libxml2-tools
+[    8s] deleting libzstd-devel
+[    8s] deleting m4
+[    8s] deleting ninja
+[    8s] deleting openssl
+[    8s] deleting openssl-3
+[    8s] deleting python-rpm-packaging
+[    8s] deleting python313-base
+[    8s] deleting python313-packaging
+[    8s] deleting xz-devel
+[    8s] deleting zlib-devel
+[    8s] [1/131] keeping compat-usrmerge-tools-84.87-5.24
+[    8s] [2/131] keeping crypto-policies-20250714.cd6043a-4.1
+[    8s] [3/131] keeping file-magic-5.48-1.1
+[    8s] [4/131] keeping kernel-obs-build-7.1.2-1.1
+[    8s] [5/131] keeping pkgconf-m4-2.5.1-1.3
+[    8s] [6/131] keeping python-rpm-macros-20260601.4a231f4-1.1
+[    8s] [7/131] keeping system-user-root-20190513-2.19
+[    8s] [8/131] keeping filesystem-84.87-21.1
+[    8s] [9/131] keeping glibc-2.43-4.1
+[    8s] [10/131] keeping diffutils-3.12-1.3
+[    8s] [11/131] keeping envsubst-mini-1.0-2.2
+[    8s] [12/131] keeping fillup-1.42-281.5
+[    8s] [13/131] keeping glibc-gconv-modules-extra-2.43-4.1
+[    8s] [14/131] keeping glibc-locale-base-2.43-4.1
+[    8s] [15/131] keeping libacl1-2.3.2-2.5
+[    8s] [16/131] keeping libalternatives1-1.2+31.da24cd4-1.3
+[    8s] [17/131] keeping libatomic1-16.1.1+git8886-1.1
+[    8s] [18/131] keeping libattr1-2.6.0-1.1
+[    8s] [19/131] keeping libaudit1-4.0.2-3.3
+[    8s] [20/131] keeping libbz2-1-1.0.8-5.14
+[    8s] [21/131] keeping libcap-ng0-0.8.5-1.5
+[    8s] [22/131] keeping libcap2-2.78-1.2
+[    8s] [23/131] keeping libcrypt1-4.5.2-2.2
+[    8s] [24/131] keeping libeconf0-0.8.3-1.3
+[    8s] [25/131] keeping libgcc_s1-16.1.1+git8886-1.1
+[    8s] [26/131] keeping libgdbm6-1.26-1.3
+[    8s] [27/131] keeping libgmp10-6.3.0-5.4
+[    8s] [28/131] keeping libgomp1-16.1.1+git8886-1.1
+[    8s] [29/131] keeping libgpg-error0-1.61-1.1
+[    8s] [30/131] keeping libitm1-16.1.1+git8886-1.1
+[    8s] [31/131] keeping libjitterentropy3-3.6.3-1.3
+[    8s] [32/131] keeping liblua5_4-5-5.4.8-4.4
+[    8s] [33/131] keeping liblz1-1.16-1.2
+[    8s] [34/131] keeping liblz4-1-1.10.0-2.6
+[    8s] [35/131] keeping liblzma5-5.8.3-1.2
+[    8s] [36/131] keeping libpcre2-8-0-10.47-1.4
+[    8s] [37/131] keeping libpkgconf7-2.5.1-1.3
+[    8s] [38/131] keeping libpopt0-1.19-2.2
+[    8s] [39/131] keeping libseccomp2-2.6.0-2.4
+[    8s] [40/131] keeping libsframe2-2.45-4.1
+[    8s] [41/131] keeping libsmartcols1-2.42.1-1.1
+[    8s] [42/131] keeping libuuid1-2.42.1-1.1
+[    8s] [43/131] keeping libxml2-16-2.15.3-1.2
+[    8s] [44/131] keeping libz1-1.3.1-3.1
+[    8s] [45/131] keeping libzstd1-1.5.7-4.2
+[    8s] [46/131] keeping patch-2.8-2.3
+[    8s] [47/131] keeping which-2.25-1.1
+[    8s] [48/131] keeping alts-1.2+31.da24cd4-1.3
+[    8s] [49/131] keeping libblkid1-2.42.1-1.1
+[    8s] [50/131] keeping libctf-nobfd0-2.45-4.1
+[    8s] [51/131] keeping libgdbm_compat4-1.26-1.3
+[    8s] [52/131] keeping libisl23-0.27-1.4
+[    8s] [53/131] keeping libmpfr6-4.2.2-1.3
+[    8s] [54/131] keeping libselinux1-3.10-3.1
+[    8s] [55/131] keeping libstdc++6-16.1.1+git8886-1.1
+[    8s] [56/131] keeping perl-base-5.42.1-1.1
+[    8s] [57/131] keeping pkgconf-2.5.1-1.3
+[    8s] [58/131] keeping libelf1-0.194-1.2
+[    8s] [59/131] keeping libgcrypt20-1.12.2-1.2
+[    8s] [60/131] keeping permctl-1699_20260512-1.1
+[    8s] [61/131] keeping libmagic1-5.48-1.1
+[    8s] [62/131] keeping build-mkbaselibs-20260505-1.1
+[    8s] [63/131] keeping dwz-0.15-6.4
+[    8s] [64/131] keeping findutils-4.10.0-2.5
+[    8s] [65/131] cumulate fdupes-2.4.0-1.3
+[    8s] [66/131] keeping file-5.48-1.1
+[    8s] [67/131] keeping libasan8-16.1.1+git8886-1.1
+[    8s] [68/131] keeping libfdisk1-2.42.1-1.1
+[    8s] [69/131] keeping libhwasan0-16.1.1+git8886-1.1
+[    8s] [70/131] keeping liblsan0-16.1.1+git8886-1.1
+[    8s] [71/131] keeping libmount1-2.42.1-1.1
+[    8s] [72/131] keeping libmpc3-1.4.1-1.2
+[    8s] [73/131] keeping libtsan2-16.1.1+git8886-1.1
+[    8s] [74/131] keeping libubsan1-16.1.1+git8886-1.1
+[    8s] [75/131] keeping sed-4.10-1.2
+[    8s] [76/131] keeping tar-1.35-8.1
+[    8s] [77/131] keeping libdw1-0.194-1.2
+[    8s] [78/131] keeping perl-5.42.1-1.1
+[    8s] [79/131] keeping brp-check-suse-84.87+git20260317.a0eb4ba-1.1
+[    8s] [80/131] keeping perl-rpm-packaging-1.3-1.2
+[    8s] [81/131] keeping libasm1-0.194-1.2
+[    8s] [82/131] keeping cpp15-15.3.0+git11272-1.1
+[    8s] [83/131] keeping terminfo-base-6.6.20260613-109.1
+[    8s] [84/131] keeping libncurses6-6.6.20260613-109.1
+[    8s] [85/131] keeping libreadline8-8.3.3-2.4
+[    8s] [86/131] keeping ncurses-utils-6.6.20260613-109.1
+[    8s] [87/131] keeping bash-5.3.15-7.1
+[    8s] [88/131] keeping lua54-5.4.8-4.4
+[    8s] [89/131] keeping bash-sh-5.3.15-7.1
+[    8s] [90/131] keeping compat-usrmerge-build-84.87-5.24
+[    8s] [91/131] keeping lua-interpreter-5-3.2
+[    8s] [92/131] keeping cpio-2.15-7.2
+[    8s] [93/131] keeping cpp-15-3.2
+[    8s] [94/131] keeping gzip-1.14-2.1
+[    8s] [95/131] keeping make-4.4.1-3.5
+[    8s] [96/131] keeping bzip2-1.0.8-5.14
+[    8s] [97/131] keeping grep-3.12-1.3
+[    8s] [98/131] keeping pkgconf-pkg-config-2.5.1-1.3
+[    8s] [99/131] keeping xz-5.8.3-1.2
+[    8s] [100/131] keeping gettext-runtime-mini-1.0-2.2
+[    8s] [101/131] keeping gawk-5.4.0-1.1
+[    8s] [102/131] keeping coreutils-9.11-4.1
+[    8s] [103/131] keeping elfutils-0.194-1.2
+[    8s] [104/131] keeping linux-glibc-devel-7.0-1.1
+[    8s] [105/131] keeping systemd-rpm-macros-26-1.2
+[    8s] [106/131] keeping libxcrypt-devel-4.5.2-2.2
+[    8s] [107/131] keeping permissions-config-1699_20260512-1.1
+[    8s] [108/131] keeping polkit-default-privs-1550+20260623.563df94-1.1
+[    8s] [109/131] keeping libopenssl3-3.5.3-6.1
+[    8s] [110/131] keeping aaa_base-84.87+git20260610.3b5a868c-1.1
+[    8s] [111/131] keeping gettext-tools-mini-1.0-2.2
+[    8s] [112/131] keeping binutils-2.45-4.1
+[    8s] [113/131] keeping rpm-4.20.1-7.1
+[    8s] [114/131] keeping aaa_base-malloccheck-84.87+git20260610.3b5a868c-1.1
+[    8s] [115/131] keeping permissions-1699_20260512-1.1
+[    8s] [116/131] keeping rpm-config-SUSE-20250904-1.2
+[    8s] [117/131] keeping glibc-devel-2.43-4.1
+[    8s] [118/131] keeping libctf0-2.45-4.1
+[    8s] [119/131] keeping rpmlint-mini-2.9.0+git20260629.bd947d09-21.9
+[    8s] [120/131] keeping build-compare-20260622T095938.6416d96-1.1
+[    8s] [121/131] keeping libarchive13-3.8.7-1.2
+[    8s] [122/131] keeping librpmbuild10-4.20.1-7.1
+[    8s] [123/131] keeping debugedit-5.1-1.5
+[    8s] [124/131] keeping pam-1.7.2+git12-1.1
+[    8s] [125/131] keeping post-build-checks-84.87+git20250725.0c3a172-1.2
+[    8s] [126/131] keeping gcc15-15.3.0+git11272-1.1
+[    8s] [127/131] keeping gcc15-PIE-15.3.0+git11272-1.1
+[    8s] [128/131] keeping gcc-15-3.2
+[    8s] [129/131] keeping util-linux-2.42.1-1.1
+[    8s] [130/131] keeping gcc-PIE-15-3.2
+[    8s] [131/131] keeping rpm-build-4.20.1-7.1
+[    8s] now installing cumulated packages
+[    8s] Preparing...                          ########################################
+[    8s] Updating / installing...
+[    8s] fdupes-2.4.0-1.3                      ########################################
+[    8s] now finalizing build dir...
+[    8s] ... running 01-add_abuild_user_to_trusted_group
+[    8s] ... running 02-set_timezone_to_utc
+[    8s] ... running 03-set-permissions-secure
+[    8s] ... running 11-hack_uname_version_to_kernel_version
+[    8s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv
+[    8s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[    9s] -----------------------------------------------------------------
+[    9s] I have the following modifications for python-adb-shell.spec:
+[    9s] 54a55
+[    9s] > %changelog
+[    9s] -----------------------------------------------------------------
+[    9s] ----- building python-adb-shell.spec (user abuild)
+[    9s] -----------------------------------------------------------------
+[    9s] -----------------------------------------------------------------
+[    9s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv
+[    9s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[    9s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/python-adb-shell.spec
+[    9s] Building target platforms: noarch
+[    9s] Building for target noarch
+[   10s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.y4Sreh
+[   10s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.AbuEs0
+[   10s] + umask 022
+[   10s] + cd /home/abuild/rpmbuild/BUILD/python-adb-shell-0.4.3-build
+[   10s] + cd /home/abuild/rpmbuild/BUILD/python-adb-shell-0.4.3-build
+[   10s] + rm -rf adb-shell-0.4.3
+[   10s] + /usr/lib/rpm/rpmuncompress -x /home/abuild/rpmbuild/SOURCES/adb_shell-0.4.3.tar.gz
+[   10s] + STATUS=0
+[   10s] + '[' 0 -ne 0 ']'
+[   10s] + cd adb-shell-0.4.3
+[   10s] /var/tmp/rpm-tmp.AbuEs0: line 39: cd: adb-shell-0.4.3: No such file or directory
+[   10s] error: Bad exit status from /var/tmp/rpm-tmp.AbuEs0 (%prep)
+[   10s] 
+[   10s] RPM build errors:
+[   10s]     Bad exit status from /var/tmp/rpm-tmp.AbuEs0 (%prep)
+[   10s] ### VM INTERACTION START ###
+[   10s] [    7.001202][    T1] sysrq: Power Off
+[   10s] ### VM INTERACTION END ###
+[   10s] 
+[   10s] reiser.suse.de failed "build python-adb-shell.spec" at Sat Jul  4 11:57:36 UTC 2026.
+[   10s] 
+
+finished ./python-adb-shell.spec after 10s: failed

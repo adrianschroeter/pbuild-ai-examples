@@ -1,0 +1,91 @@
+Binärdateien source_backup/local-time-1.0.6.tar.gz und sources/lisp-example/local-time-1.0.6.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/local-time.spec sources/lisp-example/local-time.spec
+--- source_backup/local-time.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/lisp-example/local-time.spec	2026-07-04 15:52:48.896610646 +0200
+@@ -0,0 +1,86 @@
++#
++# spec file for package local-time
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           local-time
++Version:        1.0~6
++Release:        0
++Summary:        Common Lisp library for manipulating dates and times
++License:        MIT
++URL:            https://github.com/dlowe-net/local-time
++Source:         https://github.com/dlowe-net/local-time/archive/refs/tags/v%{version}.tar.gz#/v1.0.6.tar.gz
++
++BuildArch:      noarch
++Group:          Development/Libraries/Other
++BuildRequires:  cl-asdf
++BuildRequires:  common-lisp-controller
++
++%description
++The LOCAL-TIME library is a Common Lisp library for the manipulation of
++dates and times. It is based almost entirely upon Erik Naggum's paper
++"The Long Painful History of Time".
++
++This package provides timezone data files alongside the library.
++
++%prep
++%autosetup -n %{name}-1.0~6
++
++# Remove upstream .gitignore to avoid conflicts with RPM's own handling
++rm -f .gitignore
++
++%build
++# Lisp libraries are typically source-only; no compilation needed
++
++%install
++mkdir -p %{buildroot}%{_datadir}/common-lisp/source/%{name}
++cp -r src/%{name}.lisp \
++      src/package.lisp \
++      cl-postgres+local-time.asd \
++      local-time.asd \
++      local-time.test.asd \
++      README \
++      TODO \
++      CREDITS \
++      INSTALL \
++      COPYING \
++      %{buildroot}%{_datadir}/common-lisp/source/%{name}/
++
++mkdir -p %{buildroot}%{_datadir}/common-lisp/systems
++ln -sf ../source/%{name}/local-time.asd \
++       %{buildroot}%{_datadir}/common-lisp/systems/local-time.asd
++ln -sf ../source/%{name}/local-time.test.asd \
++       %{buildroot}%{_datadir}/common-lisp/systems/local-time-test.asd
++
++mkdir -p %{buildroot}%{_datadir}/zoneinfo
++cp -a zoneinfo/* %{buildroot}%{_datadir}/zoneinfo/
++
++%post
++register-common-lisp-implementation clisp
++
++%preun
++unregister-common-lisp-implementation clisp
++
++%files
++%license COPYING
++%doc README TODO CREDITS INSTALL
++%dir %{_datadir}/common-lisp/source/%{name}
++%{_datadir}/common-lisp/source/%{name}
++%{_datadir}/common-lisp/systems/local-time.asd
++%{_datadir}/common-lisp/systems/local-time-test.asd
++%{_datadir}/zoneinfo
++
++%changelog

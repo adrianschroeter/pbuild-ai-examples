@@ -1,0 +1,91 @@
+Binärdateien source_backup/luafilesystem-1.8.0.tar.gz und sources/lua-example/luafilesystem-1.8.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/luafilesystem.spec sources/lua-example/luafilesystem.spec
+--- source_backup/luafilesystem.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/lua-example/luafilesystem.spec	2026-07-04 15:56:10.146637678 +0200
+@@ -0,0 +1,86 @@
++# vim: set ts=2 sw=2 et:
++#
++# spec file for package luafilesystem
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++# Author: SUSE LINUX Products GmbH <distribution@suse.de>
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           lua51-luafilesystem
++Version:        1.8.0
++Release:        0
++Summary:        Lua File System Library
++License:        MIT
++Group:          Development/Libraries/Other
++URL:            https://keplerproject.github.io/luafilesystem
++Source0:        https://github.com/lunarmodules/luafilesystem/archive/v1_8_0.tar.gz
++
++BuildRequires:  lua51-devel
++BuildRequires:  pkgconf-pkg-config
++
++%description
++LuaFileSystem is a Lua library developed to complement the set of functions
++related to file systems offered by the standard Lua distribution. It offers
++a portable way to access the underlying directory structure and file attributes.
++
++%package -n     lua51-luafilesystem-doc
++Summary:        Documentation for Lua FileSystem
++Group:          Documentation/Other
++BuildArch:      noarch
++
++%description -n lua51-luafilesystem-doc
++Documentation files for the LuaFileSystem package.
++
++%prep
++%autosetup -p1 -n luafilesystem-%{version}
++
++# Patch config file to use proper paths
++sed -i 's|PREFIX=/usr/local|PREFIX=%{_prefix}|' config
++sed -i 's|-I/usr/include/lua$(LUA_VERSION)|-I%{_includedir}/lua$(LUA_VERSION)|' config
++sed -i 's|-I/usr/include/lua/$(LUA_VERSION)||' config
++
++# Override LUA_LIBDIR to use proper Lua architecture directory
++echo "LUA_LIBDIR= $(PREFIX)/lib/lua/\$(LUA_VERSION)" >> Makefile
++
++%build
++make CC="%{__cc}" \
++     CFLAGS="%{optflags} -fPIC" \
++     PREFIX=%{_prefix} \
++     LUA_VERSION=%{lua_version}
++
++%install
++mkdir -p %{buildroot}%{lua_archdir}
++make install DESTDIR=%{buildroot} PREFIX=%{_prefix} LUA_LIBDIR=%{buildroot}%{lua_archdir}/
++
++# Install documentation
++mkdir -p %{buildroot}%{_docdir}/%{name}
++cp -a doc/us/* %{buildroot}%{_docdir}/%{name}/
++cp LICENSE README.md %{buildroot}%{_docdir}/%{name}/
++
++# Set proper permissions on installed files
++find %{buildroot} -type f -exec chmod 644 {} +
++chmod 755 %{buildroot}%{lua_archdir}
++
++%files
++%license LICENSE
++%doc README.md
++%{lua_archdir}/lfs.so
++
++%files -n lua51-luafilesystem-doc
++%defattr(-, root, root)
++%{_docdir}/%{name}/
++%license LICENSE
++
++%changelog
