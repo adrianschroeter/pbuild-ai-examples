@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-04T11:24:07+00:00",
+  "generated": "2026-07-05T02:29:04+00:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -19,7 +19,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112316",
+          "timestamp": "20260705_022821",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -42,7 +42,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/backport-security-fix/default/20260704_112316"
+          "result_path": "../results/backport-security-fix/default/20260705_022821"
         },
         "gemma4": {
           "timestamp": "20260701_125859",
@@ -84,7 +84,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112323",
+          "timestamp": "20260705_022827",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -107,7 +107,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/basic-analyze/default/20260704_112323"
+          "result_path": "../results/basic-analyze/default/20260705_022827"
         },
         "gemma4": {
           "timestamp": "20260701_075030",
@@ -305,7 +305,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112326",
+          "timestamp": "20260705_022830",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -328,7 +328,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/cleanup-source/default/20260704_112326"
+          "result_path": "../results/cleanup-source/default/20260705_022830"
         },
         "gemma4_12b": {
           "timestamp": "20260702_144706",
@@ -431,7 +431,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112332",
+          "timestamp": "20260705_022835",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -454,7 +454,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/fix-build-failures/default/20260704_112332"
+          "result_path": "../results/fix-build-failures/default/20260705_022835"
         },
         "gemma4": {
           "timestamp": "20260701_113751",
@@ -495,7 +495,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112333",
+          "timestamp": "20260705_022836",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -518,7 +518,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-Kardnschbill/default/20260704_112333"
+          "result_path": "../results/generate-new-Kardnschbill/default/20260705_022836"
         },
         "gemma4": {
           "timestamp": "20260702_171702",
@@ -559,7 +559,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112333",
+          "timestamp": "20260705_022836",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -582,7 +582,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-new-package/default/20260704_112333"
+          "result_path": "../results/generate-new-package/default/20260705_022836"
         },
         "gemma4_12b": {
           "timestamp": "20260702_110921",
@@ -736,7 +736,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112333",
+          "timestamp": "20260705_022836",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -759,7 +759,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-R/default/20260704_112333"
+          "result_path": "../results/generate-spec-R/default/20260705_022836"
         },
         "qwen27": {
           "timestamp": "20260702_091103",
@@ -803,7 +803,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112333",
+          "timestamp": "20260705_022836",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -826,7 +826,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-electron/default/20260704_112333"
+          "result_path": "../results/generate-spec-electron/default/20260705_022836"
         },
         "qwen27": {
           "timestamp": "20260702_074230",
@@ -873,7 +873,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112333",
+          "timestamp": "20260705_022836",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -896,7 +896,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-erlang/default/20260704_112333"
+          "result_path": "../results/generate-spec-erlang/default/20260705_022836"
         },
         "qwen27": {
           "timestamp": "20260702_080756",
@@ -940,7 +940,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022837",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -963,7 +963,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-font/default/20260704_112334"
+          "result_path": "../results/generate-spec-font/default/20260705_022837"
         },
         "qwen27": {
           "timestamp": "20260702_081905",
@@ -1008,7 +1008,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022837",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1031,7 +1031,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-go/default/20260704_112334"
+          "result_path": "../results/generate-spec-go/default/20260705_022837"
         },
         "qwen27": {
           "timestamp": "20260702_083057",
@@ -1073,7 +1073,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022837",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1096,7 +1096,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-java/default/20260704_112334"
+          "result_path": "../results/generate-spec-java/default/20260705_022837"
         },
         "qwen27": {
           "timestamp": "20260702_083823",
@@ -1138,7 +1138,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022837",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1161,7 +1161,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lisp/default/20260704_112334"
+          "result_path": "../results/generate-spec-lisp/default/20260705_022837"
         },
         "qwen27": {
           "timestamp": "20260702_084415",
@@ -1205,7 +1205,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022837",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1228,7 +1228,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-lua/default/20260704_112334"
+          "result_path": "../results/generate-spec-lua/default/20260705_022837"
         },
         "qwen27": {
           "timestamp": "20260702_085008",
@@ -1272,7 +1272,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112334",
+          "timestamp": "20260705_022838",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1295,7 +1295,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-nodejs/default/20260704_112334"
+          "result_path": "../results/generate-spec-nodejs/default/20260705_022838"
         },
         "qwen27": {
           "timestamp": "20260702_105343",
@@ -1337,7 +1337,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
+          "timestamp": "20260705_022838",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1360,7 +1360,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-perl/default/20260704_112335"
+          "result_path": "../results/generate-spec-perl/default/20260705_022838"
         },
         "qwen27": {
           "timestamp": "20260702_085610",
@@ -1404,7 +1404,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
+          "timestamp": "20260705_022838",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1427,7 +1427,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-php/default/20260704_112335"
+          "result_path": "../results/generate-spec-php/default/20260705_022838"
         },
         "qwen27": {
           "timestamp": "20260702_105554",
@@ -1472,7 +1472,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
+          "timestamp": "20260705_022838",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1495,7 +1495,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-pyqt-sip/default/20260704_112335"
+          "result_path": "../results/generate-spec-pyqt-sip/default/20260705_022838"
         },
         "qwen27": {
           "timestamp": "20260702_090715",
@@ -1540,8 +1540,8 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
-          "run_time_seconds": 0,
+          "timestamp": "20260705_022838",
+          "run_time_seconds": 1,
           "status": "error",
           "success": false,
           "exit_code": 127,
@@ -1563,7 +1563,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-python/default/20260704_112335"
+          "result_path": "../results/generate-spec-python/default/20260705_022838"
         },
         "qwen27": {
           "timestamp": "20260702_103807",
@@ -1607,7 +1607,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
+          "timestamp": "20260705_022839",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1630,7 +1630,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-ruby/default/20260704_112335"
+          "result_path": "../results/generate-spec-ruby/default/20260705_022839"
         },
         "qwen27": {
           "timestamp": "20260702_093307",
@@ -1674,7 +1674,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112335",
+          "timestamp": "20260705_022839",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1697,7 +1697,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-rust/default/20260704_112335"
+          "result_path": "../results/generate-spec-rust/default/20260705_022839"
         },
         "qwen27": {
           "timestamp": "20260702_094155",
@@ -1742,7 +1742,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112336",
+          "timestamp": "20260705_022839",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1765,7 +1765,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/generate-spec-typelibs/default/20260704_112336"
+          "result_path": "../results/generate-spec-typelibs/default/20260705_022839"
         },
         "qwen27": {
           "timestamp": "20260702_100413",
@@ -1809,7 +1809,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112336",
+          "timestamp": "20260705_022839",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1832,7 +1832,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/inline-example/default/20260704_112336"
+          "result_path": "../results/inline-example/default/20260705_022839"
         }
       }
     },
@@ -1848,7 +1848,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112336",
+          "timestamp": "20260705_022839",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -1871,7 +1871,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/simple-modification/default/20260704_112336"
+          "result_path": "../results/simple-modification/default/20260705_022839"
         },
         "gemma4": {
           "timestamp": "20260702_092041",
@@ -2060,7 +2060,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112342",
+          "timestamp": "20260705_022845",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2083,7 +2083,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-only/default/20260704_112342"
+          "result_path": "../results/update-only/default/20260705_022845"
         },
         "gemma4": {
           "timestamp": "20260630_193728",
@@ -2228,7 +2228,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112348",
+          "timestamp": "20260705_022849",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2251,7 +2251,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-to-upstream-version/default/20260704_112348"
+          "result_path": "../results/update-to-upstream-version/default/20260705_022849"
         }
       }
     },
@@ -2266,7 +2266,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112354",
+          "timestamp": "20260705_022854",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2289,7 +2289,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-to-upstream-version-20years/default/20260704_112354"
+          "result_path": "../results/update-to-upstream-version-20years/default/20260705_022854"
         }
       }
     },
@@ -2304,7 +2304,7 @@
       ],
       "models": {
         "default": {
-          "timestamp": "20260704_112359",
+          "timestamp": "20260705_022858",
           "run_time_seconds": 0,
           "status": "error",
           "success": false,
@@ -2327,7 +2327,7 @@
           "run_count": 1,
           "output": "./scripts/run-example.sh: line 484: pbuild-ai: command not found\n",
           "diff": "",
-          "result_path": "../results/update-with-own-tools/default/20260704_112359"
+          "result_path": "../results/update-with-own-tools/default/20260705_022858"
         },
         "qwen36": {
           "timestamp": "20260704_100556",
