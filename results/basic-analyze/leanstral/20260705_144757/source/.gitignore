@@ -1,0 +1,4 @@
+*.obscpio
+*.osc
+_build.*
+.pbuild

@@ -44,7 +44,7 @@ models:
     display: "Ornith-1.0:9B"
     host: "local"
     model: "ornith:9b"
-  mistral:
-    display: "Mistral Medium 2.5 128b Q4"
+  leanstral:
+    display: "leanstral-1.5:119B-A6B"
     host: "local"
-    model: "mistral-medium-3.5:128b-q4-256k"
+    model: "huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest"
