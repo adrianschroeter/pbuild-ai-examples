@@ -1,0 +1,102 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/glances-server.service sources/glances.add_service/glances-server.service
+--- source_backup/glances-server.service	1970-01-01 01:00:00.000000000 +0100
++++ sources/glances.add_service/glances-server.service	2026-07-06 15:26:36.231510597 +0200
+@@ -0,0 +1,13 @@
++[Unit]
++Description=Glances server mode
++After=network.target
++
++[Service]
++Type=simple
++User=%{_user}
++ExecStart=/usr/bin/glances -s --port 61208 --exportinfluxdb --exporxmlrpc
++Restart=always
++RestartSec=5
++
++[Install]
++WantedBy=multi-user.target
+\ Kein Zeilenumbruch am Dateiende.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.add_service/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 15:21:48.565155955 +0200
++++ sources/glances.add_service/python-Glances.spec	2026-07-06 15:27:18.801746961 +0200
+@@ -1,22 +1,4 @@
+-#
+-# spec file for package python-Glances
+-#
+-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.
+-#
+-# All modifications and additions to the file contributed by third parties
+-# remain the property of their copyright owners, unless otherwise agreed
+-# upon. The license for this file, and modifications and additions to the
+-# file, is the same license as for the pristine package itself (unless the
+-# license for the pristine package is not an Open Source License, in which
+-# case the license is the MIT License). An "Open Source License" is a
+-# license that conforms to the Open Source Definition (Version 1.9)
+-# published by the Open Source Initiative.
+-
+-# Please submit bugfixes or comments via https://bugs.opensuse.org/
+-#
+-
+-
+-%{?!python_module:%define python_module() python-%{**} python3-%{**}}
++%{?!python_module:%define python_module() python-%{} python3-%{}}
+ Name:           python-Glances
+ Version:        3.1.0
+ Release:        0
+@@ -24,26 +6,23 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
+ Patch0:         adjust-data-files.patch
+-Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
++BuildRequires:  fdupes
++BuildRequires:  python-rpm-macros
+ BuildRequires:  %{python_module psutil >= 5.3.0}
+ BuildRequires:  %{python_module requests}
+ BuildRequires:  %{python_module setuptools}
+-BuildRequires:  fdupes
+-BuildRequires:  python-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+ Requires:       python-requests
+ Provides:       python-glances = %{version}
+ Obsoletes:      python-glances
+-%ifpython3
+-Provides:       glances
+-%endif
++%{?python3_provides}
+ BuildArch:      noarch
+-%python_subpackages
++%systemd_ordering
+ 
+ %description
+ Glances is a cross-platform monitoring tool which presents a
+@@ -60,19 +39,22 @@
+ 
+ %check
+ export LANG=en_US.UTF-8
++systemd-analyze verify %{buildroot}%{_unitdir}/glances-server.service || true
+ %python_exec unitest.py
+ %python_exec unitest-restful.py
+ %python_exec unitest-xmlrpc.py
+ 
+ %install
++install -D -m 644 glances-server.service %{buildroot}%{_unitdir}/glances-server.service
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
+ 
+ %files %{python_files}
++%{_unitdir}/glances-server.service
+ %license COPYING
+ %doc NEWS README.rst
+ %python3_only %{_bindir}/glances
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
+-%changelog
++%changelog
+\ Kein Zeilenumbruch am Dateiende.
