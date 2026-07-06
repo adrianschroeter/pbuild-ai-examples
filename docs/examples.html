@@ -862,7 +862,13 @@
                     const displayStyle = index === 0 ? 'block' : 'none';
                     html += `<div id="build-tab-${attempt.num}" style="display: ${displayStyle};">`;
 
-                    // Show analysis first (or success message if no analysis) - collapsible, expanded by default
+                    // Check if build succeeded by looking at last line of log
+                    const logLines = attempt.log.trim().split('\n');
+                    const lastLine = logLines[logLines.length - 1] || '';
+                    const buildSucceeded = lastLine.includes('succeeded');
+                    const buildFailed = lastLine.includes('failed');
+
+                    // Show analysis first (or success/failure message if no analysis) - collapsible, expanded by default
                     if (attempt.analyze) {
                         html += `<div style="margin-bottom: 1rem;">`;
                         html += `<h4 style="color: var(--geeko-green); margin: 0; cursor: pointer; user-select: none;" onclick="toggleBuildSection('analysis-${attempt.num}')">`;
@@ -871,12 +877,18 @@
                         html += `<div id="analysis-${attempt.num}" style="margin-top: 0.5rem;">`;
                         html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.analyze)}</pre>`;
                         html += `</div></div>`;
-                    } else {
-                        // No analysis means build succeeded!
+                    } else if (buildSucceeded) {
+                        // No analysis and build succeeded!
                         html += `<div style="background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%); padding: 2rem; border-radius: 8px; text-align: center; margin-bottom: 1rem;">`;
                         html += `<div style="font-size: 4rem; margin-bottom: 0.5rem;">✅</div>`;
                         html += `<h3 style="color: white; margin: 0 0 0.5rem 0;">Build Successful!</h3>`;
                         html += `<p style="color: rgba(255,255,255,0.9); margin: 0;">No issues detected. The package built successfully.</p>`;
+                        html += `</div>`;
+                    } else if (buildFailed || !buildSucceeded) {
+                        // No analysis but build failed or status unclear
+                        html += `<div style="background: rgba(255, 68, 68, 0.1); border: 1px solid #ff4444; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">`;
+                        html += `<h4 style="color: #ff4444; margin: 0 0 0.5rem 0;">⚠️ Build Issue</h4>`;
+                        html += `<p style="margin: 0; color: var(--text-primary);">No analysis available. Check the build log for details.</p>`;
                         html += `</div>`;
                     }
 
