@@ -1,0 +1,10 @@
+[PBUILD-AI] Version 0.1.9
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] systemd (prompt match)
+[SKILL ACTIVE] lang_python for python-Glances.spec
+[INFO] Using skill profile: systemd_skill
+[INFO] Using skill profile: lang_python_skill
+
+[MODIFY] Sending python-Glances.spec sources to huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest...
+[OLLAMA ERROR] HTTP 500: Internal Server Error - {"error":"timed out waiting for llama-server to start - "}
+[EXIT] Exiting with code 2.

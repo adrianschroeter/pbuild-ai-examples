@@ -1,0 +1,78 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/glances-server.service sources/glances.add_service/glances-server.service
+--- source_backup/glances-server.service	1970-01-01 01:00:00.000000000 +0100
++++ sources/glances.add_service/glances-server.service	2026-07-06 14:35:49.292049816 +0200
+@@ -0,0 +1,12 @@
++[Unit]
++Description=Glances Server Mode (Web Interface)
++After=network.target
++
++[Service]
++Type=simple
++ExecStart=/usr/bin/glances --server --browser-mode
++Restart=on-failure
++RestartSec=5
++
++[Install]
++WantedBy=multi-user.target
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.add_service/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 14:31:57.112303259 +0200
++++ sources/glances.add_service/python-Glances.spec	2026-07-06 14:42:39.495968463 +0200
+@@ -24,7 +24,8 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
++Source2:        glances-server.service
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+@@ -33,6 +34,7 @@
+ BuildRequires:  %{python_module setuptools}
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  systemd-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+@@ -45,6 +47,15 @@
+ BuildArch:      noarch
+ %python_subpackages
+ 
++%package -n glances-common
++Summary:        Common files for Glances monitoring tool
++Group:          System/Monitoring
++Requires:       %{name} = %{version}
++
++%description -n glances-common
++This package contains common configuration files and systemd service unit
++for the Glances monitoring tool.
++
+ %description
+ Glances is a cross-platform monitoring tool which presents a
+ large amount of monitoring information through a curses or Web
+@@ -67,6 +78,16 @@
+ %install
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
++install -D -m 644 %{SOURCE2} %{buildroot}%{_unitdir}/glances-server.service
++
++%post glances-common
++%service_add_post glances-server.service
++
++%preun glances-common
++%service_del_preun glances-server.service
++
++%postun glances-common
++%service_del_postun glances-server.service
+ 
+ %files %{python_files}
+ %license COPYING
+@@ -75,4 +96,7 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
++%files -n glances-common
++%{_unitdir}/glances-server.service
++
+ %changelog

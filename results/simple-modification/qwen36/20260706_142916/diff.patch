@@ -1,0 +1,71 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.add_service/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 14:29:17.450663896 +0200
++++ sources/glances.add_service/python-Glances.spec	2026-07-06 14:31:56.215277194 +0200
+@@ -24,7 +24,8 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
++Source1:        glances-server.service
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+@@ -33,6 +34,7 @@
+ BuildRequires:  %{python_module setuptools}
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  systemd-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+@@ -51,6 +53,28 @@
+ based interface. The information dynamically adapts depending on the
+ size of the user interface.
+ 
++%package glances-common
++Summary:        Glances common files (including server mode)
++Group:          System/Daemons
++Requires:       %{name} = %{version}
++%systemd_ordering
++
++%description glances-common
++This package contains common files for Glances, including the systemd
++service file for running Glances in server mode. The server allows
++remote monitoring via HTTP/HTTPS.
++
++%post glances-common
++%service_add_post glances-server.service
++
++%preun glances-common
++%service_del_preun glances-server.service
++
++%postun glances-common
++if [ $1 -ge 1 ]; then
++  %service_del_postun glances-server.service
++fi
++
+ %prep
+ %setup -q -n glances-%{version}
+ %autopatch -p1
+@@ -65,8 +89,10 @@
+ %python_exec unitest-xmlrpc.py
+ 
+ %install
++%service_add_pre glances-server.service
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
++install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service
+ 
+ %files %{python_files}
+ %license COPYING
+@@ -75,4 +101,7 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
+-%changelog
++%files glances-common
++%{_unitdir}/glances-server.service
++
++%changelog
+\ Kein Zeilenumbruch am Dateiende.

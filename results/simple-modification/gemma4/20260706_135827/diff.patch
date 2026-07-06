@@ -1,0 +1,73 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.add_service/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 13:58:28.041501277 +0200
++++ sources/glances.add_service/python-Glances.spec	2026-07-06 14:01:54.684475673 +0200
+@@ -24,7 +24,7 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+@@ -33,6 +33,7 @@
+ BuildRequires:  %{python_module setuptools}
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  systemd-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+@@ -45,6 +46,14 @@
+ BuildArch:      noarch
+ %python_subpackages
+ 
++%package glances-common
++Summary: Common files for Glances
++Requires: python3-Glances
++%systemd_ordering
++
++%description glances-common
++Common files for Glances, including the systemd service.
++
+ %description
+ Glances is a cross-platform monitoring tool which presents a
+ large amount of monitoring information through a curses or Web
+@@ -68,6 +77,29 @@
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
+ 
++cat <<EOF > %{buildroot}%{_unitdir}/glances.service
++[Unit]
++Description=Glances monitoring tool server
++After=network.target
++
++[Service]
++Type=simple
++ExecStart=%{_bindir}/glances -s
++Restart=on-failure
++
++[Install]
++WantedBy=multi-user.target
++EOF
++
++%post_glances-common
++%service_add_post glances.service
++
++%preun_glances-common
++%service_del_preun glances.service
++
++%postun_glances-common
++%service_del_postun glances.service
++
+ %files %{python_files}
+ %license COPYING
+ %doc NEWS README.rst
+@@ -75,4 +107,7 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
++%files glances-common
++%{_unitdir}/glances.service
++
+ %changelog
