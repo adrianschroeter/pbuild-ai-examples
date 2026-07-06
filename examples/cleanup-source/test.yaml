@@ -1,5 +1,5 @@
 name: "Cleanup Source"
-description: "Demonstrates using --modify flag just how to cleanup an existing source"
+description: "Demonstrates using --modify flag just how to cleanup an existing source. The result is currently still very disappointing and shows where we need further work (and a better example)."
 order: 4
 
 source:

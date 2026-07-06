@@ -1,5 +1,5 @@
 name: "Backport Security Fix"
-description: "Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it get applied during build."
+description: "Point the AI to some external commit and tell it to backport it. Doing a test build to verify it. We need  more memory for the build VM, so we manually specify it."
 order: 5
 
 source:

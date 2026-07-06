@@ -1,5 +1,5 @@
 name: "Generate New Package"
-description: "Generate a complete package from scratch without any source files"
+description: "Generate a complete package from scratch without any source files. So the AI is search itself where the source lifes and is hopefully right."
 category: "generation"
 order: 3
 

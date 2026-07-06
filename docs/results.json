@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-06T16:28:59+02:00",
+  "generated": "2026-07-06T16:41:56+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -27,7 +27,7 @@
     "backport-security-fix": {
       "order": 5,
       "name": "Backport Security Fix",
-      "description": "Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it get applied during build.",
+      "description": "Point the AI to some external commit and tell it to backport it. Doing a test build to verify it. We need  more memory for the build VM, so we manually specify it.",
       "command": "pbuild-ai --modify \"Get the security fix from https://github.com/libarchive/libarchive/commit/020c40df9e31ec727201a8e3ddf1f94093f8fc02 and apply it to the package. Make sure it applies cleanly to the code.\" --fix --vm-memory 8096 <source-directory>",
       "tags": [
         "security",
@@ -314,7 +314,7 @@
     "cleanup-source": {
       "order": 4,
       "name": "Cleanup Source",
-      "description": "Demonstrates using --modify flag just how to cleanup an existing source",
+      "description": "Demonstrates using --modify flag just how to cleanup an existing source. The result is currently still very disappointing and shows where we need further work (and a better example).",
       "command": "pbuild-ai --modify \"Cleanup the source according to current rules\" <source-directory>",
       "tags": [
         "basic",
@@ -548,7 +548,7 @@
     "generate-new-package": {
       "order": 3,
       "name": "Generate New Package",
-      "description": "Generate a complete package from scratch without any source files",
+      "description": "Generate a complete package from scratch without any source files. So the AI is search itself where the source lifes and is hopefully right.",
       "command": "pbuild-ai --generate \"package ripgrep CLI tool\" <source-directory>",
       "tags": [
         "generate",
@@ -2308,7 +2308,7 @@
     "update-with-own-tools": {
       "order": 5,
       "name": "Update Ollama with own tools",
-      "description": "An example how to hook in own scripts, provided by the package.",
+      "description": "An example how to hook in own scripts, provided by the package. These scripts can execute basically any command, so the user is responsible to review them before. Note: we don't allow modifications by the AI on these scripts.",
       "command": "pbuild-ai --update --update-version=0.30.12-rc0 --allow-tool-scripts <source-directory>",
       "tags": [
         "advanced",

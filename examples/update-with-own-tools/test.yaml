@@ -1,5 +1,5 @@
 name: "Update Ollama with own tools"
-description: "An example how to hook in own scripts, provided by the package."
+description: "An example how to hook in own scripts, provided by the package. These scripts can execute basically any command, so the user is responsible to review them before. Note: we don't allow modifications by the AI on these scripts."
 order: 5
 
 source:
