@@ -1,5 +1,0 @@
-# To identify this directory as build project for pbuild and OBS
-
-subdirectories:
-- .
-

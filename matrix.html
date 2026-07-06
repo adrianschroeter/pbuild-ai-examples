@@ -916,13 +916,14 @@
             buildLogsModal.style.display = 'block';
 
             try {
-                // Collect all build attempts first
+                // Collect all build attempts
                 const buildAttempts = [];
                 let buildNum = 1;
 
                 while (buildNum <= 20) { // Max 20 build attempts
                     const logPath = `${resultPath}/build-${buildNum}.log`;
-                    const analyzePath = `${resultPath}/build-${buildNum}.log.analyze`;
+                    const analyzePath = `${resultPath}/build-${buildNum}.analyze`;
+                    const diffPath = `${resultPath}/build-${buildNum}.diff`;
 
                     try {
                         const logResponse = await fetch(logPath);
@@ -930,6 +931,7 @@
 
                         const logContent = await logResponse.text();
                         let analyzeContent = null;
+                        let diffContent = null;
 
                         // Try to fetch analyze file
                         try {
@@ -941,10 +943,21 @@
                             // No analyze file, that's okay
                         }
 
+                        // Try to fetch diff file
+                        try {
+                            const diffResponse = await fetch(diffPath);
+                            if (diffResponse.ok) {
+                                diffContent = await diffResponse.text();
+                            }
+                        } catch (e) {
+                            // No diff file, that's okay
+                        }
+
                         buildAttempts.push({
                             num: buildNum,
                             log: logContent,
-                            analyze: analyzeContent
+                            analyze: analyzeContent,
+                            diff: diffContent
                         });
 
                         buildNum++;
@@ -973,10 +986,15 @@
                     const displayStyle = index === 0 ? 'block' : 'none';
                     html += `<div id="build-tab-${attempt.num}" style="display: ${displayStyle};">`;
 
-                    // Show analysis first (or success message if no analysis)
+                    // Show analysis first (or success message if no analysis) - collapsible, expanded by default
                     if (attempt.analyze) {
-                        html += `<h4 style="color: var(--geeko-green); margin-top: 0;">Analysis:</h4>`;
-                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto; margin-bottom: 1rem;">${escapeHtml(attempt.analyze)}</pre>`;
+                        html += `<div style="margin-bottom: 1rem;">`;
+                        html += `<h4 style="color: var(--geeko-green); margin: 0; cursor: pointer; user-select: none;" onclick="toggleBuildSection('analysis-${attempt.num}')">`;
+                        html += `<span id="analysis-${attempt.num}-toggle">▼</span> Analysis`;
+                        html += `</h4>`;
+                        html += `<div id="analysis-${attempt.num}" style="margin-top: 0.5rem;">`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.analyze)}</pre>`;
+                        html += `</div></div>`;
                     } else {
                         // No analysis means build succeeded!
                         html += `<div style="background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%); padding: 2rem; border-radius: 8px; text-align: center; margin-bottom: 1rem;">`;
@@ -986,9 +1004,25 @@
                         html += `</div>`;
                     }
 
-                    // Then show build log
-                    html += `<h4 style="color: var(--geeko-green);">Build Log:</h4>`;
-                    html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.log)}</pre>`;
+                    // Show diff if available for this attempt - collapsible, expanded by default
+                    if (attempt.diff) {
+                        html += `<div style="margin-bottom: 1rem;">`;
+                        html += `<h4 style="color: var(--geeko-green); margin: 0; cursor: pointer; user-select: none;" onclick="toggleBuildSection('diff-${attempt.num}')">`;
+                        html += `<span id="diff-${attempt.num}-toggle">▼</span> Changes Made`;
+                        html += `</h4>`;
+                        html += `<div id="diff-${attempt.num}" style="margin-top: 0.5rem;">`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.diff)}</pre>`;
+                        html += `</div></div>`;
+                    }
+
+                    // Build log - collapsible, collapsed by default
+                    html += `<div style="margin-bottom: 1rem;">`;
+                    html += `<h4 style="color: var(--geeko-green); margin: 0; cursor: pointer; user-select: none;" onclick="toggleBuildLog('${attempt.num}')">`;
+                    html += `<span id="buildlog-${attempt.num}-toggle">▶</span> Build Log`;
+                    html += `</h4>`;
+                    html += `<div id="buildlog-${attempt.num}" style="display: none; margin-top: 0.5rem;">`;
+                    html += `<pre id="buildlog-${attempt.num}-content" style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.log)}</pre>`;
+                    html += `</div></div>`;
 
                     html += `</div>`;
                 });
@@ -998,6 +1032,13 @@
                 buildLogsContent.innerHTML = '<pre>Error loading build logs: ' + error.message + '</pre>';
             }
         }
+
+        // Track collapse state across all attempts
+        const buildSectionStates = {
+            analysis: true,  // true = expanded, false = collapsed
+            diff: true,      // expanded by default
+            buildlog: false
+        };
 
         function switchBuildTab(attemptNum) {
             // Hide all build tabs
@@ -1014,10 +1055,68 @@
             const selectedTab = document.getElementById(`build-tab-${attemptNum}`);
             if (selectedTab) {
                 selectedTab.style.display = 'block';
+
+                // Apply saved states to this tab's sections
+                applySectionStates(attemptNum);
             }
 
             // Add active class to clicked button
             event.target.classList.add('active');
+        }
+
+        function applySectionStates(attemptNum) {
+            // Apply analysis state
+            const analysisSection = document.getElementById(`analysis-${attemptNum}`);
+            const analysisToggle = document.getElementById(`analysis-${attemptNum}-toggle`);
+            if (analysisSection && analysisToggle) {
+                analysisSection.style.display = buildSectionStates.analysis ? 'block' : 'none';
+                analysisToggle.textContent = buildSectionStates.analysis ? '▼' : '▶';
+            }
+
+            // Apply diff state
+            const diffSection = document.getElementById(`diff-${attemptNum}`);
+            const diffToggle = document.getElementById(`diff-${attemptNum}-toggle`);
+            if (diffSection && diffToggle) {
+                diffSection.style.display = buildSectionStates.diff ? 'block' : 'none';
+                diffToggle.textContent = buildSectionStates.diff ? '▼' : '▶';
+            }
+
+            // Apply buildlog state
+            const buildlogSection = document.getElementById(`buildlog-${attemptNum}`);
+            const buildlogToggle = document.getElementById(`buildlog-${attemptNum}-toggle`);
+            if (buildlogSection && buildlogToggle) {
+                buildlogSection.style.display = buildSectionStates.buildlog ? 'block' : 'none';
+                buildlogToggle.textContent = buildSectionStates.buildlog ? '▼' : '▶';
+            }
+        }
+
+        function toggleBuildSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const toggle = document.getElementById(`${sectionId}-toggle`);
+
+            // Determine section type from ID (e.g., "analysis-1" -> "analysis")
+            const sectionType = sectionId.split('-')[0];
+
+            // Toggle display
+            const isNowExpanded = section.style.display === 'none';
+            section.style.display = isNowExpanded ? 'block' : 'none';
+            toggle.textContent = isNowExpanded ? '▼' : '▶';
+
+            // Save state
+            buildSectionStates[sectionType] = isNowExpanded;
+        }
+
+        function toggleBuildLog(attemptNum) {
+            const logSection = document.getElementById(`buildlog-${attemptNum}`);
+            const toggle = document.getElementById(`buildlog-${attemptNum}-toggle`);
+
+            // Toggle display
+            const isNowExpanded = logSection.style.display === 'none';
+            logSection.style.display = isNowExpanded ? 'block' : 'none';
+            toggle.textContent = isNowExpanded ? '▼' : '▶';
+
+            // Save state
+            buildSectionStates.buildlog = isNowExpanded;
         }
 
         function closeBuildLogsModal() {
