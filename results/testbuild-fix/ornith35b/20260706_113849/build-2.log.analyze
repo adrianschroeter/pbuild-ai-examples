@@ -1,0 +1,9 @@
+I need more information to help you debug the Qt5 build failure:
+
+1. **Build error output**: What is the actual Qt5-related error message? (e.g., "Project ERROR: Unknown module(s) in QT:", missing header files, undefined symbols?)
+
+2. **Spec file content**: Can you share the relevant portion of your `.spec` file showing the current `BuildRequires:` section and how Qt5 modules are referenced in the build system?
+
+3. **Source code references**: Are there CMake/Qt configuration files that list required Qt5 modules (e.g., `find_package(Qt5...)`, `QT += ...`)?
+
+The previous attempt failed due to a missing `python3-pyqt5-webengine` dependency, not a Qt5 build issue. Please provide the current error output so I can identify which specific Qt5 module is missing from your BuildRequires.

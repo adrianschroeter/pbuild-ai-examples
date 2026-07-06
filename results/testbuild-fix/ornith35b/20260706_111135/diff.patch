@@ -1,0 +1,17 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/openshot-qt/openshot-qt.spec sources/project-test-build/openshot-qt/openshot-qt.spec
+--- source_backup/openshot-qt/openshot-qt.spec	2026-07-06 08:30:17.408974806 +0200
++++ sources/project-test-build/openshot-qt/openshot-qt.spec	2026-07-06 11:18:20.388138070 +0200
+@@ -36,7 +36,12 @@
+ # Check list of dependencies:
+ BuildRequires:  python3-pyxdg
+ BuildRequires:  python3-pyzmq
+-BuildRequires:  python3-qt5-devel
++BuildRequires:  pkgconfig(Qt5Core)
++BuildRequires:  pkgconfig(Qt5Gui)
++BuildRequires:  pkgconfig(Qt5Network)
++BuildRequires:  pkgconfig(Qt5Svg)
++BuildRequires:  pkgconfig(Qt5WebChannel)
++BuildRequires:  pkgconfig(Qt5WebEngineWidgets)
+ BuildRequires:  python3-qtwebengine-qt5
+ BuildRequires:  python3-setuptools
+ BuildRequires:  shared-mime-info
