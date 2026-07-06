@@ -1,7 +1,0 @@
-<pbuild>
-  <preset name="tumbleweed" default>
-    <config>tumbleweed</config>
-    <repo>config:</repo>
-    <arch>x86_64</arch>
-  </preset>
-</pbuild>
