@@ -1,0 +1,89 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.add_service/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 14:07:39.218424648 +0200
++++ sources/glances.add_service/python-Glances.spec	2026-07-06 14:13:23.229594490 +0200
+@@ -24,7 +24,8 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
++Source1:        glances-server.service
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+@@ -33,6 +34,7 @@
+ BuildRequires:  %{python_module setuptools}
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  systemd-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+@@ -51,6 +53,37 @@
+ based interface. The information dynamically adapts depending on the
+ size of the user interface.
+ 
++# Glances common subpackage (systemd service for server mode)
++%description common
++Glances monitoring tool - common files including systemd service for server mode.
++
++%package common
++Summary:        Glances monitoring tool - common files
++Group:          System/Management
++Requires:       python-Glances = %{version}
++
++# Embedded glances-server.service content (inline to avoid external source dependency)
++%define _glances_server_service \
++[Unit]\n\
++Description=Glances Server Mode\n\
++After=network.target\n\
++Wants=network-online.target\n\
++\n\
++[Service]\n\
++Type=simple\n\
++ExecStart=/usr/bin/glances -s --disable-webui\n\
++Restart=on-failure\n\
++RuntimeDirectory=glances-server\n\
++\n\
++[Install]\n\
++WantedBy=multi-user.target
++
++# Install glances-server.service from inline content (avoids external source)
++install -D -m 644 /dev/stdin %{buildroot}%{_unitdir}/glances-server.service <<EOF
++%{expand:%_glances_server_service}
++EOF
++
++
+ %prep
+ %setup -q -n glances-%{version}
+ %autopatch -p1
+@@ -68,6 +101,21 @@
+ %python_install
+ %python_expand %fdupes %{buildroot}%{$python_sitelib}
+ 
++# Install glances-server systemd service file (for common package)
++install -D -m 644 %{SOURCE1} %{buildroot}%{_unitdir}/glances-server.service
++
++%pre common
++%service_add_pre glances-server.service
++
++%post common
++%service_add_post glances-server.service
++
++%preun common
++%service_del_preun glances-server.service
++
++%postun common
++%service_del_postun glances-server.service
++
+ %files %{python_files}
+ %license COPYING
+ %doc NEWS README.rst
+@@ -75,4 +123,7 @@
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+ 
++%files common
++%{_unitdir}/glances-server.service
++
+ %changelog
