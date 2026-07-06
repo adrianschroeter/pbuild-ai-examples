@@ -916,10 +916,9 @@
             buildLogsModal.style.display = 'block';
 
             try {
-                // Try to fetch build-1.log, build-2.log, etc. until we fail
-                let html = '<div style="font-family: monospace;">';
+                // Collect all build attempts first
+                const buildAttempts = [];
                 let buildNum = 1;
-                let foundAny = false;
 
                 while (buildNum <= 20) { // Max 20 build attempts
                     const logPath = `${resultPath}/build-${buildNum}.log`;
@@ -929,43 +928,96 @@
                         const logResponse = await fetch(logPath);
                         if (!logResponse.ok) break;
 
-                        foundAny = true;
                         const logContent = await logResponse.text();
-
-                        html += `<div style="margin-bottom: 2rem; border: 1px solid var(--geeko-green); border-radius: 4px; padding: 1rem;">`;
-                        html += `<h3 style="color: var(--geeko-green); margin-top: 0;">Build Attempt ${buildNum}</h3>`;
-                        html += `<h4 style="color: #888;">Build Log:</h4>`;
-                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(logContent)}</pre>`;
+                        let analyzeContent = null;
 
                         // Try to fetch analyze file
                         try {
                             const analyzeResponse = await fetch(analyzePath);
                             if (analyzeResponse.ok) {
-                                const analyzeContent = await analyzeResponse.text();
-                                html += `<h4 style="color: #888; margin-top: 1rem;">Analysis:</h4>`;
-                                html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(analyzeContent)}</pre>`;
+                                analyzeContent = await analyzeResponse.text();
                             }
                         } catch (e) {
                             // No analyze file, that's okay
                         }
 
-                        html += `</div>`;
+                        buildAttempts.push({
+                            num: buildNum,
+                            log: logContent,
+                            analyze: analyzeContent
+                        });
+
                         buildNum++;
                     } catch (e) {
                         break;
                     }
                 }
 
-                if (!foundAny) {
-                    html = '<pre>No build logs found</pre>';
-                } else {
-                    html += '</div>';
+                if (buildAttempts.length === 0) {
+                    buildLogsContent.innerHTML = '<pre>No build logs found</pre>';
+                    return;
                 }
+
+                // Create tabs for each attempt
+                let html = '<div class="model-tabs" style="margin-bottom: 1rem;">';
+                buildAttempts.forEach((attempt, index) => {
+                    const activeClass = index === 0 ? ' active' : '';
+                    html += `<button class="model-tab${activeClass}" onclick="switchBuildTab(${attempt.num})">
+                        Attempt ${attempt.num}
+                    </button>`;
+                });
+                html += '</div>';
+
+                // Create content divs for each tab
+                buildAttempts.forEach((attempt, index) => {
+                    const displayStyle = index === 0 ? 'block' : 'none';
+                    html += `<div id="build-tab-${attempt.num}" style="display: ${displayStyle};">`;
+
+                    // Show analysis first (or success message if no analysis)
+                    if (attempt.analyze) {
+                        html += `<h4 style="color: var(--geeko-green); margin-top: 0;">Analysis:</h4>`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto; margin-bottom: 1rem;">${escapeHtml(attempt.analyze)}</pre>`;
+                    } else {
+                        // No analysis means build succeeded!
+                        html += `<div style="background: linear-gradient(135deg, var(--geeko-green) 0%, var(--turquoise-teal) 100%); padding: 2rem; border-radius: 8px; text-align: center; margin-bottom: 1rem;">`;
+                        html += `<div style="font-size: 4rem; margin-bottom: 0.5rem;">✅</div>`;
+                        html += `<h3 style="color: white; margin: 0 0 0.5rem 0;">Build Successful!</h3>`;
+                        html += `<p style="color: rgba(255,255,255,0.9); margin: 0;">No issues detected. The package built successfully.</p>`;
+                        html += `</div>`;
+                    }
+
+                    // Then show build log
+                    html += `<h4 style="color: var(--geeko-green);">Build Log:</h4>`;
+                    html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.log)}</pre>`;
+
+                    html += `</div>`;
+                });
 
                 buildLogsContent.innerHTML = html;
             } catch (error) {
                 buildLogsContent.innerHTML = '<pre>Error loading build logs: ' + error.message + '</pre>';
             }
+        }
+
+        function switchBuildTab(attemptNum) {
+            // Hide all build tabs
+            document.querySelectorAll('[id^="build-tab-"]').forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('#buildLogsModal .model-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            const selectedTab = document.getElementById(`build-tab-${attemptNum}`);
+            if (selectedTab) {
+                selectedTab.style.display = 'block';
+            }
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
         }
 
         function closeBuildLogsModal() {

@@ -647,10 +647,11 @@ if os.path.isdir(RESULTS_DIR):
                         pass
 
             # Build result_path (old format: example/timestamp, new: example/model/timestamp)
+            # Use relative path without ../ since docs/results symlinks to ../results
             if is_timestamp:
-                rel_path = "../results/" + example + "/" + subdir
+                rel_path = "results/" + example + "/" + subdir
             else:
-                rel_path = "../results/" + example + "/" + subdir + "/" + (latest_ts or "")
+                rel_path = "results/" + example + "/" + subdir + "/" + (latest_ts or "")
 
             entry = {
                 "timestamp": latest_ts,
