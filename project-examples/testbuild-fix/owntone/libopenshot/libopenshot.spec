@@ -1,0 +1,163 @@
+#
+# spec file for package libopenshot
+#
+# Copyright (c) 2026 SUSE LLC and contributors
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
+#
+
+
+%define sover 30
+
+Name:           libopenshot
+Version:        0.7.0
+Release:        0
+Summary:        The core library for the OpenShot video editor
+License:        LGPL-3.0-or-later
+Group:          Productivity/Multimedia/Other
+URL:            https://openshot.org/
+#!RemoteAsset: https://github.com/OpenShot/libopenshot.git#v0.7.0
+#!CreateArchive
+Source0:        libopenshot-%{version}.tar.gz
+Patch0:         libopenshot-ffmpeg8.patch
+BuildRequires:  babl-devel
+BuildRequires:  cmake >= 3.10
+BuildRequires:  cppzmq-devel
+%if 0%{?suse_version} < 1600
+BuildRequires:  ffmpeg-4-private-devel
+BuildRequires:  gcc13
+BuildRequires:  gcc13-c++
+%else
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+%endif
+BuildRequires:  ImageMagick-devel
+BuildRequires:  alsa-devel
+BuildRequires:  jsoncpp-devel
+BuildRequires:  libopenshot-audio-devel >= 0.6.0
+BuildRequires:  opencv-devel
+BuildRequires:  pkgconfig
+BuildRequires:  protobuf-devel
+BuildRequires:  python-rpm-macros
+BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
+BuildRequires:  ruby-devel
+BuildRequires:  swig
+BuildRequires:  unittest-cpp-devel
+BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Gui)
+BuildRequires:  pkgconfig(Qt5Multimedia)
+BuildRequires:  pkgconfig(Qt5MultimediaWidgets)
+BuildRequires:  pkgconfig(Qt5Network)
+BuildRequires:  pkgconfig(Qt5Sql)
+BuildRequires:  pkgconfig(Qt5Svg)
+BuildRequires:  pkgconfig(Qt5Test)
+BuildRequires:  pkgconfig(Qt5Widgets)
+BuildRequires:  pkgconfig(Qt5Xml)
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libavdevice)
+BuildRequires:  pkgconfig(libavformat)
+BuildRequires:  pkgconfig(libavutil)
+BuildRequires:  pkgconfig(libswresample)
+BuildRequires:  pkgconfig(libswscale)
+
+%description
+A library for video editing, composition, animation, and playback,
+which focuses on The library is written in C++ and includes full
+bindings for Python and Ruby.
+
+%package -n     %{name}%{sover}
+Summary:        The core library for the OpenShot video editor
+Group:          System/Libraries
+
+%description -n %{name}%{sover}
+A library for video editing, composition, animation, and playback,
+which focuses on The library is written in C++ and includes full
+bindings for Python and Ruby. It features:
+
+* Multi-layer compositing
+* Video and audio effects (chroma key, color adjustment,
+  grayscale, etc.)
+* Animation curves (Bézier, linear, constant)
+* Time mapping (curve-based slow-down, speed-up, reverse)
+* Audio mixing & resampling (curve-based)
+* Audio plug-ins (VST & AU)
+* Telecine and Inverse Telecine (film to TV, TV to film)
+* Frame rate conversions
+* Multi-processor support
+* Uses ffmpeg for format and codec support
+
+This package contains the shared library.
+
+%package        devel
+Summary:        Development files for %{name}
+Group:          Development/Libraries/C and C++
+Requires:       %{name}%{sover} = %{version}
+
+%description    devel
+A library for video editing, composition, animation, and playback,
+which focuses on The library is written in C++.
+
+This package contains header files and libraries needed to develop
+application that use %{name}.
+
+%package -n     python3-openshot
+Summary:        Python bindings for the OpenShot library
+Group:          Development/Languages/Python
+
+%description -n python3-openshot
+This package provides the Python bindings for the OpenShot library.
+
+%prep
+%autosetup -N
+
+%build
+%if 0%{?suse_version} < 1600
+export CC=gcc-13
+export CXX=g++-13
+%endif
+# operators of base classes are not supposed to be used here, we can ignore it therefore.
+sed -i '/^set(CMAKE_CXX_FLAGS/d' CMakeLists.txt
+export CXXFLAGS="%{optflags} -Wno-return-type"
+
+%cmake \
+	-DCMAKE_SHARED_LINKER_FLAGS="-Wl,--as-needed" \
+	-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+	-DENABLE_TESTS=0 \
+	-DFFMPEG_INCLUDE_DIR=%{_includedir}/ffmpeg \
+	-DUSE_SYSTEM_JSONCPP=ON \
+	%{nil}
+export MAKEFLAGS="-j1"
+%cmake_build
+
+%install
+%cmake_install
+
+# we may not use the header files
+rm -rf %buildroot%{_includedir}/%{name}/
+
+%post   -n %{name}%{sover} -p /sbin/ldconfig
+%postun -n %{name}%{sover} -p /sbin/ldconfig
+
+%files -n %{name}%{sover}
+%license LICENSES/*
+%doc AUTHORS
+%{_libdir}/%{name}.so.*
+
+%files devel
+%{_libdir}/%{name}.so
+
+%files -n python3-openshot
+%{python3_sitearch}/*openshot*
+%_libdir/ruby/vendor_ruby/*
+
+%changelog
