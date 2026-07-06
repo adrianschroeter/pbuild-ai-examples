@@ -1,0 +1,11 @@
+{
+  "example": "generate-spec-rust",
+  "model_key": "default",
+  "model_name": "",
+  "model_host_name": "",
+  "model_host_description": "",
+  "timestamp": "2026-07-06T14:57:12+00:00",
+  "hostname": "runnervmkkn4f",
+  "repo_root": "/home/runner/work/pbuild-ai-examples/pbuild-ai-examples",
+  "pbuild_ai_bin": "pbuild-ai"
+}
