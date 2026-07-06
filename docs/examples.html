@@ -645,6 +645,13 @@
         async function showExample(exampleId, modelKey) {
             const example = examples[exampleId];
 
+            // Store current example ID
+            currentExampleId = exampleId;
+
+            // Update URL hash
+            const hash = modelKey ? `${exampleId}:${modelKey}` : exampleId;
+            history.replaceState(null, null, `#${hash}`);
+
             // If not in hardcoded examples, try to load from results.json
             if (!example) {
                 try {
@@ -759,8 +766,8 @@
         function closeModal() {
             document.getElementById('exampleModal').style.display = 'none';
             document.body.style.overflow = 'auto';
-            // Clear the hash to close modal
-            history.replaceState(null, null, ' ');
+            // Clear the hash
+            history.replaceState(null, null, window.location.pathname);
         }
 
         function showDiffModal() {
@@ -1046,6 +1053,7 @@
         let currentModelKeys = [];
         let currentModelsMeta = {};
         let activeModelKey = null;
+        let currentExampleId = null;
 
         async function loadExampleResults(exampleDir, preferredModelKey) {
             // Try to load actual results from generated manifest
@@ -1109,6 +1117,12 @@
                 t.classList.toggle('active', t.getAttribute('data-key') === modelKey);
             });
             renderModelData(modelKey);
+
+            // Update URL hash to include model
+            if (currentExampleId) {
+                const hash = `${currentExampleId}:${modelKey}`;
+                history.replaceState(null, null, `#${hash}`);
+            }
         }
 
         function renderModelData(modelKey) {
@@ -1281,14 +1295,31 @@ Run the example to see:
         });
 
         // Handle hash navigation: #example or #example:model
-        function handleHash() {
+        async function handleHash() {
             const hash = window.location.hash.slice(1); // Remove #
             if (!hash) return;
 
             // Parse format: "example" or "example:model"
             const [exampleId, modelKey] = hash.split(':');
-            if (exampleId && examples[exampleId]) {
+            if (!exampleId) return;
+
+            // Check if it's a hardcoded example
+            if (examples[exampleId]) {
                 showExample(exampleId, modelKey);
+                return;
+            }
+
+            // Otherwise, try to load from results.json
+            try {
+                const response = await fetch('results.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.examples && data.examples[exampleId]) {
+                        showExample(exampleId, modelKey);
+                    }
+                }
+            } catch (e) {
+                console.log('Could not load example from hash:', e);
             }
         }
 
