@@ -18,3 +18,10 @@ models.yaml
 *.swp
 *~
 
+.assets
+*.obsinfo
+*.obscpio
+*.osc
+_build.*
+_service:*
+.pbuild
