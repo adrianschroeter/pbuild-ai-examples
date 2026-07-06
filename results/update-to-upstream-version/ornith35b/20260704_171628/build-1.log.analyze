@@ -1,0 +1,16 @@
+The build fails during `%prep` because a patch cannot be applied:
+
+```
+1 out of 1 hunk FAILED -- saving rejects to file test/iolint.awk.rej
+1 out of 1 hunk FAILED -- saving rejects to file test/iolint.ok.rej
+error: Bad exit status from /var/tmp/rpm-tmp.S74pTh (%prep)
+```
+
+**Root cause:** The patch `gawk-5.1.1-Disable-racy-test-in-test-iolint.awk.patch` was written against gawk **5.1.1**, but the source tarball being built is **gawk 5.4.0**. The context lines in the patch no longer match the current content of `test/iolint.awk` and `test/iolint.ok`, so `patch -p1` rejects both hunks.
+
+**Fix needed:** There are two options:
+
+1. **Update the patch** — edit `gawk-5.1.1-Disable-racy-test-in-test-iolint.awk.patch` so its context lines match gawk 5.4.0's source files, then save it back to `~/rpmbuild/SOURCES/`.
+2. **Drop the patch entirely** — if the racy test was already fixed upstream in 5.4.0, remove both the `Patch:` line and the `%patch -P...` (or `%autosetup ... -p1`) application of it from the spec file.
+
+To determine which option is correct, I need to inspect what the patch actually does. Let me look at the reject files and the patch content.

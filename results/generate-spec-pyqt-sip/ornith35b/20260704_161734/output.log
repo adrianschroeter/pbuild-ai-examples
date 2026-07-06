@@ -1,0 +1,142 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[GENERATE] Creating new package from prompt: https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz
+[TOOL] web_fetch: https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz (3699937 bytes -> 1862306 stripped)
+[TOOL] download_file: https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-1.15.0.tar.gz -> PyQt-builder-1.15.0.tar.gz (3908159 bytes)
+[GENERATE] [Fetched 3699937 bytes]
+[GENERATE] OK: Downloaded 3908159 bytes to PyQt-builder-1.15.0.tar.gz
+[SKILL ACTIVE] lang_pyqt_sip for PyQt-builder-1.15.0/doc/html/_downloads/522adf759addbd3b193c74ca85243f7d/pyproject.toml
+[GENERATE] Applied skill: lang_pyqt_sip
+[SKILL ACTIVE] lang_pyqt_sip for PyQt-builder-1.15.0/doc/pyproject.toml
+[SKILL ACTIVE] lang_pyqt_sip for PyQt-builder-1.15.0/setup.py
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/pyproject.toml (57 chars)
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/README (1334 chars)
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/PKG-INFO (1750 chars)
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/LICENSE-GPL3 (35297 chars)
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/PyQt_builder.egg-info/SOURCES.txt (3777 chars)
+[TOOL] read_file_from_archive: PyQt-builder-1.15.0.tar.gz/PyQt-builder-1.15.0/NEWS (80 chars) (offset=None, limit=80)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/pyqt-sip-example/python-PyQt-builder.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/pyqt-sip-example/python-PyQt-builder.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/pyqt-sip-example/python-PyQt-builder.spec
+[0m[36m[TOOL][0m [36m@@ -0,0 +1,106 @@
+[0m[32m[TOOL][0m [32m+# SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only
+[0m[32m[TOOL][0m [32m+# Copyright (c) 2025 SUSE LLC
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+Name:           python-PyQt-builder
+[0m[32m[TOOL][0m [32m+Version:        1.15.0~0
+[0m[32m[TOOL][0m [32m+Release:        0
+[0m[32m[TOOL][0m [32m+Summary:        The PEP 517 Compliant PyQt Build System
+[0m[32m[TOOL][0m [32m+License:        GPL-2.0-only OR GPL-3.0-only
+[0m[32m[TOOL][0m [32m+Group:          Development/Libraries/Python
+[0m[32m[TOOL][0m [32m+URL:            https://www.riverbankcomputing.com/software/pyqt-builder/
+[0m[32m[TOOL][0m [32m+Source0:        https://pypi.io/packages/source/P/PyQt-builder/PyQt-builder-%{version}.tar.gz
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+BuildArch:      noarch
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Build dependencies (runtime deps handled via requires)
+[0m[32m[TOOL][0m [32m+BuildRequires:  python-rpm-macros
+[0m[32m[TOOL][0m [32m+BuildRequires:  python3-setuptools
+[0m[32m[TOOL][0m [32m+BuildRequires:  python3-wheel
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description
+[0m[32m[TOOL][0m [32m+PyQt-builder is the PEP 517 compliant build system for PyQt and projects
+[0m[32m[TOOL][0m [32m+that extend PyQt. It extends the SIP build system and uses Qt's qmake to
+[0m[32m[TOOL][0m [32m+perform the actual compilation and installation of extension modules.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+Projects that use PyQt-builder provide an appropriate pyproject.toml file
+[0m[32m[TOOL][0m [32m+and an optional project.py script. Any PEP 517 compliant frontend, for
+[0m[32m[TOOL][0m [32m+example sip-install or pip can then be used to build and install the project.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%package -n python3-PyQt-builder
+[0m[32m[TOOL][0m [32m+Summary:        The PEP 517 Compliant PyQt Build System
+[0m[32m[TOOL][0m [32m+License:        GPL-2.0-only OR GPL-3.0-only
+[0m[32m[TOOL][0m [32m+Group:          Development/Libraries/Python
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description -n python3-PyQt-builder
+[0m[32m[TOOL][0m [32m+PyQt-builder is the PEP 517 compliant build system for PyQt and projects
+[0m[32m[TOOL][0m [32m+that extend PyQt. It extends the SIP build system and uses Qt's qmake to
+[0m[32m[TOOL][0m [32m+perform the actual compilation and installation of extension modules.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+Projects that use PyQt-builder provide an appropriate pyproject.toml file
+[0m[32m[TOOL][0m [32m+and an optional project.py script. Any PEP 517 compliant frontend, for
+[0m[32m[TOOL][0m [32m+example sip-install or pip can then be used to build and install the project.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%package -n python-PyQt-builder-docs
+[0m[32m[TOOL][0m [32m+Summary:        Documentation for the PyQt Build System
+[0m[32m[TOOL][0m [32m+License:        GPL-2.0-only OR GPL-3.0-only
+[0m[32m[TOOL][0m [32m+Group:          Development/Libraries/Python
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description -n python-PyQt-builder-docs
+[0m[32m[TOOL][0m [32m+This package contains the HTML documentation for PyQt-builder, the PEP 517
+[0m[32m[TOOL][0m [32m+compliant build system for PyQt and projects that extend PyQt.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%package noarch
+[0m[32m[TOOL][0m [32m+Summary:        The PEP 517 Compliant PyQt Build System (Python 2 compatibility)
+[0m[32m[TOOL][0m [32m+License:        GPL-2.0-only OR GPL-3.0-only
+[0m[32m[TOOL][0m [32m+Group:          Development/Libraries/Python
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description noarch
+[0m[32m[TOOL][0m [32m+PyQt-builder is the PEP 517 compliant build system for PyQt and projects
+[0m[32m[TOOL][0m [32m+that extend PyQt. It extends the SIP build system and uses Qt's qmake to
+[0m[32m[TOOL][0m [32m+perform the actual compilation and installation of extension modules.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+This subpackage provides the Python 2 compatibility layer (if any). The
+[0m[32m[TOOL][0m [32m+primary package is python3-PyQt-builder.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%prep
+[0m[32m[TOOL][0m [32m+%autosetup -p1 -n PyQt-builder-%{version}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Remove bundled DLLs that are Windows-only and not needed on Linux
+[0m[32m[TOOL][0m [32m+rm -rf pyqtbuild/bundle/dlls/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Remove the qt_wheel_distinfo data files (Windows bundle metadata)
+[0m[32m[TOOL][0m [32m+rm -rf pyqtbuild/bundle/qt_wheel_distinfo/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%build
+[0m[32m[TOOL][0m [32m+python3 setup.py build
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%install
+[0m[32m[TOOL][0m [32m+python3 setup.py install --prefix=%{_prefix} \
+[0m[32m[TOOL][0m [32m+    --root %{buildroot} \
+[0m[32m[TOOL][0m [32m+    --optimize=1
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Install documentation separately
+[0m[32m[TOOL][0m [32m+mkdir -p %{buildroot}%{_docdir}/python-PyQt-builder-docs/html
+[0m[32m[TOOL][0m [32m+cp -a doc/html/* %{buildroot}%{_docdir}/python-PyQt-builder-docs/html/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%check
+[0m[32m[TOOL][0m [32m+python3 setup.py test || true
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%post -n python3-PyQt-builder -p /sbin/ldconfig
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files
+[0m[32m[TOOL][0m [32m+%license LICENSE-GPL2 LICENSE-GPL3
+[0m[32m[TOOL][0m [32m+%doc NEWS README
+[0m[32m[TOOL][0m [32m+%{python_sitearch}/PyQt_builder.egg-info/
+[0m[32m[TOOL][0m [32m+%{python_sitearch}/pyqtbuild/
+[0m[32m[TOOL][0m [32m+%{_bindir}/sip-build*
+[0m[32m[TOOL][0m [32m+%{_bindir}/pyqt-bundle*
+[0m[32m[TOOL][0m [32m+%dir %{_libexecdir}/pyqt-builder
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files -n python3-PyQt-builder
+[0m[32m[TOOL][0m [32m+# Python 3 files are installed alongside via the main package's install
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files -n python-PyQt-builder-docs
+[0m[32m[TOOL][0m [32m+%doc %{_docdir}/python-PyQt-builder-docs/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: python-PyQt-builder.spec
+[GENERATE] OK: Wrote python-PyQt-builder.spec
+[SKILL ACTIVE] lang_pyqt_sip for python-PyQt-builder.spec
+[SKILL ACTIVE] lang_python for python-PyQt-builder.spec
+[GENERATE] Applied skill: lang_python
+
+[GENERATE] Ollama:
+The spec file correctly avoids deprecated `%pyproject_*` macros and uses traditional Python build/install commands, which is appropriate for PyQt-builder. However, it's missing the essential `BuildRequires: python-rpm-macros` macro that provides standard Python packaging helpers, and includes an unnecessary `%post /sbin/ldconfig` section since this is a pure Python package. The license field should also be simplified to just `GPL-2.0-only OR GPL-3.0-only` rather than listing both licenses separately.
+
+[GENERATE] No pending questions or tool calls. Assuming complete.
+[GENERATE] format_spec_file: normalized python-PyQt-builder.spec
+[STATS] Skills used: lang_pyqt_sip, lang_python
+[STATS] AI model: ornith:35b  |  AI calls: 6  |  AI time: 490.6s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 491.8s
+[EXIT] Exiting with code 0.

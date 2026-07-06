@@ -1,0 +1,107 @@
+Binärdateien source_backup/cowboy-2.10.0.tar.gz und sources/erlang-example/cowboy-2.10.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/erlang-cowboy.spec sources/erlang-example/erlang-cowboy.spec
+--- source_backup/erlang-cowboy.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/erlang-example/erlang-cowboy.spec	2026-07-02 08:18:21.917048166 +0200
+@@ -0,0 +1,102 @@
++#
++# spec file for package erlang-cowboy
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           erlang-cowboy
++Version:        2.10.0
++Release:        0
++Summary:        Small, fast, modern HTTP server for Erlang/OTP
++License:        ISC
++URL:            https://github.com/ninenines/cowboy
++Source0:        https://github.com/ninenines/cowboy/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
++
++BuildRequires:  erlang-devel
++
++Requires:       erlang-cowlib
++Requires:       erlang-ranch
++
++%description
++Cowboy is a small, fast and modern HTTP server for Erlang/OTP. It aims to provide a complete HTTP stack in a small code base. It is optimized for low latency and low memory usage, in part because it uses binary strings. Cowboy provides routing capabilities, selectively dispatching requests to handlers written in Erlang. Because it uses Ranch for managing connections, Cowboy can easily be embedded in any other application.
++
++%prep
++%autosetup -p1
++
++# The upstream Makefile tries to fetch dependencies (cowlib, ranch) from git.
++# Those are already installed as system packages, so we compile directly with erlc.
++
++%build
++erlc -I ebin \
++    -o ebin \
++    src/cowboy.erl \
++    src/cowboy_app.erl \
++    src/cowboy_bstr.erl \
++    src/cowboy_children.erl \
++    src/cowboy_clear.erl \
++    src/cowboy_clock.erl \
++    src/cowboy_compress_h.erl \
++    src/cowboy_constraints.erl \
++    src/cowboy_handler.erl \
++    src/cowboy_http.erl \
++    src/cowboy_http2.erl \
++    src/cowboy_loop.erl \
++    src/cowboy_metrics_h.erl \
++    src/cowboy_middleware.erl \
++    src/cowboy_req.erl \
++    src/cowboy_rest.erl \
++    src/cowboy_router.erl \
++    src/cowboy_static.erl \
++    src/cowboy_stream.erl \
++    src/cowboy_stream_h.erl \
++    src/cowboy_sub_protocol.erl \
++    src/cowboy_sup.erl \
++    src/cowboy_tls.erl \
++    src/cowboy_tracer_h.erl \
++    src/cowboy_websocket.erl
++
++%install
++# Install beam files and app file
++install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}
++install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
++cp -a ebin/*.beam %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin/
++cp -a ebin/*.app %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin/
++
++# Install documentation
++install -dm 755 %{buildroot}%{_docdir}/%{name}
++cp -r doc/src %{buildroot}%{_docdir}/%{name}/
++cp -r examples %{buildroot}%{_docdir}/%{name}/
++install -m644 LICENSE README.asciidoc Makefile %{buildroot}%{_docdir}/%{name}/
++
++# Remove PNG images from docs (keep SVG)
++find %{buildroot}%{_docdir}/%{name} -name '*.png' -delete
++
++# Create symlink for Erlang library convention
++ln -sf cowboy-%{version} %{buildroot}%{erlang_libdir}/cowboy
++
++%fdupes %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
++%set_permissions %{buildroot}%{erlang_libdir}/cowboy-%{version}/*.beam
++%set_permissions %{buildroot}%{erlang_libdir}/cowboy-%{version}/*.app
++
++%files
++%{erlang_libdir}/cowboy-%{version}/ebin/
++%dir %{_docdir}/%{name}
++%{_docdir}/%{name}/doc/src/
++%{_docdir}/%{name}/examples/
++%{_docdir}/%{name}/LICENSE
++%{_docdir}/%{name}/README.asciidoc
++%{_docdir}/%{name}/Makefile
++
++%changelog

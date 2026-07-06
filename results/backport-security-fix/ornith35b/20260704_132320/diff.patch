@@ -1,0 +1,311 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/020c40df9e31ec727201a8e3ddf1f94093f8fc02.diff sources/libarchive/020c40df9e31ec727201a8e3ddf1f94093f8fc02.diff
+--- source_backup/020c40df9e31ec727201a8e3ddf1f94093f8fc02.diff	1970-01-01 01:00:00.000000000 +0100
++++ sources/libarchive/020c40df9e31ec727201a8e3ddf1f94093f8fc02.diff	2026-07-04 13:35:38.957259599 +0200
+@@ -0,0 +1,93 @@
++diff --git a/libarchive/archive_read_support_format_rar.c b/libarchive/archive_read_support_format_rar.c
++index 99a11d1700..6d3f891ee2 100644
++--- a/libarchive/archive_read_support_format_rar.c
+++++ b/libarchive/archive_read_support_format_rar.c
++@@ -432,7 +432,7 @@ static int make_table_recurse(struct archive_read *, struct huffman_code *, int,
++                               struct huffman_table_entry *, int, int);
++ static int expand(struct archive_read *, int64_t *);
++ static int copy_from_lzss_window_to_unp(struct archive_read *, const void **,
++-                                        int64_t, int);
+++                                        int64_t, size_t);
++ static const void *rar_read_ahead(struct archive_read *, size_t, ssize_t *);
++ static int parse_filter(struct archive_read *, const uint8_t *, uint16_t,
++                         uint8_t);
++@@ -2060,7 +2060,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++         bs = rar->unp_buffer_size - rar->unp_offset;
++       else
++         bs = (size_t)rar->bytes_uncopied;
++-      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++       if (ret != ARCHIVE_OK)
++         return (ret);
++       rar->offset += bs;
++@@ -2200,7 +2200,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++       bs = rar->unp_buffer_size - rar->unp_offset;
++     else
++       bs = (size_t)rar->bytes_uncopied;
++-    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++     if (ret != ARCHIVE_OK)
++       return (ret);
++     rar->offset += bs;
++@@ -3081,11 +3081,16 @@ copy_from_lzss_window(struct archive_read *a, void *buffer,
++ 
++ static int
++ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++-                             int64_t startpos, int length)
+++                             int64_t startpos, size_t length)
++ {
++   int windowoffs, firstpart;
++   struct rar *rar = (struct rar *)(a->format->data);
++ 
+++  if (length > rar->unp_buffer_size)
+++  {
+++    goto fatal;
+++  }
+++
++   if (!rar->unp_buffer)
++   {
++     if ((rar->unp_buffer = malloc(rar->unp_buffer_size)) == NULL)
++@@ -3097,17 +3102,17 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   }
++ 
++   windowoffs = lzss_offset_for_position(&rar->lzss, startpos);
++-  if(windowoffs + length <= lzss_size(&rar->lzss)) {
+++  if(windowoffs + length <= (size_t)lzss_size(&rar->lzss)) {
++     memcpy(&rar->unp_buffer[rar->unp_offset], &rar->lzss.window[windowoffs],
++            length);
++-  } else if (length <= lzss_size(&rar->lzss)) {
+++  } else if (length <= (size_t)lzss_size(&rar->lzss)) {
++     firstpart = lzss_size(&rar->lzss) - windowoffs;
++     if (firstpart < 0) {
++       archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++                         "Bad RAR file data");
++       return (ARCHIVE_FATAL);
++     }
++-    if (firstpart < length) {
+++    if ((size_t)firstpart < length) {
++       memcpy(&rar->unp_buffer[rar->unp_offset],
++              &rar->lzss.window[windowoffs], firstpart);
++       memcpy(&rar->unp_buffer[rar->unp_offset + firstpart],
++@@ -3117,9 +3122,7 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++              &rar->lzss.window[windowoffs], length);
++     }
++   } else {
++-      archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++-                        "Bad RAR file data");
++-      return (ARCHIVE_FATAL);
+++      goto fatal;
++   }
++   rar->unp_offset += length;
++   if (rar->unp_offset >= rar->unp_buffer_size)
++@@ -3127,6 +3130,11 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   else
++     *buffer = NULL;
++   return (ARCHIVE_OK);
+++
+++fatal:
+++  archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+++                    "Bad RAR file data");
+++  return (ARCHIVE_FATAL);
++ }
++ 
++ static const void *
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/020c40df-rar-bounds-check.patch sources/libarchive/020c40df-rar-bounds-check.patch
+--- source_backup/020c40df-rar-bounds-check.patch	1970-01-01 01:00:00.000000000 +0100
++++ sources/libarchive/020c40df-rar-bounds-check.patch	2026-07-04 13:28:07.074830536 +0200
+@@ -0,0 +1,93 @@
++diff --git a/libarchive/archive_read_support_format_rar.c b/libarchive/archive_read_support_format_rar.c
++index 99a11d1700..6d3f891ee2 100644
++--- a/libarchive/archive_read_support_format_rar.c
+++++ b/libarchive/archive_read_support_format_rar.c
++@@ -432,7 +432,7 @@ static int make_table_recurse(struct archive_read *, struct huffman_code *, int,
++                               struct huffman_table_entry *, int, int);
++ static int expand(struct archive_read *, int64_t *);
++ static int copy_from_lzss_window_to_unp(struct archive_read *, const void **,
++-                                        int64_t, int);
+++                                        int64_t, size_t);
++ static const void *rar_read_ahead(struct archive_read *, size_t, ssize_t *);
++ static int parse_filter(struct archive_read *, const uint8_t *, uint16_t,
++                         uint8_t);
++@@ -2060,7 +2060,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++         bs = rar->unp_buffer_size - rar->unp_offset;
++       else
++         bs = (size_t)rar->bytes_uncopied;
++-      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++       if (ret != ARCHIVE_OK)
++         return (ret);
++       rar->offset += bs;
++@@ -2200,7 +2200,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++       bs = rar->unp_buffer_size - rar->unp_offset;
++     else
++       bs = (size_t)rar->bytes_uncopied;
++-    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++     if (ret != ARCHIVE_OK)
++       return (ret);
++     rar->offset += bs;
++@@ -3081,11 +3081,16 @@ copy_from_lzss_window(struct archive_read *a, void *buffer,
++ 
++ static int
++ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++-                             int64_t startpos, int length)
+++                             int64_t startpos, size_t length)
++ {
++   int windowoffs, firstpart;
++   struct rar *rar = (struct rar *)(a->format->data);
++ 
+++  if (length > rar->unp_buffer_size)
+++  {
+++    goto fatal;
+++  }
+++
++   if (!rar->unp_buffer)
++   {
++     if ((rar->unp_buffer = malloc(rar->unp_buffer_size)) == NULL)
++@@ -3097,17 +3102,17 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   }
++ 
++   windowoffs = lzss_offset_for_position(&rar->lzss, startpos);
++-  if(windowoffs + length <= lzss_size(&rar->lzss)) {
+++  if(windowoffs + length <= (size_t)lzss_size(&rar->lzss)) {
++     memcpy(&rar->unp_buffer[rar->unp_offset], &rar->lzss.window[windowoffs],
++            length);
++-  } else if (length <= lzss_size(&rar->lzss)) {
+++  } else if (length <= (size_t)lzss_size(&rar->lzss)) {
++     firstpart = lzss_size(&rar->lzss) - windowoffs;
++     if (firstpart < 0) {
++       archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++                         "Bad RAR file data");
++       return (ARCHIVE_FATAL);
++     }
++-    if (firstpart < length) {
+++    if ((size_t)firstpart < length) {
++       memcpy(&rar->unp_buffer[rar->unp_offset],
++              &rar->lzss.window[windowoffs], firstpart);
++       memcpy(&rar->unp_buffer[rar->unp_offset + firstpart],
++@@ -3117,9 +3122,7 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++              &rar->lzss.window[windowoffs], length);
++     }
++   } else {
++-      archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++-                        "Bad RAR file data");
++-      return (ARCHIVE_FATAL);
+++      goto fatal;
++   }
++   rar->unp_offset += length;
++   if (rar->unp_offset >= rar->unp_buffer_size)
++@@ -3127,6 +3130,11 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   else
++     *buffer = NULL;
++   return (ARCHIVE_OK);
+++
+++fatal:
+++  archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+++                    "Bad RAR file data");
+++  return (ARCHIVE_FATAL);
++ }
++ 
++ static const void *
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/libarchive.spec sources/libarchive/libarchive.spec
+--- source_backup/libarchive.spec	2026-07-04 13:23:21.344172084 +0200
++++ sources/libarchive/libarchive.spec	2026-07-04 13:43:48.313979578 +0200
+@@ -36,9 +36,10 @@
+ License:        BSD-2-Clause
+ Group:          Productivity/Archiving/Compression
+ URL:            https://www.libarchive.org/
+-Source0:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz
+-Source1:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz.asc
++Source0: libarchive-3.7.4.tar.xz
++Source1: libarchive-3.7.4.tar.xz.asc
+ Source2:        libarchive.keyring
++Source4: 020c40df9e31ec727201a8e3ddf1f94093f8fc02.diff
+ Source1000:     baselibs.conf
+ Patch1:         lib-suffix.patch
+ Patch2:         fix-soversion.patch
+@@ -123,98 +124,5 @@
+ - Reads popular formats: libarchive can read GNU tar, ustar, pax
+    interchange format, cpio, and older tar variants. The internal
+    architecture is easily extensible. The only requirement for
+-   support is that it be possible to read the format without seeking
+-   in the file. (For example, a format that includes a compressed
+-   size field before the data cannot be correctly written without
+-   seeking.)
+-
+-- High-Level API: the libarchive API makes it fairly simple to build
+-   an archive from a list of filenames or to extract the entries
+-   from an archive. However, the API also provides extreme
+-   flexibility with regards to data sources. For example, there are
+-   generic hooks that allow you to write an archive to a socket or
+-   read data from an archive entry into a memory buffer.
+-
+-- Extensible. The internal design uses generic interfaces for
+-compression, archive format detection and decoding, and archive data
+-I/O. It should be very easy to add new formats, new compression
+-methods, or new ways of reading/writing archives.
+-
+-%package -n libarchive-devel
+-Summary:        Development files for libarchive
+-Group:          Development/Libraries/C and C++
+-Requires:       %{libname} = %{version}
+-Requires:       glibc-devel
+-
+-%description -n libarchive-devel
+-Libarchive is a programming library that can create and read several
+-different streaming archive formats, including most popular tar
+-variants and several cpio formats. It can also write shar archives and
+-read ISO-9660 CDROM images. The bsdtar program is an implementation of
+-tar(1) that is built on top of libarchive. It started as a test
+-harness, but has grown and is now the standard system tar for FreeBSD 5
+-and 6.
+-
+-This package contains the development files.
+-
+-%package static-devel
+-Summary:        Static library for libarchive
+-Group:          Development/Libraries/C and C++
+-Requires:       %{name}-devel = %{version}
+-
+-%description static-devel
+-Static library for libarchive
+-
+-%prep
+-%setup -q
+-%autopatch -p1
+-
+-%build
+-%define __builder ninja
+-%cmake
+-%cmake_build
+-
+-%check
+-exclude=""
+-%ifarch %arm %ix86 ppc s390
+-exclude="-E test_write_filter"
+-%endif
+-%ctest $exclude
+-
+-%install
+-%cmake_install
+-
+-find %{buildroot} -type f -name "*.la" -delete -print
+-rm "%{buildroot}%{_libdir}/libarchive.a"
+-rm "%{buildroot}%{_mandir}/man5/"{tar,cpio,mtree}.5*
+-sed -i -e '/Libs.private/d' %{buildroot}%{_libdir}/pkgconfig/libarchive.pc
+-
+-%post   -n %{libname} -p /sbin/ldconfig
+-%postun -n %{libname} -p /sbin/ldconfig
+-
+-%files -n bsdtar
+-%{_bindir}/bsdcat
+-%{_bindir}/bsdcpio
+-%{_bindir}/bsdtar
+-%{_bindir}/bsdunzip
+-%{_mandir}/man1/*
+-%{_mandir}/man5/*
+-
+-%files -n %{libname}
+-%license COPYING
+-%doc NEWS
+-%{_libdir}/libarchive.so.*
+-
+-%files -n libarchive-devel
+-%doc examples/
+-%{_mandir}/man3/*
+-%{_libdir}/libarchive.so
+-%{_includedir}/archive*
+-%{_libdir}/pkgconfig/libarchive.pc
+-
+-%if %{with static_libs}
+-%files static-devel
+-%{_libdir}/%{name}.a
+-%endif
+-
+-%changelog
++   support is that it be possible to read the file or data stream
++   one block at a time from an arbi

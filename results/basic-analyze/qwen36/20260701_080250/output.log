@@ -1,0 +1,20 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:35b-a3b) says:
+**Critical Fixes**
+- Remove the empty `%changelog` section entirely per policy. Maintain entries in `PACKAGE.changes`.
+- Fix man page path mismatch: `mv -T .../man/ %{buildroot}%{_mandir}` places files directly in `%{_mandir}`, but `%files` expects `%{_mandir}/man1/*`. Change `mv` to `mv -T %{buildroot}%{_prefix}/man/ %{buildroot}%{_mandir}/man1/` or update `%files` to `%{_mandir}/*`.
+
+**Deprecations & Compliance**
+- Remove `%defattr(-,root,root)`; deprecated in modern RPM and stripped by `spec-cleaner`.
+- Drop `Group:` field; legacy metadata, incompatible with `spec-cleaner` normalization.
+- Add `%set_permissions 755 %{_bindir}/*` in `%install` for SUSE macro compliance (Perl binaries already get executable mode via `install.sh`, but explicit macro satisfies audit rules).
+
+**Best Practices**
+- Add `BuildRequires: perl` (explicit build-time dependency, standard for Perl packages).
+- Ensure no external macros are used in `BuildRequires/Requires` (compliant).
+- Run `/usr/lib/obs/service/format_spec_file` before submission to auto-normalize whitespace/macro spacing per openSUSE standards.
+
+[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 63.4s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 63.5s

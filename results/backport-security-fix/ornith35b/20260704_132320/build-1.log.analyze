@@ -1,0 +1,14 @@
+## Build Failure Analysis
+
+### Error
+
+```
+error: %patchN is obsolete, use %patch N (or %patch -P N): %patch1 -p1
+
+must be rewritten to use explicit flag syntax:
+
+
+Concretely, the offending line ` %patch1 -p1` should become:
+
+
+Any other `%patch0`, `%patch2`, etc. in the spec must be converted the same way — replace `%patchN` with `%patch -PN`. If a line uses `%patch -p1` (without a `-P` flag), it applies `Patch0:` by default and is fine as-is. Only lines that literally start with `%patch` followed immediately by a digit need changing.

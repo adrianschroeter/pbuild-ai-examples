@@ -1,0 +1,92 @@
+Binärdateien source_backup/arcomage-hd-1.0.0-beta.26.tar.gz und sources/franconian/arcomage-hd-1.0.0-beta.26.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/arcomage-hd.spec sources/franconian/arcomage-hd.spec
+--- source_backup/arcomage-hd.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/franconian/arcomage-hd.spec	2026-07-04 14:39:14.672913485 +0200
+@@ -0,0 +1,87 @@
++#
++# spec file for package arcomage-hd
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           arcomage-hd
++Version:        1.0.0~beta.26
++Release:        0
++Summary:        Open-source card game based on Might and Magic: Heroes of Erathia
++License:        MIT
++URL:            https://github.com/arcomage/arcomage-hd
++Source0:        v%{version}.tar.gz
++BuildArch:      noarch
++
++# Build dependencies for Node.js-based web application
++BuildRequires:  nodejs-packaging
++BuildRequires:  npm
++
++%description
++ArcoMage HD is a free, open-source, remastered 3D clone of the classic
++card game Arcomage from Might and Magic: Heroes of Erathia by New World
++Computing/3DO. It features web-based gameplay with support for online
++multiplayer (P2P via WebRTC), single-player against AI, and runs in any
++modern web browser as a PWA (Progressive Web App).
++
++Features:
++- 16 languages supported
++- Desktop or mobile Android/iOS compatible
++- Online multiplayer (P2P, no server required)
++- Against AI opponents
++- Progressive Web App support
++- Built with TypeScript, React, Redux, and RxJS
++
++%prep
++%autosetup -p1
++
++# Remove precompiled binaries to ensure proper rebuilding
++find . -name '*.node' -delete
++find . -name '*.jar' -delete
++find . -name '*.dll' -delete
++find . -name '*.exe' -delete
++find . -name '*.so' -delete
++find . -name '*.dylib' -delete
++
++%build
++# Build the web application using npm (vendored dependencies)
++npm ci --ignore-scripts
++
++# Run webpack build to generate static files in dist/ directory
++npm run build
++
++%install
++# Create installation directory for the built web application
++mkdir -p %{buildroot}%{_datadir}/arcomage-hd
++
++# Copy built files to installation directory
++cp -a dist/* %{buildroot}%{_datadir}/arcomage-hd/
++
++# Set proper permissions
++find %{buildroot}%{_datadir}/arcomage-hd -type d -exec chmod 755 {} \;
++find %{buildroot}%{_datadir}/arcomage-hd -type f -exec chmod 644 {} \;
++
++%check
++# Tests are disabled in offline build environment (would require network access)
++# npm test
++
++%files
++%defattr(-, root, root, -)
++%license LICENSE.md
++%doc README.md
++%dir %{_datadir}/arcomage-hd
++%{_datadir}/arcomage-hd/*
++
++%changelog

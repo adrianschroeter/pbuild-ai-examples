@@ -1,0 +1,63 @@
+Binärdateien source_backup/chalk-5.3.0.tgz und sources/nodejs-example/chalk-5.3.0.tgz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/npm-chalk.spec sources/nodejs-example/npm-chalk.spec
+--- source_backup/npm-chalk.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/nodejs-example/npm-chalk.spec	2026-07-02 10:55:46.445948121 +0200
+@@ -0,0 +1,58 @@
++#
++# spec file for package npm-chalk
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           npm-chalk
++Version:        5.3.0
++Release:        0
++Summary:        Terminal string styling done right
++License:        MIT
++URL:            https://github.com/chalk/chalk
++Source0:        https://registry.npmjs.org/chalk/-/chalk-%{version}.tgz
++
++BuildArch:      noarch
++
++BuildRequires:  nodejs
++Requires:       nodejs
++
++%description
++Chalk is terminal string styling done right, with support for
++nesting, chaining and dynamic styler creation. All features work on
++all text colors (not just ANSI 16 colors).
++
++%prep
++%autosetup -n package -p1
++
++%build
++# No build step required for JS modules
++
++%install
++mkdir -p %{buildroot}%{_datadir}/nodejs/%{name}
++cp -a source %{buildroot}%{_datadir}/nodejs/%{name}/
++chmod 644 %{buildroot}%{_datadir}/nodejs/%{name}/source/*.{js,d.ts}
++chmod -R 755 %{buildroot}%{_datadir}/nodejs/%{name}/source/vendor/
++mkdir -p %{buildroot}%{_datadir}/licenses/%{name}
++cp -a license README.md %{buildroot}%{_datadir}/licenses/%{name}/
++
++%files
++%doc README.md
++%dir %{_datadir}/licenses/%{name}
++%{_datadir}/licenses/%{name}/*
++%dir %{_datadir}/nodejs/%{name}
++%{_datadir}/nodejs/%{name}/source/*
++
++%changelog

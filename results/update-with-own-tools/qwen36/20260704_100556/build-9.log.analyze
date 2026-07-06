@@ -1,0 +1,11 @@
+The build fails because `%autosetup -a1` causes an argument parsing error (`Bad arg to %setup: 1.`) in this RPM environment, likely due to how the `-a` flag interacts with the specific RPM version or macro expansion rules. Additionally, using `-a1` for `registry.tar.zst` can lead to extraction conflicts if it places files at the root level where `Source0` is being unpacked.
+
+The standard and robust pattern for openSUSE Rust packages is to extract `%SOURCE0` via `%autosetup -p1` and manually extract the vendor registry tarball (`%SOURCE1`) afterwards. This avoids macro parsing issues and gives you explicit control over the extraction location (usually into the `vendor/` directory).
+
+Here is the fix:
+
+
+**Explanation:**
+- Removed `-a1` from `%autosetup` to resolve the `Bad arg` parsing failure.
+- Added explicit `tar xf %{SOURCE1}` to extract the vendor registry into the build directory. This ensures the `vendor/` directory is created correctly without interfering with the main source extraction or triggering macro argument errors.
+- Keep this change; it aligns with openSUSE Rust packaging guidelines and resolves the immediate blockage. Further issues (like llama.cpp patch drift) can be addressed after this step succeeds.

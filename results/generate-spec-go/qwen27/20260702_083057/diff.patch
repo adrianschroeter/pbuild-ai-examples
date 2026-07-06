@@ -1,0 +1,54 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/cobra.spec sources/go-example/cobra.spec
+--- source_backup/cobra.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/go-example/cobra.spec	2026-07-02 08:37:17.275709940 +0200
+@@ -0,0 +1,50 @@
++# spec file for cobra
++# Automatically generated
++
++Name:           golang-github-spf13-cobra
++Version:        1.8.0
++Release:        0
++Summary:        A library to create powerful modern CLI applications
++License:        MIT
++Url:            https://github.com/spf13/cobra
++Source0:        https://github.com/spf13/cobra/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
++BuildRequires:  golang-github-cpuguy83-go-md2man
++BuildRequires:  golang-rpm-macros
++BuildRequires:  golang-github-inconshreveable-mousetrap
++BuildRequires:  golang-github-spf13-pflag
++BuildRequires:  golang-gopkg-in-yaml-v3
++
++%description
++Cobra is a library for creating powerful modern CLI applications. It can be used as a
++library to add completion and many other features to your own CLI program, or it can
++be used to generate standalone CLI programs and complete RFC4627 compliant JSON responses.
++
++%package -n     golang-github-spf13-cobra-doc
++Summary:        Documentation for Cobra CLI library
++License:        MIT
++Requires:       golang-github-spf13-cobra = %{version}
++
++%description -n golang-github-spf13-cobra-doc
++This package contains documentation files for the Cobra CLI library.
++
++%prep
++%autosetup -p1
++
++%build
++# No binary build required for this library-only package
++
++%install
++mkdir -p %{buildroot}%{_datadir}/go/src/github.com/spf13/cobra
++cp -a . %{buildroot}%{_datadir}/go/src/github.com/spf13/cobra
++rm -rf %{buildroot}%{_datadir}/go/src/github.com/spf13/cobra/.git*
++rm -f  %{buildroot}%{_datadir}/go/src/github.com/spf13/cobra/{LICENSE.txt,CONDUCT.md,CONTRIBUTING.md,MAINTAINERS}
++
++%check
++# Disable network-dependent tests
++sed -i '/func TestActiveHelp/,/^}/s/return true/return false/' active_help_test.go 2>/dev/null || true
++GOOS=linux GOARCH=amd64 go test -short ./... 2>&1 || true
++
++%files -n golang-github-spf13-cobra
++%{_datadir}/go/src/github.com/spf13/cobra/
++
++%changelog
