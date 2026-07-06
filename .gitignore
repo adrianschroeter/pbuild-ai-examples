@@ -1,6 +1,11 @@
 # Build artifacts
-results/*.log
-results/tmp/
+docs/results/*.log
+docs/results/tmp/
+
+# Exclude source copies from git to reduce repo size
+docs/results/*/source/
+docs/results/*/*/source/
+docs/results/*/*/*/source/
 
 # Source packages (cloned at runtime, not committed)
 sources/*/
