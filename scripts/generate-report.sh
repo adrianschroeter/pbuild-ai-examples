@@ -5,7 +5,7 @@ set -e
 
 OUTPUT_FILE="docs/benchmark-report.html"
 RESULTS_JSON="docs/results.json"
-RESULTS_DIR="results"
+RESULTS_DIR="docs/results"
 
 echo "Generating benchmark report..."
 
