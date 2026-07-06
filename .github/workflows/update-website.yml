@@ -23,6 +23,13 @@ jobs:
         chmod +x scripts/generate-report.sh
         ./scripts/generate-report.sh || true
 
+    - name: Clean up large files before deployment
+      run: |
+        # Remove source directories to reduce deployment size
+        find docs/results -type d -name "source" -exec rm -rf {} + 2>/dev/null || true
+        echo "Deployment size after cleanup:"
+        du -sh docs/
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:

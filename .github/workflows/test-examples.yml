@@ -48,6 +48,14 @@ jobs:
         name: test-results
         path: results/
 
+    - name: Clean up large files before deployment
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Remove source directories to reduce deployment size
+        find docs/results -type d -name "source" -exec rm -rf {} + 2>/dev/null || true
+        echo "Deployment size after cleanup:"
+        du -sh docs/
+
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v4
