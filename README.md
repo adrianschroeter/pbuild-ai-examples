@@ -68,11 +68,48 @@ benchmarks:
 | `inline` | `examples/<name>/` | ✅ Yes | Small demo packages (AI changes committed) |
 | `manual` | User provides | ❌ No | Custom testing scenarios |
 
+## AI Model Configuration
+
+AI models are configured in `models.yaml`:
+
+```yaml
+hosts:
+  biene:
+    url: "http://biene:11434"
+    name: "AMD Strix Halo"
+    description: "Server description"
+
+models:
+  gemma4:
+    display: "Gemma 4 31B"
+    host: "biene"
+    model: "gemma4:31b"
+    timeout: "300"  # Optional: AI request timeout in seconds
+```
+
+**Model fields:**
+- `display`: Display name shown in reports
+- `host`: Reference to a host defined in hosts section
+- `model`: Model identifier for the AI backend
+- `timeout`: Optional timeout in seconds (passed as `--ollama-timeout TIME` to pbuild-ai)
+
+Create `models.yaml.local` to override settings without committing them (gitignored).
+
 ## Running Examples
 
 Run a single example:
 ```bash
 ./scripts/run-example.sh examples/basic-analyze
+```
+
+Run with a specific model:
+```bash
+./scripts/run-example.sh --model gemma4 examples/basic-analyze
+```
+
+Run with all configured models:
+```bash
+./scripts/run-example.sh --all-models examples/basic-analyze
 ```
 
 Run all examples and collect benchmarks:

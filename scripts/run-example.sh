@@ -284,6 +284,14 @@ models = d.get('models', {})
 print(models.get(key, {}).get('host_description', '') or '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
+MODEL_TIMEOUT=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+print(models.get(key, {}).get('timeout', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
 if [ -n "$MODEL_HOST" ]; then
     export OLLAMA_HOST="$MODEL_HOST"
 fi
@@ -441,6 +449,11 @@ EOF
     BUILD_LOG_FILE="${RESULT_DIR}/build-_NUMBER_.log"
 
     FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}" "--build-log" "$BUILD_LOG_FILE")
+
+    # Add --ollama-timeout if model specifies a timeout
+    if [ -n "$MODEL_TIMEOUT" ]; then
+        FULL_COMMAND_ARRAY+=("--ollama-timeout" "$MODEL_TIMEOUT")
+    fi
     if [ -n "$FULL_SOURCE_PATH" ]; then
         FULL_COMMAND_ARRAY+=("$FULL_SOURCE_PATH")
     fi
@@ -454,6 +467,9 @@ EOF
         fi
     done
     DISPLAY_CMD="$DISPLAY_CMD --build-log $BUILD_LOG_FILE"
+    if [ -n "$MODEL_TIMEOUT" ]; then
+        DISPLAY_CMD="$DISPLAY_CMD --ollama-timeout $MODEL_TIMEOUT"
+    fi
     if [ -n "$FULL_SOURCE_PATH" ]; then
         DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
     fi
