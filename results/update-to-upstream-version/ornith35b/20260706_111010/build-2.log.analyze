@@ -1,0 +1,26 @@
+## Error Explanation
+
+The build failed at the **%files checking phase** (`/usr/lib/rpm/check-files`). RPM found 10 installed files that were not listed in the `%files` section of the spec file:
+
+```
+Installed (but unpackaged) file(s) found:
+   /usr/bin/gawkbug
+   /usr/share/info/gawk_api-figure1.png
+   /usr/share/info/gawk_api-figure2.png
+   /usr/share/info/gawk_api-figure3.png
+   /usr/share/info/gawk_array-elements.png
+   /usr/share/info/gawk_general-program.png
+   /usr/share/info/gawk_process-flow.png
+   /usr/share/info/gawk_statist.jpg
+   /usr/share/man/man1/gawkbug.1.gz
+   /usr/share/man/man1/pm-gawk.1.gz
+
+Specifically, these 3 lines cover all 10 unpackaged files:
+
+| Line | Files covered |
+|---|---|
+| `%{_bindir}/gawkbug` | `/usr/bin/gawkbug` (1 file) |
+| `%doc %{_infodir}/*.png %{_infodir}/*.jpg` | 6 PNG + 1 JPG under `/usr/share/info/` (7 files) |
+| `%{_mandir}/man1/gawkbug.1.gz %{_mandir}/man1/pm-gawk.1.gz` | 2 man pages under `/usr/share/man/man1/` (2 files) |
+
+**Do not remove or alter the `%doc` directive** if it already exists — only ensure these three macro lines are present and all files they cover appear in the unpackaged list.

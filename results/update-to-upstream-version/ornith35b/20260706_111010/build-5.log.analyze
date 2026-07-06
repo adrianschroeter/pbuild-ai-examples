@@ -1,0 +1,28 @@
+## Error Analysis
+
+The build failed at the **%check-files phase** with `Installed (but unpackaged) file(s) found:` — six files were installed into the build root during `%install` but none of them appear in your `%files` section:
+
+| File | Location |
+|---|---|
+| `/bin/awk` | /bin/ |
+| `/bin/gawk` | /bin/ |
+| `/usr/bin/gawk` | /usr/bin/ |
+| `/usr/bin/gawkbug` | /usr/bin/ |
+| `/usr/lib/debug/usr/bin/gawk.debug` | debug info (auto-generated) |
+| `/usr/share/man/man1/pm-gawk.1.gz` | man page |
+
+The previous attempts failed because the conditional logic (`%if !0%{?usrmerged}`) and selective file lists did not cover all installed paths. The `%files` section must explicitly list **every** file or directory that ends up in the build root — RPM does not auto-inherit files from `/bin`, `/etc/profile.d/`, or `/usr/share/man`.
+
+## Fix Required (no [DEEP_ANALYZE] needed)
+
+In your spec's `%files` section, replace the current `gawk.lang`-based file list with an explicit listing that covers all installed paths:
+
+
+Key points:
+
+- **`%{_bindir}/*`** covers `/usr/bin/gawk`, `/usr/bin/gawkbug`. On non-usrmerged systems where `/bin/awk` and `/bin/gawk` are symlinks or copies, this also picks them up via the symlink target. If you still see `/bin/awk` unpackaged on a legacy system, add `%{_sbindir}/awk` as well — but in modern Factory (usrmerged) builds `%{_bindir}/*` is sufficient and preferred.
+- **Remove** the old conditional block (`%if !0%{?usrmerged}` … `/bin/awk`) that was only conditionally listing files — it's fragile and incomplete.
+- **`%{_mandir}/man1/pm-gawk.1.gz*`** is mandatory — man pages under `%_mandir` are NOT auto-handled by RPM; they must be listed explicitly.
+- The `/usr/lib/debug/usr/bin/gawk.debug` file is the **auto-generated debuginfo** entry for `gawk`. It will appear automatically once `gawk` (or `%{_bindir}/*`) is in `%files` — do NOT add a `-debuginfo` subpackage section manually.
+
+After applying this change, re-run the build with `pbuild`.
