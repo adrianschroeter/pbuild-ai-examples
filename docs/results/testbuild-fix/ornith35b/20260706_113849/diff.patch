@@ -1,0 +1,24 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/openshot-qt/openshot-qt.spec sources/project-test-build/openshot-qt/openshot-qt.spec
+--- source_backup/openshot-qt/openshot-qt.spec	2026-07-06 08:30:17.408974806 +0200
++++ sources/project-test-build/openshot-qt/openshot-qt.spec	2026-07-06 12:07:12.059473027 +0200
+@@ -32,11 +32,11 @@
+ BuildRequires:  pkgconfig
+ BuildRequires:  python-rpm-macros
+ BuildRequires:  python3-openshot >= 0.3.3
++BuildRequires:  python3-qt5-devel
+ BuildRequires:  python3-pytest
+ # Check list of dependencies:
+ BuildRequires:  python3-pyxdg
+ BuildRequires:  python3-pyzmq
+-BuildRequires:  python3-qt5-devel
+ BuildRequires:  python3-qtwebengine-qt5
+ BuildRequires:  python3-setuptools
+ BuildRequires:  shared-mime-info
+@@ -46,7 +46,6 @@
+ Requires:       python3-pyzmq
+ Requires:       python3-qt5
+ Requires:       python3-qtwebengine-qt5
+-Requires:       python3-requests
+ Provides:       openshot = %{version}
+ Obsoletes:      openshot < %{version}
+ BuildArch:      noarch

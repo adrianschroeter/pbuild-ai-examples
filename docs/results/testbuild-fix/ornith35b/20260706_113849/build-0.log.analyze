@@ -1,0 +1,15 @@
+Based on the output you've provided, **the build actually succeeded**. The log shows:
+
+```
+finished openshot-qt/openshot-qt.spec after 4m24s: succeeded
+pbuild is done:
+succeeded: 1
+```
+
+There's no Qt5 build error visible in the STDOUT (last 100 lines), and STDERR is empty.
+
+Could you provide:
+1. The **actual error message** from a failed build run?
+2. Or clarify what specific issue you're trying to fix?
+
+If you have a different error output that shows `Project ERROR: Unknown module(s) in QT:` or similar Qt5 failures, share it and I'll identify the missing `BuildRequires: pkgconfig(Qt5<Module>)` line needed.

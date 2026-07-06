@@ -1,0 +1,12 @@
+I need the actual build failure details to provide a targeted fix:
+
+1. **The Qt5-specific error message** — Look in the build logs for lines containing:
+   - `Project ERROR: Unknown module(s) in QT:`
+   - `fatal error: QtGui/QApplication: No such file or directory`
+   - `undefined reference to vtable for...` or `undefined symbol: _ZN5Qt5...`
+
+2. **The current BuildRequires section** of the spec file — I need to see what Qt5 modules are already declared.
+
+3. **Which package is failing** and at what build stage (prep, compile, link).
+
+Paste the relevant error output and I'll identify the missing `pkgconfig(Qt5<Module>)` dependency.

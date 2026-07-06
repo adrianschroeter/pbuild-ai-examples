@@ -1,0 +1,9 @@
+I need more information to debug your Qt5 build failure. The STDOUT shows `unresolvable: 1` but doesn't reveal which dependency is missing or what error message was produced.
+
+Please provide:
+
+1. **The full build log** showing the unresolvable dependency (look for "unresolvable" in the output, or run with verbose/debug mode)
+2. **Your current spec file** (or at least the `%description` section and all `BuildRequires:` lines)
+3. **Which package** is failing to build
+
+Without seeing the actual unresolvable dependency name, I cannot determine which Qt5 module BuildRequires line needs to be added.

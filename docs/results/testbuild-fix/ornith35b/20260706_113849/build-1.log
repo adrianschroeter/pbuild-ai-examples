@@ -1,0 +1,24 @@
+Using default preset: tumbleweed
+starting project builder
+    source directory: /home/adrian/opencode/sources/project-test-build
+    result directory: /home/adrian/opencode/sources/project-test-build/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    preset: tumbleweed
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+searching for packages
+found 2 packages
+getting package information
+parsing 2 recipe files
+fetching metadata of the local repo
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+sorting packages
+
+pbuild is done:
+succeeded: 1
+unresolvable: 1

@@ -1,0 +1,7 @@
+<antThinking>
+The user is debugging a Qt5 RPM build failure for openshot-qt on openSUSE Tumbleweed. The previous attempt failed because it tried to add `python3-pyqt5-devel` which doesn't exist in the project. I need to:
+
+1. First look at the current spec file and source code
+2. Identify what Qt5 modules are actually needed based on import statements
+3. Add the correct BuildRequires lines
+</antThinking>

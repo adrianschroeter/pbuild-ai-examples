@@ -1,0 +1,12 @@
+You've provided general guidance on Qt5 build errors but no specific failure details. To help you fix a Qt5 RPM build, I need:
+
+1. **The package name** that's failing to build
+2. **The actual error output** — specifically lines mentioning `Unknown module(s) in QT:` or missing headers like `QtGui/QApplication`
+3. **The spec file** (or at least the `%build` section and current `BuildRequires`)
+
+Without these, I can't identify which `pkgconfig(Qt5<Module>)` is missing. The generic "unresolvable: 1" in your build output doesn't show the root cause — it's a dependency resolution failure that could stem from any number of issues (missing BuildRequires, version conflicts, etc.).
+
+Please share:
+- Package name
+- Full build log with Qt5-specific errors
+- Current spec file (or relevant sections)
