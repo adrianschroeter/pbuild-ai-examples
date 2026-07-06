@@ -1,0 +1,6 @@
+## Error: Missing Signature File
+
+**Root cause:** RPM expects a GPG signature file that does not exist in SOURCES.
+
+```
+error: Bad file: /home/abuild/rpmbuild/SOURCES/gawk-5.4.0.tar.xz.sig: No such file or directory

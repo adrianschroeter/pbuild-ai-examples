@@ -1,0 +1,6 @@
+## Error Analysis
+
+The build fails with:
+
+```
+error: line 81: %package debuginfo --- package gawk-debuginfo already exists

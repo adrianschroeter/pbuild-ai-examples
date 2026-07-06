@@ -1,0 +1,24 @@
+[PBUILD-AI] Version 0.1.9
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest) says:
+Looking at this spec file:
+
+**Errors:**
+1. **No `BuildRequires` dependencies listed** — the `%build` section shows nothing because there's no `BuildRequires`, but cowsay requires Perl to run and must declare `perl` as a dependency (already in `Requires` ✓), yet needs `make`/`gcc` or similar build tools
+2. **Hardcoded macro** — `sed -i "s|,\$%{nil}PREFIX,|,%{_prefix},|" install.sh` is unnecessary; should use `%configure` or standard make/install with proper paths
+3. **Missing `_service` expansion** — per rules, must run `/usr/lib/obs/service/format_spec_file` before building
+
+**Best practices violations:**
+1. **Deprecated `%patchX` syntax** — old form used, must be `%patch -P0` etc.
+2. **No `%changelog`** — should not exist in .spec; use `PACKAGE.changes` instead
+3. **BuildArch: noarch** but source build requires compilation — inconsistent with missing BuildRequires
+
+**Suggested fix:** Rewrite to remove empty sections, use standard build macros.
+
+---
+
+Want me to rewrite the spec file?
+
+[STATS] AI model: huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest  |  AI calls: 1  |  AI time: 185.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 185.2s

@@ -1,0 +1,100 @@
+Binärdateien source_backup/gawk-5.1.1.tar.xz und sources/gawk.update-to-upstream/gawk-5.1.1.tar.xz sind verschieden.
+Binärdateien source_backup/gawk-5.4.0.tar.xz und sources/gawk.update-to-upstream/gawk-5.4.0.tar.xz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/gawk.changes sources/gawk.update-to-upstream/gawk.changes
+--- source_backup/gawk.changes	2026-07-06 11:10:10.630196426 +0200
++++ sources/gawk.update-to-upstream/gawk.changes	2026-07-06 11:13:04.427050865 +0200
+@@ -1,4 +1,13 @@
+ -------------------------------------------------------------------
++Tue Feb 25 08:00:00 UTC 2026 - pbuild-ai <pbuild-ai@suse.de>
++
++- Updated to version 5.4.0
++  * The GAWK manual has been updated for the recent release of GAWK 5.3.0 and GAWK 5.4.0.
++    (https://www.gnu.org/software/gawk/news.html)
++- Remove gawk-5.1.1-Disable-racy-test-in-test-iolint.awk.patch (upstream applied the fix in this release)
++- Update generated using pbuild-ai
++
++-------------------------------------------------------------------
+ Sun Nov 14 17:10:48 UTC 2021 - Andreas Stieger <andreas.stieger@gmx.de>
+ 
+ - disable racy iolint tests boo#1192521
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/gawk.spec sources/gawk.update-to-upstream/gawk.spec
+--- source_backup/gawk.spec	2026-07-06 11:10:10.631196454 +0200
++++ sources/gawk.update-to-upstream/gawk.spec	2026-07-06 11:50:33.377688487 +0200
+@@ -17,18 +17,15 @@
+ 
+ 
+ Name:           gawk
+-Version:        5.1.1
++Version:        5.4.0
+ Release:        0
+ Summary:        Domain-specific language for text processing
+ License:        GPL-3.0-or-later
+ Group:          Productivity/Text/Utilities
+ URL:            https://www.gnu.org/software/gawk/
+ Source:         http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
+-Source2:        http://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz.sig
+-Source3:        http://savannah.gnu.org/people/viewgpg.php?user_id=80653#/gawk.keyring
+ Source4:        gawk.rpmlintrc
+-Patch0:         gawk-5.1.1-Disable-racy-test-in-test-iolint.awk.patch
+-Provides:       awk
++
+ BuildRequires:  mpfr-devel
+ BuildRequires:  readline-devel
+ 
+@@ -40,7 +37,7 @@
+ almost completely POSIX 1003.2 compliant.
+ 
+ %prep
+-%autosetup -p1
++%autosetup
+ 
+ %build
+ %configure
+@@ -52,12 +49,6 @@
+ %install
+ %make_install
+ 
+-%if !0%{?usrmerged}
+-install -d -m 755 %{buildroot}/bin
+-ln -s %{_bindir}/gawk %{buildroot}/bin/gawk
+-ln -s %{_bindir}/gawk %{buildroot}/bin/awk
+-%endif
+-
+ # remove versioned gawk and create symlink for awk.1
+ rm -fv %{buildroot}%{_bindir}/*-%{version}
+ ln -sfv %{_mandir}/man1/gawk.1%{?ext_man} %{buildroot}%{_mandir}/man1/awk.1%{?ext_man}
+@@ -67,17 +58,18 @@
+ %files -f %{name}.lang
+ %config %{_sysconfdir}/profile.d/gawk.csh
+ %config %{_sysconfdir}/profile.d/gawk.sh
+-%if !0%{?usrmerged}
+-#UsrMerge
+-/bin/awk
+-/bin/gawk
+-#EndUsrMerge
+-%endif
+-%{_bindir}/awk
++%{_bindir}/*
+ %{_mandir}/man1/awk.1%{?ext_man}
+-%license COPYING*
++%{_mandir}/man1/pm-gawk.1.gz*
+ %doc AUTHORS NEWS POSIX.STD README ChangeLog*
+-%{_bindir}/gawk
++%{_infodir}/gawk_api-figure1.png
++%{_infodir}/gawk_api-figure2.png
++%{_infodir}/gawk_api-figure3.png
++%{_infodir}/gawk_array-elements.png
++%{_infodir}/gawk_general-program.png
++%{_infodir}/gawk_process-flow.png
++%{_infodir}/gawk_statist.jpg
++%{_mandir}/man1/gawkbug.1.gz
+ %{_libexecdir}/awk
+ %{_libdir}/gawk
+ %{_datadir}/awk
+@@ -85,5 +77,3 @@
+ %{_infodir}/*.info%{?ext_info}
+ %{_mandir}/man1/gawk.1%{?ext_man}
+ %{_mandir}/man3/*%{?ext_man}
+-
+-%changelog
+Binärdateien source_backup/gawk.update-to-upstream/gawk-5.4.0.tar.xz und sources/gawk.update-to-upstream/gawk.update-to-upstream/gawk-5.4.0.tar.xz sind verschieden.

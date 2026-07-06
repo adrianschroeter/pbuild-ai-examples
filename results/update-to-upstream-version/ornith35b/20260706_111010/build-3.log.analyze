@@ -1,0 +1,7 @@
+## Error Analysis
+
+The build log shows a failure during the **final verification step** (the OBS build system's "installing all built rpms" phase), not during `%files` processing:
+
+```
+[   59s] error: unpacking of archive failed on file /usr/bin/gawk;6a4b7371: cpio: open failed - No such file or directory
+[   59s] error: gawk-5.4.0-0.x86_64: install failed

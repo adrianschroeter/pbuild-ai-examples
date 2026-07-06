@@ -1,0 +1,14 @@
+{
+  "run_time_seconds": 186,
+  "exit_code": 0,
+  "status": "success",
+  "success": true,
+  "files_changed": 0,
+  "pbuild_ai_version": "0.1.9",
+  "ai_model": "huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest",
+  "ai_calls": 1,
+  "ai_time_seconds": 185.2,
+  "pbuild_calls": 0,
+  "pbuild_time_seconds": 0.0,
+  "total_runtime_seconds": 185.2
+}
