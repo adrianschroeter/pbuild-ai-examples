@@ -1,5 +1,0 @@
-The previous attempts failed because they relied on environment variables or `$PATH` wrapper scripts (`/usr/local/bin/patch`) that CMake either ignores (due to command caching or absolute path resolution) or fails to invoke in the sandboxed subcommand context. 
-
-Since we must keep the pinned `llama.cpp` version and cannot regenerate the patches via `update_references.sh`, the most robust fix is to **modify the CMake script directly in `%prep`**. This guarantees the fuzz flag is applied exactly where the patch command is invoked, bypassing shell/environment leakage issues.
-
-Apply this diff to your spec file:

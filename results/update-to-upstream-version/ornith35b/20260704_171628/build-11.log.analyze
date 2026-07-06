@@ -1,5 +1,0 @@
-The error is **"Installed (but unpackaged) file(s) found"** — RPM detected files that were installed during `%install` but not listed in the `%files` section. This is a classic %files issue.
-
-Let me inspect what's actually in the tarball to understand which files exist and should be packaged:
-
-[read_file_from_archive(archive_path="gawk-5.4.0.tar.xz", file_path=".")]

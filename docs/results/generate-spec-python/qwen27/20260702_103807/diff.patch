@@ -1,0 +1,44 @@
+Binärdateien source_backup/ollama-0.3.3.tar.gz und sources/python-example/ollama-0.3.3.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-ollama.spec sources/python-example/python-ollama.spec
+--- source_backup/python-ollama.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/python-example/python-ollama.spec	2026-07-02 10:41:37.737684459 +0200
+@@ -0,0 +1,39 @@
++# SPDX-FileCopyrightText: 2024 Ollama <hello@ollama.com>
++# SPDX-License-Identifier: MIT
++Name:           python-ollama
++Version:        0.3.3
++Release:        0
++Summary:        The official Python client for Ollama
++License:        MIT
++Group:          Development/Libraries/Python
++Url:            https://github.com/ollama/ollama-python
++Source0:        https://pypi.io/packages/source/o/ollama/ollama-0.3.3.tar.gz
++BuildArch:      noarch
++
++%description
++The Ollama Python library provides the easiest way to integrate Python 3.8+ projects with Ollama.
++
++%prep
++%autosetup -p1
++
++%build
++# No compilation needed for pure Python
++
++%install
++# Install the package using pip
++%python_install --root=$RPM_BUILD_ROOT --prefix=%{_prefix}
++
++# Run fdupes on installed files to hardlink duplicates
++%fdupes $RPM_BUILD_ROOT%{_prefix}
++
++%check
++# Run tests (if any) - skip if pytest is not available
++%if 0%{?with_tests}
++PYTHONPATH=$RPM_BUILD_ROOT%{python3_sitelib} \
++pytest --ignore=examples -v
++%endif
++
++%files %{py_files_standard_requirements}
++%doc README.md LICENSE
++
++%changelog

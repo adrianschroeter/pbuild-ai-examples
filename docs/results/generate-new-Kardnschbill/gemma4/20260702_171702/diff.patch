@@ -1,0 +1,58 @@
+Binärdateien source_backup/2048.c-1.0.3.tar.gz und sources/franconian/2048.c-1.0.3.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/2048-cli.spec sources/franconian/2048-cli.spec
+--- source_backup/2048-cli.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/franconian/2048-cli.spec	2026-07-02 19:06:26.150791842 +0200
+@@ -0,0 +1,53 @@
++#
++# spec file for package 2048-cli
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++# Copyright 2024 OpenSUSE Project
++#
++# This package is based on the 2048.c project by Maurits van der Schee.
++#
++# License: MIT
++
++
++Name:           2048-cli
++Version:        1.0.3
++Release:        0
++Summary:        A console version of the game 2048
++License:        MIT
++Group:          Games/Puzzle
++URL:            https://github.com/mevdschee/2048.c
++Source:         %{url}/archive/refs/tags/v%{version}.tar.gz
++
++BuildRequires:  gcc
++
++%description
++2048.c is a minimal, terminal-based clone of the popular game 2048.
++
++%build
++%setup_macros
++%setup -n 2048.c-%{version}
++gcc -std=c99 -O2 -o 2048 2048.c
++
++%check
++./2048 test
++
++%install
++install -Dm755 2048 %{buildroot}%{_bindir}/2048
++
++%files
++%{_bindir}/2048
++
++%set_permissions
++%fdupes

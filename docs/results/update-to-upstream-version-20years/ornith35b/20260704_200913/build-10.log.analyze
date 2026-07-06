@@ -1,0 +1,19 @@
+**Error:** `Installed (but unpackaged) file(s) found:` — seven image files under `/usr/share/info/` were installed during `make install` but are not listed in any `%files` section:
+
+```
+/usr/share/info/gawk_api-figure1.png
+/usr/share/info/gawk_api-figure2.png
+/usr/share/info/gawk_api-figure3.png
+/usr/share/info/gawk_array-elements.png
+/usr/share/info/gawk_general-program.png
+/usr/share/info/gawk_process-flow.png
+/usr/share/info/gawk_statist.jpg
+```
+
+**Fix:** Add a `%files` line that globs these files. In the appropriate `%files` section (the main `gawk` package section), add:
+
+
+Or more simply, since all unpackaged files are under `${_infodir}` and match `gawk_*`:
+
+
+This captures the seven missing image files without being overly broad. Place it in the main `%files` section of the spec, alongside the existing `%doc` and `%license` entries.

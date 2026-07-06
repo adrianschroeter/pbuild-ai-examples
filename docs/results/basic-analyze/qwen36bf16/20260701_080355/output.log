@@ -1,0 +1,18 @@
+[PBUILD-AI] Version 0.1.6
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:35b-a3b-bf16) says:
+Errors and missing best practices identified:
+
+*   **Empty `%changelog`:** Remove the section entirely per spec policy. Do not leave it blank.
+*   **Deprecated tags:**
+    *   `Group:` is legacy; remove it.
+    *   `%defattr(-,root,root)` in `%files` is deprecated; modern RPM handles defaults automatically. Remove it.
+*   **`BuildRequires: bash`:** Likely unnecessary for a Perl package. Verify if the install script actually uses Bashisms. If not, remove this dependency.
+*   **Upstream modification:** The `sed` in `%prep` modifies source in the build tree. Prefer an external patch file or passing prefix via command-line arguments/environment variables to `install.sh` if supported.
+*   **`Url:` field:** Uses HTTP; update to HTTPS or a canonical repository URL if available.
+*   **License files:** Consider using the `%license` macro for license documentation instead of listing them in `%doc`, depending on current distribution standards.
+*   **File list safety:** `%{_mandir}/man1/*` uses a wildcard. Ensure this doesn't clash with other packages; explicit file lists or `%{_mandir}/man1/%{name}*.1%{ext_man}` is safer.
+
+[STATS] AI model: qwen3.6:35b-a3b-bf16  |  AI calls: 1  |  AI time: 128.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 128.3s

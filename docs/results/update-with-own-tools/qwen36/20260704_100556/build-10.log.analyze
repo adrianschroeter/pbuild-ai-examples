@@ -1,0 +1,9 @@
+The build failure is caused by an outdated Makefile target in the spec file. Recent Ollama versions dropped the `build` alias and only ship the `ollama` target. Additionally, note that **Ollama is a Go/C++ project**, not Rust, so the Rust packaging guidelines do not apply here.
+
+Apply this minimal patch to fix the `%build` section:
+
+
+If you prefer to bypass upstream `Makefile` fragility entirely (recommended for Go RPMs), replace the `%build` block with:
+
+
+This directly invokes the Go toolchain, avoids missing Makefile targets, and matches standard openSUSE Go packaging practice. Rebuild after applying.

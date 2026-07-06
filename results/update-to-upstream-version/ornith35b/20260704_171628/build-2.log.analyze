@@ -1,5 +1,0 @@
-## Error Analysis
-
-**Root cause:** RPM encountered an unresolvable source file reference:
-```
-error: Bad file: /home/abuild/rpmbuild/SOURCES/gawk-5.4.0.tar.xz.sig: No such file or directory

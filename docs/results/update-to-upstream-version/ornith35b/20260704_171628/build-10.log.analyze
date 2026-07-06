@@ -1,0 +1,31 @@
+## Error Analysis
+
+The build fails with **unpackaged files** — RPM found installed files that are not listed in the `%files` section:
+
+| File | Issue |
+|------|-------|
+| `/usr/bin/awk`, `/usr/bin/gawk` | Binaries not declared in `%files` (the symlinks were attempted but apparently didn't work) |
+| `/usr/libexec/awk/grcat`, `/usr/libexec/awk/pwcat` | Helper binaries installed by `make install` but missing from `%files` |
+| `/usr/lib/debug/.../*.debug` | Debug symbols for grcat and pwcat (auto-generated, need explicit listing) |
+| `/usr/share/man/man1/gawkbug.1.gz`, `/usr/share/man/man1/pm-gawk.1.gz` | Man pages not declared |
+| `/usr/share/info/gawk_api-figure*.png`, `gawk_array-elements.png`, etc. | Info documentation images not declared |
+
+## Fix Required
+
+The `%files` section needs additional entries to cover everything installed by `make install`:
+
+1. **Add the helper binaries** — include `%{_libexecdir}/awk/grcat` and `%{_libexecdir}/awk/pwcat`.
+
+2. **Add debug symbols for those helpers** — include `${_libdir}/debug/%{_libexecdir}/awk/grcat.debug` and `pwcat.debug`. (These are auto-collected by `%find_lang` or similar; if the spec uses `%{?_unpackaged_files_terminate_build}` or has explicit `%files`, they must be listed.)
+
+3. **Add missing man pages** — include `%{_mandir}/man1/gawkbug.1%{?ext_man}` and `%{_mandir}/man1/pm-gawk.1%{?ext_man}`. (Note: `gawkbug` is the program, so its manual would be `gawkbug.1`, not `pm-gawk.1`.)
+
+4. **Add info documentation images** — include all `/usr/share/info/gawk_*.png` files explicitly or use a wildcard pattern like `%{_infodir}/gawk_*` if the spec already uses such patterns for other info files.
+
+5. **Verify symlink handling** — The previously attempted `ln -sfv %{_mandir}/man1/gawk.1%{?ext_man} %{buildroot}%{_mandir}/man1/awk.1%{?ext_man}` and `/bin/sh` symlink for awk were not effective in the last attempt. Ensure these symlinks are created correctly during `%install`.
+
+To see exactly which files `make install` puts into the build root, run interactively:
+```
+rpmbuild -bi --short-circuit <spec>.spec   # then inspect %buildroot
+find %{buildroot} -type f | sort
+```

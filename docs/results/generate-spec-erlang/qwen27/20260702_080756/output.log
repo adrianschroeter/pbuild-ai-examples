@@ -1,0 +1,336 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[GENERATE] Creating new package from prompt: https://github.com/ninenines/cowboy/archive/refs/tags/2.10.0.tar.gz
+[GENERATE] Error fetching https://api.github.com/repos/ninenines/cowboy/releases/latest: HTTP Error 404: Not Found
+[GENERATE] Error fetching https://raw.githubusercontent.com/ninenines/cowboy/2.10.0/README.md: HTTP Error 404: Not Found
+[GENERATE] Error fetching https://raw.githubusercontent.com/ninenines/cowboy/2.10.0/cowboy.app.src: HTTP Error 404: Not Found
+[TOOL] web_fetch: https://api.github.com/repos/ninenines/cowboy/tags (12302 bytes -> 12302 stripped)
+[GENERATE] [Fetched 12302 bytes]
+[TOOL] download_file: https://github.com/ninenines/cowboy/archive/refs/tags/2.10.0.tar.gz -> cowboy-2.10.0.tar.gz (3738888 bytes)
+[GENERATE] OK: Downloaded 3738888 bytes to cowboy-2.10.0.tar.gz
+[TOOL] read_file_from_archive: cowboy-2.10.0.tar.gz/cowboy-2.10.0/Makefile (3235 chars)
+[TOOL] read_file_from_archive: cowboy-2.10.0.tar.gz/cowboy-2.10.0/LICENSE (756 chars)
+[TOOL] read_file_from_archive: cowboy-2.10.0.tar.gz/cowboy-2.10.0/ebin/cowboy.app (649 chars)
+[TOOL] read_file_from_archive: cowboy-2.10.0.tar.gz/cowboy-2.10.0/rebar.config (262 chars)
+[TOOL] web_fetch: https://raw.githubusercontent.com/ninenines/cowboy/2.10.0/README.asciidoc (1256 bytes -> 1243 stripped)
+[GENERATE] [Fetched 1256 bytes]
+[TOOL] download_file: https://raw.githubusercontent.com/ninenines/erlang.mk/master/erlang.mk -> erlang.mk (454 bytes)
+[GENERATE] OK: Downloaded 454 bytes to erlang.mk
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[36m[TOOL][0m [36m@@ -0,0 +1,92 @@
+[0m[32m[TOOL][0m [32m+# SPDX-FileCopyrightText: none
+[0m[32m[TOOL][0m [32m+# SPDX-License-Identifier: ISC
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+Name:           erlang-cowboy
+[0m[32m[TOOL][0m [32m+Summary:        Small, fast, modern HTTP server for Erlang/OTP
+[0m[32m[TOOL][0m [32m+Version:        2.10.0
+[0m[32m[TOOL][0m [32m+Release:        0
+[0m[32m[TOOL][0m [32m+License:        ISC
+[0m[32m[TOOL][0m [32m+Source0:        https://github.com/ninenines/cowboy/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+[0m[32m[TOOL][0m [32m+BuildRequires:  erlang
+[0m[32m[TOOL][0m [32m+BuildRequires:  erlang-cowlib
+[0m[32m[TOOL][0m [32m+BuildRequires:  erlang-ranch
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description
+[0m[32m[TOOL][0m [32m+Cowboy is a small, fast and modern HTTP server for Erlang/OTP. It aims to provide a complete HTTP stack in a small code base. It is optimized for low latency and low memory usage, in part because it uses binary strings. Cowboy provides routing capabilities, selectively dispatching requests to handlers written in Erlang. Because it uses Ranch for managing connections, Cowboy can easily be embedded in any other application.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%package -n erlang-cowlib
+[0m[32m[TOOL][0m [32m+Summary:        HTTP library for Erlang
+[0m[32m[TOOL][0m [32m+BuildArch:      noarch
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# cowboy also depends on cowlib at runtime
+[0m[32m[TOOL][0m [32m+%requires_eq erlang-cowlib
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description -n erlang-cowlib
+[0m[32m[TOOL][0m [32m+Cowlib is the underlying HTTP/1.x and HTTP/2 protocol implementation used by Cowboy.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%prep
+[0m[32m[TOOL][0m [32m+%autosetup -p1
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Cowboy uses erlang.mk for building. We need to compile without its test/doc targets
+[0m[32m[TOOL][0m [32m+# that try to download external resources (which would fail in offline build environment).
+[0m[32m[TOOL][0m [32m+# Remove the app file generation step since we already have one from upstream.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%build
+[0m[32m[TOOL][0m [32m+erlc -o ebin \
+[0m[32m[TOOL][0m [32m+    src/cowboy.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_app.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_bstr.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_children.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_clear.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_clock.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_compress_h.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_constraints.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_handler.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_http.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_http2.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_loop.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_metrics_h.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_middleware.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_req.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_rest.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_router.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_static.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_stream.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_stream_h.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_sub_protocol.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_sup.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_tls.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_tracer_h.erl \
+[0m[32m[TOOL][0m [32m+    src/cowboy_websocket.erl
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%install
+[0m[32m[TOOL][0m [32m+install -dm 755 %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}
+[0m[32m[TOOL][0m [32m+install -dm 755 %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin
+[0m[32m[TOOL][0m [32m+cp -a ebin/*.beam %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+cp -a ebin/*.app %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Install documentation
+[0m[32m[TOOL][0m [32m+install -dm 755 %{buildroot}%{_docdir}/%{name}
+[0m[32m[TOOL][0m [32m+cp -r doc/src %{buildroot}%{_docdir}/%{name}/
+[0m[32m[TOOL][0m [32m+cp -r examples %{buildroot}%{_docdir}/%{name}/
+[0m[32m[TOOL][0m [32m+install -m644 LICENSE README.asciidoc Makefile %{buildroot}%{_docdir}/%{name}/
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+# Remove build-related artifacts from docs
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/http_req_resp.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_cond.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_conneg.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_delete.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_get_head.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_options.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_put_post_patch.png
+[0m[32m[TOOL][0m [32m+rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_start.png
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%fdupes %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin
+[0m[32m[TOOL][0m [32m+%set_permissions %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/*.beam
+[0m[32m[TOOL][0m [32m+%set_permissions %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/*.app
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files -n erlang-cowboy
+[0m[32m[TOOL][0m [32m+%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+%doc %{_docdir}/%{name}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: erlang-cowboy.spec
+[GENERATE] OK: Wrote erlang-cowboy.spec
+[SKILL ACTIVE] lang_erlang for erlang-cowboy.spec
+[GENERATE] Applied skill: lang_erlang
+[TOOL] read_file: erlang.mk
+[GENERATE] read_file: erlang.mk (14 lines)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[36m[TOOL][0m [36m@@ -2,34 +2,24 @@
+[0m[TOOL]  # SPDX-License-Identifier: ISC
+[TOOL]  
+[TOOL]  Name:           erlang-cowboy
+[31m[TOOL][0m [31m-Summary:        Small, fast, modern HTTP server for Erlang/OTP
+[0m[TOOL]  Version:        2.10.0
+[TOOL]  Release:        0
+[32m[TOOL][0m [32m+Summary:        Small, fast, modern HTTP server for Erlang/OTP
+[0m[TOOL]  License:        ISC
+[32m[TOOL][0m [32m+URL:            https://github.com/ninenines/cowboy
+[0m[TOOL]  Source0:        https://github.com/ninenines/cowboy/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+[31m[TOOL][0m [31m-BuildRequires:  erlang
+[0m[31m[TOOL][0m [31m-BuildRequires:  erlang-cowlib
+[0m[31m[TOOL][0m [31m-BuildRequires:  erlang-ranch
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+BuildRequires:  erlang-devel
+[0m[TOOL]  
+[TOOL]  %description
+[TOOL]  Cowboy is a small, fast and modern HTTP server for Erlang/OTP. It aims to provide a complete HTTP stack in a small code base. It is optimized for low latency and low memory usage, in part because it uses binary strings. Cowboy provides routing capabilities, selectively dispatching requests to handlers written in Erlang. Because it uses Ranch for managing connections, Cowboy can easily be embedded in any other application.
+[TOOL]  
+[31m[TOOL][0m [31m-%package -n erlang-cowlib
+[0m[31m[TOOL][0m [31m-Summary:        HTTP library for Erlang
+[0m[31m[TOOL][0m [31m-BuildArch:      noarch
+[0m[31m[TOOL][0m [31m-
+[0m[31m[TOOL][0m [31m-# cowboy also depends on cowlib at runtime
+[0m[31m[TOOL][0m [31m-%requires_eq erlang-cowlib
+[0m[31m[TOOL][0m [31m-
+[0m[31m[TOOL][0m [31m-%description -n erlang-cowlib
+[0m[31m[TOOL][0m [31m-Cowlib is the underlying HTTP/1.x and HTTP/2 protocol implementation used by Cowboy.
+[0m[31m[TOOL][0m [31m-
+[0m[TOOL]  %prep
+[TOOL]  %autosetup -p1
+[TOOL]  
+[31m[TOOL][0m [31m-# Cowboy uses erlang.mk for building. We need to compile without its test/doc targets
+[0m[31m[TOOL][0m [31m-# that try to download external resources (which would fail in offline build environment).
+[0m[31m[TOOL][0m [31m-# Remove the app file generation step since we already have one from upstream.
+[0m[32m[TOOL][0m [32m+# Cowboy uses erlang.mk for building. We compile manually using erlc with the proper options.
+[0m[32m[TOOL][0m [32m+# The upstream Makefile's default targets try to fetch external dependencies
+[0m[32m[TOOL][0m [32m+# (cowlib, ranch) which is not available in the build environment.
+[0m[TOOL]  
+[TOOL]  %build
+[TOOL]  erlc -o ebin \
+[36m[TOOL][0m [36m@@ -60,10 +50,11 @@
+[0m[TOOL]      src/cowboy_websocket.erl
+[TOOL]  
+[TOOL]  %install
+[31m[TOOL][0m [31m-install -dm 755 %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}
+[0m[31m[TOOL][0m [31m-install -dm 755 %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin
+[0m[31m[TOOL][0m [31m-cp -a ebin/*.beam %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[31m[TOOL][0m [31m-cp -a ebin/*.app %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+# Install beam files
+[0m[32m[TOOL][0m [32m+install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}
+[0m[32m[TOOL][0m [32m+install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
+[0m[32m[TOOL][0m [32m+cp -a ebin/*.beam %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+cp -a ebin/*.app %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin/
+[0m[TOOL]  
+[TOOL]  # Install documentation
+[TOOL]  install -dm 755 %{buildroot}%{_docdir}/%{name}
+[36m[TOOL][0m [36m@@ -71,7 +62,7 @@
+[0m[TOOL]  cp -r examples %{buildroot}%{_docdir}/%{name}/
+[TOOL]  install -m644 LICENSE README.asciidoc Makefile %{buildroot}%{_docdir}/%{name}/
+[TOOL]  
+[31m[TOOL][0m [31m-# Remove build-related artifacts from docs
+[0m[32m[TOOL][0m [32m+# Remove binary image files from docs (keep SVG)
+[0m[TOOL]  rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/http_req_resp.png
+[TOOL]  rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_cond.png
+[TOOL]  rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_conneg.png
+[36m[TOOL][0m [36m@@ -81,12 +72,20 @@
+[0m[TOOL]  rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_put_post_patch.png
+[TOOL]  rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_start.png
+[TOOL]  
+[31m[TOOL][0m [31m-%fdupes %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/ebin
+[0m[31m[TOOL][0m [31m-%set_permissions %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/*.beam
+[0m[31m[TOOL][0m [31m-%set_permissions %{buildroot}%{_lib}/erlang/lib/%{name}-%{version}/*.app
+[0m[32m[TOOL][0m [32m+# Create symlink in erlang lib
+[0m[32m[TOOL][0m [32m+ln -sf cowboy-%{version} %{buildroot}%{erlang_libdir}/cowboy
+[0m[TOOL]  
+[31m[TOOL][0m [31m-%files -n erlang-cowboy
+[0m[31m[TOOL][0m [31m-%{_lib}/erlang/lib/%{name}-%{version}/ebin/
+[0m[31m[TOOL][0m [31m-%doc %{_docdir}/%{name}
+[0m[32m[TOOL][0m [32m+%fdupes %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
+[0m[32m[TOOL][0m [32m+%set_permissions %{buildroot}%{erlang_libdir}/cowboy-%{version}/*.beam
+[0m[32m[TOOL][0m [32m+%set_permissions %{buildroot}%{erlang_libdir}/cowboy-%{version}/*.app
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files
+[0m[32m[TOOL][0m [32m+%{erlang_libdir}/cowboy-%{version}/ebin/
+[0m[32m[TOOL][0m [32m+%dir %{_docdir}/%{name}
+[0m[32m[TOOL][0m [32m+%{_docdir}/%{name}/doc/src/
+[0m[32m[TOOL][0m [32m+%{_docdir}/%{name}/examples/
+[0m[32m[TOOL][0m [32m+%{_docdir}/%{name}/LICENSE
+[0m[32m[TOOL][0m [32m+%{_docdir}/%{name}/README.asciidoc
+[0m[32m[TOOL][0m [32m+%{_docdir}/%{name}/Makefile
+[0m[TOOL]  
+[TOOL]  %changelog
+[TOOL] --- End diff ---
+[TOOL] edit_file: erlang-cowboy.spec (1 match replaced)
+[GENERATE] OK: Edited erlang-cowboy.spec
+[TOOL] read_file: erlang-cowboy.spec
+[GENERATE] read_file: erlang-cowboy.spec (91 lines)
+[TOOL] read_file: erlang-cowboy.spec
+[GENERATE] read_file: erlang-cowboy.spec (91 lines)
+[TOOL] remove_file: erlang.mk
+[GENERATE] OK: Removed erlang.mk
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example/erlang-cowboy.spec
+[0m[36m[TOOL][0m [36m@@ -11,18 +11,21 @@
+[0m[TOOL]  
+[TOOL]  BuildRequires:  erlang-devel
+[TOOL]  
+[32m[TOOL][0m [32m+Requires:       erlang-cowlib
+[0m[32m[TOOL][0m [32m+Requires:       erlang-ranch
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %description
+[TOOL]  Cowboy is a small, fast and modern HTTP server for Erlang/OTP. It aims to provide a complete HTTP stack in a small code base. It is optimized for low latency and low memory usage, in part because it uses binary strings. Cowboy provides routing capabilities, selectively dispatching requests to handlers written in Erlang. Because it uses Ranch for managing connections, Cowboy can easily be embedded in any other application.
+[TOOL]  
+[TOOL]  %prep
+[TOOL]  %autosetup -p1
+[TOOL]  
+[31m[TOOL][0m [31m-# Cowboy uses erlang.mk for building. We compile manually using erlc with the proper options.
+[0m[31m[TOOL][0m [31m-# The upstream Makefile's default targets try to fetch external dependencies
+[0m[31m[TOOL][0m [31m-# (cowlib, ranch) which is not available in the build environment.
+[0m[32m[TOOL][0m [32m+# The upstream Makefile tries to fetch dependencies (cowlib, ranch) from git.
+[0m[32m[TOOL][0m [32m+# Those are already installed as system packages, so we compile directly with erlc.
+[0m[TOOL]  
+[TOOL]  %build
+[31m[TOOL][0m [31m-erlc -o ebin \
+[0m[32m[TOOL][0m [32m+erlc -I ebin \
+[0m[32m[TOOL][0m [32m+    -o ebin \
+[0m[TOOL]      src/cowboy.erl \
+[TOOL]      src/cowboy_app.erl \
+[TOOL]      src/cowboy_bstr.erl \
+[36m[TOOL][0m [36m@@ -50,7 +53,7 @@
+[0m[TOOL]      src/cowboy_websocket.erl
+[TOOL]  
+[TOOL]  %install
+[31m[TOOL][0m [31m-# Install beam files
+[0m[32m[TOOL][0m [32m+# Install beam files and app file
+[0m[TOOL]  install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}
+[TOOL]  install -dm 755 %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
+[TOOL]  cp -a ebin/*.beam %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin/
+[36m[TOOL][0m [36m@@ -62,17 +65,10 @@
+[0m[TOOL]  cp -r examples %{buildroot}%{_docdir}/%{name}/
+[TOOL]  install -m644 LICENSE README.asciidoc Makefile %{buildroot}%{_docdir}/%{name}/
+[TOOL]  
+[31m[TOOL][0m [31m-# Remove binary image files from docs (keep SVG)
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/http_req_resp.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_cond.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_conneg.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_delete.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_get_head.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_options.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_put_post_patch.png
+[0m[31m[TOOL][0m [31m-rm -f %{buildroot}%{_docdir}/%{name}/doc/src/guide/rest_start.png
+[0m[32m[TOOL][0m [32m+# Remove PNG images from docs (keep SVG)
+[0m[32m[TOOL][0m [32m+find %{buildroot}%{_docdir}/%{name} -name '*.png' -delete
+[0m[TOOL]  
+[31m[TOOL][0m [31m-# Create symlink in erlang lib
+[0m[32m[TOOL][0m [32m+# Create symlink for Erlang library convention
+[0m[TOOL]  ln -sf cowboy-%{version} %{buildroot}%{erlang_libdir}/cowboy
+[TOOL]  
+[TOOL]  %fdupes %{buildroot}%{erlang_libdir}/cowboy-%{version}/ebin
+[36m[TOOL][0m [36m@@ -87,5 +83,3 @@
+[0m[TOOL]  %{_docdir}/%{name}/LICENSE
+[TOOL]  %{_docdir}/%{name}/README.asciidoc
+[TOOL]  %{_docdir}/%{name}/Makefile
+[31m[TOOL][0m [31m-
+[0m[31m[TOOL][0m [31m-%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: erlang-cowboy.spec
+[GENERATE] OK: Wrote erlang-cowboy.spec
+[TOOL] format_spec_file: normalized 1 spec(s)
+[GENERATE] OK
+[TOOL] read_file: erlang-cowboy.spec
+[GENERATE] read_file: erlang-cowboy.spec (102 lines)
+
+[GENERATE] Ollama:
+The spec file has been created and formatted. Here's a summary of what I created:
+
+Created files in /home/adrian/opencode/pbuild-ai-examples/sources/erlang-example:
+
+1. erlang-cowboy.spec - The RPM spec file for Cowboy HTTP server 2.10.0
+2. cowboy-2.10.0.tar.gz - Downloaded source tarball
+
+Key details about the package:
+
+- Name: erlang-cowboy
+- Version: 2.10.0
+- License: ISC (confirmed from upstream LICENSE file)
+- URL: https://github.com/ninenines/cowboy
+
+BuildRequires:
+- erlang-devel (per Erlang packaging guidelines)
+
+Requires:
+- erlang-cowlib (declared in cowboy.app as a runtime dependency)
+- erlang-ranch (declared in cowboy.app as a runtime dependency)
+
+The spec compiles Cowboy directly with erlc rather than using the upstream erlang.mk build system, which would try to fetch cowlib and ranch from git at build time (impossible in an offline build environment).
+
+Installed files:
+- All 25 .beam files + cowboy.app to %{erlang_libdir}/cowboy-2.10.0/ebin/
+- Documentation tree (doc/src/) under %{_docdir}/erlang-cowboy/
+- Examples directory under %{_docdir}/erlang-cowboy/
+- LICENSE, README.asciidoc, Makefile to %{_docdir}/erlang-cowboy/
+- PNG images removed from docs (kept SVG versions)
+- Symlink cowboy -> cowboy-2.10.0 created in erlang_libdir
+
+[GENERATE] No pending questions or tool calls. Assuming complete.
+[GENERATE] format_spec_file: normalized erlang-cowboy.spec
+[STATS] Skills used: lang_erlang
+[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 0  |  AI time: 0.0s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 668.7s

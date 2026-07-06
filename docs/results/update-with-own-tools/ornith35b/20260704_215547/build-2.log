@@ -1,0 +1,19 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/ollama
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/ollama/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+fetching 1 asset from git+https://github.com
+
+STDERR:
+Schwerwiegend: Remote-Branch v0.30.12~rc0 nicht im Upstream-Repository origin gefunden
+git clone failed: 32768

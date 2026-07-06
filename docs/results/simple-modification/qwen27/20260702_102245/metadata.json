@@ -1,0 +1,11 @@
+{
+  "example": "simple-modification",
+  "model_key": "qwen27",
+  "model_name": "qwen27",
+  "model_host_name": "AMD Strix Halo",
+  "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+  "timestamp": "2026-07-02T10:22:45+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}

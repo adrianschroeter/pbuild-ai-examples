@@ -1,9 +1,0 @@
-The build fails because a previous patch added a `sed` command targeting `cmake/compat/apply-patch.cmake`, which does not exist in this version of the upstream source. Under `%prep`, RPM scripts run with `set -e`, so any non-zero exit status (like `sed: can't read ...`) aborts the entire spec, resulting in `Bad exit status from /var/tmp/rpm-tmp.FEItdK (%prep)`.
-
-Drop the dead `sed` line. `%autosetup -p1 -a1` correctly handles both the main tarball and the vendored crate registry (`Source1`), which is required for networkless Rust builds.
-
-
-**Why this works:**
-- `cmake/compat/apply-patch.cmake` was either renamed, restructured, or removed in newer ollama releases. Attempting to modify it breaks `%prep`.
-- Keeping `-a1` ensures the `registry.tar.zst` crate vendor archive is unpacked into `vendor/`, satisfying Cargo's offline build requirements.
-- If upstream CMake later reports patch context drift for llama.cpp, the proper fix is to override the patch tool options in `CMakeLists.txt` (e.g., via `list(APPEND CMAKE_PATCH_OPTS "--fuzz=3")`) or apply a dedicated patch earlier in `%prep`, not rely on a stale `sed` one-liner.

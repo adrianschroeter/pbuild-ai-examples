@@ -1,0 +1,29 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.cleanup_source/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-02 10:20:10.804162469 +0200
++++ sources/glances.cleanup_source/python-Glances.spec	2026-07-02 10:23:27.141251411 +0200
+@@ -1,7 +1,7 @@
+ #
+ # spec file for package python-Glances
+ #
+-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.
++# Copyright (c) 2026 SUSE LLC and contributors
+ #
+ # All modifications and additions to the file contributed by third parties
+ # remain the property of their copyright owners, unless otherwise agreed
+@@ -24,8 +24,8 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
+-Patch0:         adjust-data-files.patch
++Source0:      %{name}-%{version}.tar.gz
++Patch0:
+ Patch1:         remove-shebang.patch
+ BuildRequires:  %{python_module bottle}
+ BuildRequires:  %{python_module psutil >= 5.3.0}
+@@ -74,5 +74,3 @@
+ %python3_only %{_bindir}/glances
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+-
+-%changelog

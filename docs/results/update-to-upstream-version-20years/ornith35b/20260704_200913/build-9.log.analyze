@@ -1,0 +1,14 @@
+## Error Analysis
+
+**Error:** `error: line 79: %files devel — package gawk-devel does not exist`
+
+RPM requires that every `%files` section corresponds to a declared subpackage (via `%package -n <name>`). The spec file contains a second `%files` section intended for a `gawk-devel` subpackage, but there is **no matching `%package devel` block** defined anywhere in the spec. RPM refuses to build because it cannot assign files from an undeclared subpackage.
+
+## Fix Required
+
+Remove or comment out the entire stray `%files devel ... %end` block (the second `%files` section). The gawk package does not ship a `-devel` subpackage — all headers and development files are typically included in the main `gawk` package itself, so there is no need for a separate `-devel` split.
+
+Specifically:
+- Find the **second** `%files` block (the one that says `%files devel`)
+- Delete it entirely — including its closing `%end`
+- Keep only the first `%files` section (for the main `gawk` package)

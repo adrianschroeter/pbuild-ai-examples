@@ -1,0 +1,95 @@
+Binärdateien source_backup/ripgrep-15.1.0.tar.gz und sources/ripgrep/ripgrep-15.1.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep.spec sources/ripgrep/ripgrep.spec
+--- source_backup/ripgrep.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep.spec	2026-07-02 11:16:19.562574752 +0200
+@@ -0,0 +1,71 @@
++#
++# spec file for package ripgrep
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%copiedfrom Unlicense OR MIT
++# [License Information]
++Name:           ripgrep
++Version:        15.1.0
++Release:        1~major
++Summary:        A line-oriented search tool that recursively searches the current directory for a regex pattern while respecting gitignore rules
++License:        MIT OR Unlicense
++Upstream:      https://github.com/BurntSushi/ripgrep
++URL:            https://github.com/BurntSushi/ripgrep
++Maintainer:    Andrew Gallant <jamslam@gmail.com>
++
++Source0:        ripgrep-15.1.0.tar.gz
++
++BuildRequires:  cargo
++BuildRequires:  cargo-packaging
++BuildRequires:  gcc-c++
++BuildRequires:  git
++BuildRequires:  make
++BuildRequires:  pkg-config
++
++ExclusiveArch:  %{rust_tier1_arches}
++
++%description
++ripgrep (rg) recursively searches your current directory for a regex pattern.
++By default, ripgrep will respect your .gitignore and automatically skip hidden
++files/directories and binary files.
++
++%prep
++%autosetup -p1 -a1
++
++%build
++export CARGO_HOME=$PWD/.cargo
++%{cargo_build}
++
++%install
++export CARGO_HOME=$PWD/.cargo
++%{cargo_install}
++
++%check
++export CARGO_HOME=$PWD/.cargo
++%{cargo_test}
++
++%files
++%defattr(-/usr/bin,755)
++/usr/bin/rg
++%defattr(-/usr/share/doc/ripgrep,644)
++/usr/share/doc/ripgrep/COPYING
++/usr/share/doc/ripgrep/LICENSE-MIT
++/usr/share/doc/ripgrep/UNLICENSE
++/usr/share/doc/ripgrep/CHANGELOG.md
++/usr/share/doc/ripgrep/README.md
++
++%changelog
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/_service sources/ripgrep/_service
+--- source_backup/_service	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/_service	2026-07-02 11:16:17.049546950 +0200
+@@ -0,0 +1,14 @@
++<services>
++  <service name="tar_scm" mode="manual">
++    <param name="url">https://github.com/BurntSushi/ripgrep.git</param>
++    <param name="scm">git</param>
++  </service>
++  <service name="recompress" mode="manual">
++    <param name="compression">zst</param>
++    <param name="file">*.tar</param>
++  </service>
++  <service name="set_version" mode="manual"/>
++  <service name="cargo_vendor" mode="manual">
++    <param name="compression">zst</param>
++  </service>
++</services>
+\ Kein Zeilenumbruch am Dateiende.

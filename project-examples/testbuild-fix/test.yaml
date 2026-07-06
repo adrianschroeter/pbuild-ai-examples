@@ -1,0 +1,28 @@
+name: "Test Build and Fix Project"
+description: "Test build an entire project containing multiple packages and automatically fix any build failures across all packages."
+order: 9999  # Hidden - not yet prepared
+
+source:
+  type: local
+  path: "../sources/project-test-build"
+  local_path: "./owntone"
+
+command: "pbuild-ai"
+options:
+  - "--fix"
+
+expected:
+  success: true
+  changes: true
+  build_result: "succeeded"
+
+tags:
+  - "project"
+  - "advanced"
+  - "fix"
+
+notes: |
+  This example demonstrates pbuild-ai's ability to handle entire projects
+  with multiple packages, testing and fixing build failures across all of them.
+
+  Project mode works on a directory containing multiple package directories.

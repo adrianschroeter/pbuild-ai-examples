@@ -1,0 +1,117 @@
+[PBUILD-AI] Version 0.1.8
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] systemd (prompt match)
+[SKILL ACTIVE] python_skill.py for python-Glances.spec
+[INFO] Using skill profile: systemd_skill
+[INFO] Using skill profile: python_skill
+
+[MODIFY] Sending python-Glances.spec sources to default...
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -33,6 +33,7 @@
+[0m[TOOL]  BuildRequires:  %{python_module setuptools}
+[TOOL]  BuildRequires:  fdupes
+[TOOL]  BuildRequires:  python-rpm-macros
+[32m[TOOL][0m [32m+BuildRequires:  systemd-rpm-macros
+[0m[TOOL]  Requires:       python-bottle
+[TOOL]  Requires:       python-curses
+[TOOL]  Requires:       python-psutil >= 5.3.0
+[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -68,6 +68,8 @@
+[0m[TOOL]  %install
+[TOOL]  %python_install
+[TOOL]  %python_expand %fdupes %{buildroot}%{$python_sitelib}
+[32m[TOOL][0m [32m+mkdir -p %{buildroot}%{_unitdir}
+[0m[32m[TOOL][0m [32m+printf "[Unit]\nDescription=Glances server\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=%{_bindir}/glances -s\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target\n" > %{buildroot}%{_unitdir}/glances.service
+[0m[TOOL]  
+[TOOL]  %files %{python_files}
+[TOOL]  %license COPYING
+[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -71,6 +71,23 @@
+[0m[TOOL]  mkdir -p %{buildroot}%{_unitdir}
+[TOOL]  printf "[Unit]\nDescription=Glances server\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=%{_bindir}/glances -s\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target\n" > %{buildroot}%{_unitdir}/glances.service
+[TOOL]  
+[32m[TOOL][0m [32m+%package glances-common
+[0m[32m[TOOL][0m [32m+Summary: Common files for Glances
+[0m[32m[TOOL][0m [32m+Requires: python3-Glances
+[0m[32m[TOOL][0m [32m+%systemd_ordering
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%post
+[0m[32m[TOOL][0m [32m+%service_add_post glances.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%preun
+[0m[32m[TOOL][0m [32m+%service_del_preun glances.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%postun
+[0m[32m[TOOL][0m [32m+%service_del_postun glances.service
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files
+[0m[32m[TOOL][0m [32m+%{_unitdir}/glances.service
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %files %{python_files}
+[TOOL]  %license COPYING
+[TOOL]  %doc NEWS README.rst
+[TOOL] --- End diff ---
+[TOOL] edit_file: python-Glances.spec (1 match replaced)
+[MODIFY] OK: Edited python-Glances.spec
+[MODIFY] OK: Edited python-Glances.spec
+[MODIFY] OK: Edited python-Glances.spec
+[TOOL] read_file: python-Glances.spec
+[MODIFY] read_file: python-Glances.spec (98 lines)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/glances.add_service/python-Glances.spec
+[0m[36m[TOOL][0m [36m@@ -71,6 +71,13 @@
+[0m[TOOL]  mkdir -p %{buildroot}%{_unitdir}
+[TOOL]  printf "[Unit]\nDescription=Glances server\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=%{_bindir}/glances -s\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target\n" > %{buildroot}%{_unitdir}/glances.service
+[TOOL]  
+[32m[TOOL][0m [32m+%files %{python_files}
+[0m[32m[TOOL][0m [32m+%license COPYING
+[0m[32m[TOOL][0m [32m+%doc NEWS README.rst
+[0m[32m[TOOL][0m [32m+%python3_only %{_bindir}/glances
+[0m[32m[TOOL][0m [32m+%python3_only %{_mandir}/man1/glances.1.gz
+[0m[32m[TOOL][0m [32m+%{python_sitelib}/*
+[0m[32m[TOOL][0m [32m+
+[0m[TOOL]  %package glances-common
+[TOOL]  Summary: Common files for Glances
+[TOOL]  Requires: python3-Glances
+[36m[TOOL][0m [36m@@ -88,11 +95,4 @@
+[0m[TOOL]  %files
+[TOOL]  %{_unitdir}/glances.service
+[TOOL]  
+[31m[TOOL][0m [31m-%files %{python_files}
+[0m[31m[TOOL][0m [31m-%license COPYING
+[0m[31m[TOOL][0m [31m-%doc NEWS README.rst
+[0m[31m[TOOL][0m [31m-%python3_only %{_bindir}/glances
+[0m[31m[TOOL][0m [31m-%python3_only %{_mandir}/man1/glances.1.gz
+[0m[31m[TOOL][0m [31m-%{python_sitelib}/*
+[0m[31m[TOOL][0m [31m-
+[0m[TOOL]  %changelog
+[TOOL] --- End diff ---
+[TOOL] write_file: python-Glances.spec
+[MODIFY] OK: Wrote python-Glances.spec
+
+[MODIFY] Ollama:
+The spec file has been updated to include a systemd service for the Glances server. 
+
+Key changes:
+1.  Added `BuildRequires: systemd-rpm-macros`.
+2.  Added logic in the `%install` section to create the `glances.service` unit file in `%{_unitdir}`.
+3.  Introduced a new subpackage `glances-common` to house the service file.
+4.  Configured `glances-common` with `%systemd_ordering` and the necessary systemd scriptlets (`%service_add_post`, `%service_del_preun`, and `%service_del_postun`) to manage the service lifecycle.
+5.  Ensured that `glances-common` depends on `python3-Glances` to provide the required binary.
+
+[MODIFY] Changes confirmed.
+[MODIFY] v3.1.0.tar.gz already exists, skipping download.
+[MODIFY] Updated python-Glances.spec: 1 remote URL(s) resolved to local files.
+[STATS] Skills used: python_skill.py, systemd
+[STATS] AI model: default  |  AI calls: 4  |  AI time: 2006.5s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 2006.6s

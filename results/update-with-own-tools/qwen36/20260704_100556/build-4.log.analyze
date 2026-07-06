@@ -1,5 +1,0 @@
-The build fails because Ollama's upstream `llama.cpp` maintainers recently rebased or reformatted the pinned commit's history. This shifts line numbers and whitespace, causing the exact-context matching in `cmake/compat/apply-patch.cmake` to reject valid patches (`patch context drifted`). The CMake script uses strict diff matching by default; allowing slight fuzz restores compatibility without altering build logic or disabling features.
-
-Apply the following fix to `/home/abuild/rpmbuild/BUILD/ollama-0.30.12_rc0-build/ollama-0.30.12~rc0/cmake/compat/apply-patch.cmake`:
-
-2. Retry the build. The CMake configuration step will succeed, and `llama-server` will compile normally.
