@@ -727,11 +727,52 @@
             }
         }
 
+        // Handle hash navigation: #example:model
+        async function handleHash() {
+            const hash = window.location.hash.slice(1); // Remove #
+            if (!hash) return;
+
+            // Parse format: "example:model"
+            const [exampleName, modelKey] = hash.split(':');
+            if (!exampleName || !modelKey) return;
+
+            // Wait for matrix data to be available
+            try {
+                const response = await fetch('results.json');
+                const data = await response.json();
+
+                const exampleData = data.examples?.[exampleName];
+                const result = exampleData?.models?.[modelKey];
+
+                if (result) {
+                    const modelMeta = data.models?.[modelKey] || {};
+                    const exampleMetadata = {
+                        name: exampleData.name || exampleName,
+                        description: exampleData.description || null,
+                        command: exampleData.command || null
+                    };
+                    showResultModal(exampleName, modelKey, result, modelMeta, exampleMetadata);
+                }
+            } catch (e) {
+                console.log('Could not load result from hash:', e);
+            }
+        }
+
         // Load matrix on page load
-        loadMatrix();
+        loadMatrix().then(() => {
+            // Handle hash after matrix is loaded
+            handleHash();
+        });
+
+        // Handle hash changes (e.g., browser back/forward)
+        window.addEventListener('hashchange', handleHash);
 
         // Modal functions
         function showResultModal(exampleName, modelKey, result, modelMeta, exampleMetadata) {
+            // Update URL hash
+            const hash = `${exampleName}:${modelKey}`;
+            history.replaceState(null, null, `#${hash}`);
+
             const displayName = modelMeta?.display || modelKey;
             const exampleTitle = exampleMetadata?.name || exampleName;
             document.getElementById('modalTitle').textContent = `${exampleTitle} - ${displayName}`;
@@ -880,6 +921,8 @@
         function closeResultModal() {
             document.getElementById('resultModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+            // Clear the hash
+            history.replaceState(null, null, window.location.pathname);
         }
 
         function showDiffInModal() {
