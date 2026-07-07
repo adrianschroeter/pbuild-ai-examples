@@ -15,6 +15,7 @@ results/
 │   │       ├── diff.patch
 │   │       ├── build-1.log
 │   │       ├── build-1.log.analyze
+│   │       ├── build-1.log.diff
 │   │       ├── build-2.log
 │   │       └── source/ (gitignored)
 ```
