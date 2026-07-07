@@ -1,0 +1,17 @@
+### Error Analysis
+The build failed during the installation phase with the error:
+```text
+error: unpacking of archive failed on file /usr/bin/gawk;6a4c656e: cpio: symlink failed - No such file or directory
+    This restores `/usr/bin/gawk` as a regular file installed by `make install`.
+
+2.  **Update `%files`:**
+    Ensure that the `%files` section lists the binary correctly. Add or verify the presence of:
+    If your package needs to provide `/usr/bin/awk`, you should create a symlink pointing `awk` to `gawk` (not `gawk` to a versioned file) and list it in `%files`:
+
+3.  **Check for other unpackaged files:**
+    If the build logs show warnings about "Installed (but unpackaged) file(s)", add any missing paths (such as `%{_bindir}/gawkbug` if provided by `make install`) to the `%files` section. Do not omit any installed files.
+
+**Summary of Changes:**
+- Remove the invalid symlink creation lines from `%install`.
+- List `%{_bindir}/gawk` in `%files`.
+- Optionally add `/usr/bin/awk` handling if required.

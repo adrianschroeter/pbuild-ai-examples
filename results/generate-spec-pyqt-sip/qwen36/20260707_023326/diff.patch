@@ -1,0 +1,62 @@
+Binärdateien source_backup/PyQt-builder-1.15.0.tar.gz und sources/pyqt-sip-example/PyQt-builder-1.15.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-pyqt-builder.spec sources/pyqt-sip-example/python-pyqt-builder.spec
+--- source_backup/python-pyqt-builder.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/pyqt-sip-example/python-pyqt-builder.spec	2026-07-07 02:39:55.263178458 +0200
+@@ -0,0 +1,57 @@
++# SPDX-FileCopyrightText: 2024 Adrian <adrian@opencode.example>
++# SPDX-License-Identifier: FSFAP
++
++Name:           python-pyqt-builder
++Version:        1.15.0
++Release:        0
++Summary:        The PEP 517 compliant PyQt build system
++License:        GPL-2.0-only OR GPL-3.0-only OR SIP
++Group:          Development/Libraries/Python
++URL:            https://www.riverbankcomputing.com/software/pyqt-builder/
++Source0:        https://files.pythonhosted.org/packages/source/P/PyQt-builder/%{name}-%{version}.tar.gz
++
++BuildArch:      noarch
++
++%description
++PyQt-builder is the PEP 517 compliant build system for PyQt and projects that
++extend PyQt. It extends the SIP build system and uses Qt's qmake to perform the
++actual compilation and installation of extension modules. Projects that use
++PyQt-builder provide an appropriate pyproject.toml file and an optional
++project.py script. Any PEP 517 compliant frontend, for example sip-install or
++pip, can then be used to build and install the project.
++
++%package -n python3-pyqt-builder
++Summary:        The PEP 517 compliant PyQt build system
++Group:          Development/Libraries/Python
++
++%description -n python3-pyqt-builder
++PyQt-builder is the PEP 517 compliant build system for PyQt and projects that
++extend PyQt. It extends the SIP build system and uses Qt's qmake to perform the
++actual compilation and installation of extension modules. Projects that use
++PyQt-builder provide an appropriate pyproject.toml file and an optional
++project.py script. Any PEP 517 compliant frontend, for example sip-install or
++pip, can then be used to build and install the project.
++
++%if 0%{?suse_version}
++Requires:       python3-pyqt-builder = %{version}~%{release}
++%else
++Requires:       python3-sip >= 6.7
++Requires:       python3-packaging
++%endif
++BuildRequires:  python-rpm-macros
++BuildRequires:  python3-setuptools
++
++%description -n python-pyqt-builder
++PyQt-builder is the PEP 517 compliant build system for PyQt and projects that
++extend PyQt. It extends the SIP build system and uses Qt's qmake to perform the
++actual compilation and installation of extension modules. Projects that use
++PyQt-builder provide an appropriate pyproject.toml file and an optional
++project.py script. Any PEP 517 compliant frontend, for example sip-install or
++pip, can then be used to build and install the project.
++
++%python_install %{?_smp_mflags}
++
++%files -n python-pyqt-builder
++%license LICENSE
++%doc ChangeLog NEWS README
++%python_modules

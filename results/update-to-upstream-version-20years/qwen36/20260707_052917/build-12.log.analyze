@@ -1,0 +1,13 @@
+The RPM build failed because it detected directories created during the install phase that are not explicitly declared as owned by a package in the spec file. The post-build check log shows:
+```
+gawk-5.4.0-1.2.x86_64.rpm: directories not owned by a package:
+ - /usr/lib64/gawk
+ - /usr/share/awk
+```
+
+**Fix needed:**
+Add `%dir` declarations for these two directories to the `%files` section of the spec file using standard RPM macros:
+- `%dir %{_libdir}/gawk`
+- `%dir %{_datadir}/awk`
+
+Place these lines in `%files` before any files or wildcards that reside within those paths. This explicitly grants package ownership to RPM, satisfying the unowned directory check. No other modifications are required.

@@ -1,0 +1,12 @@
+**Error Analysis:**
+The build fails during the post-build filelist check (`00-check-filelist`) with:
+```
+gawk-5.4.0-0.x86_64.rpm: directories not owned by a package:
+ - /usr/lib64/gawk
+ - /usr/share/awk
+```
+RPM requires every directory created during `%install` to be explicitly claimed in the `%files` section using the `%dir` directive. The build process creates these directories (e.g., via `mkdir -p` or `install`), but the spec file's `%files` section does not list them, causing a hard failure.
+
+**Required Fix:**
+Add two lines to the `%files` section to claim ownership of the unowned directories:
+Place these entries alongside other directory (`%dir`) or library/distribution paths in your `%files` block. No files are reported as "installed but unpackaged," so adding these two `%dir` lines is sufficient to resolve the build failure.

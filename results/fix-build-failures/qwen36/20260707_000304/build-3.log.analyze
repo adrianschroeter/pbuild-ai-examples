@@ -1,0 +1,3 @@
+The `fg: no job control` error occurs because the legacy `%python_wheel` macro expands to shell commands that rely on interactive job control, which is disabled in RPM's non-interactive `%build` environment. Replacing it with `%pyproject_wheel` and adding `%pyproject_install` aligns with modern pyproject.toml standards and avoids this shell incompatibility. These macros are provided by the `python-rpm-macros` package.
+
+BuildRequires: python-rpm-macros

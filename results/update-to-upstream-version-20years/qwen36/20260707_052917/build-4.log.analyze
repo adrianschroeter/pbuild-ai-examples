@@ -1,0 +1,5 @@
+**Error Analysis:**
+The build fails during the `%files` verification phase because RPM enforces that every file listed in the spec must exist in `BUILDROOT`. The spec lists three documentation files (`FUTURES`, `LIMITATIONS`, `PROBLEMS`) that are absent from the gawk 5.4.0 source tarball. Upstream removed these legacy documentation files in newer gawk releases, so the `%install` copy commands fail silently (likely guarded by `|| true`), and RPM's file list checker aborts the build with `File not found` errors.
+
+**Required Fix:**
+In your spec file, locate the `%doc` macro or explicit `%files` list. Remove the three entries for `FUTURES`, `LIMITATIONS`, and `PROBLEMS` from the documentation list. Cleanly delete these lines/entries so no trailing commas, whitespace-only placeholders, or stray references remain. All other listed documentation files should be left unchanged. (These files were intentionally dropped upstream in gawk 5.x; they do not need to be re-added or workarounded.)

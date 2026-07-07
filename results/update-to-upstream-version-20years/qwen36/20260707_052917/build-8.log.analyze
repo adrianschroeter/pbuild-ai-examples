@@ -1,0 +1,7 @@
+### Error Analysis
+The build failed at the final packaging stage with `Installed (but unpackaged) file(s) found:`. RPM strictly requires that every file placed into `$RPM_BUILD_ROOT` during `%install` be explicitly listed in the `%files` section. Missing entries cause an immediate abort to prevent accidentally shipping untracked binaries or data.
+
+Note: Files under `/usr/lib/debug/` (`.debug` files) should **not** be added manually. RPM automatically scans binaries listed in `%files` and generates the `gawk-debuginfo` subpackage for them. Manually listing `.debug` files will trigger conflicts or duplicate packaging warnings.
+
+### Required Fix
+Add the following lines to the `%files` section of the spec file, replacing or appending to your existing entries:

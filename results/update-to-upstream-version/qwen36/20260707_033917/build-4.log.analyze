@@ -1,0 +1,24 @@
+### Error Analysis
+The build failed during the `00-check-install-rpms` phase with:
+`error: unpacking of archive failed on file /usr/bin/gawk;6a4c625f: cpio: open failed - No such file or directory`
+
+This is a package verification failure, not a compilation error. RPM successfully built the spec, generated the RPM payload, and then attempted to install it into a temporary test environment. The installer could not find `/usr/bin/gawk` because that path does not exist in `$RPM_BUILD_ROOT` after the `%install` phase.
+
+### Root Cause
+The `%files` section lists `/usr/bin/gawk` (via `%{_bindir}/gawk`), but `make install DESTDIR=$RPM_BUILD_ROOT` did not place a file at that exact location. This typically happens when:
+1. The Makefile installs the binary under a different name (e.g., only as `/usr/bin/awk` or in a legacy path).
+2. The `%files` entry was added/modified in a previous attempt but never synced with the actual `DESTDIR` output.
+3. A macro typo or incorrect prefix caused the install tree to diverge from the spec list.
+
+### Required Fix
+Do not guess paths. You must align the `%files` section with what actually landed in the build root:
+
+1. **Verify actual installed binaries**: After `%install`, inspect `$RPM_BUILD_ROOT/usr/bin/`. Run `ls -l $RPM_BUILD_ROOT/usr/bin/ | grep gawk` to see exactly what file names and symlinks were created.
+2. **Update `%files` accordingly**:
+   - If the binary is installed as `/usr/bin/gawk`, ensure `%{_bindir}/gawk` is present and correct.
+   - If `make install` only placed it as `/usr/bin/awk`, change the `%files` entry to `%{_bindir}/awk`. Keep `%{_bindir}/gawk` only if the symlink or binary genuinely exists at that path.
+   - Remove any other `%{_bindir}/...` entries from `%files` that do not actually exist in the build root (stale lines from previous attempts will cause identical `cpio: open failed` errors).
+3. **Verify macros**: Ensure `%{_bindir}` expands to `/usr/bin` in your build environment. Do not hardcode paths like `/bin/gawk` or `/usr/local/bin/gawk`.
+4. **Sync other entries**: Confirm that the newly added `%{_infodir}/*`, `%{_mandir}/man1/*`, and `%{_bindir}/gawkbug` actually exist after install. If they are missing, remove them from `%files` or add the correct `BuildRequires`/`install` flags to create them.
+
+Once `%files` exactly matches `$RPM_BUILD_ROOT/usr/bin/` (and all other listed paths), rerun the build. The verification phase will pass automatically.

@@ -1,0 +1,3 @@
+The build failed because the spec file lacks a declaration for the required Python module `pipper`, resulting in an unresolved dependency on `python313-pipper`. Adding the dynamic macro allows the RPM build system to automatically resolve the correct versioned package without hardcoding the interpreter version.
+
+BuildRequires: %{python_module pipper}

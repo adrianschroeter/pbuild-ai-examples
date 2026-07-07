@@ -1,0 +1,65 @@
+Binärdateien source_backup/cargo-0.75.0.tar.gz und sources/rust-example/cargo-0.75.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/cargo.spec sources/rust-example/cargo.spec
+--- source_backup/cargo.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/rust-example/cargo.spec	2026-07-07 03:17:09.019361071 +0200
+@@ -0,0 +1,60 @@
++#
++# spec file for package cargo
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           cargo
++Version:        0.75.0
++Release:        0
++Summary:        The Rust package manager
++License:        Apache-2.0 OR MIT
++URL:            https://github.com/rust-lang/cargo
++Source0:        https://github.com/rust-lang/cargo/archive/refs/tags/%{version}.tar.gz
++ExclusiveArch:  %{rust_tier1_arches}
++
++BuildRequires:  cargo
++BuildRequires:  cargo-packaging
++BuildRequires:  cmake
++BuildRequires:  curl-devel
++BuildRequires:  gcc
++BuildRequires:  git
++BuildRequires:  openssl-devel
++
++%description
++Cargo is the Rust package manager. It downloads your Rust project's
++dependencies and compiles your project.
++
++%prep
++%autosetup -p1
++
++%build
++export CARGO_HOME=$PWD/.cargo
++%{cargo_build}
++
++%install
++export CARGO_HOME=$PWD/.cargo
++%{cargo_install}
++
++%check
++export CARGO_HOME=$PWD/.cargo
++%{cargo_test}
++
++%files
++%license LICENSE-APACHE LICENSE-MIT LICENSE-THIRD-PARTY
++%doc README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md
++%{_bindir}/cargo
++
++%changelog

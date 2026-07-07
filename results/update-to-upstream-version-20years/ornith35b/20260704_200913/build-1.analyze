@@ -1,8 +1,0 @@
-## Error Analysis
-
-The build fails at **line 45** of `gawk.spec` with:
-
-```
-error: Patch number not specified: patch
-
-If the intent was to apply a specific patch other than 0, adjust `-P<number>` accordingly. The `-p1` flag is standard for patches in `SOURCES/`. If no patches are actually needed on that line (e.g., leftover from an old macro), remove the line entirely.

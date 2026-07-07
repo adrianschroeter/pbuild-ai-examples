@@ -1,0 +1,349 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime/cpanspec.yml sources/perl-example/perl-Module-Runtime/cpanspec.yml
+--- source_backup/perl-Module-Runtime/cpanspec.yml	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime/cpanspec.yml	2026-07-07 02:15:55.622906762 +0200
+@@ -0,0 +1,28 @@
++---
++#description_paragraphs: 3
++#description: |-
++#  override description from CPAN
++#summary: override summary from CPAN
++#no_testing: broken upstream
++#sources:
++#  - source1
++#  - source2
++#patches:
++#  foo.patch: -p1
++#  bar.patch:
++#preamble: |-
++# BuildRequires:  gcc-c++
++#post_prep: |-
++# hunspell=`pkg-config --libs hunspell | sed -e 's,-l,,; s,  *,,g'`
++# sed -i -e "s,hunspell-X,$hunspell," t/00-prereq.t Makefile.PL 
++#post_build: |-
++# rm unused.files
++#post_install: |-
++# sed on %{name}.files
++#license: SUSE-NonFree
++#skip_noarch: 1
++#custom_build: |-
++#./Build build flags=%{?_smp_mflags} --myflag
++#custom_test: |-
++#startserver && make test
++#ignore_requires: Bizarre::Module
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime/.gitattributes sources/perl-example/perl-Module-Runtime/.gitattributes
+--- source_backup/perl-Module-Runtime/.gitattributes	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime/.gitattributes	2026-07-07 02:15:55.601924664 +0200
+@@ -0,0 +1,23 @@
++## Default LFS
++*.7z filter=lfs diff=lfs merge=lfs -text
++*.bsp filter=lfs diff=lfs merge=lfs -text
++*.bz2 filter=lfs diff=lfs merge=lfs -text
++*.gem filter=lfs diff=lfs merge=lfs -text
++*.gz filter=lfs diff=lfs merge=lfs -text
++*.jar filter=lfs diff=lfs merge=lfs -text
++*.lz filter=lfs diff=lfs merge=lfs -text
++*.lzma filter=lfs diff=lfs merge=lfs -text
++*.obscpio filter=lfs diff=lfs merge=lfs -text
++*.oxt filter=lfs diff=lfs merge=lfs -text
++*.pdf filter=lfs diff=lfs merge=lfs -text
++*.png filter=lfs diff=lfs merge=lfs -text
++*.rpm filter=lfs diff=lfs merge=lfs -text
++*.tbz filter=lfs diff=lfs merge=lfs -text
++*.tbz2 filter=lfs diff=lfs merge=lfs -text
++*.tgz filter=lfs diff=lfs merge=lfs -text
++*.ttf filter=lfs diff=lfs merge=lfs -text
++*.txz filter=lfs diff=lfs merge=lfs -text
++*.whl filter=lfs diff=lfs merge=lfs -text
++*.xz filter=lfs diff=lfs merge=lfs -text
++*.zip filter=lfs diff=lfs merge=lfs -text
++*.zst filter=lfs diff=lfs merge=lfs -text
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime/.gitignore sources/perl-example/perl-Module-Runtime/.gitignore
+--- source_backup/perl-Module-Runtime/.gitignore	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime/.gitignore	2026-07-07 02:15:55.601924664 +0200
+@@ -0,0 +1 @@
++.osc
+Binärdateien source_backup/perl-Module-Runtime/Module-Runtime-0.018.tar.gz und sources/perl-example/perl-Module-Runtime/Module-Runtime-0.018.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime/perl-Module-Runtime.changes sources/perl-example/perl-Module-Runtime/perl-Module-Runtime.changes
+--- source_backup/perl-Module-Runtime/perl-Module-Runtime.changes	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime/perl-Module-Runtime.changes	2026-07-07 02:15:55.622906762 +0200
+@@ -0,0 +1,137 @@
++-------------------------------------------------------------------
++Tue Apr 22 05:35:26 UTC 2025 - Tina Müller <timueller+perl@suse.de>
++
++- updated to 0.18.0 (0.018)
++   see /usr/share/doc/packages/perl-Module-Runtime/Changes
++
++  0.018   2025-04-21
++    - avoid xattr headers in release tarball
++
++    - minor code reformatting
++
++-------------------------------------------------------------------
++Tue Apr  8 05:36:15 UTC 2025 - Tina Müller <timueller+perl@suse.de>
++
++- updated to 0.17.0 (0.017)
++   see /usr/share/doc/packages/perl-Module-Runtime/Changes
++
++-------------------------------------------------------------------
++Thu Oct 19 05:36:17 UTC 2017 - coolo@suse.com
++
++- updated to 0.016
++   see /usr/share/doc/packages/perl-Module-Runtime/Changes
++
++  version 0.016; 2017-10-17
++  
++    * port t/taint.t to Perl 5.27.5, where re-requiring an already-loaded
++      module doesn't trigger tainting
++  
++    * skip t/taint.t if the perl empirically doesn't perform taint checks
++      but the script got run anyway (which happens with an unsupported
++      configuration of the Perl core which some people are using in the
++      absence of a supported no-taint configuration)
++  
++    * in t/taint.t, use $^X rather than $ENV{PATH} as the primordial
++      tainted value to taint a string being tested
++  
++    * in documentation, use four-column indentation for all verbatim
++      material
++  
++    * in META.{yml,json}, point to public bug tracker
++  
++    * in META.json, specify type of public repository
++
++-------------------------------------------------------------------
++Mon Jul 17 05:49:49 UTC 2017 - coolo@suse.com
++
++- updated to 0.015
++   see /usr/share/doc/packages/perl-Module-Runtime/Changes
++
++  version 0.015; 2017-07-16
++  
++    * update test suite to not rely on . in @INC, which is no longer
++      necessarily there from Perl 5.25.7
++  
++    * in documentation, warn about the security problem with
++      use_package_optimistically()
++  
++    * declare correct version for Test::More dependency
++  
++    * generate "traditional" style of compatibility Makefile.PL, to
++      permit building in environments that don't support Build.PL or
++      configure_requires
++
++-------------------------------------------------------------------
++Mon Feb 24 06:10:39 UTC 2014 - coolo@suse.com
++
++- updated to 0.014
++   * bugfix: suppress any CORE::GLOBAL::require override, where possible,
++     to avoid use_package_optimistically() being misled into treating
++     missing modules as broken
++ 
++   * bugfix: in use_module() and use_package_optimistically(), pass a
++     supplied VERSION parameter through for the version check even if it
++     is undef
++ 
++   * tighten use_package_optimistically()'s recognition of can't-locate
++     errors (the same way that base.pm has recently been tightened),
++     so that, when a module fails to load because a module that it uses
++     isn't available, the outer module will be perceived as broken rather
++     than missing
++ 
++   * update documentation notes about the state of Unicode handling for
++     module names
++ 
++   * in META.{yml,json}, point to public git repository
++
++-------------------------------------------------------------------
++Tue Jun 11 19:41:49 UTC 2013 - coolo@suse.com
++
++- rebuild for perl 5.18
++
++-------------------------------------------------------------------
++Fri Feb 17 08:50:52 UTC 2012 - coolo@suse.com
++
++- updated to 0.013
++  * fix false failure of the test for lack of unintended dependencies
++    that occurred on systems using a sitecustomize.pl
++
++-------------------------------------------------------------------
++Mon Feb 13 09:03:02 UTC 2012 - coolo@suse.com
++
++- updated to 0.012
++   * work around Perl core bug [RT#68590] regarding leakage of %^H
++     into modules being loaded
++ 
++   * work around Perl core bug that made a failed module loading appear
++     successful when re-requiring the same module
++ 
++   * duplicate is_string() from Params::Classify, rather than importing it,
++     to avoid circular dependency problems (affecting both installation
++     and runtime)
++ 
++   * duplicate minimal exporting behaviour from Exporter, and avoid using
++     the "feature", "warnings", "strict", and "parent" pragmata, to allow
++     for possible future use of this module by any infrastructure module
++ 
++   * document core bug workarounds
++ 
++   * document module name syntax more prominently, and discuss the state
++     of Unicode handling
++ 
++   * tweak documentation of use_package_optimistically()
++ 
++   * test behaviour with tainted module name
++ 
++   * test lack of unwanted eval frame around require
++ 
++   * give test modules more meaningful names
++ 
++   * convert .cvsignore to .gitignore
++
++-------------------------------------------------------------------
++Wed Oct 26 17:09:13 UTC 2011 - tabraham@novell.com
++
++- initial package 0.011
++    * created by cpanspec 1.78.06
++
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime/perl-Module-Runtime.spec sources/perl-example/perl-Module-Runtime/perl-Module-Runtime.spec
+--- source_backup/perl-Module-Runtime/perl-Module-Runtime.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime/perl-Module-Runtime.spec	2026-07-07 02:15:55.622906762 +0200
+@@ -0,0 +1,75 @@
++#
++# spec file for package perl-Module-Runtime
++#
++# Copyright (c) 2025 SUSE LLC
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%define cpan_name Module-Runtime
++Name:           perl-Module-Runtime
++Version:        0.18.0
++Release:        0
++# 0.018 -> normalize -> 0.18.0
++%define cpan_version 0.018
++License:        Artistic-1.0 OR GPL-1.0-or-later
++Summary:        Runtime module handling
++URL:            https://metacpan.org/release/%{cpan_name}
++Source0:        https://cpan.metacpan.org/authors/id/H/HA/HAARG/%{cpan_name}-%{cpan_version}.tar.gz
++Source1:        cpanspec.yml
++BuildArch:      noarch
++BuildRequires:  perl
++BuildRequires:  perl-macros
++Provides:       perl(Module::Runtime) = %{version}
++%undefine       __perllib_provides
++%{perl_requires}
++
++%description
++The functions exported by this module deal with runtime handling of Perl
++modules, which are normally handled at compile time. This module avoids
++using any other modules, so that it can be used in low-level
++infrastructure.
++
++The parts of this module that work with module names apply the same syntax
++that is used for barewords in Perl source. In principle this syntax can
++vary between versions of Perl, and this module applies the syntax of the
++Perl on which it is running. In practice the usable syntax hasn't changed
++yet. There's some intent for Unicode module names to be supported in the
++future, but this hasn't yet amounted to any consistent facility.
++
++The functions of this module whose purpose is to load modules include
++workarounds for three old Perl core bugs regarding 'require'. These
++workarounds are applied on any Perl version where the bugs exist, except
++for a case where one of the bugs cannot be adequately worked around in pure
++Perl.
++
++%prep
++%autosetup  -n %{cpan_name}-%{cpan_version} -p1
++
++%build
++perl Makefile.PL INSTALLDIRS=vendor
++%make_build
++
++%check
++make test
++
++%install
++%perl_make_install
++%perl_process_packlist
++%perl_gen_filelist
++
++%files -f %{name}.files
++%doc Changes README TODO
++%license LICENSE
++
++%changelog
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/perl-Module-Runtime.spec sources/perl-example/perl-Module-Runtime.spec
+--- source_backup/perl-Module-Runtime.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/perl-Module-Runtime.spec	2026-07-07 02:25:00.487163701 +0200
+@@ -0,0 +1,60 @@
++#
++# spec file for package perl-Module-Runtime
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%define cpan_name Module-Runtime
++Name:           perl-Module-Runtime
++Version:        0.016
++Release:        0
++Summary:        Runtime module handling
++License:        Artistic-1.0 OR GPL-1.0-or-later
++Group:          Development/Libraries/Perl
++BuildArch:      noarch
++Source0:        %{cpan_name}/%{cpan_name}-%{version}.tar.gz
++BuildRequires:  perl-ExtUtils-MakeMaker
++BuildRequires:  perl-macros
++
++%description
++Module::Runtime provides several routines which might come in handy if you were
++doing things at runtime (at run time) that involve modules, and you couldn't do
++them at compile time. This includes inspecting the name of the current module or
++the package of an object, converting a string containing a class or package name
++into its canonical form (e.g., 'Some::Class' -> 'Some/Class.pm'), loading a
++module and checking if it loaded successfully, returning all the names of
++modules currently loaded, verifying if something is a valid module, returning
++the path in @INC where a module was found, and other things.
++
++%prep
++%autosetup -p1 -n %{cpan_name}-%{version}
++
++%build
++perl Makefile.PL INSTALLDIRS=vendor
++%make_build
++
++%install
++%perl_make_install
++%perl_process_packlist
++%perl_gen_filelist
++
++%check
++make test
++
++%files -f %{name}.files
++%doc Changes README TODO
++%license LICENSE
++
++%changelog

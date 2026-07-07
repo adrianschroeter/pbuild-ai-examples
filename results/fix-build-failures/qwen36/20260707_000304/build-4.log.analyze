@@ -1,0 +1,3 @@
+The build fails because the `pip` Python module is not installed in the build environment, causing `/usr/bin/python3.13: No module named pip` during the `%pyproject_wheel` step. To fix this, you need to add a BuildRequires for the pip package.
+
+BuildRequires: %{python_module pip}

@@ -1,0 +1,5 @@
+**Error Analysis:**
+The build failed during RPM's file list validation (`Processing files`). RPM encountered a line in the `%files` section that references `/usr/include/gawk` (typically written as `%{_includedir}/gawk`), but this directory was never created under `BUILDROOT`. This occurs because gawk is a standalone interpreter and **does not ship C header files**, so no `include/gawk` path is installed by upstream's `make install`.
+
+**Required Fix:**
+Navigate to the `%files` section of your spec file. Delete the exact line containing `%{_includedir}/gawk` (or `/usr/include/gawk`). Do not leave blank lines or comments in its place; simply remove the entire entry. This removes the invalid directory reference from the manifest, allowing RPM to correctly package the files that actually exist. After saving this change, retry the build.

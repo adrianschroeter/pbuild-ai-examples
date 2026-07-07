@@ -1,0 +1,86 @@
+Binärdateien source_backup/jackson-core-2.15.0.tar.gz und sources/java-example/jackson-core-2.15.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/jackson-core.spec sources/java-example/jackson-core.spec
+--- source_backup/jackson-core.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/java-example/jackson-core.spec	2026-07-07 01:55:23.204364801 +0200
+@@ -0,0 +1,81 @@
++#
++# spec file for package jackson-core
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           jackson-core
++Version:        2.15.0~git199708b0355e6f168970e3d8596a716525ebc137
++Release:        0
++Summary:        Core Jackson processing abstractions (Streaming API)
++License:        Apache-2.0
++URL:            https://github.com/FasterXML/jackson-core
++Source0:        FasterXML/jackson-core/archive/refs/tags/jackson-core-%{version}.tar.gz#name=jackson-core.tar.gz
++BuildArch:      noarch
++BuildRequires:  maven
++BuildRequires:  poms-update
++BuildRequires:  pom(com.fasterxml.jackson.core:jackson-core) >= %{version}
++BuildRequires:  poms-build-depends(jackson-base-pom)
++
++%description
++Core Jackson processing abstractions (aka Streaming API), implementation for JSON.
++
++The core abstractions are not JSON specific, although naming does contain
++"JSON" in many places, due to historical reasons. Only packages that
++specifically contain word "json" are JSON-specific.
++
++%package -n     java-%{name}
++Summary:        Core Jackson processing abstractions (Streaming API)
++License:        Apache-2.0
++%{?javaProvidesProviders}
++
++%description -n java-%{name}
++Core Jackson processing abstractions (aka Streaming API), implementation for JSON.
++
++The core abstractions are not JSON specific, although naming does contain
++"JSON" in many places, due to historical reasons. Only packages that
++specifically contain word "json" are JSON-specific.
++
++%prep
++%setup -q -n jackson-core-jackson-core-%{version:trunc=1}-2.15.0.tar.gz
++
++# No network access during build
++sed -i '/<id>sonatype-nexus-snapshots<\/id>/,/<\/repository>/d' pom.xml
++
++%build
++mvn package \
++    -DskipTests \
++    -Dfindbugs.skip=true \
++    -Djacoco.skip=true \
++    -Dpmd.skip=true \
++    -Denforcer.skip=true \
++    -Dxml.skip=true \
++    -Dmaven.javadoc.skip=true \
++    -Dmaven.build.number.skip=true \
++    --batch-mode \
++    -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
++
++%install
++install -d %{buildroot}%{_javadir}
++cp -a target/*.jar %{buildroot}%{_javadir}/
++
++%check
++# No tests run in build environment (no network access)
++
++%files -n java-%{name}
++%license LICENSE
++%{_javadir}/*
++
++%changelog

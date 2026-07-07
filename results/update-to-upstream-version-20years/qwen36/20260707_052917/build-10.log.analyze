@@ -1,0 +1,12 @@
+### Root Cause
+The build failed during the `%files` phase because RPM detected 10 installed files that are not listed in the `%files` section of the spec file. Specifically, it found:
+- 9 documentation/image files in `/usr/share/info/` (`gawk_api-figure*.png`, `gawk_array-elements.png`, `gawk_general-program.png`, `gawk_process-flow.png`, `gawk_statist.jpg`, `notes.info.gz`, `pm-gawk.info.gz`)
+- 1 compressed man page in `/usr/share/man/man1/` (`pm-gawk.1.gz`)
+
+RPM does not automatically package files under `/usr/share/info` or `/usr/share/man`. They must be explicitly declared in `%files`.
+
+### Fix
+Add the missing documentation paths to the `%files` section using standard RPM macros for info and man directories. Insert the following two lines anywhere within your `%files` section (typically near other `%{_datadir}` or doc listings):
+
+
+This explicitly packages all unpackaged info files and the `pm-gawk` man page, satisfying RPM's unpackaged file check. No other changes are required.

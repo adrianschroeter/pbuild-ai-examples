@@ -1,0 +1,169 @@
+Binärdateien source_backup/libpeas-1.36.0.tar.xz und sources/typelibs-example/libpeas-1.36.0.tar.xz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/libpeas.spec sources/typelibs-example/libpeas.spec
+--- source_backup/libpeas.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/typelibs-example/libpeas.spec	2026-07-07 03:25:38.087982923 +0200
+@@ -0,0 +1,164 @@
++# vim: set ft=rpm :
++# SPDX-License-Identifier: LGPL-2.1-only
++
++Name:           libpeas
++Version:        1.36.0
++Release:        0
++Summary:        GObject-based plugin engine
++License:        LGPL-2.1-only
++Url:            https://gitlab.gnome.org/GNOME/libpeas/
++Source:         https://download.gnome.org/sources/%{name}/%{version}/%{name}-%{version}.tar.xz
++Patch0:         disable-introspection-tests.patch
++
++BuildRequires:  meson >= 0.50.0
++BuildRequires:  pkg-config
++BuildRequires:  gobject-introspection-devel
++BuildRequires:  gtk3-devel
++BuildRequires:  python3-pygobject
++BuildRequires:  lua51-devel
++BuildRequires:  luajit-devel
++BuildRequires:  glib2-devel
++BuildRequires:  gdk-pixbuf-2_devel
++BuildRequires:  gettext-devel
++
++%description
++libpeas is a GObject-based plugin engine, targeted at giving every application
++the chance to assume its own extensibility. It takes its roots in the old gedit
++plugins engine, and provides an extensive set of features mirroring the
++desiderata of most of the applications providing an extension framework.
++
++It supports multiple languages for writing plugins (C, Lua, Python) and
++provides both a core library (libpeas) and GTK+ widgetry (libpeas-gtk).
++
++%package -n     libpeas-1_0-0
++Summary:        GObject-based plugin engine
++License:        LGPL-2.1-only
++# Fix SO version to be forward-compatible
++Provides:       libpeas-1_0.so()(64bit)
++# This library provides GLib/GObject introspection data
++Obsoletes:      libpeas >= 1.37
++
++%description -n libpeas-1_0-0
++The shared library for the libpeas GObject-based plugin engine.
++This package contains the core runtime library required by applications
++that use libpeas as a plugin framework.
++
++%package -n     libpeas-gtk-1_0-0
++Summary:        GTK+ widgetry for the libpeas plugin engine
++License:        LGPL-2.1-only
++Provides:       libpeas-gtk-1_0.so()(64bit)
++Obsoletes:      libpeas-gtk >= 1.37
++
++%description -n libpeas-gtk-1_0-0
++This package contains the GTK+ widgetry for the libpeas plugin engine,
++including plugin manager dialogs and other GTK-based UI components.
++
++%package -devel
++Summary:        Development files for libpeas
++License:        LGPL-2.1-only
++Requires:       libpeas-devel = %{version}
++Requires:       libpeas-1_0-0 = %{version}
++Requires:       libpeas-gtk-1_0-0 = %{version}
++
++%description -devel
++This package contains the development files for building applications
++that use the libpeas plugin engine. It includes header files, pkg-config
++configuration, and introspection typelibs.
++
++%package lua5_1
++Summary:        Lua 5.1 loader for the libpeas plugin engine
++License:        LGPL-2.1-only
++Requires:       libpeas-1_0-0 = %{version}
++
++%description lua5_1
++This package contains the Lua 5.1 loader module for the libpeas plugin engine,
++allowing plugins to be written in the Lua programming language.
++
++%package python3
++Summary:        Python 3 loader for the libpeas plugin engine
++License:        LGPL-2.1-only
++Requires:       libpeas-1_0-0 = %{version}
++
++%description python3
++This package contains the Python 3 loader module for the libpeas plugin engine,
++allowing plugins to be written in the Python 3 programming language.
++
++%package demo
++Summary:        Demo application and sample plugins for libpeas
++License:        LGPL-2.1-only
++
++%description demo
++This package contains the peas-demo sample application and example plugins
++for the libpeas plugin engine, demonstrating how to use the library.
++
++%prep
++%autosetup -p1
++
++%build
++MESON_ARGS+=" \
++  -Dintrospection=true \
++  -Dvapi=false \
++  -Dwidgetry=true \
++  -Ddemos=true \
++  -Dgtk_doc=false \
++  -Dglade_catalog=true"
++meson setup build %{MESON_ARGS} --prefix=/usr
++ninja -C build
++
++%check
++# No tests in the upstream build system for this version
++
++%install
++ninja -C build install
++%glib2_gtkdoc_convert_schemas data/icons/gnome-icon-theme-symbolic/scalable/devices/
++%suse_register_gio_compatible 16x16/libpeas-plugin.png 22x22/libpeas-plugin.png 32x32/libpeas-plugin.png
++%set_permissions \
++  %{buildroot}%{_bindir}/peas-demo
++
++%fdupes -s %{buildroot}
++
++%files -n libpeas-1_0-0
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_libdir}/libpeas-1.0.so.*
++%{_datadir}/girepository-1.0/Peas-1.0.typelib
++%{_datadir}/gir-1.0/Peas-1.0.gir
++
++%files -n libpeas-gtk-1_0-0
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_libdir}/libpeas-gtk-1.0.so.*
++%{_datadir}/girepository-1.0/PeasGtk-1.0.typelib
++%{_datadir}/gir-1.0/PeasGtk-1.0.gir
++
++%files -devel
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_includedir}/libpeas-1.0/
++%{_libdir}/libpeas-1.0.so
++%{_libdir}/pkgconfig/libpeas-1.0.pc
++%{_datadir}/glib-2.0/schemas/org.gnome.libpeas.gschema.xml
++%{_datadir}/girepository-1.0/Peas-1.0.typelib
++%{_datadir}/girepository-1.0/PeasGtk-1.0.typelib
++
++%files lua5_1
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_libdir}/libpeas/*/loaders/lua51loader.so
++%{_datadir}/glib-2.0/modules/libpeas-loaders-gtk3.ini
++%{_datadir}/glib-2.0/gio/modules/libpeas-loader-init-loaders-gtk3.so
++
++%files python3
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_libdir}/libpeas/*/loaders/py3loader.so
++
++%files demo
++%defattr(-, root, root)
++%doc AUTHORS COPYING NEWS README
++%{_bindir}/peas-demo
++%{_datadir}/icons/hicolor/
++%{_datadir}/applications/org.gnome.peas-demo.desktop
++%{_datadir}/glib-2.0/schemas/org.gnome.peas-demo.gschema.xml
++
++%changelog

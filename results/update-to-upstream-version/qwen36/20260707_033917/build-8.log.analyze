@@ -1,0 +1,20 @@
+### Error Analysis
+The build fails in the `%files` check phase because RPM cannot locate `/bin/gawk` and `/bin/awk` inside the `BUILDROOT`. On modern SUSE systems with `usrmerge`, the binary directory is `/usr/bin`, not `/bin`. Your `%files` section likely contains hardcoded `/bin/gawk` and `/bin/awk`, which causes RPM to look for them at `$RPM_BUILD_ROOT/bin/gawk` instead of the correct `$RPM_BUILD_ROOT/usr/bin/gawk`. 
+
+Additionally, previous attempts failed because they used the deprecated `%{buildroot}` macro (which often expands to an empty string or breaks in modern RPM environments) and attempted to create unversioned symlinks that GNU packaging guidelines now discourage upstream tarballs from providing. The binaries are installed as versioned `gawk-5.4.0`, so the spec must explicitly generate the unversioned symlinks during `%install`.
+
+### Required Fixes
+
+**1. Fix the `%files` section:**
+Replace any hardcoded `/bin/gawk` and `/bin/awk` entries with the standard RPM macro to match the modern `usrmerge` layout:
+- Change `/bin/gawk` → `%{_bindir}/gawk`
+- Change `/bin/awk` → `%{_bindir}/awk`
+
+**2. Fix the `%install` section:**
+Remove the previous `ln -sfv` attempts that used `%{buildroot}`. Immediately after `%make_install`, add the following lines to correctly generate the unversioned symlinks in the active build root:
+```bash
+mkdir -p $RPM_BUILD_ROOT%{_bindir}
+ln -sf gawk-%{version} $RPM_BUILD_ROOT%{_bindir}/gawk
+ln -sf gawk-%{version} $RPM_BUILD_ROOT%{_bindir}/awk
+```
+This ensures the symlinks are placed exactly where RPM expects them during the `%files` validation phase.

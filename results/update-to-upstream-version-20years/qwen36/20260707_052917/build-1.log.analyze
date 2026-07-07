@@ -1,0 +1,11 @@
+### Root Cause Analysis
+The build failed because line 45 of `gawk.spec` uses the deprecated implicit patch macro syntax (e.g., `%patch0`). Modern RPM (4.18+) dropped support for implicit patch numbering and requires explicit selection via the `-P` flag. The RPM parser fails with `Patch number not specified: patch` because it cannot resolve which patch index to apply.
+
+### Required Fix
+- **Line 45 (`%prep` section)**: Replace `%patch0` (or bare `%patch`) with `%patch -P0 -p1`. 
+  - Ensure `-P0` matches the `Patch0:` tag defined in the spec's metadata section.
+  - Add `-p1` to correctly strip the leading directory prefix from the patch file names. Preserve any other existing flags (e.g., `-b`, `-V`).
+- **Additional `%prep` lines**: Scan for any other occurrences of `%patchN` (e.g., `%patch1`) and rewrite them sequentially as `%patch -PN -p1`. Do not reuse `-P0`; increment the index to match the corresponding `Patch:` definitions.
+- Verify that `Patch0: <filename>` exists near the top of `gawk.spec` so RPM can locate the correct patch file during the prep phase.
+
+This update aligns the spec with modern RPM macro requirements and resolves the parse error. No interactive debugging is needed.

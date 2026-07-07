@@ -1,0 +1,603 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep.changes sources/ripgrep/ripgrep.changes
+--- source_backup/ripgrep.changes	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep.changes	2026-07-07 00:43:57.238628087 +0200
+@@ -0,0 +1,4 @@
++-------------------------------------------------------------------
++Sat Mar 15 2025 Your Name <your@email.com>
++
++- Initial package created from upstream release 15.1.0
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/.gitattributes sources/ripgrep/ripgrep-ref/.gitattributes
+--- source_backup/ripgrep-ref/.gitattributes	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/.gitattributes	2026-07-07 00:32:57.350232118 +0200
+@@ -0,0 +1,24 @@
++*.changes merge=merge-changes
++*.7z filter=lfs diff=lfs merge=lfs -text
++*.bsp filter=lfs diff=lfs merge=lfs -text
++*.bz2 filter=lfs diff=lfs merge=lfs -text
++*.gem filter=lfs diff=lfs merge=lfs -text
++*.gz filter=lfs diff=lfs merge=lfs -text
++*.jar filter=lfs diff=lfs merge=lfs -text
++*.lz filter=lfs diff=lfs merge=lfs -text
++*.lzma filter=lfs diff=lfs merge=lfs -text
++*.obscpio filter=lfs diff=lfs merge=lfs -text
++*.oxt filter=lfs diff=lfs merge=lfs -text
++*.pdf filter=lfs diff=lfs merge=lfs -text
++*.png filter=lfs diff=lfs merge=lfs -text
++*.rpm filter=lfs diff=lfs merge=lfs -text
++*.tar filter=lfs diff=lfs merge=lfs -text
++*.tbz filter=lfs diff=lfs merge=lfs -text
++*.tbz2 filter=lfs diff=lfs merge=lfs -text
++*.tgz filter=lfs diff=lfs merge=lfs -text
++*.ttf filter=lfs diff=lfs merge=lfs -text
++*.txz filter=lfs diff=lfs merge=lfs -text
++*.whl filter=lfs diff=lfs merge=lfs -text
++*.xz filter=lfs diff=lfs merge=lfs -text
++*.zip filter=lfs diff=lfs merge=lfs -text
++*.zst filter=lfs diff=lfs merge=lfs -text
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/.gitignore sources/ripgrep/ripgrep-ref/.gitignore
+--- source_backup/ripgrep-ref/.gitignore	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/.gitignore	2026-07-07 00:32:57.350232118 +0200
+@@ -0,0 +1,4 @@
++*.obscpio
++*.osc
++_build.*
++.pbuild
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/README.suse-maint.md sources/ripgrep/ripgrep-ref/README.suse-maint.md
+--- source_backup/ripgrep-ref/README.suse-maint.md	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/README.suse-maint.md	2026-07-07 00:32:57.350232118 +0200
+@@ -0,0 +1,19 @@
++# How to update the ripgrep package
++
++## Prerequisites:
++
++You need the `tar_scm`, `cargo_vendor` and `cargo_audit` obs services
++installed:
++
++    zypper in obs-service-tar_scm obs-service-cargo_vendor \
++        obs-service-cargo_audit
++
++## Updating to a new version from upstream
++
++Edit the `_service` and `spec` file and update the version variable.
++
++Download the new source file by running:
++
++    osc service disabledrun
++
++Update the changelog file with the upstream release notes.
+Binärdateien source_backup/ripgrep-ref/ripgrep-15.1.0.tar.zst und sources/ripgrep/ripgrep-ref/ripgrep-15.1.0.tar.zst sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/ripgrep.changes sources/ripgrep/ripgrep-ref/ripgrep.changes
+--- source_backup/ripgrep-ref/ripgrep.changes	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/ripgrep.changes	2026-07-07 00:32:57.372199756 +0200
+@@ -0,0 +1,281 @@
++-------------------------------------------------------------------
++Sun Oct 26 15:20:59 UTC 2025 - Andrea Manzini <andrea.manzini@suse.com>
++
++- Update to 15.1.0:
++  * Fix a regression with --line-buffered introduced in ripgrep 15.0.0
++
++-------------------------------------------------------------------
++Sat Oct 18 16:49:56 UTC 2025 - Andreas Stieger <andreas.stieger@gmx.de>
++
++- Update to 15.0.0:
++  * Several bugs around gitignore matching have been fixed. This
++    includes a commonly reported bug related to applying gitignore
++    rules from parent directories.
++  * A memory usage regression when handling very large gitignore
++    files has been fixed.
++  * rg -vf file, where file is empty, now matches everything.
++  * The -r/--replace flag now works with --json.
++  * A subset of Jujutsu (jj) repositories are now treated as if
++    they were git repositories. That is, ripgrep will respect jj's
++    gitignores.
++  * Globs can now use nested curly braces.
++  * Improve performance of large values with -A/--after-context
++
++-------------------------------------------------------------------
++Mon Sep  9 06:27:41 UTC 2024 - Michael Vetter <mvetter@suse.com>
++
++- Update to 14.1.1:
++  * BUG #2884:
++    Fix bug where ripgrep could miss some matches that it should report.
++  * MISC #2748:
++    Remove ripgrep's simd-accel feature because it was frequently broken.
++
++-------------------------------------------------------------------
++Sat Mar 30 04:59:13 UTC 2024 - William Brown <william.brown@suse.com>
++
++- Change xz to zst for better compression ratios
++- Remove unneeded cargo config
++- Tidy up spec with cargo-packaging macros
++
++-------------------------------------------------------------------
++Fri Mar 22 23:49:38 UTC 2024 - Gordon Leung <pirateclip@protonmail.com>
++
++- Add requires and licenses to completion packages
++
++-------------------------------------------------------------------
++Sun Jan  7 17:40:00 UTC 2024 - Andrea Manzini <andrea.manzini@suse.com>
++
++- Update to ripgrep 14.1.0:
++  * bug fix for unbounded memory growth while walking a directory tree. 
++  * improvements to the completions for the fish shell
++
++- Update to ripgrep 14.0.3:
++  * This is a patch release with a bug fix for the --sortr flag.
++
++- Update to ripgrep 14.0.0:
++  * a new major version release of ripgrep that has some new features, performance improvements and a lot of bug fixes.
++  * The headlining feature in this release is hyperlink support. In this release, they are an opt-in feature but may 
++    change to an opt-out feature in the future. To enable them, try passing --hyperlink-format default. 
++    If you use VS Code, then try passing --hyperlink-format vscode. 
++    Please report your experience with hyperlinks, positive or negative.
++
++  * Another headlining development in this release is that it contains a rewrite of its regex engine. 
++    You generally shouldn't notice any changes, except for some searches may get faster. 
++    You can read more about the regex engine rewrite on my blog. 
++    Please report your performance improvements or regressions that you notice.
++
++  * Finally, ripgrep switched the library it uses for argument parsing. Users should not notice a difference in most cases 
++    (error messages have changed somewhat), but flag overrides should generally be more consistent. 
++    For example, things like --no-ignore --ignore-vcs work as one would expect 
++    (disables all filtering related to ignore rules except for rules found in version control systems such as git).
++
++  * BREAKING CHANGES:
++    rg -C1 -A2 used to be equivalent to rg -A2, but now it is equivalent to rg -B1 -A2. 
++    That is, -A and -B no longer completely override -C. Instead, they only partially override -C.
++
++- dropped ruby build dependency and embedded shell completions/man generation in the build process
++
++
++-------------------------------------------------------------------
++Sat Dec 24 23:22:38 UTC 2022 - Matej Cepl <mcepl@suse.com>
++
++- Enable building of the pcre2 feature.
++
++-------------------------------------------------------------------
++Mon Jun 20 03:22:55 UTC 2022 - William Brown <william.brown@suse.com>
++
++- Automatic update of vendored dependencies
++
++-------------------------------------------------------------------
++Tue May 24 06:35:00 UTC 2022 - William Brown <william.brown@suse.com>
++
++- Automatic update of vendored dependencies
++
++-------------------------------------------------------------------
++Wed Jul 14 15:39:52 UTC 2021 - Andreas Schneider <asn@cryptomilk.org>
++
++- Build with rust flags
++- Add obs service file
++
++-------------------------------------------------------------------
++Sun Jun 13 06:51:54 UTC 2021 - Avindra Goolcharan <avindra@opensuse.org>
++
++- update to ripgrep 13.0.0:
++  * A new short flag, -., has been added. It is an alias for the --hidden
++    flag, which includes hidden files and directories in search
++  * ripgrep is now using a new vectorized implementation of memmem, which
++    accelerates many common searches. Please report performance regressions
++    (or major improvements).
++  * BREAKING: Binary detection output has changed slightly. In this
++    release, a tweak has been made to the output format when a
++    binary file is detected.
++
++    Previous format:
++      Binary file FOO matches (found "\0" byte around offset XXX)
++
++    New format:
++      FOO: binary file matches (found "\0" byte around offset XXX)
++
++  * vimgrep output in multi-line now only prints the first line for
++    each match. In multi-line mode, --count is now equivalent
++    to --count-matches.
++  * VULN #1773: public facing issue tracking CVE-2021-3013. ripgrep's README
++    now contains a section describing how to report a vulnerability
++  * PERF #1657: Check if a file should be ignored first before issuing stat calls
++  * PERF memchr#82: ripgrep now uses a new vectorized implementation of memmem
++  * FEAT: Added or improved file type filtering for ASP, Bazel, dvc,
++    FlatBuffers, Futhark, minified files, Mint, pofiles (from GNU gettext)
++    Racket, Red, Ruby, VCL, Yang
++  * FEAT #1404: ripgrep now prints a warning if nothing is searched
++  * FEAT #1680: Add -. as a short flag alias for --hidden.
++  * FEAT #1842: Add --field-{context,match}-separator for customizing field delimiters.
++  * FEAT #1856: README now links to Spanish translation.
++  * BUG #1277: document cygwin path translation behavior in the FAQ
++  * BUG #1739: fix bug where replacements were buggy if the regex matched a line terminator
++  * BUG #1311: fix multi-line bug where a search & replace for \n didn't work as expected
++  * BUG #1401: fix buggy interaction between PCRE2 look-around and -o/--only-matching
++  * BUG #1412: fix multi-line bug with searches using look-around past matching lines
++  * BUG #1577: fish shell completions will continue to be auto-generated
++  * BUG #1642: fixes a bug where using -m and -A printed more matches than the limit
++  * BUG #1703: clarify the function of -u/--unrestricted
++  * BUG #1708: clarify how -S/--smart-case works
++  * BUG #1730: clarify that CLI invocation must always be valid, regardless of config file
++  * BUG #1741: fix stdin detection when using PowerShell in UNIX environments
++  * BUG #1756: fix bug where foo/** would match foo, but it shouldn't
++  * BUG #1765: fix panic when --crlf is used in some cases
++  * BUG #1638: correctly sniff UTF-8 and do transcoding, like we do for UTF-16
++  * BUG #1816: add documentation for glob alternate syntax, e.g., {a,b,..}
++  * BUG #1847: clarify how the --hidden flag works
++  * BUG #1866: fix bug when computing column numbers in --vimgrep mode
++  * BUG #1868: fix bug where --passthru and -A/-B/-C did not override each other
++  * BUG #1869: clarify docs for --files-with-matches and --files-without-match
++  * BUG #1878: fix bug where \A could produce unanchored matches in multiline search
++  * BUG 94e4b8e3: Fix column numbers with --vimgrep is used with -U/--multiline
++- ran spec-cleaner
++
++-------------------------------------------------------------------
++Tue Jul 28 22:49:23 UTC 2020 - Martin Rey <mrey@suse.com>
++
++- ripgrep 12.1.1 
++  * Corrects some egregious markup output in --help (#1581)
++  * Mention the special $0 capture group in docs for the
++    -r/--replace flag. (#1591)
++  * Fix failing test resulting from out-of-sync dependencies.
++    (#1602)
++
++-------------------------------------------------------------------
++Fri May 15 15:33:34 UTC 2020 - Andreas Stieger <andreas.stieger@gmx.de>
++
++- ripgrep 12.1.0
++  * many bug fixes
++  * performance improvements
++  * --no-pcre2-unicode deprecated in favor of --no-unicode
++  * --auto-hybrid-regex deprecated in favor of --engine auto
++  * supports decompressing .Z files via uncompress
++- drop ripgrep-11.0.2-reproducible-manpage.patch, now upstream
++
++-------------------------------------------------------------------
++Thu Apr 30 22:33:42 UTC 2020 - Martin Wilck <mwilck@suse.com>
++
++- Remove transient file .crates2.json during build 
++
++-------------------------------------------------------------------
++Wed Mar 25 09:24:24 UTC 2020 - Bernhard Wiedemann <bwiedemann@suse.com>
++
++- Add ripgrep-11.0.2-reproducible-manpage.patch (boo#1100677)
++
++-------------------------------------------------------------------
++Mon Nov 11 15:52:55 UTC 2019 - Ismail Dönmez <idonmez@suse.com>
++
++- Update to version 11.0.2
++  * See included CHANGELOG.md for the complete changelog
++
++-------------------------------------------------------------------
++Sun Sep 16 02:44:51 UTC 2018 - Avindra Goolcharan <avindra@opensuse.org>
++
++- Updated to version 0.10.0
++- Breaking change
++  * The match semantics of -w/--word-regexp have changed slightly.
++    They used to be \b(?:<your pattern>)\b. Now, it's
++    (?:^|\W)(?:<your pattern>)(?:$|\W). This matches the behavior
++    of GNU grep and is believed to be closer to the intended
++    semantics of the flag. 
++- Features
++  * Add -U/--multiline flag that permits matching over multiple lines.
++  * Add -P/--pcre2 flag that gives support for look-around and
++    backreferences.
++  * Add --json flag that prints results in a JSON Lines format.
++  * --one-file-system flag to skip directories on different file systems.
++  * Add --sort and --sortr flag for more sorting. Deprecate --sort-files.
++  * The --trim flag strips prefix whitespace from all lines printed.
++  * Add --null-data flag, which makes ripgrep use NUL as a line terminator.
++  * The --passthru flag now works with the --replace flag.
++  * Add --line-buffered and --block-buffered for forcing a buffer strategy.
++  * Add --pre-glob for filtering files through the --pre flag.
++- Bug fixes
++  * Searching with non-zero context can now use memory maps if
++    appropriate.
++  * ripgrep will now stop correctly when its output pipe is closed.
++  * The -w/--word-regexp flag now works more intuitively.
++  * Detection of readable stdin has improved on Windows.
++  * Matching empty lines now works correctly in several corner cases.
++  * Color escape sequences now coalesce, which reduces output size.
++  * ripgrep is now more robust with respect to memory maps failing.
++  * Color escape sequences are no longer emitted for empty matches.
++  * Context from the --passthru flag should not impact process exit status.
++  * Fixes bug in ignore crate where first path was always treated
++    as a symlink.
++  * Read stderr asynchronously when running a process.
++  * Add compile time and runtime CPU features to --version output.
++  * Don't complete bare pattern after -f in zsh.
++
++-------------------------------------------------------------------
++Mon Aug 27 16:26:04 UTC 2018 - jengelh@inai.de
++
++- Update RPM groups and summary.
++
++-------------------------------------------------------------------
++Sun Aug 26 21:09:52 UTC 2018 - viktor.saevars@gmail.com
++
++- Updated to version 0.9.0
++- Breaking changes
++  * When --count and --only-matching are provided simultaneously,
++    the behavior of ripgrep is as if the --count-matches flag was given.
++  * Octal syntax is no longer supported.
++  * The --line-number-width flag has been removed.
++- Features
++  * Added a --stats flag, which emits aggregate statistics 
++    after search results.
++  * lz4 support when using the -z flag
++  * Added --no-ignore-global that permits disabling global gitignores
++  * Renamed --maxdepth to --max-depth
++  * Added a --pre option to filter with an arbitrary program
++  * Improved zsh completion
++- Bug fixes
++  * No longer skips tar archives when -z is used
++  * Ignore gitignore files if outside of a repository
++  * Use more descriptive error messages
++
++-------------------------------------------------------------------
++Tue Mar 13 03:56:43 UTC 2018 - avindra@opensuse.org
++
++ - reduce tarball sizes
++   * source tarball taken as is from github
++   * vendor tarball compressed with xz
++ - cleanup with spec-cleaner
++ - port history to ripgrep.changes
++ - mark as dual licensed with MIT
++ - split completion scripts off into separate packages
++
++-------------------------------------------------------------------
++Fri Mar 09 01:00:00 UTC 2018 - viktor.saevars@gmail.com
++
++ - Use version 0.8.1
++ - Generate man file
++ - Add check
++ - Remove empty post and postun
++
++-------------------------------------------------------------------
++Sun Oct 08 01:00:00 UTC 2017 - viktor.saevars@gmail.com
++
++ - Inital packaging @ 0.6.0
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/ripgrep.spec sources/ripgrep/ripgrep-ref/ripgrep.spec
+--- source_backup/ripgrep-ref/ripgrep.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/ripgrep.spec	2026-07-07 00:32:57.372199756 +0200
+@@ -0,0 +1,114 @@
++#
++# spec file for package ripgrep
++#
++# Copyright (c) 2025 SUSE LLC and contributors
++# Copyright (c) 2025 Andreas Stieger <Andreas.Stieger@gmx.de>
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%global rustflags '-Clink-arg=-Wl,-z,relro,-z,now'
++Name:           ripgrep
++Version:        15.1.0
++Release:        0
++Summary:        A search tool that combines ag with grep
++License:        MIT AND Unlicense
++Group:          Productivity/Text/Utilities
++URL:            https://github.com/BurntSushi/ripgrep
++Source0:        %{name}-%{version}.tar.zst
++Source1:        vendor.tar.zst
++Source999:      README.suse-maint.md
++BuildRequires:  cargo-packaging
++BuildRequires:  pkgconf
++BuildRequires:  pkgconfig
++BuildRequires:  pkgconfig(libpcre2-posix)
++
++%description
++ripgrep is a line oriented search tool that combines the usability of
++The Silver Searcher (similar to ack) with the raw speed of GNU grep.
++ripgrep works by recursively searching your current directory
++for a regex pattern.
++
++%package bash-completion
++Summary:        Bash Completion for %{name}
++Group:          System/Shells
++Requires:       %{name} = %{version}
++Requires:       bash-completion
++Supplements:    (%{name} and bash)
++BuildArch:      noarch
++
++%description bash-completion
++The official bash completion script for ripgrep, generated during the build.
++
++%package zsh-completion
++Summary:        ZSH Completion for %{name}
++Group:          System/Shells
++Requires:       %{name} = %{version}
++Supplements:    (%{name} and zsh)
++BuildArch:      noarch
++
++%description zsh-completion
++The official zsh completion script for ripgrep, generated during the build.
++
++%package fish-completion
++Summary:        Fish Completion for %{name}
++Group:          System/Shells
++Requires:       %{name} = %{version}
++Supplements:    (%{name} and fish)
++BuildArch:      noarch
++
++%description fish-completion
++The official fish completion script for ripgrep, generated during the build.
++
++%prep
++%autosetup -p1 -a1
++
++%build
++%{cargo_build} --features 'pcre2'
++
++%install
++install -D -d -m 0755 %{buildroot}%{_bindir}
++install -m 0755 %{_builddir}/%{name}-%{version}/target/release/rg %{buildroot}%{_bindir}/rg
++
++# remove residue crate file
++rm -f %{buildroot}%{_prefix}/.crates*
++
++TARGETBIN=target/release/rg
++$TARGETBIN --generate man > rg.1
++$TARGETBIN --generate complete-bash > rg.bash
++$TARGETBIN --generate complete-fish > rg.fish
++$TARGETBIN --generate complete-zsh > rg.zsh
++install -Dm 644 rg.1 %{buildroot}%{_mandir}/man1/rg.1
++install -Dm 644 rg.bash %{buildroot}%{_datadir}/bash-completion/completions/rg
++install -Dm 644 rg.fish %{buildroot}%{_datadir}/fish/vendor_completions.d/rg.fish
++install -Dm 644 rg.zsh %{buildroot}%{_datadir}/zsh/site-functions/_rg
++
++%files
++%license LICENSE-MIT UNLICENSE
++%doc CHANGELOG.md README.md
++%{_mandir}/man1/rg.1%{?ext_man}
++%{_bindir}/rg
++
++%files bash-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/bash-completion
++
++%files fish-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/fish
++
++%files zsh-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/zsh
++
++%changelog
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep-ref/_service sources/ripgrep/ripgrep-ref/_service
+--- source_backup/ripgrep-ref/_service	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep-ref/_service	2026-07-07 00:32:57.350232118 +0200
+@@ -0,0 +1,25 @@
++<services>
++    <service name="tar_scm" mode="disabled">
++        <param name="url">https://github.com/BurntSushi/ripgrep</param>
++        <param name="scm">git</param>
++        <param name="exclude">.git</param>
++        <param name="revision">15.1.0</param>
++        <param name="versionformat">@PARENT_TAG@</param>
++        <param name="versionrewrite-pattern">v(.*)</param>
++    </service>
++    <service name="set_version" mode="disabled">
++        <param name="basename">ripgrep</param>
++    </service>
++    <service name="recompress" mode="disabled">
++        <param name="file">*.tar</param>
++        <param name="compression">zst</param>
++    </service>
++    <service name="cargo_vendor" mode="disabled">
++        <param name="srcdir">ripgrep</param>
++        <param name="compression">zst</param>
++        <param name="update">true</param>
++    </service>
++    <service name="cargo_audit" mode="disabled">
++        <param name="srcdir">ripgrep</param>
++    </service>
++</services>
+Binärdateien source_backup/ripgrep-ref/vendor.tar.zst und sources/ripgrep/ripgrep-ref/vendor.tar.zst sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/ripgrep.spec sources/ripgrep/ripgrep.spec
+--- source_backup/ripgrep.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/ripgrep.spec	2026-07-07 00:50:34.856152880 +0200
+@@ -0,0 +1,89 @@
++#
++# spec file for package ripgrep
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++%global rustflags '-Clink-arg=-Wl,-z,relro,-z,now'
++Name:           ripgrep
++Version:        15.1.0
++Release:        0
++Summary:        A search tool that combines ag with grep
++License:        MIT AND Unlicense
++Group:          Prod
++
++# The rust_tier1_arches macro needs to be defined locally before use. It is
++# automatically provided by cargo-packaging in OBS, but here we list them out.
++ExclusiveArch:  %{rust_tier1_arches}
++BuildRequires:  cargo
++BuildRequires:  cargo-packaging
++Source0:        ripgrep-%{version}.tar.zst
++Source1:        registry.tar.zst
++
++%description
++ripgrep (rg) recursively searches your current directory for a regex pattern.
++By default, ripgrep will respect your .gitignore and automatically skip hidden
++files/directories and binary files.
++
++# Note: ripgrep generates man page and shell completions at build time using the built binary.
++
++%prep
++%autosetup -p1 -a1
++
++%build
++export CARGO_HOME=$PWD/.cargo
++%{cargo_build}
++
++%install
++export CARGO_HOME=$PWD/.cargo
++%{cargo_install}
++
++# ripgrep can generate its own man page and completions from the built binary
++TARGETBIN=target/release/rg
++$TARGETBIN --generate man > rg.1
++$TARGETBIN --generate complete-bash > rg.bash
++$TARGETBIN --generate complete-fish > rg.fish
++$TARGETBIN --generate complete-zsh > rg.zsh
++install -Dm 644 rg.1 %{buildroot}%{_mandir}/man1/rg.1
++install -Dm 644 rg.bash %{buildroot}%{_datadir}/bash-completion/completions/rg
++install -Dm 644 rg.fish %{buildroot}%{_datadir}/fish/vendor_completions.d/rg.fish
++install -Dm 644 rg.zsh %{buildroot}%{_datadir}/zsh/site-functions/_rg
++
++# Remove residue files from cargo install
++rm -f %{buildroot}%{_prefix}/.crates*
++
++%check
++export CARGO_HOME=$PWD/.cargo
++%{cargo_test}
++
++%files
++%license LICENSE-MIT UNLICENSE
++%doc CHANGELOG.md README.md
++%{_mandir}/man1/rg.1%{?ext_man}
++%{_bindir}/rg
++
++%files bash-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/bash-completion
++
++%files fish-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/fish
++
++%files zsh-completion
++%license LICENSE-MIT UNLICENSE
++%{_datadir}/zsh
++
++%changelog
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/_service sources/ripgrep/_service
+--- source_backup/_service	1970-01-01 01:00:00.000000000 +0100
++++ sources/ripgrep/_service	2026-07-07 00:36:35.747904215 +0200
+@@ -0,0 +1,5 @@
++<services>
++  <service name="cargo_vendor" mode="manual">
++    <param name="compression">zst</param>
++  </service>
++</services>
