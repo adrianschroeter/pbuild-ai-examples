@@ -1,6 +1,0 @@
-The build failed because two `%doc` entries reference paths that don't exist in gawk 5.4.0:
-
-1. **`bugreports`** — not a directory (or file) in this tarball. The `%files` section lists it, and `%install` also tries to `cp -pr` it into the buildroot, both of which fail with "No such file or directory".
-2. **`LICENSE`** — gawk 5.4.0 does not ship a top-level `LICENSE` file (it uses `COPYING`). The `%license` section fails copying it.
-
-Let me inspect what doc files actually exist in the tarball to give an accurate fix.

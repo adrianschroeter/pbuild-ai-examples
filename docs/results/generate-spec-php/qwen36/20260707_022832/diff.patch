@@ -1,0 +1,63 @@
+Binärdateien source_backup/phpstan-1.10.0.tar.gz und sources/php-example/phpstan-1.10.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/phpstan.spec sources/php-example/phpstan.spec
+--- source_backup/phpstan.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/php-example/phpstan.spec	2026-07-07 02:32:58.527927637 +0200
+@@ -0,0 +1,58 @@
++#
++# spec file for package phpstan
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           phpstan
++Version:        1.10.0
++Release:        0
++Summary:        PHPStan - PHP Static Analysis Tool
++License:        MIT
++URL:            https://phpstan.org/
++Source:         https://github.com/phpstan/phpstan/archive/refs/tags/1.10.0.tar.gz
++BuildRequires:  php >= 5.6
++BuildArch:      noarch
++
++%description
++PHPStan focuses on finding errors in your code without actually running it.
++It catches whole classes of bugs even before you write tests for the code.
++It moves PHP closer to compiled languages in the sense that the correctness
++of each line of the code can be checked before you run the actual line.
++
++%install
++install -Dm644 phpstan-%{version}/phpstan.phar %{buildroot}%{_datadir}/phpstan/phpstan.phar
++install -d -m755 %{buildroot}%{_datadir}/phpstan/conf
++cat > phpstan-wrapper <<'EOF'
++#!/usr/bin/env php
++<?php
++
++declare (strict_types=1);
++
++Phar::loadPhar(__DIR__ . '/../share/phpstan/phpstan.phar', 'phpstan.phar');
++
++require 'phar://phpstan.phar/bin/phpstan';
++EOF
++install -Dm755 phpstan-wrapper %{buildroot}%{_bindir}/phpstan
++
++%files
++%license phpstan-%{version}/LICENSE
++%doc phpstan-%{version}/README.md
++%dir %{_datadir}/phpstan/
++%{_datadir}/phpstan/*.phar
++%{_datadir}/phpstan/conf/
++%{_bindir}/phpstan
++
++%changelog

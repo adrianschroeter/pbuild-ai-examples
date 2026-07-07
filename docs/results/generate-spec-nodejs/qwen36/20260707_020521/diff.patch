@@ -1,0 +1,56 @@
+Binärdateien source_backup/chalk-5.3.0.tgz und sources/nodejs-example/chalk-5.3.0.tgz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/chalk.spec sources/nodejs-example/chalk.spec
+--- source_backup/chalk.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/nodejs-example/chalk.spec	2026-07-07 02:10:23.680498514 +0200
+@@ -0,0 +1,51 @@
++#
++# spec file for package chalk
++#
++# Copyright (c) 2024 SUSE LLC
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the upstream package. The license can be
++# found in the LICENSE file.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++Name:           nodejs-chalk
++Version:        5.3.0
++Release:        0
++Summary:        Terminal string styling done right
++License:        MIT
++URL:            https://github.com/chalk/chalk
++Source:         https://registry.npmjs.org/chalk/-/chalk-%{version}.tgz
++BuildArch:      noarch
++
++%description
++Chalk is a terminal string styling solution. It provides a clean and
++consistent API for formatting text in the terminal with colors and styles.
++
++It supports 256 and truecolor (16 million color) output, chained
++styling, nested styles, automatic detection of supported color levels,
++and works consistently across different terminals and platforms.
++
++%prep
++%setup -q -n package
++
++%build
++# No build step needed for pure JavaScript
++
++%install
++mkdir -p %{buildroot}%{nodejs_default_library_dir}/chalk
++cp -a * %{buildroot}%{nodejs_default_library_dir}/chalk/
++
++%fdupes -s %{buildroot}%{nodejs_default_library_dir}/chalk
++
++%files
++%dir %{nodejs_default_library_dir}/chalk
++%{nodejs_default_library_dir}/chalk/package.json
++%{nodejs_default_library_dir}/chalk/source/
++%{nodejs_default_library_dir}/chalk/license
++%{nodejs_default_library_dir}/chalk/readme.md
++
++%changelog

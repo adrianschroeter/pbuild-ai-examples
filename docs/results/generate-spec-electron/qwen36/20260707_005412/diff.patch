@@ -1,0 +1,126 @@
+Binärdateien source_backup/atom-1.60.0.tar.gz und sources/electron-example/atom-1.60.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.spec sources/electron-example/atom.spec
+--- source_backup/atom.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.spec	2026-07-07 01:05:18.433067776 +0200
+@@ -0,0 +1,121 @@
++#
++# spec file for package atom
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           atom
++Version:        1.60.0
++Release:        0
++Summary:        A hackable text editor for the 21st Century
++License:        MIT
++Group:          Development/Tools/Other
++URL:            https://github.com/atom/atom
++Source0:        https://github.com/atom/atom/archive/refs/tags/v%{version}.tar.gz
++BuildArch:      noarch
++
++# Build dependencies
++BuildRequires:  gcc-c++
++BuildRequires:  make
++BuildRequires:  nodejs-electron-devel >= 9.4.4
++BuildRequires:  npm
++BuildRequires:  python3
++
++# Electron runtime dependencies
++Requires:       nodejs-electron%{_isa} >= 9.4.4
++%electron_req
++
++%description
++A hackable text editor for the 21st Century.
++
++Atom is a approachable, hackable, infinitely customizable open-source text
++editor; an accessible entry point for learning how to build Electron
++applications with a small JavaScript module and some HTML.
++
++%prep
++%autosetup -p1
++
++# Remove precompiled binaries to ensure they are rebuilt against system Electron
++find . -name '*.node' -delete
++find . -name '*.jar' -delete
++find . -name '*.dll' -delete
++find . -name '*.exe' -delete
++find . -name '*.so' -not -type d -delete
++find . -name '*.dylib' -delete
++
++# Remove precompiled native modules in bundled packages to force rebuild
++find packages -name '*.node' -delete 2>/dev/null || true
++
++# The upstream tarball doesn't bundle node_modules. For the RPM build,
++# dependencies are expected to come from system repositories or vendored archives.
++# The following patch removes references to the Atom Package Registry (atom.io)
++# which is no longer operational, and replaces them with a placeholder version
++# that npm ci will resolve from local/OS repos.
++sed -i 's|"https://www.atom.io/api/packages/[^"]*"|"1.0.0"|g' package.json
++
++%build
++export ELECTRON_SKIP_BINARY_DOWNLOAD=1
++export CFLAGS="%{optflags} -fPIC"
++export CXXFLAGS="%{optflags} -fPIC"
++npm ci --ignore-scripts
++%electron_rebuild
++
++%install
++mkdir -p %{buildroot}%{_libdir}/%{name}
++cp -r . %{buildroot}%{_libdir}/%{name}
++
++# Create wrapper script for the atom editor
++mkdir -p %{buildroot}%{_bindir}
++cat > %{buildroot}%{_bindir}/atom << 'WRAPPER'
++#!/bin/sh
++exec /usr/bin/env node \
++    "$(dirname "$(readlink -f "$0")")/../lib/atom/src/main-process/main.js" \
++    "$@"
++WRAPPER
++chmod 755 %{buildroot}%{_bindir}/atom
++
++# Install desktop file
++mkdir -p %{buildroot}%{_datadir}/applications
++cat > %{buildroot}%{_datadir}/applications/atom.desktop << 'DESKTOP'
++[Desktop Entry]
++Name=Atom
++Comment=A hackable text editor for the 21st Century
++Exec=/usr/bin/atom %F
++Icon=atom
++Terminal=false
++Type=Application
++Categories=Development;TextEditor;
++MimeType=text/plain;text/x-chdr;text/x-hdr;text/x-quote;text/x-hqx;text/x-tcl;text/x-c;text/x-c++;text/x-c#;text/x-java;application/json;
++StartupWMClass=Atom
++DESKTOP
++
++# Install icon
++mkdir -p %{buildroot}%{_datadir}/icons/hicolor/256x256/apps
++install -D -m 644 resources/linux/atom-256x256.png \
++    %{buildroot}%{_datadir}/icons/hicolor/256x256/apps/atom.png
++
++%check
++export ELECTRON_SKIP_BINARY_DOWNLOAD=1
++%electron_check_native
++
++%files
++%license LICENSE.md
++%doc README.md CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md SUPPORT.md PULL_REQUEST_TEMPLATE.md
++%{_bindir}/atom
++%{_libdir}/%{name}
++%{_datadir}/applications/atom.desktop
++%{_datadir}/icons/hicolor/256x256/apps/atom.png
++
++%changelog

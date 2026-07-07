@@ -1,0 +1,77 @@
+Binärdateien source_backup/ggplot2_3.4.0.tar.gz und sources/R-example/ggplot2_3.4.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/R-ggplot2.spec sources/R-example/R-ggplot2.spec
+--- source_backup/R-ggplot2.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/R-example/R-ggplot2.spec	2026-07-07 02:56:18.376445844 +0200
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# spec file for package R-ggplot2
++#
++# Copyright (c) 2024 SUSE LLC
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license explicitly states the latter).
++#
++# All other files are contributed
++# by the maintainer of the respective packages they modify.
++
++%global packname ggplot2
++%global rlibdir %{_libdir}/R/library
++
++Name:           R-ggplot2
++Version:        3.4.0
++Release:        0
++Summary:        Create Elegant Data Visualisations Using the Grammar of Graphics
++License:        GPL-2.0-or-later
++URL:            https://cran.r-project.org/package=%{packname}
++Source0:        https://cran.r-project.org/src/contrib/%{packname}_%{version}.tar.gz
++BuildArch:      noarch
++
++BuildRequires:  R-base
++BuildRequires:  R-rlang
++BuildRequires:  R-gtable >= 0.3.6
++BuildRequires:  R-scales >= 1.4.0
++BuildRequires:  R-vctrs >= 0.6.0
++BuildRequires:  R-glue
++BuildRequires:  R-lifecycle >= 1.0.1
++BuildRequires:  R-tibble
++
++%description
++A system for declaratively creating graphics, based on the 'Grammar of Graphics'.
++You provide the data, tell ggplot2 how to map variables to aesthetics, what
++graphical primitives to use, and it takes care of the details.
++
++%prep
++%setup -q -c -n %{packname}
++
++%build
++# nothing to build
++
++%install
++R CMD INSTALL -l %{buildroot}%{rlibdir} %{packname}
++rm -f %{buildroot}%{rlibdir}/R.css
++rm -f *.o *.so
++rm -rf %{buildroot}%{rlibdir}/%{packname}/tests
++%set_permissions %{rlibdir}/%{packname}
++
++%check
++_R_CHECK_FORCE_SUGGESTS=0 \
++%{_bindir}/R CMD check --no-tests \
++    --no-manual --no-vignettes --no-build-vignettes \
++    --no-codoc --no-demo --no-examples --no-help %{packname}
++
++%files
++%dir %{rlibdir}/%{packname}
++%doc LICENSE NEWS.md README.md
++%{rlibdir}/%{packname}/DESCRIPTION
++%{rlibdir}/%{packname}/INDEX
++%{rlibdir}/%{packname}/NAMESPACE
++%{rlibdir}/%{packname}/Meta
++%{rlibdir}/%{packname}/R
++%{rlibdir}/%{packname}/data
++%{rlibdir}/%{packname}/help
++
++%changelog

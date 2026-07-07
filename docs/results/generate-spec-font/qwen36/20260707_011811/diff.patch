@@ -1,0 +1,74 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/font-roboto.spec sources/font-example/font-roboto.spec
+--- source_backup/font-roboto.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/font-example/font-roboto.spec	2026-07-07 01:19:31.072669503 +0200
+@@ -0,0 +1,69 @@
++#
++# spec file for package font-roboto
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the upstream source, see
++# https://www.apache.org/licenses/LICENSE-2.0
++# SPDX-License-Identifier: Apache-2.0
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           font-roboto
++Version:        2.138
++Release:        0
++Summary:        Clean and friendly sans serif font by Google
++License:        Apache-2.0
++URL:            https://github.com/googlefonts/roboto-2
++Source:         https://github.com/googlefonts/roboto-2/releases/download/v2.138/roboto-unhinted.zip
++BuildRequires:  fdupes
++BuildRequires:  fontpackages-backend-afm
++Requires:       fontpackages >= 0.6
++BuildArch:      noarch
++
++%description
++Roboto is a clean, friendly sans serif font designed for Roboto by Google.
++This package contains the unhinted TrueType fonts (regular, italic, bold,
++bold italic, black, black italic, light, light italic, medium, medium
++italic, thin, and thin italic) in both regular and condensed variants.
++
++%prep
++%setup -q -n roboto-unhinted
++
++%build
++
++%install
++for font in *.ttf; do
++  mkdir -p %{buildroot}%{_fontdir}/roboto
++  install -m 644 "$font" %{buildroot}%{_fontdir}/roboto/
++done
++# Install LICENSE file
++mkdir -p %{buildroot}%{_docdir}/%{name}
++install -m 644 LICENSE %{buildroot}%{_docdir}/%{name}/
++
++%post
++fontcache_post
++
++%postun
++fontcache_postun
++
++%files
++%defattr(-, root, root)
++%dir %{_fontdir}/roboto
++%{_fontdir}/roboto/*.ttf
++%doc %{_docdir}/%{name}
++
++%changelog
+Binärdateien source_backup/roboto-unhinted.zip und sources/font-example/roboto-unhinted.zip sind verschieden.

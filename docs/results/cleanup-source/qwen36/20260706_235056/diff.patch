@@ -1,0 +1,27 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-Glances.spec sources/glances.cleanup_source/python-Glances.spec
+--- source_backup/python-Glances.spec	2026-07-06 23:50:56.948088666 +0200
++++ sources/glances.cleanup_source/python-Glances.spec	2026-07-07 00:03:04.344748757 +0200
+@@ -24,15 +24,15 @@
+ License:        LGPL-3.0-only
+ Group:          Development/Languages/Python
+ URL:            https://github.com/nicolargo/glances
+-Source:         https://github.com/nicolargo/glances/archive/v%{version}.tar.gz
++Source: v3.1.0.tar.gz
+ Patch0:         adjust-data-files.patch
+ Patch1:         remove-shebang.patch
++BuildRequires:  python-rpm-macros
+ BuildRequires:  %{python_module bottle}
+ BuildRequires:  %{python_module psutil >= 5.3.0}
+ BuildRequires:  %{python_module requests}
+ BuildRequires:  %{python_module setuptools}
+ BuildRequires:  fdupes
+-BuildRequires:  python-rpm-macros
+ Requires:       python-bottle
+ Requires:       python-curses
+ Requires:       python-psutil >= 5.3.0
+@@ -74,5 +74,3 @@
+ %python3_only %{_bindir}/glances
+ %python3_only %{_mandir}/man1/glances.1.gz
+ %{python_sitelib}/*
+-
+-%changelog

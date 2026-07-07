@@ -1,0 +1,10 @@
+**Error Analysis**
+The build failed because `make install` placed a versioned binary `/usr/bin/gawk-5.4.0` into the build root, but this exact path was not declared in the `%files` section. RPM enforces that every file installed into `$RPM_BUILD_ROOT` must be explicitly listed; omitting it triggers the `Installed (but unpackaged) file(s)` fatal error.
+
+**Required Fix**
+Modify the `%files` section:
+- Add `/usr/bin/gawk-5.4.0` to the file list. 
+- If an unversioned entry like `%{_bindir}/gawk` currently exists, replace it with `/usr/bin/gawk-5.4.0` (or keep both if a fallback alias is still desired, but the versioned binary must be present).
+- Do **not** add `/usr/lib/debug/usr/bin/gawk-5.4.0.debug` to `%files`. RPM automatically packages debug files into the `-debuginfo` subpackage when their corresponding binaries are listed in `%files`. Manually adding it will cause conflicts or be ignored by `check-files`.
+
+Apply this addition to resolve the unpackaged file error. No other build phases require modification.

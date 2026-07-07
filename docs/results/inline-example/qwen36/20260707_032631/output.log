@@ -1,0 +1,18 @@
+[PBUILD-AI] Version 0.1.9
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: hello.spec...
+-> AI(qwen3.6:35b-a3b) says:
+**Critical & Constraint Violations:**
+- `Group: Invalid` → Deprecated in RPM ≥4.15 and removed from modern packaging standards. **Remove entirely.**
+- `%changelog` section → Explicitly forbidden per OPENSUSE.md. **Omit from the spec**; maintain version history in a `PACKAGE.changes` file instead.
+- `%files: %doc` → Fails at install time if no documentation files are actually present. **Remove** or replace with actual paths (e.g., `%license LICENSE`).
+- `%build` / `%install` → Bare `echo`/comments may trigger strict build environment failures. Use `:` for safe no-ops, and add `BuildArch: noarch` since this is a metadata/dummy package.
+
+**Missing Best Practices:**
+- License format: Modern specs prefer SPDX identifiers. `MIT` is acceptable, but if referencing a file, list it in `%files` as `%license LICENSE`.
+- Missing standard macros: Even minimal specs should use `%autosetup -n %_name-%_version` (or omit if truly source-less) to avoid macro-resolution warnings in `spec-cleaner`/OBS environments.
+
+No other changes required. Apply the four removals/additions above and run `/usr/lib/obs/service/format_spec_file` to normalize.
+
+[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 100.2s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 100.3s

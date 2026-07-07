@@ -1,0 +1,12 @@
+[PBUILD-AI] Version 0.1.9
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:35b-a3b) says:
+- **Critical violation:** `%changelog` section exists and is empty. Per your guidelines, omit it entirely; maintain changelogs in `PACKAGE.changes`.
+- **Deprecated tags:** `Group:` and `%defattr(-,root,root)` are legacy/ignored in RPM ≥5. Safe to remove for modern spec-cleaner compliance.
+- **BuildRequires:** `bash` is likely unnecessary for a pure Perl package unless `install.sh` uses bash-specific syntax (RPM's `%install` runs in `/bin/sh` by default). Drop if not verified needed.
+- **Best practice:** Run `/usr/lib/obs/service/format_spec_file` on the spec directory before committing to ensure automated normalization per guidelines.
+- **Note:** `Url:` uses HTTP; updating to HTTPS is recommended upstream but omitted per "no unnecessary changes" rule. All other directives align with packaging standards.
+
+[STATS] AI model: qwen3.6:35b-a3b  |  AI calls: 1  |  AI time: 64.9s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 65.0s

@@ -1,0 +1,2156 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+building ./gawk.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    0s] 
+[    0s] reiser.suse.de started "build gawk.spec" at Tue Jul  7 02:56:09 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    0s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec
+[    0s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --clean --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    1s] cycle: libncurses6 -> terminfo-base
+[    1s]   breaking dependency terminfo-base -> libncurses6
+[    1s] [1/27] preinstalling compat-usrmerge-tools...
+[    1s] [2/27] preinstalling system-user-root...
+[    1s] [3/27] preinstalling filesystem...
+[    1s] [4/27] preinstalling glibc...
+[    1s] [5/27] preinstalling fillup...
+[    1s] [6/27] preinstalling libacl1...
+[    1s] [7/27] preinstalling libattr1...
+[    1s] [8/27] preinstalling libbz2-1...
+[    1s] [9/27] preinstalling libcap2...
+[    1s] [10/27] preinstalling libgmp10...
+[    1s] [11/27] preinstalling libgpg-error0...
+[    1s] [12/27] preinstalling libjitterentropy3...
+[    2s] [13/27] preinstalling liblua5_4-5...
+[    2s] [14/27] preinstalling liblzma5...
+[    2s] [15/27] preinstalling libpcre2-8-0...
+[    2s] [16/27] preinstalling libpopt0...
+[    2s] [17/27] preinstalling libz1...
+[    2s] [18/27] preinstalling libzstd1...
+[    2s] [19/27] preinstalling libselinux1...
+[    2s] [20/27] preinstalling libgcrypt20...
+[    2s] [21/27] preinstalling terminfo-base...
+[    2s] [22/27] preinstalling libncurses6...
+[    2s] [23/27] preinstalling libreadline8...
+[    2s] [24/27] preinstalling bash...
+[    2s] [25/27] preinstalling bash-sh...
+[    2s] [26/27] preinstalling coreutils...
+[    2s] [27/27] preinstalling rpm...
+[    2s] 
+[    2s] [1/18] preinstalling grep...
+[    2s] [2/18] preinstalling kernel-obs-build...
+[    2s] [3/18] preinstalling libaudit1...
+[    2s] [4/18] preinstalling libcap-ng0...
+[    2s] [5/18] preinstalling libcrypt1...
+[    2s] [6/18] preinstalling libeconf0...
+[    2s] [7/18] preinstalling libgcc_s1...
+[    2s] [8/18] preinstalling libsmartcols1...
+[    2s] [9/18] preinstalling libuuid1...
+[    2s] [10/18] preinstalling libblkid1...
+[    2s] [11/18] preinstalling perl-base...
+[    2s] [12/18] preinstalling permctl...
+[    2s] [13/18] preinstalling libmount1...
+[    2s] [14/18] preinstalling permissions-config...
+[    2s] [15/18] preinstalling libfdisk1...
+[    2s] [16/18] preinstalling permissions...
+[    2s] [17/18] preinstalling pam...
+[    3s] [18/18] preinstalling util-linux...
+[    3s] copying packages...
+[    3s] reordering...cycle: libncurses6 -> terminfo-base
+[    3s]   breaking dependency terminfo-base -> libncurses6
+[    3s] cycle: lua54 -> lua-interpreter
+[    3s]   breaking dependency lua54 -> lua-interpreter
+[    3s] cycle: binutils -> libctf0
+[    3s]   breaking dependency binutils -> libctf0
+[    3s] cycle: rpm-config-SUSE -> rpm
+[    3s]   breaking dependency rpm -> rpm-config-SUSE
+[    3s] done
+[    3s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64'
+[    3s] setting source mtime to 1637492521
+[    3s] Detected virtio-serial support
+[    3s] Creating ext4 filesystem on /var/tmp/build-root-adrian/.mount.img
+[    4s] tune2fs 1.47.3 (8-Jul-2025)
+[    4s] Setting maximal mount count to -1
+[    4s] booting kvm...
+[    4s] ### VM INTERACTION START ###
+[    4s] Using virtio-serial support
+[    4s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    8s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=bea3a8ad8f184e30baa41133dcd468d6;user=root;hostname=localhost;machineid=325cf516839a48e2829232f0b96903ad;bootid=d04434694443419086be8460ab9128f1;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J### VM INTERACTION END ###
+[    8s] 2nd stage started in virtual machine
+[    8s] machine type: x86_64
+[    8s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul  2 05:05:55 UTC 2026 (992f18c)
+[    8s] Time: Tue Jul  7 02:56:16 UTC 2026
+[    8s] Increasing log level from now on...
+[    8s] [    3.642377][  T444] sysrq: Changing Loglevel
+[    8s] [    3.642428][  T444] sysrq: Loglevel set to 4
+[    8s] Enable sysrq operations
+[    8s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    8s] no label, UUID=b6307090-b726-44f7-93cc-486442b07efa
+[    8s] logging output to //.build.log...
+[    8s] processing recipe //.build-srcdir/gawk.spec ...
+[    8s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/gawk.spec ...
+[    8s] initializing rpm db...
+[    8s] querying package ids...
+[    8s] [1/136] cumulate compat-usrmerge-tools-84.87-5.25
+[    8s] [2/136] cumulate crypto-policies-20250714.cd6043a-4.2
+[    8s] [3/136] cumulate file-magic-5.48-1.2
+[    8s] [4/136] cumulate kernel-obs-build-7.1.2-1.1
+[    8s] [5/136] cumulate pkgconf-m4-2.5.1-1.4
+[    8s] [6/136] cumulate system-user-root-20190513-2.20
+[    8s] [7/136] cumulate filesystem-84.87-21.2
+[    8s] [8/136] cumulate glibc-2.43-4.2
+[    8s] [9/136] cumulate diffutils-3.12-1.4
+[    8s] [10/136] cumulate envsubst-mini-1.0-2.3
+[    8s] [11/136] cumulate fillup-1.42-281.6
+[    8s] [12/136] cumulate glibc-gconv-modules-extra-2.43-4.2
+[    8s] [13/136] cumulate glibc-locale-base-2.43-4.2
+[    8s] [14/136] cumulate libacl1-2.3.2-2.6
+[    8s] [15/136] cumulate libalternatives1-1.2+31.da24cd4-1.4
+[    8s] [16/136] cumulate libatomic1-16.1.1+git8886-1.2
+[    8s] [17/136] cumulate libattr1-2.6.0-1.1
+[    8s] [18/136] cumulate libaudit1-4.0.2-3.4
+[    8s] [19/136] cumulate libbz2-1-1.0.8-5.15
+[    8s] [20/136] cumulate libcap-ng0-0.8.5-1.6
+[    8s] [21/136] cumulate libcap2-2.78-1.3
+[    8s] [22/136] cumulate libcrypt1-4.5.2-2.3
+[    8s] [23/136] cumulate libeconf0-0.8.3-1.4
+[    8s] [24/136] cumulate libgcc_s1-16.1.1+git8886-1.2
+[    8s] [25/136] cumulate libgdbm6-1.26-1.4
+[    8s] [26/136] cumulate libgmp10-6.3.0-5.5
+[    8s] [27/136] cumulate libgomp1-16.1.1+git8886-1.2
+[    8s] [28/136] cumulate libgpg-error0-1.61-1.2
+[    8s] [29/136] cumulate libitm1-16.1.1+git8886-1.2
+[    8s] [30/136] cumulate libjitterentropy3-3.6.3-1.4
+[    8s] [31/136] cumulate liblua5_4-5-5.4.8-4.5
+[    8s] [32/136] cumulate liblz1-1.16-1.3
+[    8s] [33/136] cumulate liblz4-1-1.10.0-2.7
+[    8s] [34/136] cumulate liblzma5-5.8.3-1.3
+[    8s] [35/136] cumulate libpcre2-8-0-10.47-1.5
+[    8s] [36/136] cumulate libpkgconf7-2.5.1-1.4
+[    8s] [37/136] cumulate libpopt0-1.19-2.3
+[    8s] [38/136] cumulate libseccomp2-2.6.0-2.5
+[    8s] [39/136] cumulate libsframe2-2.45-4.2
+[    8s] [40/136] cumulate libsmartcols1-2.42.1-1.2
+[    8s] [41/136] cumulate libuuid1-2.42.1-1.2
+[    8s] [42/136] cumulate libxml2-16-2.15.3-1.3
+[    8s] [43/136] cumulate libz1-1.3.1-3.2
+[    8s] [44/136] cumulate libzstd1-1.5.7-4.3
+[    8s] [45/136] cumulate patch-2.8-2.4
+[    8s] [46/136] cumulate which-2.25-1.2
+[    8s] [47/136] cumulate alts-1.2+31.da24cd4-1.4
+[    8s] [48/136] cumulate libblkid1-2.42.1-1.2
+[    8s] [49/136] cumulate libctf-nobfd0-2.45-4.2
+[    8s] [50/136] cumulate libgdbm_compat4-1.26-1.4
+[    8s] [51/136] cumulate libisl23-0.27-1.5
+[    8s] [52/136] cumulate libmpfr6-4.2.2-1.4
+[    8s] [53/136] cumulate libselinux1-3.10-3.2
+[    8s] [54/136] cumulate libstdc++6-16.1.1+git8886-1.2
+[    8s] [55/136] cumulate perl-base-5.42.1-1.2
+[    8s] [56/136] cumulate pkgconf-2.5.1-1.4
+[    8s] [57/136] cumulate libelf1-0.194-1.3
+[    8s] [58/136] cumulate libgcrypt20-1.12.2-1.3
+[    8s] [59/136] cumulate permctl-1699_20260512-1.2
+[    8s] [60/136] cumulate libmagic1-5.48-1.2
+[    8s] [61/136] cumulate build-mkbaselibs-20260505-1.2
+[    8s] [62/136] cumulate dwz-0.15-6.5
+[    8s] [63/136] cumulate findutils-4.10.0-2.6
+[    8s] [64/136] cumulate file-5.48-1.2
+[    8s] [65/136] cumulate libasan8-16.1.1+git8886-1.2
+[    8s] [66/136] cumulate libfdisk1-2.42.1-1.2
+[    8s] [67/136] cumulate libhwasan0-16.1.1+git8886-1.2
+[    8s] [68/136] cumulate liblsan0-16.1.1+git8886-1.2
+[    8s] [69/136] cumulate libmount1-2.42.1-1.2
+[    8s] [70/136] cumulate libmpc3-1.4.1-1.3
+[    8s] [71/136] cumulate libtsan2-16.1.1+git8886-1.2
+[    8s] [72/136] cumulate libubsan1-16.1.1+git8886-1.2
+[    8s] [73/136] cumulate sed-4.10-1.3
+[    8s] [74/136] cumulate tar-1.35-8.2
+[    8s] [75/136] cumulate libgmpxx4-6.3.0-5.5
+[    8s] [76/136] cumulate libdw1-0.194-1.3
+[    8s] [77/136] cumulate perl-5.42.1-1.2
+[    8s] [78/136] cumulate brp-check-suse-84.87+git20260317.a0eb4ba-1.2
+[    8s] [79/136] cumulate perl-rpm-packaging-1.3-1.3
+[    8s] [80/136] cumulate libasm1-0.194-1.3
+[    8s] [81/136] cumulate cpp15-15.3.0+git11272-1.2
+[    8s] [82/136] cumulate terminfo-base-6.6.20260613-109.2
+[    8s] [83/136] cumulate libncurses6-6.6.20260613-109.2
+[    8s] [84/136] cumulate libreadline8-8.3.3-2.5
+[    8s] [85/136] cumulate ncurses-utils-6.6.20260613-109.2
+[    8s] [86/136] cumulate tack-1.11.20251210-109.2
+[    8s] [87/136] cumulate libncurses_c++6-6.6.20260613-109.2
+[    8s] [88/136] cumulate bash-5.3.15-7.2
+[    8s] [89/136] cumulate lua54-5.4.8-4.5
+[    8s] [90/136] cumulate bash-sh-5.3.15-7.2
+[    8s] [91/136] cumulate compat-usrmerge-build-84.87-5.25
+[    8s] [92/136] cumulate lua-interpreter-5-3.3
+[    8s] [93/136] cumulate cpio-2.15-7.3
+[    8s] [94/136] cumulate cpp-15-3.3
+[    8s] [95/136] cumulate gzip-1.14-2.1
+[    8s] [96/136] cumulate make-4.4.1-3.6
+[    8s] [97/136] cumulate bzip2-1.0.8-5.15
+[    8s] [98/136] cumulate grep-3.12-1.4
+[    8s] [99/136] cumulate pkgconf-pkg-config-2.5.1-1.4
+[    8s] [100/136] cumulate xz-5.8.3-1.3
+[    8s] [101/136] cumulate gettext-runtime-mini-1.0-2.3
+[    8s] [102/136] cumulate gawk-5.4.0-1.2
+[    8s] [103/136] cumulate coreutils-9.11-4.2
+[    8s] [104/136] cumulate elfutils-0.194-1.3
+[    8s] [105/136] cumulate linux-glibc-devel-7.0-1.2
+[    8s] [106/136] cumulate systemd-rpm-macros-26-1.3
+[    8s] [107/136] cumulate libxcrypt-devel-4.5.2-2.3
+[    8s] [108/136] cumulate gmp-devel-6.3.0-5.5
+[    8s] [109/136] cumulate permissions-config-1699_20260512-1.2
+[    8s] [110/136] cumulate polkit-default-privs-1550+20260623.563df94-1.2
+[    8s] [111/136] cumulate libopenssl3-3.5.3-6.2
+[    8s] [112/136] cumulate ncurses-devel-6.6.20260613-109.2
+[    8s] [113/136] cumulate aaa_base-84.87+git20260610.3b5a868c-1.2
+[    8s] [114/136] cumulate gettext-tools-mini-1.0-2.3
+[    8s] [115/136] cumulate binutils-2.45-4.2
+[    8s] [116/136] cumulate rpm-4.20.1-7.2
+[    8s] [117/136] cumulate aaa_base-malloccheck-84.87+git20260610.3b5a868c-1.2
+[    8s] [118/136] cumulate permissions-1699_20260512-1.2
+[    8s] [119/136] cumulate rpm-config-SUSE-20250904-1.3
+[    8s] [120/136] cumulate glibc-devel-2.43-4.2
+[    8s] [121/136] cumulate libctf0-2.45-4.2
+[    8s] [122/136] cumulate readline-devel-8.3.3-2.5
+[    8s] [123/136] cumulate mpfr-devel-4.2.2-1.4
+[    8s] [124/136] cumulate rpmlint-mini-2.9.0+git20260629.bd947d09-21.10
+[    8s] [125/136] cumulate build-compare-20260622T095938.6416d96-1.2
+[    8s] [126/136] cumulate libarchive13-3.8.7-1.3
+[    8s] [127/136] cumulate librpmbuild10-4.20.1-7.2
+[    8s] [128/136] cumulate debugedit-5.1-1.6
+[    8s] [129/136] cumulate pam-1.7.2+git12-1.2
+[    8s] [130/136] cumulate post-build-checks-84.87+git20250725.0c3a172-1.3
+[    8s] [131/136] cumulate gcc15-15.3.0+git11272-1.2
+[    8s] [132/136] cumulate gcc15-PIE-15.3.0+git11272-1.2
+[    8s] [133/136] cumulate gcc-15-3.3
+[    8s] [134/136] cumulate util-linux-2.42.1-1.2
+[    8s] [135/136] cumulate gcc-PIE-15-3.3
+[    8s] [136/136] cumulate rpm-build-4.20.1-7.2
+[    8s] now installing cumulated packages
+[    9s] Preparing...                          ########################################
+[    9s] Updating / installing...
+[    9s] system-user-root-20190513-2.20        ########################################
+[    9s] pkgconf-m4-2.5.1-1.4                  ########################################
+[    9s] file-magic-5.48-1.2                   ########################################
+[    9s] crypto-policies-20250714.cd6043a-4.2  ########################################
+[    9s] compat-usrmerge-tools-84.87-5.25      ########################################
+[    9s] filesystem-84.87-21.2                 ########################################
+[    9s] glibc-2.43-4.2                        ########################################
+[    9s] libz1-1.3.1-3.2                       ########################################
+[    9s] libgcc_s1-16.1.1+git8886-1.2          ########################################
+[    9s] libstdc++6-16.1.1+git8886-1.2         ########################################
+[    9s] libgmp10-6.3.0-5.5                    ########################################
+[    9s] libzstd1-1.5.7-4.3                    ########################################
+[    9s] libelf1-0.194-1.3                     ########################################
+[    9s] libacl1-2.3.2-2.6                     ########################################
+[    9s] libbz2-1-1.0.8-5.15                   ########################################
+[    9s] libmpfr6-4.2.2-1.4                    ########################################
+[    9s] libcrypt1-4.5.2-2.3                   ########################################
+[    9s] perl-base-5.42.1-1.2                  ########################################
+[    9s] liblzma5-5.8.3-1.3                    ########################################
+[    9s] libdw1-0.194-1.3                      ########################################
+[    9s] fillup-1.42-281.6                     ########################################
+[    9s] libcap2-2.78-1.3                      ########################################
+[    9s] diffutils-3.12-1.4                    ########################################
+[    9s] libeconf0-0.8.3-1.4                   ########################################
+[    9s] libblkid1-2.42.1-1.2                  ########################################
+[    9s] libgomp1-16.1.1+git8886-1.2           ########################################
+[    9s] liblua5_4-5-5.4.8-4.5                 ########################################
+[    9s] libpopt0-1.19-2.3                     ########################################
+[    9s] permctl-1699_20260512-1.2             ########################################
+[    9s] libmpc3-1.4.1-1.3                     ########################################
+[    9s] dwz-0.15-6.5                          ########################################
+[    9s] libisl23-0.27-1.5                     ########################################
+[    9s] cpp15-15.3.0+git11272-1.2             ########################################
+[    9s] libaudit1-4.0.2-3.4                   ########################################
+[    9s] libgdbm6-1.26-1.4                     ########################################
+[    9s] libjitterentropy3-3.6.3-1.4           ########################################
+[    9s] libpcre2-8-0-10.47-1.5                ########################################
+[    9s] libselinux1-3.10-3.2                  ########################################
+[    9s] sed-4.10-1.3                          ########################################
+[    9s] findutils-4.10.0-2.6                  ########################################
+[    9s] libuuid1-2.42.1-1.2                   ########################################
+[    9s] terminfo-base-6.6.20260613-109.2      ########################################
+[    9s] libncurses6-6.6.20260613-109.2        ########################################
+[    9s] libreadline8-8.3.3-2.5                ########################################
+[    9s] bash-5.3.15-7.2                       ########################################
+[    9s] bash-sh-5.3.15-7.2                    ########################################
+[    9s] grep-3.12-1.4                         ########################################
+[    9s] xz-5.8.3-1.3                          ########################################
+[    9s] gawk-5.4.0-1.2                        ########################################
+[    9s] cpio-2.15-7.3                         ########################################
+[    9s] cpp-15-3.3                            ########################################
+[    9s] gzip-1.14-2.1                         ########################################
+[    9s] make-4.4.1-3.6                        ########################################
+[    9s] bzip2-1.0.8-5.15                      ########################################
+[    9s] ncurses-utils-6.6.20260613-109.2      ########################################
+[    9s] tack-1.11.20251210-109.2              ########################################
+[    9s] libncurses_c++6-6.6.20260613-109.2    ########################################
+[    9s] libfdisk1-2.42.1-1.2                  ########################################
+[    9s] libmount1-2.42.1-1.2                  ########################################
+[    9s] tar-1.35-8.2                          ########################################
+[    9s] libgdbm_compat4-1.26-1.4              ########################################
+[    9s] perl-5.42.1-1.2                       ########################################
+[   10s] perl-rpm-packaging-1.3-1.3            ########################################
+[   10s] libasm1-0.194-1.3                     ########################################
+[   10s] elfutils-0.194-1.3                    ########################################
+[   10s] libgmpxx4-6.3.0-5.5                   ########################################
+[   10s] libasan8-16.1.1+git8886-1.2           ########################################
+[   10s] libhwasan0-16.1.1+git8886-1.2         ########################################
+[   10s] liblsan0-16.1.1+git8886-1.2           ########################################
+[   10s] libtsan2-16.1.1+git8886-1.2           ########################################
+[   10s] libubsan1-16.1.1+git8886-1.2          ########################################
+[   10s] libctf-nobfd0-2.45-4.2                ########################################
+[   10s] envsubst-mini-1.0-2.3                 ########################################
+[   10s] gettext-runtime-mini-1.0-2.3          ########################################
+[   10s] glibc-gconv-modules-extra-2.43-4.2    ########################################
+[   10s] glibc-locale-base-2.43-4.2            ########################################
+[   10s] libalternatives1-1.2+31.da24cd4-1.4   ########################################
+[   10s] alts-1.2+31.da24cd4-1.4               ########################################
+[   10s] lua-interpreter-5-3.3                 ########################################
+[   10s] lua54-5.4.8-4.5                       ########################################
+[   10s] libatomic1-16.1.1+git8886-1.2         ########################################
+[   10s] libattr1-2.6.0-1.1                    ########################################
+[   10s] coreutils-9.11-4.2                    ########################################
+[   10s] aaa_base-84.87+git20260610.3b5a868c-1.########################################
+[   10s] Updating /etc/sysconfig/proxy ...
+[   10s] aaa_base-malloccheck-84.87+git20260610########################################
+[   10s] linux-glibc-devel-7.0-1.2             ########################################
+[   10s] systemd-rpm-macros-26-1.3             ########################################
+[   10s] permissions-config-1699_20260512-1.2  ########################################
+[   10s] Updating /etc/sysconfig/security ...
+[   10s] Checking permissions and ownerships - using the permissions files
+[   10s] 	/usr/share/permissions/permissions
+[   10s] 	/usr/share/permissions/permissions.easy
+[   10s] 	/etc/permissions.local
+[   10s] permissions-1699_20260512-1.2         ########################################
+[   10s] pam-1.7.2+git12-1.2                   ########################################
+[   10s] polkit-default-privs-1550+20260623.563########################################
+[   10s] Updating /etc/sysconfig/security ...
+[   10s] can't open /etc/polkit-1/rules.d/90-default-privs.rules.new: No such file or directory
+[   10s] warning: %post(polkit-default-privs-1550+20260623.563df94-1.2.noarch) scriptlet failed, exit status 2
+[   10s] libopenssl3-3.5.3-6.2                 ########################################
+[   10s] gettext-tools-mini-1.0-2.3            ########################################
+[   10s] libcap-ng0-0.8.5-1.6                  ########################################
+[   10s] libgpg-error0-1.61-1.2                ########################################
+[   10s] libgcrypt20-1.12.2-1.3                ########################################
+[   10s] rpm-config-SUSE-20250904-1.3          ########################################
+[   10s] rpm-4.20.1-7.2                        ########################################
+[   10s] Updating /etc/sysconfig/services ...
+[   10s] libitm1-16.1.1+git8886-1.2            ########################################
+[   10s] liblz1-1.16-1.3                       ########################################
+[   10s] libmagic1-5.48-1.2                    ########################################
+[   10s] librpmbuild10-4.20.1-7.2              ########################################
+[   10s] liblz4-1-1.10.0-2.7                   ########################################
+[   10s] libpkgconf7-2.5.1-1.4                 ########################################
+[   10s] pkgconf-2.5.1-1.4                     ########################################
+[   10s] pkgconf-pkg-config-2.5.1-1.4          ########################################
+[   10s] libxcrypt-devel-4.5.2-2.3             ########################################
+[   10s] glibc-devel-2.43-4.2                  ########################################
+[   10s] gmp-devel-6.3.0-5.5                   ########################################
+[   10s] ncurses-devel-6.6.20260613-109.2      ########################################
+[   10s] libseccomp2-2.6.0-2.5                 ########################################
+[   10s] file-5.48-1.2                         ########################################
+[   10s] libsframe2-2.45-4.2                   ########################################
+[   11s] binutils-2.45-4.2                     ########################################
+[   11s] libctf0-2.45-4.2                      ########################################
+[   11s] gcc15-15.3.0+git11272-1.2             ########################################
+[   11s] gcc15-PIE-15.3.0+git11272-1.2         ########################################
+[   11s] gcc-15-3.3                            ########################################
+[   11s] debugedit-5.1-1.6                     ########################################
+[   11s] libsmartcols1-2.42.1-1.2              ########################################
+[   11s] util-linux-2.42.1-1.2                 ########################################
+[   12s] libxml2-16-2.15.3-1.3                 ########################################
+[   12s] libarchive13-3.8.7-1.3                ########################################
+[   12s] patch-2.8-2.4                         ########################################
+[   12s] which-2.25-1.2                        ########################################
+[   12s] rpm-build-4.20.1-7.2                  ########################################
+[   12s] gcc-PIE-15-3.3                        ########################################
+[   12s] build-compare-20260622T095938.6416d96-########################################
+[   12s] readline-devel-8.3.3-2.5              ########################################
+[   12s] mpfr-devel-4.2.2-1.4                  ########################################
+[   12s] rpmlint-mini-2.9.0+git20260629.bd947d0########################################
+[   12s] post-build-checks-84.87+git20250725.0c########################################
+[   12s] compat-usrmerge-build-84.87-5.25      ########################################
+[   12s] brp-check-suse-84.87+git20260317.a0eb4########################################
+[   12s] build-mkbaselibs-20260505-1.2         ########################################
+[   12s] kernel-obs-build-7.1.2-1.1            ########################################
+[   12s] now finalizing build dir...
+[   12s] ... running 01-add_abuild_user_to_trusted_group
+[   12s] ... running 02-set_timezone_to_utc
+[   12s] ... running 03-set-permissions-secure
+[   12s] ... running 11-hack_uname_version_to_kernel_version
+[   12s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[   13s] -----------------------------------------------------------------
+[   13s] I have the following modifications for gawk.spec:
+[   13s] -----------------------------------------------------------------
+[   13s] ----- building gawk.spec (user abuild)
+[   13s] -----------------------------------------------------------------
+[   13s] -----------------------------------------------------------------
+[   13s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[   13s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/gawk.spec
+[   13s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.28cxfS
+[   13s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.hYy0XS
+[   13s] + umask 022
+[   13s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   13s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   13s] + rm -rf gawk-5.4.0
+[   13s] + /usr/lib/rpm/rpmuncompress -x /home/abuild/rpmbuild/SOURCES/gawk-5.4.0.tar.xz
+[   13s] + STATUS=0
+[   13s] + '[' 0 -ne 0 ']'
+[   13s] + cd gawk-5.4.0
+[   13s] + /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+[   13s] + RPM_EC=0
+[   13s] ++ jobs -p
+[   13s] + exit 0
+[   13s] Executing(%build): /usr/bin/bash -e /var/tmp/rpm-tmp.I0xGgA
+[   13s] + umask 022
+[   13s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   13s] + /usr/bin/rm -rf /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   13s] ++ dirname /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   13s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   13s] + /usr/bin/mkdir /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   13s] + cd gawk-5.4.0
+[   13s] + CONFIG_SHELL=/usr/bin/bash
+[   13s] + export CONFIG_SHELL
+[   13s] + CFLAGS='-fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g'
+[   13s] + export CFLAGS
+[   13s] + CXXFLAGS='-fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g'
+[   13s] + export CXXFLAGS
+[   13s] + FFLAGS='-fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g '
+[   13s] + export FFLAGS
+[   13s] + FCFLAGS='-fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g '
+[   13s] + export FCFLAGS
+[   13s] + LDFLAGS=' -flto=auto'
+[   13s] + export LDFLAGS
+[   13s] + ./configure --host=x86_64-suse-linux --build=x86_64-suse-linux --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info
+[   14s] checking for a BSD-compatible install... ./build-aux/install-sh -c
+[   14s] checking whether build environment is sane... yes
+[   14s] checking for a race-free mkdir -p... /usr/bin/mkdir -p
+[   14s] checking for gawk... gawk
+[   14s] checking whether make sets $(MAKE)... yes
+[   14s] checking whether make supports nested variables... yes
+[   14s] checking build system type... x86_64-suse-linux-gnu
+[   14s] checking host system type... x86_64-suse-linux-gnu
+[   14s] checking whether make supports the include directive... yes (GNU style)
+[   14s] checking for x86_64-suse-linux-gcc... no
+[   14s] checking for gcc... gcc
+[   14s] checking whether the C compiler works... yes
+[   14s] checking for C compiler default output file name... a.out
+[   14s] checking for suffix of executables... 
+[   14s] checking whether we are cross compiling... no
+[   14s] checking for suffix of object files... o
+[   14s] checking whether the compiler supports GNU C... yes
+[   14s] checking whether gcc accepts -g... yes
+[   14s] checking for gcc option to enable C11 features... none needed
+[   14s] checking whether gcc understands -c and -o together... yes
+[   14s] checking dependency style of gcc... none
+[   14s] checking for stdio.h... yes
+[   14s] checking for stdlib.h... yes
+[   14s] checking for string.h... yes
+[   14s] checking for inttypes.h... yes
+[   14s] checking for stdint.h... yes
+[   14s] checking for strings.h... yes
+[   14s] checking for sys/stat.h... yes
+[   14s] checking for sys/types.h... yes
+[   14s] checking for unistd.h... yes
+[   14s] checking for wchar.h... yes
+[   14s] checking for minix/config.h... no
+[   14s] checking for stdbool.h... yes
+[   14s] checking for sys/time.h... yes
+[   14s] checking whether it is safe to define __EXTENSIONS__... yes
+[   14s] checking whether _XOPEN_SOURCE should be defined... no
+[   14s] checking for grep that handles long lines and -e... /usr/bin/grep
+[   14s] checking for egrep... /usr/bin/grep -E
+[   14s] checking for bison... no
+[   14s] checking for byacc... no
+[   14s] checking whether ln -s works... yes
+[   14s] checking for x86_64-suse-linux-gcc... gcc
+[   14s] checking whether the compiler supports GNU C... (cached) yes
+[   14s] checking whether gcc accepts -g... (cached) yes
+[   14s] checking for gcc option to enable C11 features... (cached) none needed
+[   14s] checking whether gcc understands -c and -o together... (cached) yes
+[   14s] checking dependency style of gcc... (cached) none
+[   14s] checking how to run the C preprocessor... gcc -E
+[   14s] checking for variable-length arrays... yes
+[   14s] checking how to run the C preprocessor... gcc -E
+[   15s] checking for x86_64-suse-linux-ranlib... no
+[   15s] checking for ranlib... ranlib
+[   15s] checking whether make sets $(MAKE)... (cached) yes
+[   15s] checking for x86_64-suse-linux-ar... no
+[   15s] checking for x86_64-suse-linux-lib... no
+[   15s] checking for x86_64-suse-linux-link... no
+[   15s] checking for ar... ar
+[   15s] checking the archiver (ar) interface... ar
+[   15s] checking for special development options... no
+[   15s] checking for z/OS USS compilation... no
+[   15s] checking for library containing strerror... none required
+[   15s] checking for special C compiler options needed for large files... no
+[   15s] checking for _FILE_OFFSET_BITS value needed for large files... no
+[   15s] checking if we are using EBCDIC... no
+[   15s] checking for a sed that does not truncate output... /usr/bin/sed
+[   15s] checking whether NLS is requested... yes
+[   15s] checking for msgfmt... /usr/bin/msgfmt
+[   15s] checking for gmsgfmt... /usr/bin/msgfmt
+[   15s] checking for xgettext... /usr/bin/xgettext
+[   15s] checking for msgmerge... /usr/bin/msgmerge
+[   15s] checking for ld used by gcc... /usr/x86_64-suse-linux/bin/ld
+[   15s] checking if the linker (/usr/x86_64-suse-linux/bin/ld) is GNU ld... yes
+[   15s] checking for shared library run path origin... done
+[   15s] checking 32-bit host C ABI... no
+[   15s] checking for ELF binary format... yes
+[   15s] checking for the common suffixes of directories in the library search path... lib,lib,lib64
+[   15s] checking for CFPreferencesCopyAppValue... no
+[   15s] checking for CFLocaleCopyPreferredLanguages... no
+[   15s] checking for GNU gettext in libc... yes
+[   15s] checking whether to use NLS... yes
+[   15s] checking where the gettext function comes from... libc
+[   15s] checking for nl_langinfo and CODESET... yes
+[   15s] checking for LC_MESSAGES... yes
+[   15s] checking for arpa/inet.h... yes
+[   15s] checking for fcntl.h... yes
+[   15s] checking for locale.h... yes
+[   15s] checking for libintl.h... yes
+[   15s] checking for mcheck.h... yes
+[   15s] checking for netdb.h... yes
+[   15s] checking for netinet/in.h... yes
+[   15s] checking for stddef.h... yes
+[   15s] checking for string.h... (cached) yes
+[   15s] checking for spawn.h... yes
+[   15s] checking for sys/procctl.h... no
+[   15s] checking for sys/sysctl.h... no
+[   15s] checking for sys/ioctl.h... yes
+[   15s] checking for sys/param.h... yes
+[   16s] checking for sys/personality.h... yes
+[   16s] checking for sys/select.h... yes
+[   16s] checking for sys/socket.h... yes
+[   16s] checking for sys/time.h... (cached) yes
+[   16s] checking for uchar.h... yes
+[   16s] checking for unistd.h... (cached) yes
+[   16s] checking for termios.h... yes
+[   16s] checking for stropts.h... no
+[   16s] checking for wchar.h... (cached) yes
+[   16s] checking for wctype.h... yes
+[   16s] checking for bool, true, false... yes
+[   16s] checking for sys/wait.h that is POSIX.1 compatible... yes
+[   16s] checking for memory.h... yes
+[   16s] checking for pid_t... yes
+[   16s] checking for size_t... yes
+[   16s] checking for uid_t in sys/types.h... yes
+[   16s] checking type of array argument to getgroups... gid_t
+[   16s] checking for unsigned long long int... yes
+[   16s] checking for long long int... yes
+[   16s] checking for unsigned long long int... (cached) yes
+[   16s] checking for intmax_t... yes
+[   16s] checking for uintmax_t... yes
+[   16s] checking for ssize_t... yes
+[   17s] checking size of unsigned int... 4
+[   17s] checking size of unsigned long... 8
+[   17s] checking for socklen_t... yes
+[   17s] checking for getaddrinfo... yes
+[   17s] checking for library containing fmod... -lm
+[   17s] checking for library containing isinf... none required
+[   17s] checking for library containing ismod... no
+[   17s] checking for library containing isnan... none required
+[   17s] checking for __etoa_l... no
+[   17s] checking for atexit... yes
+[   17s] checking for btowc... yes
+[   18s] checking for fmod... yes
+[   18s] checking for fwrite_unlocked... yes
+[   18s] checking for gai_strerror... yes
+[   18s] checking for getgrent... yes
+[   18s] checking for getgroups... yes
+[   18s] checking for grantpt... yes
+[   18s] checking for isascii... yes
+[   18s] checking for isblank... yes
+[   18s] checking for gettimeofday... yes
+[   18s] checking for clock_gettime... yes
+[   18s] checking for lstat... yes
+[   18s] checking for getdtablesize... yes
+[   18s] checking for _NSGetExecutablePath... no
+[   18s] checking for posix_spawnp... yes
+[   19s] checking for mbrtoc32... yes
+[   19s] checking for c32rtomb... yes
+[   19s] checking for mtrace... yes
+[   19s] checking for personality... yes
+[   19s] checking for posix_openpt... yes
+[   19s] checking for setenv... yes
+[   19s] checking for setlocale... yes
+[   19s] checking for setsid... yes
+[   19s] checking for sigprocmask... yes
+[   19s] checking for procctl... no
+[   19s] checking for sysctl... no
+[   19s] checking for strcasecmp... yes
+[   19s] checking for strcoll... yes
+[   19s] checking for strftime... yes
+[   20s] checking for strncasecmp... yes
+[   20s] checking for strsignal... yes
+[   20s] checking for timegm... yes
+[   20s] checking for waitpid... yes
+[   20s] checking for wctype... yes
+[   20s] checking whether mbrtowc and mbstate_t are properly declared... yes
+[   20s] checking whether C compiler accepts ... yes
+[   20s] checking size of void *... 8
+[   20s] checking for mmap... yes
+[   20s] checking for munmap... yes
+[   20s] checking for dlfcn.h... yes
+[   20s] checking for library containing dlopen... none required
+[   20s] checking whether getpgrp requires zero arguments... yes
+[   20s] checking for printf %F format... yes
+[   20s] checking for printf %a format... yes
+[   21s] checking for gethostbyname... yes
+[   21s] checking for connect... yes
+[   21s] checking where to find the socket library calls... the standard library
+[   21s] checking whether readline via "-lreadline" is present and sane... yes
+[   21s] checking for history_list in -lreadline... yes
+[   21s] checking whether mpfr via "-lmpfr -lgmp" is present and usable... yes
+[   21s] checking for struct stat.st_blksize... yes
+[   21s] checking for struct passwd.pw_passwd... yes
+[   21s] checking for struct group.gr_passwd... yes
+[   21s] checking whether struct tm is in sys/time.h or time.h... time.h
+[   21s] checking for gcc options needed to detect all undeclared functions... none needed
+[   21s] checking for struct tm.tm_zone... yes
+[   21s] checking whether char is unsigned... no
+[   21s] checking for an ANSI C-conforming const... yes
+[   21s] checking for C/C++ restrict keyword... __restrict__
+[   21s] checking for inline... inline
+[   21s] checking for preprocessor stringizing operator... yes
+[   21s] checking that generated files are newer than configure... done
+[   21s] configure: creating ./config.status
+[   21s] config.status: creating Makefile
+[   21s] config.status: creating support/Makefile
+[   21s] config.status: creating awklib/Makefile
+[   21s] config.status: creating doc/Makefile
+[   21s] config.status: creating extras/Makefile
+[   21s] config.status: creating po/Makefile.in
+[   21s] config.status: creating test/Makefile
+[   21s] config.status: creating gawkbug
+[   21s] config.status: creating config.h
+[   21s] config.status: executing depfiles commands
+[   21s] config.status: executing po-directories commands
+[   21s] config.status: creating po/POTFILES
+[   21s] config.status: creating po/Makefile
+[   21s] === configuring in extension (/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension)
+[   21s] configure: running /usr/bin/bash ./configure --disable-option-checking '--prefix=/usr'  '--host=x86_64-suse-linux' '--build=x86_64-suse-linux' '--program-prefix=' '--disable-dependency-tracking' '--exec-prefix=/usr' '--bindir=/usr/bin' '--sbindir=/usr/sbin' '--sysconfdir=/etc' '--datadir=/usr/share' '--includedir=/usr/include' '--libdir=/usr/lib64' '--libexecdir=/usr/libexec' '--localstatedir=/var' '--sharedstatedir=/var/lib' '--mandir=/usr/share/man' '--infodir=/usr/share/info' 'build_alias=x86_64-suse-linux' 'host_alias=x86_64-suse-linux' 'CFLAGS=-fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g' 'LDFLAGS= -flto=auto' --cache-file=/dev/null --srcdir=.
+[   21s] checking for a BSD-compatible install... ./build-aux/install-sh -c
+[   21s] checking whether build environment is sane... yes
+[   21s] checking for a race-free mkdir -p... /usr/bin/mkdir -p
+[   21s] checking for gawk... gawk
+[   21s] checking whether make sets $(MAKE)... yes
+[   21s] checking whether make supports nested variables... yes
+[   21s] checking build system type... x86_64-suse-linux-gnu
+[   21s] checking host system type... x86_64-suse-linux-gnu
+[   21s] checking whether make supports the include directive... yes (GNU style)
+[   21s] checking for x86_64-suse-linux-gcc... no
+[   21s] checking for gcc... gcc
+[   22s] checking whether the C compiler works... yes
+[   22s] checking for C compiler default output file name... a.out
+[   22s] checking for suffix of executables... 
+[   22s] checking whether we are cross compiling... no
+[   22s] checking for suffix of object files... o
+[   22s] checking whether the compiler supports GNU C... yes
+[   22s] checking whether gcc accepts -g... yes
+[   22s] checking for gcc option to enable C11 features... none needed
+[   22s] checking whether gcc understands -c and -o together... yes
+[   22s] checking dependency style of gcc... none
+[   22s] checking for stdio.h... yes
+[   22s] checking for stdlib.h... yes
+[   22s] checking for string.h... yes
+[   22s] checking for inttypes.h... yes
+[   22s] checking for stdint.h... yes
+[   22s] checking for strings.h... yes
+[   22s] checking for sys/stat.h... yes
+[   22s] checking for sys/types.h... yes
+[   22s] checking for unistd.h... yes
+[   22s] checking for wchar.h... yes
+[   22s] checking for minix/config.h... no
+[   22s] checking for sys/time.h... yes
+[   22s] checking whether it is safe to define __EXTENSIONS__... yes
+[   22s] checking whether _XOPEN_SOURCE should be defined... no
+[   22s] checking for z/OS USS compilation... no
+[   22s] checking for a sed that does not truncate output... /usr/bin/sed
+[   22s] checking whether NLS is requested... yes
+[   22s] checking for msgfmt... /usr/bin/msgfmt
+[   22s] checking for gmsgfmt... /usr/bin/msgfmt
+[   22s] checking for xgettext... /usr/bin/xgettext
+[   22s] checking for msgmerge... /usr/bin/msgmerge
+[   22s] checking for ld used by gcc... /usr/x86_64-suse-linux/bin/ld
+[   22s] checking if the linker (/usr/x86_64-suse-linux/bin/ld) is GNU ld... yes
+[   22s] checking for shared library run path origin... done
+[   22s] checking 32-bit host C ABI... no
+[   22s] checking how to run the C preprocessor... gcc -E
+[   22s] checking for grep that handles long lines and -e... /usr/bin/grep
+[   22s] checking for egrep... /usr/bin/grep -E
+[   22s] checking for ELF binary format... yes
+[   22s] checking for the common suffixes of directories in the library search path... lib,lib,lib64
+[   22s] checking for CFPreferencesCopyAppValue... no
+[   22s] checking for CFLocaleCopyPreferredLanguages... no
+[   22s] checking for GNU gettext in libc... yes
+[   22s] checking whether to use NLS... yes
+[   22s] checking where the gettext function comes from... libc
+[   23s] checking for nl_langinfo and CODESET... yes
+[   23s] checking for LC_MESSAGES... yes
+[   23s] checking for struct stat.st_blksize... yes
+[   23s] checking for x86_64-suse-linux-ar... no
+[   23s] checking for x86_64-suse-linux-lib... no
+[   23s] checking for x86_64-suse-linux-link... no
+[   23s] checking for ar... ar
+[   23s] checking the archiver (ar) interface... ar
+[   23s] checking for special C compiler options needed for large files... no
+[   23s] checking for _FILE_OFFSET_BITS value needed for large files... no
+[   23s] checking whether C compiler accepts ... yes
+[   23s] checking size of void *... 8
+[   23s] checking for mmap... yes
+[   23s] checking for munmap... yes
+[   23s] checking how to print strings... printf
+[   23s] checking for a sed that does not truncate output... (cached) /usr/bin/sed
+[   23s] checking for fgrep... /usr/bin/grep -F
+[   23s] checking for ld used by gcc... /usr/x86_64-suse-linux/bin/ld
+[   23s] checking if the linker (/usr/x86_64-suse-linux/bin/ld) is GNU ld... yes
+[   23s] checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+[   23s] checking the name lister (/usr/bin/nm -B) interface... BSD nm
+[   23s] checking whether ln -s works... yes
+[   23s] checking the maximum length of command line arguments... 1572864
+[   23s] checking how to convert x86_64-suse-linux-gnu file names to x86_64-suse-linux-gnu format... func_convert_file_noop
+[   23s] checking how to convert x86_64-suse-linux-gnu file names to toolchain format... func_convert_file_noop
+[   23s] checking for /usr/x86_64-suse-linux/bin/ld option to reload object files... -r
+[   23s] checking for x86_64-suse-linux-file... no
+[   23s] checking for file... file
+[   23s] checking for x86_64-suse-linux-objdump... no
+[   23s] checking for objdump... objdump
+[   23s] checking how to recognize dependent libraries... pass_all
+[   23s] checking for x86_64-suse-linux-dlltool... no
+[   23s] checking for dlltool... no
+[   23s] checking how to associate runtime and link libraries... printf %s\n
+[   23s] checking for x86_64-suse-linux-ar... ar
+[   23s] checking for archiver @FILE support... @
+[   23s] checking for x86_64-suse-linux-strip... no
+[   23s] checking for strip... strip
+[   23s] checking for x86_64-suse-linux-ranlib... no
+[   23s] checking for ranlib... ranlib
+[   23s] checking command to parse /usr/bin/nm -B output from gcc object... ok
+[   23s] checking for sysroot... no
+[   23s] checking for a working dd... /usr/bin/dd
+[   23s] checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+[   23s] checking for x86_64-suse-linux-mt... no
+[   23s] checking for mt... no
+[   23s] checking if : is a manifest tool... no
+[   23s] checking for dlfcn.h... yes
+[   23s] checking for objdir... .libs
+[   23s] checking if gcc supports -fno-rtti -fno-exceptions... no
+[   23s] checking for gcc option to produce PIC... -fPIC -DPIC
+[   23s] checking if gcc PIC flag -fPIC -DPIC works... yes
+[   23s] checking if gcc static flag -static works... no
+[   23s] checking if gcc supports -c -o file.o... yes
+[   23s] checking if gcc supports -c -o file.o... (cached) yes
+[   23s] checking whether the gcc linker (/usr/x86_64-suse-linux/bin/ld -m elf_x86_64) supports shared libraries... yes
+[   23s] checking whether -lc should be explicitly linked in... no
+[   24s] checking dynamic linker characteristics... GNU/Linux ld.so
+[   24s] checking how to hardcode library paths into programs... immediate
+[   24s] checking whether stripping libraries is possible... yes
+[   24s] checking if libtool supports shared libraries... yes
+[   24s] checking whether to build shared libraries... yes
+[   24s] checking whether to build static libraries... no
+[   24s] checking for special development options... no
+[   24s] checking for fnmatch.h... yes
+[   24s] checking for limits.h... yes
+[   24s] checking for sys/mkdev.h... no
+[   24s] checking for sys/param.h... yes
+[   24s] checking for sys/select.h... yes
+[   24s] checking for sys/statvfs.h... yes
+[   24s] checking for sys/sysmacros.h... yes
+[   24s] checking for sys/time.h... (cached) yes
+[   24s] checking for uchar.h... yes
+[   24s] checking for dirent.h that defines DIR... yes
+[   24s] checking for library containing opendir... none required
+[   24s] checking whether mpfr via "-lmpfr -lgmp" is present and usable... yes
+[   24s] checking for library containing fmod... -lm
+[   24s] checking for fdopendir... yes
+[   24s] checking for fmod... yes
+[   24s] checking for fnmatch... yes
+[   24s] checking for getdtablesize... yes
+[   25s] checking for clock_gettime... yes
+[   25s] checking for gettimeofday... yes
+[   25s] checking for nanosleep... yes
+[   25s] checking for select... yes
+[   25s] checking for statvfs... yes
+[   25s] checking for mbrtoc32... yes
+[   25s] checking for c32rtomb... yes
+[   25s] checking for GetSystemTimeAsFileTime... no
+[   25s] checking for strptime... yes
+[   25s] checking for gcc options needed to detect all undeclared functions... none needed
+[   25s] checking for dirfd... yes
+[   25s] checking whether dirfd is declared... yes
+[   25s] checking whether dirfd is a macro... no
+[   25s] checking how to get the file descriptor associated with an open DIR*... no_such_member
+[   25s] checking for inline... inline
+[   25s] checking that generated files are newer than configure... done
+[   25s] configure: creating ./config.status
+[   26s] config.status: creating Makefile
+[   26s] config.status: creating po/Makefile.in
+[   26s] config.status: creating config.h
+[   26s] config.status: executing depfiles commands
+[   26s] config.status: executing po-directories commands
+[   26s] config.status: creating po/POTFILES
+[   26s] config.status: creating po/Makefile
+[   26s] config.status: executing libtool commands
+[   26s] + /usr/bin/make -O -j1 V=1 VERBOSE=1
+[   26s] /usr/bin/make  all-recursive
+[   26s] make[1]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   26s] Making all in support
+[   26s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o dfa.o dfa.c
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o getopt.o getopt.c
+[   26s] getopt.c: In function ‘_getopt_internal_r’:
+[   26s] getopt.c:845:18: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+[   26s]   845 |     char *temp = strchr (optstring, c);
+[   26s]       |                  ^~~~~~
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o getopt1.o getopt1.c
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o localeinfo.o localeinfo.c
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o minrx.o minrx.c
+[   26s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o random.o random.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o regex.o regex.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o malloc/dynarray_at_failure.o malloc/dynarray_at_failure.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o malloc/dynarray_emplace_enlarge.o malloc/dynarray_emplace_enlarge.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o malloc/dynarray_finalize.o malloc/dynarray_finalize.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o malloc/dynarray_resize.o malloc/dynarray_resize.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o malloc/dynarray_resize_clear.o malloc/dynarray_resize_clear.c
+[   27s] gcc -DGAWK -DHAVE_CONFIG_H -I"./.." -I. -I..    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o pma.o pma.c
+[   27s] rm -f libsupport.a
+[   27s] ar cru libsupport.a dfa.o getopt.o getopt1.o localeinfo.o minrx.o random.o regex.o malloc/dynarray_at_failure.o malloc/dynarray_emplace_enlarge.o malloc/dynarray_finalize.o malloc/dynarray_resize.o malloc/dynarray_resize_clear.o pma.o 
+[   27s] ranlib libsupport.a
+[   27s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   27s] Making all in .
+[   27s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   27s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o array.o array.c
+[   27s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o awkgram.o awkgram.c
+[   28s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o builtin.o builtin.c
+[   28s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o cint_array.o cint_array.c
+[   28s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o command.o command.c
+[   28s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o debug.o debug.c
+[   29s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o eval.o eval.c
+[   29s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o ext.o ext.c
+[   29s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o field.o field.c
+[   29s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o floatcomp.o floatcomp.c
+[   29s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o gawkapi.o gawkapi.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o gawkmisc.o gawkmisc.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o int_array.o int_array.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o io.o io.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o main.o main.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o mpfr.o mpfr.c
+[   30s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o msg.o msg.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o node.o node.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o printf.o printf.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o profile.o profile.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o re.o re.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o replace.o replace.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o str_array.o str_array.c
+[   31s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o symbol.o symbol.c
+[   32s] gcc -DDEFPATH='".:/usr/share/awk"' -DDEFLIBPATH="\"/usr/lib64/gawk\"" -DSHLIBEXT="\"so"\" -DHAVE_CONFIG_H -DGAWK -DLOCALEDIR='"/usr/share/locale"' -I"./support" -I.    -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o version.o version.c
+[   32s] gcc -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -flto=auto -flto=auto -o gawk array.o awkgram.o builtin.o cint_array.o command.o debug.o eval.o ext.o field.o floatcomp.o gawkapi.o gawkmisc.o int_array.o io.o main.o mpfr.o msg.o node.o printf.o profile.o re.o replace.o str_array.o symbol.o version.o support/libsupport.a    -lreadline -lmpfr -lgmp -flto=auto -lm 
+[   51s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   51s] Making all in extension
+[   51s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   51s] /usr/bin/make  all-recursive
+[   51s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   51s] Making all in po
+[   51s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   51s] /usr/bin/make gawk-extensions.pot-update
+[   51s] make[5]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   51s] sed -e '/^#/d' remove-potcdate.sin > t-remove-potcdate.sed
+[   51s] mv t-remove-potcdate.sed remove-potcdate.sed
+[   51s] package_gnu=""; \
+[   51s] test -n "$package_gnu" || { \
+[   51s]   if { if (LC_ALL=C find --version) 2>/dev/null | grep GNU >/dev/null; then \
+[   51s]          LC_ALL=C find -L .. -maxdepth 1 -type f -size -10000000c -exec grep -i 'GNU gawk-extensions' /dev/null '{}' ';' 2>/dev/null; \
+[   51s]        else \
+[   51s]          LC_ALL=C grep -i 'GNU gawk-extensions' ../* 2>/dev/null; \
+[   51s]        fi; \
+[   51s]      } | grep -v 'libtool:' >/dev/null; then \
+[   51s]      package_gnu=yes; \
+[   51s]    else \
+[   51s]      package_gnu=no; \
+[   51s]    fi; \
+[   51s] }; \
+[   51s] if test "$package_gnu" = "yes"; then \
+[   51s]   package_prefix='GNU '; \
+[   51s] else \
+[   51s]   package_prefix=''; \
+[   51s] fi; \
+[   51s] if test -n 'bug-gawk@gnu.org' || test 'bug-gawk@gnu.org' = '@'PACKAGE_BUGREPORT'@'; then \
+[   51s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   51s] else \
+[   51s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   51s] fi; \
+[   51s] case `/usr/bin/xgettext --version | sed 1q | sed -e 's,^[^0-9]*,,'` in \
+[   51s]   '' | 0.[0-9] | 0.[0-9].* | 0.1[0-5] | 0.1[0-5].* | 0.16 | 0.16.[0-1]*) \
+[   51s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   51s]       --add-comments=TRANSLATORS: \
+[   51s]       --files-from=./POTFILES.in \
+[   51s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   51s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   51s]       --keyword=_ --keyword=N_  \
+[   51s]     ;; \
+[   51s]   *) \
+[   51s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   51s]       --add-comments=TRANSLATORS: \
+[   51s]       --files-from=./POTFILES.in \
+[   51s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   51s]       --package-name="${package_prefix}gawk-extensions" \
+[   51s]       --package-version='5.4.0' \
+[   51s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   51s]       --keyword=_ --keyword=N_  \
+[   51s]     ;; \
+[   51s] esac
+[   51s] test ! -f gawk-extensions.po || { \
+[   51s]   if test -f ./gawk-extensions.pot-header; then \
+[   51s]     sed -e '1,/^#$/d' < gawk-extensions.po > gawk-extensions.1po && \
+[   51s]     cat ./gawk-extensions.pot-header gawk-extensions.1po > gawk-extensions.po && \
+[   51s]     rm -f gawk-extensions.1po \
+[   51s]     || exit 1; \
+[   51s]   fi; \
+[   51s]   if test -f ./gawk-extensions.pot; then \
+[   51s]     sed -f remove-potcdate.sed < ./gawk-extensions.pot > gawk-extensions.1po && \
+[   51s]     sed -f remove-potcdate.sed < gawk-extensions.po > gawk-extensions.2po && \
+[   51s]     if cmp gawk-extensions.1po gawk-extensions.2po >/dev/null 2>&1; then \
+[   51s]       rm -f gawk-extensions.1po gawk-extensions.2po gawk-extensions.po; \
+[   51s]     else \
+[   51s]       rm -f gawk-extensions.1po gawk-extensions.2po ./gawk-extensions.pot && \
+[   51s]       mv gawk-extensions.po ./gawk-extensions.pot; \
+[   51s]     fi; \
+[   51s]   else \
+[   51s]     mv gawk-extensions.po ./gawk-extensions.pot; \
+[   51s]   fi; \
+[   51s] }
+[   51s] make[5]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   51s] test ! -f ./gawk-extensions.pot || \
+[   51s]   test -z "" || /usr/bin/make 
+[   51s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   51s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   51s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o testext.lo testext.c
+[   51s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c testext.c  -fPIC -DPIC -o .libs/testext.o
+[   52s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -rpath /foo -flto=auto -o testext.la  testext.lo  -lmpfr -lgmp -lm 
+[   52s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/testext.o   -lmpfr -lgmp -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,testext.so -o .libs/testext.so
+[   52s] libtool: link: ( cd ".libs" && rm -f "testext.la" && ln -s "../testext.la" "testext.la" )
+[   52s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o filefuncs.lo filefuncs.c
+[   52s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c filefuncs.c  -fPIC -DPIC -o .libs/filefuncs.o
+[   52s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o stack.lo stack.c
+[   52s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c stack.c  -fPIC -DPIC -o .libs/stack.o
+[   52s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o gawkfts.lo gawkfts.c
+[   52s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c gawkfts.c  -fPIC -DPIC -o .libs/gawkfts.o
+[   52s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o filefuncs.la -rpath /usr/lib64/gawk filefuncs.lo stack.lo gawkfts.lo  -lm 
+[   52s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/filefuncs.o .libs/stack.o .libs/gawkfts.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,filefuncs.so -o .libs/filefuncs.so
+[   53s] libtool: link: ( cd ".libs" && rm -f "filefuncs.la" && ln -s "../filefuncs.la" "filefuncs.la" )
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o fnmatch.lo fnmatch.c
+[   53s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c fnmatch.c  -fPIC -DPIC -o .libs/fnmatch.o
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o fnmatch.la -rpath /usr/lib64/gawk fnmatch.lo  -lm 
+[   53s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/fnmatch.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,fnmatch.so -o .libs/fnmatch.so
+[   53s] libtool: link: ( cd ".libs" && rm -f "fnmatch.la" && ln -s "../fnmatch.la" "fnmatch.la" )
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o fork.lo fork.c
+[   53s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c fork.c  -fPIC -DPIC -o .libs/fork.o
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o fork.la -rpath /usr/lib64/gawk fork.lo  -lm 
+[   53s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/fork.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,fork.so -o .libs/fork.so
+[   53s] libtool: link: ( cd ".libs" && rm -f "fork.la" && ln -s "../fork.la" "fork.la" )
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o inplace.lo inplace.c
+[   53s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c inplace.c  -fPIC -DPIC -o .libs/inplace.o
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o inplace.la -rpath /usr/lib64/gawk inplace.lo  -lm 
+[   53s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/inplace.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,inplace.so -o .libs/inplace.so
+[   53s] libtool: link: ( cd ".libs" && rm -f "inplace.la" && ln -s "../inplace.la" "inplace.la" )
+[   53s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o intdiv.lo intdiv.c
+[   53s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c intdiv.c  -fPIC -DPIC -o .libs/intdiv.o
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o intdiv.la -rpath /usr/lib64/gawk intdiv.lo  -lmpfr -lgmp -lm -lm 
+[   54s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/intdiv.o   -lmpfr -lgmp -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,intdiv.so -o .libs/intdiv.so
+[   54s] libtool: link: ( cd ".libs" && rm -f "intdiv.la" && ln -s "../intdiv.la" "intdiv.la" )
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o ordchr.lo ordchr.c
+[   54s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c ordchr.c  -fPIC -DPIC -o .libs/ordchr.o
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o ordchr.la -rpath /usr/lib64/gawk ordchr.lo  -lm 
+[   54s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/ordchr.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,ordchr.so -o .libs/ordchr.so
+[   54s] libtool: link: ( cd ".libs" && rm -f "ordchr.la" && ln -s "../ordchr.la" "ordchr.la" )
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o readdir.lo readdir.c
+[   54s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c readdir.c  -fPIC -DPIC -o .libs/readdir.o
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o readdir.la -rpath /usr/lib64/gawk readdir.lo  -lm 
+[   54s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/readdir.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,readdir.so -o .libs/readdir.so
+[   54s] libtool: link: ( cd ".libs" && rm -f "readdir.la" && ln -s "../readdir.la" "readdir.la" )
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o readfile.lo readfile.c
+[   54s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c readfile.c  -fPIC -DPIC -o .libs/readfile.o
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o readfile.la -rpath /usr/lib64/gawk readfile.lo  -lm 
+[   54s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/readfile.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,readfile.so -o .libs/readfile.so
+[   54s] libtool: link: ( cd ".libs" && rm -f "readfile.la" && ln -s "../readfile.la" "readfile.la" )
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o revoutput.lo revoutput.c
+[   54s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c revoutput.c  -fPIC -DPIC -o .libs/revoutput.o
+[   54s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o revoutput.la -rpath /usr/lib64/gawk revoutput.lo  -lm 
+[   55s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/revoutput.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,revoutput.so -o .libs/revoutput.so
+[   55s] libtool: link: ( cd ".libs" && rm -f "revoutput.la" && ln -s "../revoutput.la" "revoutput.la" )
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o revtwoway.lo revtwoway.c
+[   55s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c revtwoway.c  -fPIC -DPIC -o .libs/revtwoway.o
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o revtwoway.la -rpath /usr/lib64/gawk revtwoway.lo  -lm 
+[   55s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/revtwoway.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,revtwoway.so -o .libs/revtwoway.so
+[   55s] libtool: link: ( cd ".libs" && rm -f "revtwoway.la" && ln -s "../revtwoway.la" "revtwoway.la" )
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o rwarray.lo rwarray.c
+[   55s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c rwarray.c  -fPIC -DPIC -o .libs/rwarray.o
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o rwarray.la -rpath /usr/lib64/gawk rwarray.lo  -lmpfr -lgmp -lm 
+[   55s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/rwarray.o   -lmpfr -lgmp -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,rwarray.so -o .libs/rwarray.so
+[   55s] libtool: link: ( cd ".libs" && rm -f "rwarray.la" && ln -s "../rwarray.la" "rwarray.la" )
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I.  -I./..   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c -o time.lo time.c
+[   55s] libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I./.. -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -c time.c  -fPIC -DPIC -o .libs/time.o
+[   55s] /usr/bin/bash ./libtool  --tag=CC   --mode=link gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -Wall -module -avoid-version -no-undefined -flto=auto -o time.la -rpath /usr/lib64/gawk time.lo  -lm 
+[   55s] libtool: link: gcc -shared  -fPIC -DPIC  .libs/time.o   -lm  -O2 -fstack-protector-strong -flto=auto -g -flto=auto   -Wl,-soname -Wl,time.so -o .libs/time.so
+[   55s] libtool: link: ( cd ".libs" && rm -f "time.la" && ln -s "../time.la" "time.la" )
+[   55s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   55s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   55s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   55s] Making all in extras
+[   55s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   55s] make[2]: Nothing to be done for 'all'.
+[   55s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   55s] Making all in doc
+[   55s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   55s] make[2]: Nothing to be done for 'all'.
+[   55s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   55s] Making all in awklib
+[   55s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   55s] rm -f pwcat.c
+[   55s] ln -s ./eg/lib/pwcat.c .
+[   55s] gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I.. -I../support   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o pwcat.o pwcat.c
+[   55s] gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g  -flto=auto -o pwcat pwcat.o  -lm 
+[   56s] rm -f grcat.c
+[   56s] ln -s ./eg/lib/grcat.c .
+[   56s] gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I.. -I../support   -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -c -o grcat.o grcat.c
+[   56s] gcc  -fcf-protection -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g  -flto=auto -o grcat grcat.o  -lm 
+[   56s] sed 's;/usr/local/libexec/awk;/usr/libexec/awk;' < ./eg/lib/passwdawk.in > passwd.awk
+[   56s] sed 's;/usr/local/libexec/awk;/usr/libexec/awk;' < ./eg/lib/groupawk.in > group.awk
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] Making all in po
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   56s] make[2]: Nothing to be done for 'all'.
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   56s] Making all in test
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   56s] make[2]: Nothing to be done for 'all'.
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   56s] make[1]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] + RPM_EC=0
+[   56s] ++ jobs -p
+[   56s] + exit 0
+[   56s] Executing(%install): /usr/bin/bash -e /var/tmp/rpm-tmp.cj6tRC
+[   56s] + umask 022
+[   56s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   56s] + /usr/bin/rm -rf /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   56s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   56s] + /usr/bin/mkdir /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   56s] + cd gawk-5.4.0
+[   56s] + make install DESTDIR=/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT
+[   56s] make  install-recursive
+[   56s] make[1]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] Making install in support
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   56s] make[3]: Nothing to be done for 'install-exec-am'.
+[   56s] make[3]: Nothing to be done for 'install-data-am'.
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   56s] Making install in .
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin'
+[   56s]   ./build-aux/install-sh -c gawk '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin'
+[   56s]  ./build-aux/install-sh -c gawkbug '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin'
+[   56s] make  install-exec-hook
+[   56s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] (cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin; \
+[   56s] name=`echo gawk | sed 's&^&&'` ; \
+[   56s] if [ ! -f gawk-5.4.0 ]; \
+[   56s] then	ln ${name} gawk-5.4.0 2>/dev/null ; \
+[   56s] fi; \
+[   56s] if [ ! -f awk ]; \
+[   56s] then	ln -s ${name} awk; \
+[   56s] fi; exit 0)
+[   56s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/include'
+[   56s]  ./build-aux/install-sh -c -m 644 gawkapi.h '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/include'
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   56s] Making install in extension
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] Making install in po
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   56s] make gawk-extensions.pot-update
+[   56s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   56s] package_gnu=""; \
+[   56s] test -n "$package_gnu" || { \
+[   56s]   if { if (LC_ALL=C find --version) 2>/dev/null | grep GNU >/dev/null; then \
+[   56s]          LC_ALL=C find -L .. -maxdepth 1 -type f -size -10000000c -exec grep -i 'GNU gawk-extensions' /dev/null '{}' ';' 2>/dev/null; \
+[   56s]        else \
+[   56s]          LC_ALL=C grep -i 'GNU gawk-extensions' ../* 2>/dev/null; \
+[   56s]        fi; \
+[   56s]      } | grep -v 'libtool:' >/dev/null; then \
+[   56s]      package_gnu=yes; \
+[   56s]    else \
+[   56s]      package_gnu=no; \
+[   56s]    fi; \
+[   56s] }; \
+[   56s] if test "$package_gnu" = "yes"; then \
+[   56s]   package_prefix='GNU '; \
+[   56s] else \
+[   56s]   package_prefix=''; \
+[   56s] fi; \
+[   56s] if test -n 'bug-gawk@gnu.org' || test 'bug-gawk@gnu.org' = '@'PACKAGE_BUGREPORT'@'; then \
+[   56s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   56s] else \
+[   56s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   56s] fi; \
+[   56s] case `/usr/bin/xgettext --version | sed 1q | sed -e 's,^[^0-9]*,,'` in \
+[   56s]   '' | 0.[0-9] | 0.[0-9].* | 0.1[0-5] | 0.1[0-5].* | 0.16 | 0.16.[0-1]*) \
+[   56s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   56s]       --add-comments=TRANSLATORS: \
+[   56s]       --files-from=./POTFILES.in \
+[   56s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   56s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   56s]       --keyword=_ --keyword=N_  \
+[   56s]     ;; \
+[   56s]   *) \
+[   56s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   56s]       --add-comments=TRANSLATORS: \
+[   56s]       --files-from=./POTFILES.in \
+[   56s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   56s]       --package-name="${package_prefix}gawk-extensions" \
+[   56s]       --package-version='5.4.0' \
+[   56s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   56s]       --keyword=_ --keyword=N_  \
+[   56s]     ;; \
+[   56s] esac
+[   56s] test ! -f gawk-extensions.po || { \
+[   56s]   if test -f ./gawk-extensions.pot-header; then \
+[   56s]     sed -e '1,/^#$/d' < gawk-extensions.po > gawk-extensions.1po && \
+[   56s]     cat ./gawk-extensions.pot-header gawk-extensions.1po > gawk-extensions.po && \
+[   56s]     rm -f gawk-extensions.1po \
+[   56s]     || exit 1; \
+[   56s]   fi; \
+[   56s]   if test -f ./gawk-extensions.pot; then \
+[   56s]     sed -f remove-potcdate.sed < ./gawk-extensions.pot > gawk-extensions.1po && \
+[   56s]     sed -f remove-potcdate.sed < gawk-extensions.po > gawk-extensions.2po && \
+[   56s]     if cmp gawk-extensions.1po gawk-extensions.2po >/dev/null 2>&1; then \
+[   56s]       rm -f gawk-extensions.1po gawk-extensions.2po gawk-extensions.po; \
+[   56s]     else \
+[   56s]       rm -f gawk-extensions.1po gawk-extensions.2po ./gawk-extensions.pot && \
+[   56s]       mv gawk-extensions.po ./gawk-extensions.pot; \
+[   56s]     fi; \
+[   56s]   else \
+[   56s]     mv gawk-extensions.po ./gawk-extensions.pot; \
+[   56s]   fi; \
+[   56s] }
+[   56s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   56s] test ! -f ./gawk-extensions.pot || \
+[   56s]   test -z "" || make 
+[   56s] if test "gawk-extensions" = "gettext-tools"; then \
+[   56s]   /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po; \
+[   56s]   for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+[   56s]     .././../build-aux//install-sh -c -m 644 ./$file \
+[   56s] 		    /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po/$file; \
+[   56s]   done; \
+[   56s]   for file in Makevars; do \
+[   56s]     rm -f /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po/$file; \
+[   56s]   done; \
+[   56s] else \
+[   56s]   : ; \
+[   56s] fi
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] make[4]: Nothing to be done for 'install-exec-am'.
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man3'
+[   56s]  ./../build-aux//install-sh -c -m 644 filefuncs.3am fnmatch.3am fork.3am inplace.3am ordchr.3am readdir.3am readfile.3am revoutput.3am revtwoway.3am rwarray.3am time.3am '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man3'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk'
+[   56s]  /usr/bin/bash ./libtool   --mode=install ./../build-aux//install-sh -c   filefuncs.la fnmatch.la fork.la inplace.la intdiv.la ordchr.la readdir.la readfile.la revoutput.la revtwoway.la rwarray.la time.la '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk'
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/filefuncs.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/filefuncs.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/filefuncs.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/filefuncs.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/fnmatch.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/fnmatch.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/fnmatch.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/fnmatch.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/fork.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/fork.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/fork.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/fork.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/inplace.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/inplace.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/inplace.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/inplace.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/intdiv.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/intdiv.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/intdiv.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/intdiv.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/ordchr.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/ordchr.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/ordchr.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/ordchr.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/readdir.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/readdir.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/readdir.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/readdir.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/readfile.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/readfile.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/readfile.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/readfile.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/revoutput.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/revoutput.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/revoutput.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/revoutput.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/revtwoway.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/revtwoway.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/revtwoway.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/revtwoway.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/rwarray.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/rwarray.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/rwarray.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/rwarray.la
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/time.so /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/time.so
+[   56s] libtool: install: ./../build-aux//install-sh -c .libs/time.lai /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/time.la
+[   56s] libtool: warning: remember to run 'libtool --finish /usr/lib64/gawk'
+[   56s] make  install-data-hook
+[   56s] make[5]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] for i in filefuncs.la fnmatch.la fork.la inplace.la intdiv.la ordchr.la readdir.la readfile.la revoutput.la revtwoway.la rwarray.la time.la ; do \
+[   56s] 	rm -f /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/lib64/gawk/$i ; \
+[   56s] done
+[   56s] make[5]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   56s] Making install in extras
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   56s] make[3]: Nothing to be done for 'install-exec-am'.
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/etc/profile.d'
+[   56s]  .././build-aux/install-sh -c -m 644 gawk.sh gawk.csh '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/etc/profile.d'
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   56s] Making install in doc
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   56s] make[3]: Nothing to be done for 'install-exec-am'.
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/info'
+[   56s]  .././build-aux/install-sh -c -m 644 gawk_api-figure1.png gawk_api-figure2.png gawk_api-figure3.png gawk_array-elements.png gawk_general-program.png gawk_process-flow.png gawk_statist.jpg '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/info'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/info'
+[   56s]  .././build-aux/install-sh -c -m 644 ./gawk.info ./gawkinet.info ./gawkworkflow.info ./pm-gawk.info ./notes.info '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/info'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man1'
+[   56s]  .././build-aux/install-sh -c -m 644 gawk.1 gawkbug.1 pm-gawk.1 '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man1'
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   56s] Making install in awklib
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s]  /usr/bin/mkdir -p '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/libexec/awk'
+[   56s]   .././build-aux/install-sh -c pwcat grcat '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/libexec/awk'
+[   56s] make  install-exec-hook
+[   56s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] /usr/bin/bash /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/build-aux/install-sh -d /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/awk
+[   56s] for i in passwd.awk group.awk ./eg/lib/*.awk ; do \
+[   56s] 	progname=`echo $i | sed 's;.*/;;'` ; \
+[   56s] 	.././build-aux/install-sh -c -m 644 $i /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/awk/$progname ; \
+[   56s] done
+[   56s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] make[3]: Nothing to be done for 'install-data-am'.
+[   56s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   56s] Making install in po
+[   56s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   56s] installing ar.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/ar/LC_MESSAGES/gawk.mo
+[   56s] installing bg.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/bg/LC_MESSAGES/gawk.mo
+[   57s] installing de.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/de/LC_MESSAGES/gawk.mo
+[   57s] installing es.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/es/LC_MESSAGES/gawk.mo
+[   57s] installing fr.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/fr/LC_MESSAGES/gawk.mo
+[   57s] installing he.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/he/LC_MESSAGES/gawk.mo
+[   57s] installing id.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/id/LC_MESSAGES/gawk.mo
+[   57s] installing it.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/it/LC_MESSAGES/gawk.mo
+[   57s] installing ko.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/ko/LC_MESSAGES/gawk.mo
+[   57s] installing nl.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/nl/LC_MESSAGES/gawk.mo
+[   57s] installing pl.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/pl/LC_MESSAGES/gawk.mo
+[   57s] installing pt.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/pt/LC_MESSAGES/gawk.mo
+[   57s] installing pt_BR.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/pt_BR/LC_MESSAGES/gawk.mo
+[   57s] installing ro.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/ro/LC_MESSAGES/gawk.mo
+[   57s] installing sr.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/sr/LC_MESSAGES/gawk.mo
+[   57s] installing sv.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/sv/LC_MESSAGES/gawk.mo
+[   57s] installing tr.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/tr/LC_MESSAGES/gawk.mo
+[   57s] installing uk.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/uk/LC_MESSAGES/gawk.mo
+[   57s] installing zh_CN.gmo as /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/locale/zh_CN/LC_MESSAGES/gawk.mo
+[   57s] if test "gawk" = "gettext-tools"; then \
+[   57s]   /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po; \
+[   57s]   for file in Makefile.in.in remove-potcdate.sin quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot   Makevars.template; do \
+[   57s]     .././build-aux/install-sh -c -m 644 ./$file \
+[   57s] 		    /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po/$file; \
+[   57s]   done; \
+[   57s]   for file in Makevars; do \
+[   57s]     rm -f /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/gettext/po/$file; \
+[   57s]   done; \
+[   57s] else \
+[   57s]   : ; \
+[   57s] fi
+[   57s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   57s] Making install in test
+[   57s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   57s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   57s] make[3]: Nothing to be done for 'install-exec-am'.
+[   57s] make[3]: Nothing to be done for 'install-data-am'.
+[   57s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   57s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   57s] make[1]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   57s] + ln -sfv gawk-5.4.0 /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin/gawk
+[   57s] '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin/gawk' -> 'gawk-5.4.0'
+[   57s] + ln -sfv gawk.1.gz /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man1/awk.1.gz
+[   57s] '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/man/man1/awk.1.gz' -> 'gawk.1.gz'
+[   57s] + /usr/lib/rpm/find-lang.sh /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT gawk
+[   57s] + /usr/lib/rpm/find-debuginfo -j1 -n --run-dwz --dwz-low-mem-die-limit 10000000 --dwz-max-die-limit 50000000 -S debugsourcefiles.list /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0
+[   57s] find-debuginfo: starting
+[   57s] Extracting debug info from 15 files
+[   57s] DWARF-compressing 15 files
+[   57s] sepdebugcrcfix: Updated 15 CRC32s, 0 CRC32s did match.
+[   57s] Copying sources found by 'debugedit -l' to /usr/src/debug
+[   58s] find-debuginfo: done
+[   58s] + /usr/lib/rpm/brp-compress
+[   58s] + /usr/lib/rpm/brp-suse
+[   58s] calling /usr/lib/rpm/brp-suse.d/brp-05-permissions
+[   58s] calling /usr/lib/rpm/brp-suse.d/brp-15-strip-debug
+[   58s] calling /usr/lib/rpm/brp-suse.d/brp-25-symlink
+[   58s] calling /usr/lib/rpm/brp-suse.d/brp-50-generate-fips-hmac
+[   58s] calling /usr/lib/rpm/brp-suse.d/brp-75-ar
+[   58s] SOURCE_DATE_EPOCH is not set: skipping ar normalization
+[   58s] Executing(%check): /usr/bin/bash -e /var/tmp/rpm-tmp.n6r7eM
+[   58s] + umask 022
+[   58s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   58s] + cd gawk-5.4.0
+[   58s] + /usr/bin/make -O -j1 V=1 VERBOSE=1 check
+[   58s] /usr/bin/make  check-recursive
+[   58s] make[1]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   58s] Making check in support
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   58s] make[2]: Nothing to be done for 'check'.
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/support'
+[   58s] Making check in .
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   58s] /usr/bin/make  check-local
+[   58s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   58s] make[3]: Nothing to be done for 'check-local'.
+[   58s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   58s] Making check in extension
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   58s] Making check in po
+[   58s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   58s] /usr/bin/make gawk-extensions.pot-update
+[   58s] make[4]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   58s] package_gnu=""; \
+[   58s] test -n "$package_gnu" || { \
+[   58s]   if { if (LC_ALL=C find --version) 2>/dev/null | grep GNU >/dev/null; then \
+[   58s]          LC_ALL=C find -L .. -maxdepth 1 -type f -size -10000000c -exec grep -i 'GNU gawk-extensions' /dev/null '{}' ';' 2>/dev/null; \
+[   58s]        else \
+[   58s]          LC_ALL=C grep -i 'GNU gawk-extensions' ../* 2>/dev/null; \
+[   58s]        fi; \
+[   58s]      } | grep -v 'libtool:' >/dev/null; then \
+[   58s]      package_gnu=yes; \
+[   58s]    else \
+[   58s]      package_gnu=no; \
+[   58s]    fi; \
+[   58s] }; \
+[   58s] if test "$package_gnu" = "yes"; then \
+[   58s]   package_prefix='GNU '; \
+[   58s] else \
+[   58s]   package_prefix=''; \
+[   58s] fi; \
+[   58s] if test -n 'bug-gawk@gnu.org' || test 'bug-gawk@gnu.org' = '@'PACKAGE_BUGREPORT'@'; then \
+[   58s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   58s] else \
+[   58s]   msgid_bugs_address='bug-gawk@gnu.org'; \
+[   58s] fi; \
+[   58s] case `/usr/bin/xgettext --version | sed 1q | sed -e 's,^[^0-9]*,,'` in \
+[   58s]   '' | 0.[0-9] | 0.[0-9].* | 0.1[0-5] | 0.1[0-5].* | 0.16 | 0.16.[0-1]*) \
+[   58s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   58s]       --add-comments=TRANSLATORS: \
+[   58s]       --files-from=./POTFILES.in \
+[   58s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   58s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   58s]       --keyword=_ --keyword=N_  \
+[   58s]     ;; \
+[   58s]   *) \
+[   58s]     /usr/bin/xgettext --default-domain=gawk-extensions --directory=.. \
+[   58s]       --add-comments=TRANSLATORS: \
+[   58s]       --files-from=./POTFILES.in \
+[   58s]       --copyright-holder='Free Software Foundation, Inc.' \
+[   58s]       --package-name="${package_prefix}gawk-extensions" \
+[   58s]       --package-version='5.4.0' \
+[   58s]       --msgid-bugs-address="$msgid_bugs_address" \
+[   58s]       --keyword=_ --keyword=N_  \
+[   58s]     ;; \
+[   58s] esac
+[   58s] test ! -f gawk-extensions.po || { \
+[   58s]   if test -f ./gawk-extensions.pot-header; then \
+[   58s]     sed -e '1,/^#$/d' < gawk-extensions.po > gawk-extensions.1po && \
+[   58s]     cat ./gawk-extensions.pot-header gawk-extensions.1po > gawk-extensions.po && \
+[   58s]     rm -f gawk-extensions.1po \
+[   58s]     || exit 1; \
+[   58s]   fi; \
+[   58s]   if test -f ./gawk-extensions.pot; then \
+[   58s]     sed -f remove-potcdate.sed < ./gawk-extensions.pot > gawk-extensions.1po && \
+[   58s]     sed -f remove-potcdate.sed < gawk-extensions.po > gawk-extensions.2po && \
+[   58s]     if cmp gawk-extensions.1po gawk-extensions.2po >/dev/null 2>&1; then \
+[   58s]       rm -f gawk-extensions.1po gawk-extensions.2po gawk-extensions.po; \
+[   58s]     else \
+[   58s]       rm -f gawk-extensions.1po gawk-extensions.2po ./gawk-extensions.pot && \
+[   58s]       mv gawk-extensions.po ./gawk-extensions.pot; \
+[   58s]     fi; \
+[   58s]   else \
+[   58s]     mv gawk-extensions.po ./gawk-extensions.pot; \
+[   58s]   fi; \
+[   58s] }
+[   58s] make[4]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   58s] test ! -f ./gawk-extensions.pot || \
+[   58s]   test -z "" || /usr/bin/make 
+[   58s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension/po'
+[   58s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   58s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extension'
+[   58s] Making check in extras
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   58s] make[2]: Nothing to be done for 'check'.
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/extras'
+[   58s] Making check in doc
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   58s] make[2]: Nothing to be done for 'check'.
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/doc'
+[   58s] Making check in awklib
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   58s] make[2]: Nothing to be done for 'check'.
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/awklib'
+[   58s] Making check in po
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   58s] make[2]: Nothing to be done for 'check'.
+[   58s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/po'
+[   58s] Making check in test
+[   58s] make[2]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   58s] 
+[   58s] Any output from "cmp" is bad news, although some differences
+[   58s] in floating point values are probably benign -- in particular,
+[   58s] some systems may omit a leading zero and the floating point
+[   58s] precision may lead to slightly different output in a few cases.
+[   58s] 
+[   58s] Locale environment:
+[   58s] 	LC_ALL="C" LANG="C"
+[   58s] 
+[   58s] ======== Starting basic tests ========
+[   58s] addcomma
+[   58s] anchgsub
+[   58s] anchor
+[   58s] argarray
+[   58s] argcasfile
+[   58s] arrayind1
+[   58s] arrayind2
+[   58s] arrayind3
+[   58s] arrayparm
+[   58s] arrayprm2
+[   58s] arrayprm3
+[   58s] arrayref
+[   58s] arrymem1
+[   58s] arryref2
+[   58s] arryref3
+[   58s] arryref4
+[   58s] arryref5
+[   58s] arynasty
+[   58s] arynocls
+[   58s] aryprm1
+[   58s] aryprm2
+[   58s] aryprm3
+[   58s] aryprm4
+[   58s] aryprm5
+[   58s] aryprm6
+[   58s] aryprm7
+[   58s] aryprm8
+[   58s] aryprm9
+[   58s] arysubnm
+[   58s] aryunasgn
+[   58s] asgext
+[   58s] assignnumfield
+[   58s] assignnumfield2
+[   58s] awkpath
+[   58s] back89
+[   58s] backgsub
+[   58s] badassign1
+[   58s] badbuild
+[   58s] callparam
+[   58s] childin
+[   58s] clobber
+[   58s] close_status
+[   58s] closebad
+[   58s] clsflnam
+[   58s] cmdlinefsbacknl
+[   58s] cmdlinefsbacknl2
+[   58s] compare
+[   58s] compare2
+[   58s] concat1
+[   58s] concat2
+[   58s] concat3
+[   58s] concat4
+[   58s] concat5
+[   58s] convfmt
+[   58s] datanonl
+[   58s] defref
+[   58s] delargv
+[   58s] delarpm2
+[   58s] delarprm
+[   58s] delfunc
+[   58s] dfacheck2
+[   58s] dfamb1
+[   58s] dfastress
+[   58s] divzero
+[   58s] divzero2
+[   58s] dynlj
+[   59s] elemnew5
+[   59s] elemnew6
+[   59s] eofsplit
+[   59s] eofsrc1
+[   59s] escapebrace
+[   59s] exit2
+[   59s] exitval1
+[   59s] exitval2
+[   59s] exitval3
+[   59s] fcall_exit
+[   59s] fcall_exit2
+[   59s] fieldassign
+[   59s] fldchg
+[   59s] fldchgnf
+[   59s] fldterm
+[   59s] fnamedat
+[   59s] fnarray
+[   59s] fnarray2
+[   59s] fnaryscl
+[   59s] fnasgnm
+[   59s] fnmisc
+[   59s] fordel
+[   59s] forref
+[   59s] forsimp
+[   59s] fsbs
+[   59s] fscaret
+[   59s] fsnul1
+[   59s] fsrs
+[   59s] fsspcoln
+[   59s] fstabplus
+[   59s] funsemnl
+[   59s] funsmnam
+[   59s] funstack
+[   59s] getline
+[   59s] getline2
+[   59s] getline3
+[   59s] getline4
+[   59s] getline5
+[   59s] getlnbuf
+[   59s] getlnfa
+[   59s] getnr2tb
+[   59s] getnr2tm
+[   59s] gsubasgn
+[   59s] gsubnulli18n
+[   59s] gsubtest
+[   59s] gsubtst2
+[   59s] gsubtst3
+[   59s] gsubtst4
+[   59s] gsubtst5
+[   59s] gsubtst6
+[   59s] gsubtst7
+[   59s] gsubtst8
+[   59s] hex
+[   59s] hex2
+[   59s] hex3
+[   59s] hsprint
+[   59s] inpref
+[   59s] inputred
+[   59s] intest
+[   59s] intprec
+[   59s] iobug1
+[   59s] leaddig
+[   59s] leadnl
+[   59s] litoct
+[   59s] longsub
+[   59s] longwrds
+[   59s] manglprm
+[   59s] match4
+[   59s] match5
+[   59s] matchbadarg1
+[   59s] matchbadarg2
+[   59s] matchuninitialized
+[   59s] math
+[   59s] membug1
+[   59s] memleak
+[   59s] messages
+[   59s] minusstr
+[   59s] mmap8k
+[   59s] nasty
+[   59s] nasty2
+[   59s] negexp
+[   59s] negrange
+[   59s] nested
+[   59s] nfldstr
+[   59s] nfloop
+[   59s] nfneg
+[   59s] nfset
+[   59s] nlfldsep
+[   59s] nlinstr
+[   59s] nlstrina
+[   59s] noeffect
+[   59s] nofile
+[   59s] nofmtch
+[   59s] noloop1
+[   59s] noloop2
+[   59s] nonl
+[   59s] noparms
+[   59s] nors
+[   59s] nulinsrc
+[   59s] nulrsend
+[   59s] numindex
+[   59s] numrange
+[   59s] egrep: warning: egrep is obsolescent; using grep -E
+[   59s] numstr1
+[   59s] numsubstr
+[   59s] octsub
+[   59s] ofmt
+[   59s] ofmta
+[   59s] ofmtbig
+[   59s] ofmtfidl
+[   59s] ofmts
+[   59s] ofmtstrnum
+[   59s] ofs1
+[   59s] onlynl
+[   59s] opasnidx
+[   59s] opasnslf
+[   59s] paramasfunc1
+[   59s] paramasfunc2
+[   59s] paramdup
+[   59s] paramres
+[   59s] paramtyp
+[   59s] paramuninitglobal
+[   59s] parse1
+[   59s] parsefld
+[   59s] parseme
+[   59s] pcntplus
+[   59s] posix2008sub
+[   59s] posix_compare
+[   59s] prdupval
+[   59s] prec
+[   59s] printf-corners
+[   59s] egrep: warning: egrep is obsolescent; using grep -E
+[   59s] printf0
+[   59s] printf1
+[   59s] printfchar
+[   59s] prmarscl
+[   59s] prmreuse
+[   59s] prt1eval
+[   59s] prtoeval
+[   59s] rand
+[   59s] egrep: warning: egrep is obsolescent; using grep -E
+[   59s] randtest
+[   62s] range1
+[   62s] range2
+[   62s] readbuf
+[   62s] rebrackloc
+[   62s] rebt8b1
+[   63s] rebuild
+[   63s] redfilnm
+[   63s] regeq
+[   63s] regex3minus
+[   63s] regexpbad
+[   63s] regexpbrack
+[   63s] regexpbrack2
+[   63s] regexprange
+[   63s] regexpuparrow
+[   63s] regrange
+[   63s] reindops
+[   63s] reparse
+[   63s] resplit
+[   63s] rri1
+[   63s] rs
+[   63s] rscompat
+[   63s] rsnul1nl
+[   63s] rsnulbig
+[   63s] rsnulbig2
+[   63s] rsnullre
+[   63s] rsnulw
+[   63s] rstest1
+[   63s] rstest2
+[   63s] rstest3
+[   63s] rstest4
+[   63s] rstest5
+[   63s] rswhite
+[   63s] scalar
+[   63s] sclforin
+[   63s] sclifin
+[   63s] setrec0
+[   63s] setrec1
+[   63s] shortest-match
+[   63s] sigpipe1
+[   63s] sortempty
+[   63s] sortglos
+[   63s] spacere
+[   63s] splitargv
+[   63s] splitarr
+[   63s] splitdef
+[   63s] splitvar
+[   63s] splitwht
+[   63s] splitwht2
+[   63s] status-close
+[   63s] strcat1
+[   63s] strfieldnum
+[   63s] strnum1
+[   63s] strnum2
+[   63s] strsubscript
+[   63s] strtod
+[   63s] subamp
+[   63s] subback
+[   63s] subi18n
+[   63s] subsepnm
+[   63s] subslash
+[   63s] substr
+[   63s] swaplns
+[   63s] synerr1
+[   63s] synerr2
+[   63s] synerr3
+[   63s] tailrecurse
+[   63s] tradanch
+[   63s] trailbs
+[   63s] tweakfld
+[   63s] uninit2
+[   63s] uninit3
+[   63s] uninit4
+[   63s] uninit5
+[   63s] uninitialized
+[   63s] unterm
+[   63s] uparrfs
+[   63s] uplus
+[   63s] wideidx
+[   63s] wideidx2
+[   63s] widesub
+[   63s] widesub2
+[   63s] widesub3
+[   63s] widesub4
+[   63s] wjposer1
+[   63s] zero2
+[   63s] zeroe0
+[   63s] zeroflag
+[   63s] ======== Done with basic tests ========
+[   63s] ======== Starting Unix tests ========
+[   63s] fflush
+[   63s] getlnhd
+[   63s] localenl
+[   63s] pid
+[   63s] pipeio1
+[   63s] pipeio2
+[   63s] poundbang
+[   63s] rtlen
+[   63s] rtlen01
+[   63s] space
+[   63s] strftlng
+[   63s] ======== Done with Unix tests ========
+[   63s] ======== Starting gawk extension tests ========
+[   63s] aadelete1
+[   63s] aadelete2
+[   63s] aarray1
+[   63s] aasort
+[   63s] aasorti
+[   63s] ar2fn_elnew_sc
+[   63s] ar2fn_elnew_sc2
+[   63s] ar2fn_fmod
+[   63s] ar2fn_unxptyp_aref
+[   63s] ar2fn_unxptyp_val
+[   63s] argtest
+[   63s] arraysort
+[   63s] arraysort2
+[   63s] arraytype
+[   63s] egrep: warning: egrep is obsolescent; using grep -E
+[   63s] asortbool
+[   63s] asortsymtab
+[   63s] egrep: warning: egrep is obsolescent; using grep -E
+[   63s] backw
+[   63s] badargs
+[   63s] beginfile1
+[   63s] beginfile2
+[   63s] binmode1
+[   63s] charasbytes
+[   63s] clos1way
+[   63s] clos1way2
+[   65s] clos1way3
+[   67s] clos1way4
+[   69s] clos1way5
+[   72s] clos1way6
+[   74s] colonwarn
+[   74s] crlf
+[   74s] csv1
+[   74s] csv2
+[   74s] csv3
+[   74s] csvodd
+[   74s] dbugarray1
+[   74s] dbugarray2
+[   74s] dbugarray3
+[   74s] dbugarray4
+[   74s] dbugeval
+[   74s] dbugeval2
+[   74s] dbugeval3
+[   74s] dbugeval4
+[   74s] dbugtypedre1
+[   74s] dbugtypedre2
+[   74s] delmessy
+[   74s] delsub
+[   74s] devfd
+[   74s] devfd1
+[   74s] devfd2
+[   74s] dfacheck1
+[   74s] dumpvars
+[   74s] elemnew1
+[   74s] elemnew2
+[   74s] elemnew3
+[   74s] elemnew4
+[   74s] equiv
+[   74s] errno
+[   74s] exit
+[   74s] fieldwdth
+[   74s] forcenum
+[   74s] fpat1
+[   74s] fpat2
+[   74s] fpat3
+[   74s] fpat4
+[   74s] fpat5
+[   74s] fpat6
+[   74s] fpat7
+[   74s] fpat8
+[   74s] fpat9
+[   74s] fpatnull
+[   74s] fsfwfs
+[   74s] functab1
+[   74s] functab2
+[   74s] functab3
+[   74s] functab6
+[   74s] funlen
+[   74s] fwtest
+[   74s] fwtest2
+[   74s] fwtest3
+[   74s] fwtest4
+[   74s] fwtest5
+[   74s] fwtest6
+[   74s] fwtest7
+[   74s] fwtest8
+[   74s] genpot
+[   74s] gensub
+[   74s] gensub2
+[   74s] gensub3
+[   74s] gensub4
+[   74s] getlndir
+[   74s] gnuops2
+[   74s] gnuops3
+[   74s] gnureops
+[   74s] gsubind
+[   74s] hexfloat
+[   74s] icasefs
+[   74s] icasers
+[   74s] id
+[   74s] igncdym
+[   74s] igncfs
+[   74s] ignrcas2
+[   74s] ignrcas4
+[   74s] ignrcase
+[   74s] incdupe
+[   74s] incdupe2
+[   74s] incdupe3
+[   74s] incdupe4
+[   74s] incdupe5
+[   74s] incdupe6
+[   74s] incdupe7
+[   74s] include
+[   74s] include2
+[   74s] indirectbuiltin
+[   74s] indirectbuiltin3
+[   74s] indirectbuiltin4
+[   74s] indirectbuiltin5
+[   74s] indirectbuiltin6
+[   74s] indirectcall
+[   74s] indirectcall2
+[   74s] indirectcall3
+[   74s] intarray
+[   74s] iolint
+[   74s] isarrayunset
+[   74s] lint
+[   74s] lintexp
+[   74s] lintindex
+[   74s] lintint
+[   74s] lintlength
+[   74s] lintold
+[   74s] lintplus
+[   74s] lintplus2
+[   74s] lintplus3
+[   74s] lintset
+[   74s] lintsubarray
+[   74s] linttypeof
+[   74s] lintwarn
+[   74s] manyfiles
+[   74s] match1
+[   74s] match2
+[   74s] match3
+[   74s] mdim1
+[   74s] mdim2
+[   74s] mdim3
+[   74s] mdim4
+[   74s] mdim5
+[   74s] mdim6
+[   74s] mdim7
+[   74s] mdim8
+[   75s] memleak2
+[   75s] memleak3
+[   75s] mixed1
+[   75s] mktime
+[   75s] modifiers
+[   75s] muldimposix
+[   75s] nastyparm
+[   75s] negtime
+[   75s] next
+[   75s] nondec
+[   75s] nondec2
+[   75s] nonfatal1
+[   75s] nonfatal2
+[   75s] nonfatal3
+[   75s] nsawk1a
+[   75s] nsawk1b
+[   75s] nsawk1c
+[   75s] nsawk2a
+[   75s] nsawk2b
+[   75s] nsbad
+[   75s] nsbad2
+[   75s] nsbad3
+[   75s] nsbad_cmd
+[   75s] nsforloop
+[   75s] nsfuncrecurse
+[   75s] nsidentifier
+[   75s] nsindirect1
+[   75s] nsindirect2
+[   75s] nsprof1
+[   75s] nsprof2
+[   75s] nsprof3
+[   75s] octdec
+[   75s] patsplit
+[   75s] posix
+[   75s] printfbad1
+[   75s] printfbad2
+[   75s] printfbad3
+[   75s] printfbad4
+[   75s] printhuge
+[   75s] procinfs
+[   75s] profile0
+[   75s] profile1
+[   75s] profile2
+[   75s] profile3
+[   75s] profile4
+[   75s] profile5
+[   75s] profile6
+[   75s] profile7
+[   75s] profile8
+[   75s] profile9
+[   75s] profile10
+[   75s] profile11
+[   75s] profile12
+[   75s] profile13
+[   75s] profile14
+[   75s] profile15
+[   75s] profile16
+[   75s] profile17
+[   75s] pty1
+[   75s] pty2
+[   75s] re_test
+[   75s] rebuf
+[   75s] regexsub
+[   75s] reginttrad
+[   75s] regnul1
+[   75s] regnul2
+[   75s] regx8bit
+[   75s] reint
+[   75s] reint2
+[   75s] rsgetline
+[   75s] rsglstdin
+[   75s] rsstart1
+[   75s] rsstart2
+[   75s] rsstart3
+[   75s] rstest6
+[   75s] sandbox1
+[   75s] shadow
+[   75s] shadowbuiltin
+[   75s] sortfor
+[   75s] sortfor2
+[   75s] sortu
+[   75s] sourcesplit
+[   75s] split_after_fpat
+[   75s] splitarg4
+[   75s] strftfld
+[   75s] strftime
+[   75s] strtonum
+[   75s] strtonum1
+[   75s] stupid1
+[   75s] stupid2
+[   75s] stupid3
+[   75s] stupid4
+[   75s] stupid5
+[   75s] switch2
+[   75s] symtab1
+[   75s] symtab2
+[   75s] symtab3
+[   75s] symtab4
+[   75s] symtab5
+[   75s] symtab6
+[   75s] symtab7
+[   75s] symtab8
+[   75s] symtab9
+[   75s] symtab10
+[   75s] symtab11
+[   75s] symtab12
+[   75s] timeout
+[   77s] typedregex1
+[   77s] typedregex2
+[   77s] typedregex3
+[   77s] typedregex4
+[   77s] typedregex5
+[   77s] typedregex6
+[   77s] typeof1
+[   77s] typeof2
+[   77s] typeof3
+[   77s] typeof4
+[   77s] typeof5
+[   77s] typeof6
+[   77s] typeof7
+[   77s] typeof8
+[   77s] typeof9
+[   77s] unicode1
+[   77s] watchpoint1
+[   77s] gawk is not compiled to support the array debug tests
+[   77s] ======== Done with gawk extension tests ========
+[   77s] %%%%%%%%%% Inadequate locale support: skipping charset tests.
+[   77s] %%%%%%%%%% At least en_US.UTF-8, fr_FR.UTF-8, ru_RU.UTF-8 and ja_JP.UTF-8 are needed.
+[   77s] ======== Starting dynamic extension tests ========
+[   77s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   77s] apiterm
+[   77s] filefuncs
+[   77s] fnmatch
+[   77s] fork
+[   77s] fork2
+[   77s] fts
+[   77s] functab4
+[   77s] functab5
+[   77s] getfile
+[   77s] indirectbuiltin2
+[   78s] inplace1
+[   78s] inplace2
+[   78s] inplace2bcomp
+[   78s] inplace3
+[   78s] inplace3bcomp
+[   78s] ordchr
+[   78s] ordchr2
+[   78s] readall
+[   78s] readdir
+[   78s] readdir_retest
+[   78s] readdir_test
+[   78s] readfile
+[   78s] readfile2
+[   78s] revout
+[   78s] revtwoway
+[   78s] rwarray
+[   78s] testext
+[   78s] egrep: warning: egrep is obsolescent; using grep -E
+[   78s] time
+[   79s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   79s] ======== Done with dynamic extension tests ========
+[   79s] ======== Starting MPFR tests ========
+[   79s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   79s] mpfranswer42
+[   79s] mpfrbigint
+[   79s] mpfrbigint2
+[   79s] mpfrcase
+[   79s] mpfrcase2
+[   79s] mpfrexprange
+[   79s] mpfrfield
+[   79s] mpfrieee
+[   79s] mpfrmemok1
+[   79s] mpfrnegzero
+[   79s] mpfrnegzero2
+[   79s] mpfrnonum
+[   79s] mpfrnr
+[   79s] mpfrrem
+[   79s] mpfrrnd
+[   79s] mpfrrndeval
+[   79s] mpfrsort
+[   79s] mpfrsqrt
+[   79s] mpfrstrtonum
+[   79s] mpfruplus
+[   79s] mpgforcenum
+[   79s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   79s] ======== Done with MPFR tests ========
+[   79s] ======== Starting PMA tests ========
+[   80s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] gcc ./makepmafile.c -o makepmafile
+[   80s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] pma
+[   80s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] ======== Done with PMA tests ========
+[   80s] ======== Starting machine-specific tests ========
+[   80s] If any of these tests fail, don't worry too much.
+[   80s] double1
+[   80s] double2
+[   80s] inf-nan-torture
+[   80s] intformat
+[   80s] ======== Done with machine-specific tests ========
+[   80s] make[3]: Entering directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] ALL TESTS PASSED
+[   80s] make[3]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] make[2]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/test'
+[   80s] make[1]: Leaving directory '/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0'
+[   80s] + RPM_EC=0
+[   80s] ++ jobs -p
+[   80s] + exit 0
+[   80s] Processing files: gawk-5.4.0-0.x86_64
+[   80s] error: File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/awk
+[   80s] error: File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/gawk
+[   80s] Executing(%doc): /usr/bin/bash -e /var/tmp/rpm-tmp.ierl4W
+[   80s] + umask 022
+[   80s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   80s] + cd gawk-5.4.0
+[   80s] + DOCDIR=/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + export LC_ALL=C.UTF-8
+[   80s] + LC_ALL=C.UTF-8
+[   80s] + export DOCDIR
+[   80s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/AUTHORS /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/NEWS /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/POSIX.STD /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/README /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/ChangeLog /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/ChangeLog.0 /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/ChangeLog.1 /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/doc/packages/gawk
+[   80s] + RPM_EC=0
+[   80s] ++ jobs -p
+[   80s] + exit 0
+[   80s] Executing(%license): /usr/bin/bash -e /var/tmp/rpm-tmp.oj2I2x
+[   80s] + umask 022
+[   80s] + cd /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build
+[   80s] + cd gawk-5.4.0
+[   80s] + LICENSEDIR=/home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/licenses/gawk
+[   80s] + export LC_ALL=C.UTF-8
+[   80s] + LC_ALL=C.UTF-8
+[   80s] + export LICENSEDIR
+[   80s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/licenses/gawk
+[   80s] + cp -pr /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/gawk-5.4.0/COPYING /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/share/licenses/gawk
+[   80s] + RPM_EC=0
+[   80s] ++ jobs -p
+[   80s] + exit 0
+[   80s] 
+[   80s] RPM build errors:
+[   80s]     File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/awk
+[   80s]     File not found: /home/abuild/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/bin/gawk
+[   80s] ### VM INTERACTION START ###
+[   80s] [   75.607777][    T1] sysrq: Power Off
+[   80s] ### VM INTERACTION END ###
+[   80s] 
+[   80s] reiser.suse.de failed "build gawk.spec" at Tue Jul  7 02:57:29 UTC 2026.
+[   80s] 
+
+finished ./gawk.spec after 1m21s: failed

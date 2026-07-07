@@ -1,0 +1,13 @@
+**Error Analysis:**
+The build failed during RPM's post-install verification because **10 files** were installed to the `BUILDROOT` but are not listed in the `%files` section. This triggers a fatal `Installed (but unpackaged) file(s) found` error, which blocks package creation. The missing files consist of one utility binary (`gawkbug`) and documentation (info figures and man pages).
+
+**Required Fix:**
+Add the following three lines to your `%files` section. These explicitly list the standalone debugger and use standard RPM macros to capture all info/figure and man1 files without hardcoding paths.
+
+
+**Why this works:**
+- `%{_bindir}/gawkbug` packages the exact binary listed in `/usr/bin/`.
+- `%{_infodir}/*` captures all 7 `.png` documentation figures installed to `/usr/share/info/`.
+- `%{_mandir}/man1/*` captures `gawkbug.1.gz` and `pm-gawk.1.gz` installed to `/usr/share/man/man1/`.
+
+Apply this diff, then retry the build. No interactive investigation or dependency changes are required.

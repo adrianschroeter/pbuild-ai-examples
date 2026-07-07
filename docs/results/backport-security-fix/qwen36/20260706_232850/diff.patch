@@ -1,0 +1,143 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/fix-rar-bounds-check.patch sources/libarchive/fix-rar-bounds-check.patch
+--- source_backup/fix-rar-bounds-check.patch	1970-01-01 01:00:00.000000000 +0100
++++ sources/libarchive/fix-rar-bounds-check.patch	2026-07-06 23:32:21.708778812 +0200
+@@ -0,0 +1,115 @@
++From 020c40df9e31ec727201a8e3ddf1f94093f8fc02 Mon Sep 17 00:00:00 2001
++From: "Dustin L. Howett" <dustin@howett.net>
++Date: Mon, 15 Jan 2024 22:16:27 -0600
++Subject: [PATCH] rar4 reader: protect copy_..._to_unp from too-big or
++ too-small length
++
++copy_from_lzss_window_to_unp unnecessarily took an `int` parameter where
++both of its callers were holding a `size_t`.
++
++A lzss opcode chain could be cosntructed that resulted in a negative
++copy length, which when passed into memcpy would result in a very, very
++large positive number.
++
++Switching copy_from_lzss_window_to_unp to take a `size_t` allows it to
++properly bounds-check length.
++
++In addition, this patch also ensures that `length` is not itself larger
++than the destination buffer.
++---
++ libarchive/archive_read_support_format_rar.c | 28 +++++++++++++-------
++ 1 file changed, 18 insertions(+), 10 deletions(-)
++
++diff --git a/libarchive/archive_read_support_format_rar.c b/libarchive/archive_read_support_format_rar.c
++index 99a11d1700..6d3f891ee2 100644
++--- a/libarchive/archive_read_support_format_rar.c
+++++ b/libarchive/archive_read_support_format_rar.c
++@@ -432,7 +432,7 @@ static int make_table_recurse(struct archive_read *, struct huffman_code *, int,
++                               struct huffman_table_entry *, int, int);
++ static int expand(struct archive_read *, int64_t *);
++ static int copy_from_lzss_window_to_unp(struct archive_read *, const void **,
++-                                        int64_t, int);
+++                                        int64_t, size_t);
++ static const void *rar_read_ahead(struct archive_read *, size_t, ssize_t *);
++ static int parse_filter(struct archive_read *, const uint8_t *, uint16_t,
++                         uint8_t);
++@@ -2060,7 +2060,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++         bs = rar->unp_buffer_size - rar->unp_offset;
++       else
++         bs = (size_t)rar->bytes_uncopied;
++-      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++      ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++       if (ret != ARCHIVE_OK)
++         return (ret);
++       rar->offset += bs;
++@@ -2200,7 +2200,7 @@ read_data_compressed(struct archive_read *a, const void **buff, size_t *size,
++       bs = rar->unp_buffer_size - rar->unp_offset;
++     else
++       bs = (size_t)rar->bytes_uncopied;
++-    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, (int)bs);
+++    ret = copy_from_lzss_window_to_unp(a, buff, rar->offset, bs);
++     if (ret != ARCHIVE_OK)
++       return (ret);
++     rar->offset += bs;
++@@ -3081,11 +3081,16 @@ copy_from_lzss_window(struct archive_read *a, void *buffer,
++ 
++ static int
++ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++-                             int64_t startpos, int length)
+++                             int64_t startpos, size_t length)
++ {
++   int windowoffs, firstpart;
++   struct rar *rar = (struct rar *)(a->format->data);
++ 
+++  if (length > rar->unp_buffer_size)
+++  {
+++    goto fatal;
+++  }
+++
++   if (!rar->unp_buffer)
++   {
++     if ((rar->unp_buffer = malloc(rar->unp_buffer_size)) == NULL)
++@@ -3097,17 +3102,17 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   }
++ 
++   windowoffs = lzss_offset_for_position(&rar->lzss, startpos);
++-  if(windowoffs + length <= lzss_size(&rar->lzss)) {
+++  if(windowoffs + length <= (size_t)lzss_size(&rar->lzss)) {
++     memcpy(&rar->unp_buffer[rar->unp_offset], &rar->lzss.window[windowoffs],
++            length);
++-  } else if (length <= lzss_size(&rar->lzss)) {
+++  } else if (length <= (size_t)lzss_size(&rar->lzss)) {
++     firstpart = lzss_size(&rar->lzss) - windowoffs;
++     if (firstpart < 0) {
++       archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++                         "Bad RAR file data");
++       return (ARCHIVE_FATAL);
++     }
++-    if (firstpart < length) {
+++    if ((size_t)firstpart < length) {
++       memcpy(&rar->unp_buffer[rar->unp_offset],
++              &rar->lzss.window[windowoffs], firstpart);
++       memcpy(&rar->unp_buffer[rar->unp_offset + firstpart],
++@@ -3117,9 +3122,7 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++              &rar->lzss.window[windowoffs], length);
++     }
++   } else {
++-      archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
++-                        "Bad RAR file data");
++-      return (ARCHIVE_FATAL);
+++      goto fatal;
++   }
++   rar->unp_offset += length;
++   if (rar->unp_offset >= rar->unp_buffer_size)
++@@ -3127,6 +3130,11 @@ copy_from_lzss_window_to_unp(struct archive_read *a, const void **buffer,
++   else
++     *buffer = NULL;
++   return (ARCHIVE_OK);
+++
+++fatal:
+++  archive_set_error(&a->archive, ARCHIVE_ERRNO_FILE_FORMAT,
+++                    "Bad RAR file data");
+++  return (ARCHIVE_FATAL);
++ }
++ 
++ static const void *
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/libarchive.spec sources/libarchive/libarchive.spec
+--- source_backup/libarchive.spec	2026-07-06 23:28:50.918638792 +0200
++++ sources/libarchive/libarchive.spec	2026-07-06 23:44:54.425963099 +0200
+@@ -36,8 +36,8 @@
+ License:        BSD-2-Clause
+ Group:          Productivity/Archiving/Compression
+ URL:            https://www.libarchive.org/
+-Source0:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz
+-Source1:        https://github.com/libarchive/libarchive/releases/download/v%{version}/libarchive-%{version}.tar.xz.asc
++Source0: libarchive-3.7.4.tar.xz
++Source1: libarchive-3.7.4.tar.xz.asc
+ Source2:        libarchive.keyring
+ Source1000:     baselibs.conf
+ Patch1:         lib-suffix.patch
+@@ -46,6 +46,9 @@
+ # bsdunzip test fails because of a locale issue, set locale properly to fix it
+ # It will be fixed in the next release
+ Patch3:         fix-bsdunzip-test.patch
++# PATCH-FIX-SUSU CVE security fix from upstream
++# RAR4 LZSS bounds check for copy_from_lzss_window_to_unp
++Patch4:         fix-rar-bounds-check.patch
+ BuildRequires:  cmake
+ BuildRequires:  libacl-devel
+ BuildRequires:  libbz2-devel

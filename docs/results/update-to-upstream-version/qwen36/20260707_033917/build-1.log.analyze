@@ -1,0 +1,13 @@
+The build failed during the `%prep` phase because the RPM spec file references a patch file that is missing from the `SOURCES` directory. Specifically, the script tries to read `/home/abuild/rpmbuild/SOURCES/gawk-5.4.0-Disable-racy-test-in-test-iolint.awk.patch` but cannot find it, causing an immediate exit.
+
+**Root Cause**
+The spec file contains a `Patch:` line for `gawk-5.4.0-Disable-racy-test-in-test-iolint.awk.patch`, but this file is not present in the package's SOURCES directory. RPM requires every source listed in `Source:`, `Patch:`, or `URL:` (if used as a file) to exist locally before the build starts.
+
+**Required Fix**
+1. **Add the missing patch file:** Upload or add the file `gawk-5.4.0-Disable-racy-test-in-test-iolint.awk.patch` to the `SOURCES` directory of your package repository.
+2. **Verify spec references:** Ensure the spec file includes a corresponding definition line, such as:
+   ```text
+   PatchN: gawk-5.4.0-Disable-racy-test-in-test-iolint.awk.patch
+4. **Alternative (if obsolete):** If this patch is no longer needed or was incorrectly added, remove both the `PatchN:` line and the corresponding `%patch -PN` application line from the spec file.
+
+After adding the file to SOURCES, rebuild the package. The `%prep` phase will now locate the patch and proceed successfully.
