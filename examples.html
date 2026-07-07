@@ -806,7 +806,7 @@
                 while (buildNum <= 20) { // Max 20 build attempts
                     const logPath = `${resultPath}/build-${buildNum}.log`;
                     const analyzePath = `${resultPath}/build-${buildNum}.log.analyze`;
-                    const diffPath = `${resultPath}/build-${buildNum}.log.diff`;
+                    const diffPath = `${resultPath}/build-${buildNum}.log.tool_changes`;
 
                     try {
                         const logResponse = await fetch(logPath);
