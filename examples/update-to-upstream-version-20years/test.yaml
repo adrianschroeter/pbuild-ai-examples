@@ -13,7 +13,9 @@ source:
 command: "pbuild-ai"
 options:
   - "--update"
-  - "--max-rounds"
+  - "--max-fix-attempts"
+  - "20"
+  - "--max-ai-rounds"
   - "20"
   - "--email"
   - "localhero@opensuse.org"

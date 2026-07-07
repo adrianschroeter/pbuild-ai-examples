@@ -1,5 +1,5 @@
 name: "Update to Latest Upstream"
-description: "Automatically update package to latest upstream version and fix compatibility issues."
+description: "Automatically update package to latest upstream version and fix compatibility issues. This example jumps from a 5 year old version."
 order: 4
 
 source:

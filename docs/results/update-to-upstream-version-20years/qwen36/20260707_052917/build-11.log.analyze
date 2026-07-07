@@ -1,0 +1,14 @@
+### Root Cause
+The build failed during the `brp-suse` file list verification phase (`50-check-filelist`). RPM's policy enforces that any directory created during `%install` must be explicitly owned in the `%files` section. The logs show that `/usr/lib64/gawk` (containing dynamically loaded `.so` plugins) and `/usr/share/awk` (containing bundled `.awk` scripts) were installed but never claimed by a `%dir` directive, causing `brp-suse` to abort with:
+```
+gawk-5.4.0-0.x86_64.rpm: directories not owned by a package:
+ - /usr/lib64/gawk
+ - /usr/share/awk
+
+**Explanation:**
+- `%dir %{_libdir}/gawk` claims the library directory itself.
+- `%{_libdir}/gawk/*.so` packages the compiled plugin modules installed there.
+- `%dir /usr/share/awk` claims the scripts directory.
+- `/usr/share/awk/*.awk` packages the awk utility scripts installed there.
+
+After applying this change, `brp-suse` will pass its directory ownership check and proceed to package assembly.

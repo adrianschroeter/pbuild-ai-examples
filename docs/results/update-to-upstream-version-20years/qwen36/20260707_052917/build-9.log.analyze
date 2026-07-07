@@ -1,0 +1,8 @@
+### Error Analysis
+The build failed because RPM's `%files` section references `/usr/bin/igawk`, but the file does not exist in `$RPM_BUILD_ROOT`. Attempt 7 removed a manual `ln -sf igawk` command from `%install`, which previously created the file. However, gawk's upstream `make install` already installs `igawk` as an independent shell script into `${bindir}`. Manually symlinking it was unnecessary and masked the fact that you simply needed to list the file in `%files`.
+
+### Required Fix
+1. **In the `%files` section:** Add the exact macro path for the binary so RPM can locate it during the final packaging phase:
+2. **In the `%install` section:** Remove any manual `ln -sf igawk ...` or copy commands for this file. Rely entirely on the standard `%make_install` (or `%{?make_install}`) phase, which automatically places the upstream-provided script into `$RPM_BUILD_ROOT%{_bindir}/igawk`.
+
+No other lines need to change. The manual symlink workaround is obsolete and causes path mismatches; packaging the file normally resolves the `File not found` error.

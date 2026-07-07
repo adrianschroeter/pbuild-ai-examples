@@ -1,0 +1,7 @@
+The build failed during the `%files` checking phase because RPM cannot locate files listed in the spec file. This is caused by outdated hard-coded paths and potentially missing build dependencies that prevent certain binaries from being compiled.
+
+**Required Changes:**
+1. **Update bindir paths:** In the `%files` section, replace all occurrences of `/bin/awk` and `/bin/gawk` with `%{_bindir}/awk` and `%{_bindir}/gawk`. Modern RPM builds use `%{_bindir}` (which resolves to `/usr/bin`), not legacy `/bin` paths.
+2. **Fix library directory path:** Replace `/usr/lib64/awk/grcat` and `/usr/lib64/awk/pwcat` in `%files` with `/usr/libexec/awk/grcat` and `/usr/libexec/awk/pwcat`. The upstream `make install` explicitly places these utilities in `/usr/libexec/awk`, not the architecture-dependent lib directory.
+3. **Add missing BuildRequires:** `pgawk` and `igawk` are only built when Perl and M4 development headers are present. Add `BuildRequires: perl-devel` and `BuildRequires: m4` to the top of the spec file. After adding them, verify they install to `%{_bindir}/pgawk` and `%{_bindir}/igawk` and add those lines to `%files` if applicable.
+4. **** Use this directive to enter the build environment. Run `rpmbuild -bi --short-circuit ~/rpmbuild/SOURCES/<spec>.spec` to skip compilation and re-trigger only the `%install` and `%files` phases. Inspect `$RPM_BUILD_ROOT/usr/bin/` and `$RPM_BUILD_ROOT/usr/libexec/awk/` directly to confirm exact filenames and finalize the `%files` list.

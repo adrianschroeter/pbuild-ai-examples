@@ -1,0 +1,12 @@
+**Error Analysis:**
+The build failed with `Installed (but unpackaged) file(s) found:` because RPM's post-installation checker detected files installed into the `BUILDROOT` that were not explicitly claimed in the `%files` section. RPM strictly requires every installed file to be listed to prevent package conflicts and ensure proper dependency resolution.
+
+**Required Fix:**
+Append the following lines directly to your `%files` section (typically below `%defattr(-,root,root)`). These exactly match the non-debug paths reported in the error block:
+
+
+**Important Notes:**
+- **Do NOT manually list any `/usr/lib/debug/...` files** shown in the error log. RPM automatically generates `-debuginfo` and `-debugsource` subpackages for every binary or shared library explicitly listed in `%files`. Adding them manually will cause a hard build conflict.
+- The `Recommends: gawk-debugsource(x86-64) = 5.4.0-0` line is an automatic dependency injection by RPM and requires no manual section creation. Manual `-debugsource` sections are forbidden and will break the build.
+- Once these lines are added to `%files`, re-run the build. The unpackaged file error will be resolved immediately. 
+*(Optional: You may replace explicit `.so` paths with `%{_libdir}/gawk/*.so` if you prefer macro-based globbing, but explicit listing guarantees an immediate pass for this specific error.)*

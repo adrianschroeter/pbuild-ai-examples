@@ -1,0 +1,10 @@
+The build failed during the `%files` phase due to two distinct issues:
+
+1. **Fatal Error**: RPM throws `Recognition of file ".../usr/bin/igawk" failed: mode 120777 broken symbolic link to igawk (Too many levels of symbolic links)`. This happens because `/usr/bin/igawk` in the buildroot is a self-referencing loop (`igawk -> igawk -> ...`). RPM's file validator rejects broken/self-looping symlinks during package creation.
+2. **Warnings**: Several image files (`.png`, `.jpg`) under `/usr/share/info/` are explicitly listed multiple times, causing "File listed twice" warnings.
+
+**Required Changes to the Spec File:**
+- In the `%files` section, **delete the line listing `%{_bindir}/igawk`**. This resolves the fatal symlink error. (`igawk` is a legacy Perl helper script that is typically omitted from modern `gawk` packages precisely because its install process creates problematic symlinks during packaging).
+- Locate all explicit entries for `/usr/share/info/` image files that trigger the "File listed twice" warnings. Replace these duplicate/fragmented listings with single glob patterns: **add** `/%_infodir/*.png` and `/%_infodir/*.jpg`, then **remove** any individual `.png` or `.jpg` file paths currently listed under `/usr/share/info/`. Each directory should only be referenced once per pattern type.
+
+Apply these two targeted edits to the `%files` section, and the build will pass file validation.

@@ -1,0 +1,14 @@
+**Error Analysis:**
+The build fails during the `%prep` phase because RPM cannot locate the patch file `gawk-5.4.0.diff`. The log explicitly reports:
+`error: File /home/abuild/rpmbuild/SOURCES/gawk-5.4.0.diff: No such file or directory`
+This occurs when a `Patch:` tag in the spec file references a file that does not exist in the `SOURCES/` directory, or when a patch reference is left behind after a version bump (e.g., the comment shows v3.1.5 but the build targets v5.4.0).
+
+**Required Fix:**
+1. **Find and remove obsolete patch lines:** Search the spec file for any line starting with `Patch:` (or `Patch0:`) that references `gawk-5.4.0.diff`, as well as the corresponding `%patch` or `%patch0` command in the `%prep` section that applies it. Since these are likely remnants from an older version, delete both lines entirely.
+2. **If the patch is actually needed for v5.4.0:**
+   - Add `gawk-5.4.0.diff` to your `SOURCES/` directory (and upload it to OBS).
+   - Use modern syntax: `Patch0: gawk-5.4.0.diff`
+   - Apply it in `%prep` using `%patch -P0 -p1`.
+3. Verify all remaining `Patch:` lines use sequential numbering (`Patch0:`, `Patch1:`, etc.) and that no other patch definitions point to missing files.
+
+No macro expansions, OOM handling, or `%files` adjustments are required. The failure is strictly a missing source file for the patch phase.
