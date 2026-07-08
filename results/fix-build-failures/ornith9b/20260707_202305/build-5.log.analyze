@@ -1,0 +1,8 @@
+The "fg: no job control" error is an RPM bash-script generation bug — not a real code problem. The previous attempts already fixed the source directory name (`oterm-%{version}`) and switched to `%python_wheel`. The remaining fix is enabling job control in the generated build script.
+
+Add `set -m` at the top of `%prep` (before any command that spawns subshells) — this enables job control so RPM's generated scripts don't fail with "fg: no job control":
+
+
+Wait — let me reconsider. The error happens at line 37 of the generated script *after* `%python_wheel`. The issue is that RPM's build macro generates a subshell without `set -m`, causing "no job control". 
+
+The fix: add `set -m` to enable job control in the spec file's `%prep` section, before any setup or build commands. This tells bash to set up job control at startup, preventing the "fg: no job control" error that RPM hits when running `%python_wheel`.

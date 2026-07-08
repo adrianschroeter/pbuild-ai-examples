@@ -1,0 +1,4 @@
+--- oterm.spec
++++ oterm.spec
+@@ -27,9 +27,6 @@
+ BuildRequires:  python-rpm-macros BuildArch:      noarch -%define skip_python314 0-%define skip_python311 1- %description Another terminal client for Ollama 

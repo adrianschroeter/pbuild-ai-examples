@@ -1,3 +1,0 @@
-The build error is straightforward: `%pyproject_install` installs `/usr/bin/oterm`, but the `%files` section doesn't include it. I also see there are unpackaged `.pyc` cache directories being listed in the build output that suggest more files may need to be accounted for. Let me check what's actually installed.
-
-Let me look at the source tarball to find any other files that should be packaged (man pages, info docs, etc.).

@@ -1,0 +1,14 @@
+{
+  "run_time_seconds": 2962,
+  "exit_code": 1,
+  "status": "failed",
+  "success": false,
+  "files_changed": 1,
+  "pbuild_ai_version": "0.1.9",
+  "ai_model": "ornith:35b",
+  "ai_calls": 85,
+  "ai_time_seconds": 2811.8,
+  "pbuild_calls": 11,
+  "pbuild_time_seconds": 148.6,
+  "total_runtime_seconds": 2961.5
+}

@@ -1,0 +1,7 @@
+--- oterm.spec
++++ oterm.spec
+@@ -25,8 +25,9 @@
+ Url:            https://github.com/ggozad/oterm Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz -BuildRequires:  %{python_module pip}-BuildRequires:  %{python_module wheel}+# Use literal package names - no macros needed+BuildRequires:  python3-pip+BuildRequires:  python3-wheel  Requires:       python3-textual >= 3.2.0 Requires:       python3-typer >= 0.15.2@@ -37,7 +38,6 @@
+ Requires:       python3-ollama >= 0.5.0  BuildRequires:  fdupes-BuildRequires:  python-rpm-macros BuildArch:      noarch  %description@@ -46,8 +46,10 @@
+ %prep %autosetup -p1 +# Replace poetry-core with setuptools build backend+sed -i 's/build-backend = "poetry_core"/build-backend = "setuptools.build_meta"/' pyproject.toml+ %build-sed -i 's/build-backend = "poetry_core"/build-backend = "setuptools.build_meta"/' pyproject.toml %py2_compilesite %{python_sitelib}/oterm/__main__.py %{__python3} setup.py build @@ -61,7 +63,6 @@
+ %files %license LICENSE %doc README.md CHANGES.txt-%{python_sitelib}/oterm-*.pyc-%dir %attr(0755, root, root) %{python_sitelib}/oterm-%attr(0644, root, root) %{python_sitelib}/oterm/*.py-%{_bindir}/oterm+%dir %attr(0755, root, root) %{_bindir}+%attr(0755, root, root) %{_bindir}/oterm+%{python_sitelib}/oterm/

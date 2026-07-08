@@ -1,0 +1,17 @@
+## Analysis
+
+**Root cause:** The build fails because `%py2_compilesite` is being called on a Python 3 package (`/usr/lib/python3.13/site-packages/oterm/__main__.py`). This macro is for Python 2 bytecode compilation and causes `fg: no job control` errors in modern environments when misapplied to Python 3 packages.
+
+**Fix:** Since oterm uses `poetry-core` (pyproject.toml-based build), replace all `%py2_*` macros with `%pyproject_wheel` and `%pyproject_install`. The spec file likely has an explicit `%py2_compilesite` call or is triggering it through incorrect macro usage.
+
+**Missing BuildRequires:**
+```
+BuildRequires:  python-rpm-macros
+```
+
+This package provides the `%pyproject_wheel`, `%pyproject_install`, and related macros needed for pyproject.toml-based Python packages. Without it, the build environment may fall back to legacy `%py2_*` macros that are incompatible with Python 3.
+
+**Spec changes needed:**
+1. Add `BuildRequires: python-rpm-macros` 
+2. Replace any `%py2_compilesite`, `%py2_install`, or similar with `%pyproject_wheel` in %build and `%pyproject_install` in %install
+3. Remove Python 2 specific build steps

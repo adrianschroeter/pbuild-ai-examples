@@ -1,7 +1,0 @@
-## Root Cause Analysis
-
-The build failed because `%autosetup` does not support the `-q` (quiet) option. Unlike `%setup`, `%autosetup` is quiet by default, so adding `-q` causes an "Unknown option" error:
-
-```
-autosetup: invalid option -- 'q'
->>> [   12s] error: /home/abuild/rpmbuild/SOURCES/oterm.spec: line 54: Unknown option q in autosetup(a:b:cCDn:TvNS:p:)

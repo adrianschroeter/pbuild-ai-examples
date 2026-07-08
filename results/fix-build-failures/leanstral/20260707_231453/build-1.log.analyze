@@ -1,0 +1,9 @@
+Looking at this build failure, I need to analyze why `python313-pipper` is not available and what's needed.
+
+The error shows `[DEEP_ANALYZE]` because the build system can't resolve the dependency. Based on the context and typical openSUSE Python packaging patterns, this package requires Python 3.13 but Tumbleweed's default Python version doesn't match. I need to skip Python 3.13 in the spec.
+
+**Analysis:**
+The build log shows an unresolvable dependency for `python313-pipper`, indicating a Python 3.13 requirement that conflicts with the available system Python. The package needs to support only the available Python versions in Tumbleweed, so we must skip Python 3.13. Add `%define skip_python313 1` below the copyright header.
+
+**BuildRequires line:**
+None needed — skipping the unsupported version fixes this issue.

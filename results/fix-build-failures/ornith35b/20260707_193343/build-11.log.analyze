@@ -1,0 +1,11 @@
+## Analysis
+
+**Root Cause:** The build environment has **Python 3.13**, but the `%build` section detected and tried to invoke `/usr/bin/python3.14`, which doesn't exist on this system (`No such file or directory`). This happened because the spec manually hardcoded a Python flavor lookup instead of using RPM macros that auto-detect the available version.
+
+**Fix:** Replace the manual `pythonX.Y -mpip wheel` invocation with `%pyproject_wheel` and `%pyproject_install`, which automatically use the correct system Python (3.13 here). The `sed` patch to swap `poetry_core` → `setuptools.build_meta` can stay since it's needed for build isolation.
+
+**Missing BuildRequires:** Need `python-rpm-macros` for the `%pyproject_wheel`/`%pyproject_install` macros, plus `python3-pip` and `python3-wheel` for wheel building.
+
+BuildRequires: %{python_module pip}
+BuildRequires: python3-wheel
+BuildRequires: python-rpm-macros

@@ -1,0 +1,11 @@
+{
+  "example": "fix-build-failures",
+  "model_key": "ornith9b",
+  "model_name": "ornith:9b",
+  "model_host_name": "AMD Strix Halo",
+  "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+  "timestamp": "2026-07-07T20:23:05+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}

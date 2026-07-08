@@ -1,0 +1,7 @@
+The error is clear: `python3.13 -mpip wheel` fails with "No module named pip". The `%pyproject_wheel` macro internally invokes `pip wheel`, but pip isn't installed in the build environment. Since hatchling is already available (from previous builds), I need to ensure pip is a BuildRequires and also check the current spec state.
+
+Let me read the current spec file and source:
+
+```
+read_file_from_archive(archive_path="oterm-0.13.0.tar.gz", file_path="pyproject.toml")
+```

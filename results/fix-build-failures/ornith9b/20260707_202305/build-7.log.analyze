@@ -1,0 +1,3 @@
+The build error is clear: `/usr/bin/oterm` was installed during `%install` but not declared in `%%files`. This binary must be added to the spec file's files section.
+
+No Python module or pyproject.toml issue here — the previous macro fixes (attempts 1–5) were unnecessary for this specific error. The only fix needed is declaring the unpackaged binary.

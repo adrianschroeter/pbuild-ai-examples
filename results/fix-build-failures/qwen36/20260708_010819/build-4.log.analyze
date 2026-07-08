@@ -1,0 +1,4 @@
+The build fails because `pip wheel` with `--no-build-isolation` crashes during metadata preparation when required PEP 517 build backends are not declared. Switching to `%pyproject_wheel` and `%pyproject_install` macros automatically handles the backend invocation, but you must explicitly declare them in `BuildRequires`. Add the following lines to your spec file:
+
+BuildRequires: %{python_module setuptools}
+BuildRequires: %{python_module wheel}

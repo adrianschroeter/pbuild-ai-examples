@@ -1,0 +1,3 @@
+The build failed because the dependency `python313-pipper` cannot be resolved by the build system. This typically occurs when a specific python-versioned package is requested instead of using the standard macro that handles versioning automatically.
+
+BuildRequires: %{python_module pipper}

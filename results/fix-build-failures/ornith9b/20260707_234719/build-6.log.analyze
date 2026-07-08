@@ -1,0 +1,7 @@
+The error is clear: `python_flavor=python314` but `/usr/bin/python3.14` doesn't exist on this system (only python3.12). The build tries to invoke the unavailable Python 3.14 interpreter and fails.
+
+This means Python 3.14 was resolved as a dependency or flavor, but it's not installed. Adding `skip_python314` tells the build system to skip that version entirely.
+
+```
+BuildRequires: python3-module oterm
+```

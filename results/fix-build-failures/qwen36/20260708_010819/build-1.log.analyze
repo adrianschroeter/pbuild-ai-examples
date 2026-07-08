@@ -1,0 +1,3 @@
+The build fails because the dependency resolver cannot find the `pipper` module for Python 3.13, indicating a missing BuildRequires declaration in the spec file. Add the standard Python module macro to resolve this unresolvable dependency.
+
+BuildRequires: %{python_module pipper}

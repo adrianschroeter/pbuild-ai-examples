@@ -1,0 +1,3 @@
+The build failed because the spec requires `python313-pipper`, which doesn't exist on Tumbleweed. The correct package providing pip is `python3-pip`.
+
+BuildRequires: python3-pip

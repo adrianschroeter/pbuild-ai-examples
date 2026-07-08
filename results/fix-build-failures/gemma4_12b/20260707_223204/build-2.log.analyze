@@ -1,0 +1,10 @@
+The build failed because the `%prep` section of the spec file attempts to enter a directory named `oterm_0.13.0` (using an underscore), but the source archive extracts into a directory named `oterm-0.13.0` (using a hyphen).
+
+To fix this, you should update the `%prep` section to use the correct directory name. If the spec file uses `%autosetup`, change it to:
+`%autosetup -n oterm-0.13.0`
+
+If it uses manual `cd` commands, update them as follows:
+```bash
+rm -rf oterm-0.13.0
+cd oterm-0.13.0
+```

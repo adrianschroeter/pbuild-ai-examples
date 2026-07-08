@@ -1,0 +1,1 @@
+The build fails in `%prep` because the spec file attempts to `cd oterm_0.13.0`, but the source archive actually extracts to `oterm-0.13.0` (using a hyphen instead of an underscore). Resolve this by adding `-n oterm-0.13.0` to your `%setup` or `%autosetup` macro so RPM uses the correct directory name. No additional `BuildRequires:` lines are needed for this extraction mismatch.

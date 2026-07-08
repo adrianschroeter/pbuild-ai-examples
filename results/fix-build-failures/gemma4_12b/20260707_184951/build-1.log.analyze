@@ -1,0 +1,3 @@
+The build failed because the dependency for the Python module `pipper` could not be resolved, specifically searching for `python313-pipper`. Adding the `% {python_module pipper}` macro will allow the build system to resolve the appropriate version of the package.
+
+BuildRequires: %{python_module pipper}
