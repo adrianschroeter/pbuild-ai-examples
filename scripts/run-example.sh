@@ -178,7 +178,7 @@ models = config.get("models", {})
 if not models:
     print("default")
 else:
-    print(" ".join(sorted(models.keys())))
+    print(" ".join(models.keys()))
 ' 2>/dev/null || echo "default")
 
     OVERALL_EXIT=0
