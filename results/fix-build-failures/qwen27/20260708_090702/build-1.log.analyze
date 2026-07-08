@@ -1,0 +1,3 @@
+The build fails because of a typo in the spec file requesting `python313-pipper` instead of the correct `pip` package. Replace the invalid requirement with the standard openSUSE Python macro, which will automatically resolve to the version-appropriate package (e.g., `python313-pip`). If the upstream source uses `pyproject.toml`, ensure the spec file's build and install sections use `%pyproject_wheel` and `%pyproject_install`.
+
+BuildRequires: %{python_module pip}

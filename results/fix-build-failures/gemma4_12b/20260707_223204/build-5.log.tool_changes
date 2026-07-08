@@ -1,5 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -46,6 +46,16 @@
- Requires: %primary_python-textual-image >= 0.8.2 Requires: %primary_python-fastmcp >= 2.5.2 +BuildRequires:  %{python_module poetry-core}+BuildRequires:  %{python_module wheel}+BuildRequires:  %{python_module hatchling}+BuildRequires:  %{python_module pip}+BuildRequires:  %{python_module setuptools}+BuildRequires:  %{python_module poetry-core}+BuildRequires:  %{python_module wheel}+BuildRequires:  %{python_module hatchling}+BuildRequires:  %{python_module pip}+BuildRequires:  %{python_module setuptools} BuildRequires:  fdupes BuildRequires:  python-rpm-macros BuildArch:      noarch@@ -69,4 +79,5 @@
- %doc README.md CHANGES.txt %{python_sitelib}/%name %{python_sitelib}/%name-%version.dist-info+%{_bindir}/oterm 

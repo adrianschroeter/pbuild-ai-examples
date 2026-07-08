@@ -1,0 +1,9 @@
+The build log shows: `.: unresolvable (nothing provides ( python313-pipper ))`
+
+**Cause:** The spec file requires `python313-pip` (or similar), but in openSUSE tumbleweed, pip is packaged as just `python3-pip` regardless of Python minor version. There's also a likely typo (`pipper` instead of `pip`).
+
+**Fix:** Replace the incorrect BuildRequires with `%{python_module pip}`:
+
+```
+BuildRequires: %{python_module pip}
+```

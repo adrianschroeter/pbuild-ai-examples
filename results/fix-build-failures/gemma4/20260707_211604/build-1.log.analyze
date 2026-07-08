@@ -1,3 +1,0 @@
-The build failed due to a typo in the `BuildRequires` section of the spec file, where `python313-pipper` was specified instead of the correct Python module name. The package `python313-pipper` does not exist; it should be replaced with the macro for `pip`.
-
-BuildRequires: %{python_module pip}

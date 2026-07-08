@@ -1,2 +1,0 @@
-**Cause:** The build failed because `/usr/bin/oterm` was installed but not listed in the `%files` section, triggering an unpackaged file error. No additional `BuildRequires` are needed for this specific failure; instead, add `%{ _bindir}/oterm` to the `%files` section.
-**Missing BuildRequires:** None required. Ensure standard Python build dependencies (`python-rpm-macros`, `pip`, `wheel`, `poetry-core`) are already present in the spec file.

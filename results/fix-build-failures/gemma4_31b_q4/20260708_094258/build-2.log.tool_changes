@@ -1,0 +1,24 @@
+--- oterm.spec
++++ oterm.spec
+@@ -26,7 +26,7 @@
+ Url:            https://github.com/ggozad/oterm
+ Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz
+ BuildRequires:  %{python_module poetry-core}
+-BuildRequires:  python3-pip
++BuildRequires:  %{python_module pip}
+ BuildRequires:  %{python_module wheel}
+ BuildRequires:  %{python_module hatchling}
+ 
+@@ -51,10 +51,10 @@
+ Another terminal client for Ollama
+ 
+ %prep
+-%setup -q -n oterm_%{version}
++%setup -q -n oterm-%{version}
+ 
+ %build
+-%pyton_wheel
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install

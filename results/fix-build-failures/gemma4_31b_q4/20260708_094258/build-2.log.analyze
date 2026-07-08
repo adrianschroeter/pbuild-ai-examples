@@ -1,0 +1,4 @@
+The build failed in the `%prep` section because it attempted to enter a directory named `oterm_0.13.0`, which does not exist after extracting `oterm-0.13.0.tar.gz`. This is a common mismatch between the archive's internal directory name (typically using hyphens) and the `-n` option provided to `%setup` or `%autosetup`.
+
+Change the `%setup` (or `%autosetup`) macro in the spec file to use the correct directory name:
+`-n oterm-0.13.0` instead of `-n oterm_0.13.0`.

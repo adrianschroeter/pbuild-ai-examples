@@ -1,5 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -28,7 +28,6 @@
- BuildRequires:  %{python_module poetry-core} BuildRequires:  %{python_module pip} BuildRequires:  %{python_module wheel}-BuildRequires:  %{python_module hatchling}  Requires: %primary_python-textual >= 3.2.0 Requires: %primary_python-typer >= 0.15.2@@ -54,10 +53,10 @@
- %autosetup -n oterm-%{version}  %build-%py3_build+%pyproject_wheel  %install-%py3_install+%pyproject_install %fdupes %{buildroot}%{python_sitelib}  

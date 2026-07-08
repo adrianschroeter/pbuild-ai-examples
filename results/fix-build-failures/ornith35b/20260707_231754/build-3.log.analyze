@@ -1,3 +1,0 @@
-The build error is straightforward: **unpacked files not listed in `%files`**. The `/usr/bin/oterm` binary was installed but never declared in the `%files` section, causing RPM to abort with "Installed (but unpackaged) file(s) found".
-
-Let me check the current spec file from the archive.

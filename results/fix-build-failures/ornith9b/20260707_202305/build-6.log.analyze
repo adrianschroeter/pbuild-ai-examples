@@ -1,9 +1,0 @@
-The build fails because `%pyproject_wheel` (or `%pyproject_install`) doesn't automatically pull in `pip`, but the macro expansion calls `/usr/bin/python3.13 -mpip wheel`. The error is:
-
-```
-/usr/bin/python3.13: No module named pip
-```
-
-This means `python3-pip` (which provides the `pip` module for python3) is missing from BuildRequires. Adding it resolves the issue:
-
-BuildRequires: %{python_module pip}

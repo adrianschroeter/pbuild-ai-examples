@@ -1,7 +1,0 @@
-The build failed because of a typo in the macro name used in the `%build` section: `%pyton_wheel` is incorrect and should be `%python_wheel`. Additionally, since this project uses `pyproject.toml`, it is recommended to use the modern `%pyproject_wheel` and `%pyproject_install` macros instead of the legacy wheel macros to ensure compatibility with modern build standards (PEP 517/660).
-
-The error `fg: no job control` often occurs when a shell script expansion fails or tries to execute an interactive command in a non-interactive environment, which is triggered here by the undefined `%pyton_wheel` macro.
-
-No specific missing Python modules were identified in the logs as there was no `ModuleNotFoundError`.
-
-BuildRequires: %{python_module setuptools}

@@ -1,0 +1,7 @@
+The build error is clear: `%prep` fails because the extracted source directory doesn't match the `cd oterm_0.13.0` in the spec file. The tarball extracts to a different top-level directory name.
+
+Let me check what the actual top-level directory inside the tarball is:
+
+```
+tar -tzf /home/abuild/rpmbuild/SOURCES/oterm-0.13.0.tar.gz | sed 's|/.*||' | sort -u
+```

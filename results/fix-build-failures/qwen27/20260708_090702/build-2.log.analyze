@@ -1,0 +1,5 @@
+The build fails during `%prep` because the spec file expects the source tarball to extract into `oterm_0.13.0`, but the archive actually contains `oterm-0.13.0/`. This naming mismatch causes the automatic `cd` in the prep script to fail with `No such file or directory`.
+
+**Fix:** Update the `%setup` or `%autosetup` macro in your `.spec` file to explicitly override the target directory name:
+
+No additional `BuildRequires:` is needed for this specific error, as it's purely a spec file macro configuration issue rather than a missing dependency.

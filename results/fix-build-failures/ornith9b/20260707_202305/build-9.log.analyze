@@ -1,5 +1,0 @@
-The build failed because `/usr/bin/oterm` was installed during wheel install but not listed in `%files`. I need to add it explicitly.
-
-BuildRequires: none needed (the error is purely about unpackaged files)
-
-Let me check the current spec around the `%install` and `%files` sections to place this correctly.

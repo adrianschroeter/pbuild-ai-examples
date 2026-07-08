@@ -1,0 +1,14 @@
+{
+  "run_time_seconds": 2265,
+  "exit_code": 0,
+  "status": "success",
+  "success": true,
+  "files_changed": 1,
+  "pbuild_ai_version": "0.1.9",
+  "ai_model": "gemma4:31b-it-qat-q4_0-it-256k",
+  "ai_calls": 12,
+  "ai_time_seconds": 2197.3,
+  "pbuild_calls": 4,
+  "pbuild_time_seconds": 68.1,
+  "total_runtime_seconds": 2265.5
+}

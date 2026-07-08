@@ -1,0 +1,26 @@
+--- oterm.spec
++++ oterm.spec
+@@ -22,7 +22,7 @@
+ Release:        0
+ License:        MIT
+ Summary:        Another terminal client for Ollama
+-Group:          Development/Languages/Python
++Group:          Development/Lang/Python
+ Url:            https://github.com/ggozad/oterm
+ Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz
+ BuildRequires:  %{python_module poetry-core}
+@@ -54,7 +54,8 @@
+ %autosetup -p1
+ 
+ %build
+-%py3_wheel
++%pyproject_buildrequires
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install
+@@ -66,4 +67,3 @@
+ %doc README.md CHANGES.txt
+ %{python_sitelib}/%name
+ %{python_sitelib}/%name-%version.dist-info
+-

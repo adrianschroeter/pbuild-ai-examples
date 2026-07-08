@@ -1,3 +1,0 @@
-The build failed because the `%files` section of the spec file does not include the path to the installed binary `/usr/bin/oterm`. The build process successfully created the executable, but since it is not accounted for in the RPM's file list, the `check-files` step failed.
-
-No additional `BuildRequires` are missing as the logs show the Python modules and build tools were correctly used to produce the files. You must manually add `%{_bindir}/oterm` to the `%files` section of the spec file.

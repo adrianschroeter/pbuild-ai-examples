@@ -1,4 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -66,4 +66,3 @@
- %doc README.md CHANGES.txt %{python_sitelib}/%name %{python_sitelib}/%name-%version.dist-info-

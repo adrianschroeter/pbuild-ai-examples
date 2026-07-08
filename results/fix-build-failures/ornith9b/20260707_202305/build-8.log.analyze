@@ -1,7 +1,0 @@
-The `%build` step runs `python3.13 -mpip wheel --use-pep517 ...`. The error is `/usr/bin/python3.13: No module named pip` — pip is not installed in this environment. When using PEP 517 build isolation (`--use-pep517`), the `%pyproject_wheel` macro relies on pip being available as a Python module.
-
-**Root cause:** Missing `pip` BuildRequires. In SUSE/openSUSE packaging, the correct package is `python3-pip-devel`. Add it to spec's `BuildRequires:` section:
-
-```
-BuildRequires: python3-pip-devel
-```

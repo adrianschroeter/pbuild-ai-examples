@@ -1,5 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -25,7 +25,7 @@
- Url:            https://github.com/ggozad/oterm Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz -# Use literal package names - no macros needed+# Use literal package names that exist in Tumbleweed repos BuildRequires:  python3-pip BuildRequires:  python3-wheel @@ -46,16 +46,17 @@
- %prep %autosetup -p1 -# Replace poetry-core with setuptools build backend+# Replace poetry-core with setuptools build backend for compatibility sed -i 's/build-backend = "poetry_core"/build-backend = "setuptools.build_meta"/' pyproject.toml  %build-%py2_compilesite %{python_sitelib}/oterm/__main__.py-%{__python3} setup.py build+# Use pyproject_wheel macro instead of %py2_compilesite (Python 2 specific)+%pyproject_wheel  %install-%{__python3} setup.py install --prefix=%{_prefix} --root=%{buildroot}-%fdupes -s %{buildroot}%{_prefix}+# Use pyproject_install macro for proper Python 3 package installation+%pyproject_install+%fdupes %{buildroot}%{python_sitelib}  %check %{__python3} -m pytest tests/

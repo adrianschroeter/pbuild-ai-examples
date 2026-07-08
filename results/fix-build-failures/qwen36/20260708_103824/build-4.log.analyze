@@ -1,0 +1,2 @@
+The build fails because `%pyproject_buildrequires` is deprecated and triggers a `fg: no job control` error due to internal shell handling in modern RPM environments. Remove this macro from the `%build` section entirely, relying instead on explicit dependency declarations or the standard `%pyproject_wheel`/`%pyproject_install` workflow. Add `BuildRequires: python-rpm-macros` to ensure the required pyproject macro infrastructure is available during build.
+BuildRequires: python-rpm-macros
