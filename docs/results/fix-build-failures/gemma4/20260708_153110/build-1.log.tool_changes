@@ -9,3 +9,12 @@
  BuildRequires:  %{python_module wheel}
  BuildRequires:  %{python_module hatchling}
  
+@@ -54,7 +54,7 @@
+ %setup -q -n oterm_%{version}
+ 
+ %build
+-%pyton_wheel
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install

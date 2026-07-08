@@ -1,0 +1,16 @@
+[PBUILD-AI] Version 0.1.10
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[SKILL ACTIVE] lang_python for oterm.spec
+[INFO] Using skill profile: lang_python_skill
+[AI] Analyzing Spec-file: oterm.spec...
+-> AI(huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest) says:
+Looking at this spec file, I need to check:
+
+1. The `py2pack` base template uses `%pyproject_wheel` and `%pyproject_install`, but the spec incorrectly references `%pyton_wheel` (typo) and omits `%pyproject_install` from `%build`
+2. BuildRequires macros should each have a single dependency per line using the `%{python_module ...}` format, which is satisfied
+3. The `%prep` section lacks `-n` flag with correct directory name for extraction
+
+The spec has a typo in `%build` (`%pyton_wheel` instead of `%pyproject_wheel`), uses hardcoded Requires instead of py2pack's `%{python_module ...}` format (violating the single-dependency-per-line rule), and will fail to extract properly without `-n` in `%setup`.
+
+[INFO] Single package mode (no _manifest found). Running orphan build...
+[EXEC] pbuild --orphan --release 0 --no-clean --dist tumbleweed

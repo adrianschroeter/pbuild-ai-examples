@@ -1,0 +1,9 @@
+The build failed during the `%prep` stage because the directory extracted from the source tarball (`oterm-0.13.0.tar.gz`) does not match the name specified in the spec file (likely via `-n oterm_0.13.0`). The error `cd: oterm_0.13.0: No such file or directory` indicates that the spec is attempting to enter a directory with an underscore, while the archive likely uses a hyphen (`oterm-0.13.0`).
+
+To fix this, update the `%setup` or `%autosetup` macro in the `%prep` section to use `-n oterm-0.13.0`.
+
+Additionally, based on the initial spec review, the following typos should be corrected:
+1. Change `%{python_module pipper}` to a valid module or remove it if unnecessary (as pip is typically not required as a BuildRequires for `%pyproject` macros).
+2. Correct `%pyton_wheel` to `%pyproject_wheel` in the `%build` section.
+
+No missing BuildRequires are causing this specific failure, but please ensure `python-rpm-macros` is present.

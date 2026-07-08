@@ -22,11 +22,11 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
 [    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
 [    0s] 
-[    1s] 
-[    1s] rio started "build oterm.spec" at Wed Jul  8 09:22:24 UTC 2026.
-[    1s] 
-[    1s] 
-[    1s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
+[    0s] 
+[    0s] rio started "build oterm.spec" at Wed Jul  8 13:41:10 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
 [    1s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec
 [    1s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
 [    1s] copying packages...
@@ -47,18 +47,18 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    2s] ### VM INTERACTION START ###
 [    2s] Using virtio-serial support
 [    2s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
-[    5s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=8fed3bc1be994a3a9e07270df7c1a6c6;user=root;hostname=localhost;machineid=1ef4b59919b548028ed03f9ef5e93c32;bootid=efe02e6a00c84d6aa6279735bfd7a035;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
+[    5s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=032533e73c2f4ef1b6a43b0609db0a9a;user=root;hostname=localhost;machineid=de229016facb460a996465cd7aea5033;bootid=65a29b84be6d46bb89e57908427ce97e;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
 [    6s] ### VM INTERACTION END ###
 [    6s] 2nd stage started in virtual machine
 [    6s] machine type: x86_64
-[    6s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul  2 05:05:55 UTC 2026 (992f18c)
-[    6s] Time: Wed Jul  8 09:22:28 UTC 2026
+[    6s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 2 05:05:55 UTC 2026 (992f18c)
+[    6s] Time: Wed Jul  8 13:41:15 UTC 2026
 [    6s] Increasing log level from now on...
-[    6s] [    3.540567][  T513] sysrq: Changing Loglevel
-[    6s] [    3.540635][  T513] sysrq: Loglevel set to 4
+[    6s] [    3.629593][  T513] sysrq: Changing Loglevel
+[    6s] [    3.629656][  T513] sysrq: Loglevel set to 4
 [    6s] Enable sysrq operations
 [    6s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
-[    6s] no label, UUID=2ad36d3a-2ba2-4d27-83f1-4c46279b492d
+[    6s] no label, UUID=14a9649e-6744-4e37-b7b8-093123a6c55d
 [    6s] logging output to //.build.log...
 [    6s] processing recipe //.build-srcdir/oterm.spec ...
 [    6s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/oterm.spec ...
@@ -194,7 +194,7 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    6s] [128/145] keeping python313-packaging-26.2-1.2
 [    6s] [129/145] keeping python313-pathspec-1.1.1-1.2
 [    6s] [130/145] keeping python313-pluggy-1.6.0-2.6
-[    6s] [131/145] keeping python313-poetry-core-2.4.0-1.2
+[    6s] [131/145] cumulate python313-poetry-core-2.4.0-1.2
 [    6s] [132/145] keeping libpython3_13-1_0-3.13.13-3.2
 [    6s] [133/145] keeping python313-trove-classifiers-2026.5.7.17-1.2
 [    6s] [134/145] keeping python313-pip-26.1.2-1.2
@@ -203,12 +203,17 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    6s] [137/145] keeping gcc15-15.3.0+git11272-1.2
 [    6s] [138/145] keeping gcc15-PIE-15.3.0+git11272-1.2
 [    6s] [139/145] keeping gcc-15-3.3
-[    6s] [140/145] keeping python313-wheel-0.46.3-2.6
+[    6s] [140/145] cumulate python313-wheel-0.46.3-2.6
 [    6s] [141/145] keeping python-rpm-packaging-20210526+a18ca48-1.15
 [    6s] [142/145] keeping python313-hatchling-1.30.1-1.2
 [    6s] [143/145] keeping util-linux-2.42.1-1.2
 [    6s] [144/145] keeping gcc-PIE-15-3.3
 [    6s] [145/145] keeping rpm-build-4.20.1-7.2
+[    6s] now installing cumulated packages
+[    6s] Preparing...                          ########################################
+[    6s] Updating / installing...
+[    6s] python313-wheel-0.46.3-2.6            ########################################
+[    6s] python313-poetry-core-2.4.0-1.2       ########################################
 [    6s] now finalizing build dir...
 [    6s] ... running 01-add_abuild_user_to_trusted_group
 [    6s] ... running 02-set_timezone_to_utc
@@ -227,8 +232,8 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    7s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/oterm.spec
 [    7s] Building target platforms: noarch
 [    7s] Building for target noarch
-[    7s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.45yxKH
-[    7s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.yad7x3
+[    7s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.SEPxjF
+[    7s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.O3LAJk
 [    7s] + umask 022
 [    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
 [    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
@@ -237,16 +242,16 @@ logging output to /var/tmp/build-root-adrian/.build.log...
 [    7s] + STATUS=0
 [    7s] + '[' 0 -ne 0 ']'
 [    7s] + cd oterm_0.13.0
-[    7s] /var/tmp/rpm-tmp.yad7x3: line 39: cd: oterm_0.13.0: No such file or directory
-[    7s] error: Bad exit status from /var/tmp/rpm-tmp.yad7x3 (%prep)
+[    7s] /var/tmp/rpm-tmp.O3LAJk: line 39: cd: oterm_0.13.0: No such file or directory
+[    7s] error: Bad exit status from /var/tmp/rpm-tmp.O3LAJk (%prep)
 [    7s] 
 [    7s] RPM build errors:
-[    7s]     Bad exit status from /var/tmp/rpm-tmp.yad7x3 (%prep)
+[    7s]     Bad exit status from /var/tmp/rpm-tmp.O3LAJk (%prep)
 [    7s] ### VM INTERACTION START ###
-[    7s] [    4.955113][    T1] sysrq: Power Off
+[    7s] [    5.164388][    T1] sysrq: Power Off
 [    7s] ### VM INTERACTION END ###
 [    7s] 
-[    7s] rio failed "build oterm.spec" at Wed Jul  8 09:22:30 UTC 2026.
+[    7s] rio failed "build oterm.spec" at Wed Jul  8 13:41:17 UTC 2026.
 [    7s] 
 
 finished ./oterm.spec after 7s: failed
