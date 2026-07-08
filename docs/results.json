@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-08T16:23:11+02:00",
+  "generated": "2026-07-08T16:41:16+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -571,7 +571,7 @@
           "diff": "diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/oterm.spec sources/fix-build-example/oterm.spec\n--- source_backup/oterm.spec\t2026-07-06 16:26:55.705630251 +0200\n+++ sources/fix-build-example/oterm.spec\t2026-07-08 10:38:24.135032473 +0200\n@@ -66,4 +66,3 @@\n %doc README.md CHANGES.txt\n %{python_sitelib}/%name\n %{python_sitelib}/%name-%version.dist-info\n-\n",
           "result_path": "results/fix-build-failures/gemma4_12b/20260708_102044"
         },
-        "gemma4_q4": {
+        "gemma4_31b_q4": {
           "timestamp": "20260708_094258",
           "run_time_seconds": 2265,
           "status": "success",
