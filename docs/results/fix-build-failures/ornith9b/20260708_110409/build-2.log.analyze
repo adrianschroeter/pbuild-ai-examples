@@ -1,0 +1,5 @@
+The `%prep` macro fails because `cd oterm_0.13.0` doesn't find the extracted directory — the tarball must extract to a different name. Let me verify the actual extraction directory.
+
+```bash
+tar -tzf ~/rpmbuild/SOURCES/oterm-0.13.0.tar.gz | sed 's|/.*||' | sort -u
+```

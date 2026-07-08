@@ -1,0 +1,5 @@
+The build failure is caused by a typo in the spec file's `BuildRequires` section where `python313-pipper` is listed instead of the correct package name `python313-pip`. This results in an unresolvable dependency error since no package provides `pipper`. Fix this by replacing the malformed line with the standard Python module macro for pip.
+
+```
+BuildRequires: %{python_module pip}
+```

@@ -1,6 +1,0 @@
-The build error is clear: `%pyton_wheel` has a typo — it should be `%python_wheel`. The previous fix attempt didn't actually correct this line in the spec file, so the same bad macro name persists and fails.
-
-Fixing the typo to `%python_wheel`:
-
-
-This replaces the misspelled `%pyton_wheel` with the correct macro from `python313-rpm-macros`.

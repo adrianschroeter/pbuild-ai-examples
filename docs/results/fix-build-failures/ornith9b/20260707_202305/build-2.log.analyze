@@ -1,5 +1,0 @@
-The `%prep` section tries `cd oterm_0.13.0` (underscore) but the actual extracted directory is `oterm-0.13.0` (hyphen). Let me verify and fix this.
-
-```bash
-ls ~/rpmbuild/SOURCES/ | grep -i oterm
-```

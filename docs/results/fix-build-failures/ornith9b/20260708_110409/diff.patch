@@ -1,0 +1,43 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/oterm.spec sources/fix-build-example/oterm.spec
+--- source_backup/oterm.spec	2026-07-06 16:26:55.705630251 +0200
++++ sources/fix-build-example/oterm.spec	2026-07-08 11:15:29.066483287 +0200
+@@ -24,15 +24,15 @@
+ Summary:        Another terminal client for Ollama
+ Group:          Development/Languages/Python
+ Url:            https://github.com/ggozad/oterm
+-Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz
++Source0:        oterm-0.13.0.tar.gz
+ BuildRequires:  %{python_module poetry-core}
+-BuildRequires:  %{python_module pipper}
++BuildRequires:  %{python_module pip}
+ BuildRequires:  %{python_module wheel}
+ BuildRequires:  %{python_module hatchling}
+ 
+ Requires: %primary_python-textual >= 3.2.0
+ Requires: %primary_python-typer >= 0.15.2
+-Requires: %primary_python-python-dotenv >= 1.0.1
++Requires: %primary_python-dotenv >= 1.0.1
+ Requires: %primary_python-aiosql >= 13.4
+ Requires: %primary_python-aiosqlite >= 0.21.0
+ Requires: %primary_python-packaging >= 25.0
+@@ -51,10 +51,10 @@
+ Another terminal client for Ollama
+ 
+ %prep
+-%setup -q -n oterm_%{version}
++%setup -q -n oterm-0.13.0
+ 
+ %build
+-%pyton_wheel
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install
+@@ -64,6 +64,6 @@
+ %files
+ %license LICENSE
+ %doc README.md CHANGES.txt
++%{_bindir}/oterm
+ %{python_sitelib}/%name
+ %{python_sitelib}/%name-%version.dist-info
+-

@@ -1,4 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -64,8 +64,9 @@
- %files %license LICENSE %doc README.md CHANGES.txt-/usr/bin/oterm-/%{python_sitelib}/oterm/*-%dir %{python_sitelib}/oterm-%{version}.dist-info-%{python_sitelib}/oterm-%{version}.dist-info/*+%{_bindir}/%name+%{python_sitelib}/oterm/+%{python_sitelib}/oterm/*+%dir %{python_sitelib}/oterm-%version.dist-info/+%{python_sitelib}/oterm-%version.dist-info/* 

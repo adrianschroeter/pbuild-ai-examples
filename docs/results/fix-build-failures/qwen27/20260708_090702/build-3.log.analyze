@@ -1,0 +1,1 @@
+The build failed because the console script `/usr/bin/oterm` was installed during `%install` but omitted from the `%files` manifest, triggering a fatal "unpackaged file(s)" check. No additional `BuildRequires` or Python modules are missing; this is purely a spec packaging oversight. Append `%{_bindir}/oterm` to the `%files` section in your spec file to resolve the error.

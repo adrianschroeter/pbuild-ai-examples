@@ -1,3 +1,0 @@
-The `%prep` fails because after extracting `oterm-0.13.0.tar.gz`, the resulting directory is not named `oterm_0.13.0`. This typically happens when the tarball extracts with a trailing slash or different naming convention (e.g., just `oterm/`).
-
-**Fix:** Add `-n oterm_0.13.0` to `%autosetup` / `%setup` in the spec file, which forces RPM to use that directory name regardless of what the archive actually produces.

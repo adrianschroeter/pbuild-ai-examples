@@ -1,0 +1,5 @@
+The RPM build failed because the binary `/usr/bin/oterm` was installed into the build root during the `%install` phase but was not listed in the spec file's `%files` section. This results in an "unpackaged file" error which aborts the build. To resolve this, you must explicitly list the binary directory in the `%files` section using `%{_bindir}/*`.
+
+No additional `BuildRequires` packages are needed for this specific fix. However, if the source uses `pyproject.toml`, ensure you are using `%pyproject_wheel` and `%pyproject_install` macros, as they provide better handling of modern Python package structures and file installation compared to legacy macros.
+
+To fix the unpackaged file error, add the following line inside your `%files` section:

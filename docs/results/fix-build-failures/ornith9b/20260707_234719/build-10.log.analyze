@@ -1,6 +1,0 @@
-The error is clear: `/usr/bin/python3.13` doesn't exist on this system — only Python 3.12 is installed (`/usr/bin/python3.12`). The `python_flavor=python313` was set in the build script because the package's `pyproject.toml` requires Python >= 3.13, but that version isn't available.
-
-**Fix:** Tell the build system to skip python3.13 so it falls back gracefully:
-
-
-Add this line at the top of the spec file (below the copyright header).

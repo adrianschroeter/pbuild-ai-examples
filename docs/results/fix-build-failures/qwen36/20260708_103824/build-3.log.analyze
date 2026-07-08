@@ -1,0 +1,3 @@
+The `fg: no job control` error is triggered by `%py3_wheel`, which relies on deprecated shell shims that are incompatible with the restricted RPM build environment. Modern Python projects using `pyproject.toml` should replace `%py3_wheel` with `%pyproject_buildrequires` and `%pyproject_wheel` to delegate directly to `pip`. Add the following dependency to ensure macro definitions are correctly resolved:
+
+BuildRequires: python-rpm-macros

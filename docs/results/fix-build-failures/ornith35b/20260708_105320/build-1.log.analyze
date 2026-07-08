@@ -1,0 +1,21 @@
+Looking at the build log, the key error is:
+
+```
+.: unresolvable (nothing provides ( python313-pipper ))
+```
+
+The spec file has a BuildRequires for `python313-pipper`, but this package doesn't exist in openSUSE Tumbleweed. This appears to be a typo - "pipper" instead of "pip".
+
+**Root Cause:** The BuildRequires references a non-existent package `python313-pipper`. This is likely meant to be the Python 3.13 pip module.
+
+**Fix:** Change the incorrect BuildRequires line from:
+```
+BuildRequires: python313-pipper
+```
+
+To the correct package name:
+```
+BuildRequires: %{python_module pip}
+```
+
+The `%{python_module}` macro will automatically resolve to the correct Python version-specific package (e.g., `python313-pip` for Python 3.13) and is the proper way to specify Python module dependencies in openSUSE spec files.

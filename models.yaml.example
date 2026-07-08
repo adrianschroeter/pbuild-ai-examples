@@ -16,10 +16,18 @@ hosts:
 
 # Model configurations
 models:
+  qwen27:
+    display: "Qwen 3.5 27B"
+    host: "local"
+    model: "qwen3.6:27b"
   gemma4:
-    display: "Gemma 4 31B"
+    display: "Gemma 4 31B BF16"
     host: "remote1"
     model: "default"
+  gemma4_31b_q4:
+    display: "Gemma 4 31B Q4"
+    host: "biene"
+    model: "gemma4:31b-it-qat-q4_0-it-256k"
   gemma4_12b:
     display: "Gemma 4 12b QAT 256k"
     host: "local"
@@ -32,10 +40,6 @@ models:
     display: "Qwen3.6:35B-a3b-bf16"
     host: "local"
     model: "qwen3.6:35b-a3b-bf16"
-  qwen27:
-    display: "Qwen 3.5 27B"
-    host: "local"
-    model: "qwen3.6:27b"
   ornith35b:
     display: "Ornith 1.0 35B"
     host: "local"

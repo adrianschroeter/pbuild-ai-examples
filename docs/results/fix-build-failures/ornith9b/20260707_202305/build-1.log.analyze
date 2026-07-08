@@ -1,9 +1,0 @@
-The build failed because `python313-pipper` is not resolvable — pipper (the build backend in pyproject.toml) doesn't exist as a standalone Python 3.13 package in openSUSE repositories. Since pipper isn't available, the project must be rebuilt using setuptools as the build backend instead.
-
-Change `BuildRequires: python313-pipper` to:
-
-```
-BuildRequires: %{python_module setuptools}
-```
-
-Also update the pyproject.toml's `[build-system]` section to use setuptools (backend = "setuptools", requires = ["setuptools>=65"]).

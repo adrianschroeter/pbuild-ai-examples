@@ -1,0 +1,8 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/oterm.spec sources/fix-build-example/oterm.spec
+--- source_backup/oterm.spec	2026-07-06 16:26:55.705630251 +0200
++++ sources/fix-build-example/oterm.spec	2026-07-08 10:38:24.135032473 +0200
+@@ -66,4 +66,3 @@
+ %doc README.md CHANGES.txt
+ %{python_sitelib}/%name
+ %{python_sitelib}/%name-%version.dist-info
+-

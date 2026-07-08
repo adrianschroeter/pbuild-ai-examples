@@ -1,8 +1,0 @@
-The build failed during the `%prep` stage because the directory extracted from the source tarball is `oterm-0.13.0`, but the spec file attempts to change directory into `oterm_0.13.0` (using an underscore instead of a hyphen).
-
-To fix this, update the `%setup` or `%autosetup` macro in the `.spec` file to explicitly specify the correct directory name using the `-n` flag.
-
-Change:
-`%setup -q` (or similar)
-to:
-`%setup -q -n oterm-0.13.0`

@@ -1,5 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -28,6 +28,7 @@
- # Use literal package names that exist in Tumbleweed repos BuildRequires:  python3-pip BuildRequires:  python3-wheel+BuildRequires:  python-rpm-macros  Requires:       python3-textual >= 3.2.0 Requires:       python3-typer >= 0.15.2@@ -50,12 +51,15 @@
- sed -i 's/build-backend = "poetry_core"/build-backend = "setuptools.build_meta"/' pyproject.toml  %build-# Use pyproject_wheel macro instead of %py2_compilesite (Python 2 specific)-%pyproject_wheel+# Replace poetry-core with setuptools build backend for compatibility+sed -i 's/build-backend = "poetry_core"/build-backend = "setuptools.build_meta"/' pyproject.toml++# Use explicit python3 command instead of %pyproject_wheel to avoid version iteration issues+python3 -m pip wheel --no-deps --wheel-dir=dist .  %install-# Use pyproject_install macro for proper Python 3 package installation-%pyproject_install+# Install the built wheel using python3 directly+python3 -m pip install --root=%{buildroot} --prefix=%{_prefix} --no-index --find-links=./dist oterm-*.whl %fdupes %{buildroot}%{python_sitelib}  %check

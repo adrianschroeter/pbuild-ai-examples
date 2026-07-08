@@ -1,3 +1,0 @@
-The build fails because the dependency resolver cannot locate `python313-pipper`, which is a typo in your spec file for the `pip` package. Replace the hardcoded, version-specific name with the standard `%{python_module}` macro to ensure correct resolution and cross-Python compatibility.
-
-BuildRequires: %{python_module pip}

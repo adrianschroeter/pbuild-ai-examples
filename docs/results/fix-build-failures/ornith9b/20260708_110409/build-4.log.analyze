@@ -1,0 +1,3 @@
+The build fails because `%prep` tries to extract `/home/abuild/rpmbuild/SOURCES/v0.13.0.tar.gz`, which doesn't exist. The actual source tarball is `oterm-0.13.0.tar.gz`. The spec file's `Source:` line has the wrong filename — it says `v0.13.0` instead of `oterm-0.13.0`.
+
+**Fix:** Change the `Source:` line to point to `oterm-0.13.0.tar.gz`.

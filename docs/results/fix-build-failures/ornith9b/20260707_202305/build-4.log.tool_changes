@@ -1,4 +1,0 @@
---- oterm.spec
-+++ oterm.spec
-@@ -54,7 +54,7 @@
- %setup -q -n oterm-%{version}  %build-%pyproject_wheel+%python_wheel  %install %pyproject_install

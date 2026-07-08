@@ -1,2 +1,0 @@
-The build fails because the spec file attempts to execute `setup.py`, but the upstream source relies on `pyproject.toml` and does not include a `setup.py`. Additionally, `%autosetup -n oterm-%{version}` forces RPM into a nested directory structure that hides the actual source files from the build macro. Replacing the manual build steps with `%pyproject_wheel` and `%pyproject_install` correctly invokes PEP 517 builds, and all necessary dependencies are resolved automatically.
-BuildRequires: %{python_module setuptools}

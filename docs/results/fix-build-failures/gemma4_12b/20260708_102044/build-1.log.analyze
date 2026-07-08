@@ -1,0 +1,3 @@
+The build failed because the `pipper` Python module is missing from the build environment, which resulted in an unresolvable dependency for `python313-pipper`. To resolve this, you need to add the `pipper` module as a BuildRequirement using the appropriate macro.
+
+BuildRequires: %{python_module pipper}

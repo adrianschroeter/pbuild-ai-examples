@@ -1,0 +1,15 @@
+--- oterm.spec
++++ oterm.spec
+@@ -51,10 +51,10 @@
+ Another terminal client for Ollama
+ 
+ %prep
+-%setup -q -n oterm_%{version}
++%setup -q -n oterm-%{version}
+ 
+ %build
+-%pyton_wheel
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install
