@@ -1,0 +1,7 @@
+## Analysis
+
+The build failed because the spec file contains an invalid package name `python313-pipper` in a BuildRequires line. This is not a real RPM package in openSUSE Tumbleweed — the correct way to reference Python pip is via the `%{python_module}` macro.
+
+**Root cause:** The spec file uses a hardcoded, non-existent package name instead of the standard Python module macro.
+
+**Fix:** Replace `BuildRequires: python313-pipper` with the proper macro.

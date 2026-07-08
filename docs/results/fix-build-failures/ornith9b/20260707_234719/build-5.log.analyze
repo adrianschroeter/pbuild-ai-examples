@@ -1,0 +1,7 @@
+The build fails because `/usr/bin/python3.11` doesn't exist on this system. The RPM macros resolved `python_module` to use Python 3.11, but only a different Python version is available. I need to add a `%define skip_python311 1` directive and identify the correct Python version.
+
+Let me check what's actually installed:
+
+```bash
+ls /usr/bin/python* && python3 --version
+```

@@ -1,0 +1,7 @@
+## Root Cause Analysis
+
+The `oterm-0.13.0` package has migrated to a pure **pyproject.toml** build system (likely using Poetry or setuptools with pyproject). The old `setup.py setup.py build` invocation fails because `setup.py` no longer exists in the source tree.
+
+## Fix
+
+Replace the `%build` section:

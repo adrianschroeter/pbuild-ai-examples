@@ -1,0 +1,3 @@
+The error `fg: no job control` is triggered by `%python3_wheel` — it spawns subshells that try to use `fg` (foreground) in the rpmbuild shell context, which doesn't support job control. This isn't a typo issue; the macro itself is broken on this build environment.
+
+**Fix:** Replace `%python3_wheel` with `%pyproject_wheel` since the project uses `pyproject.toml`. The `%pyproject_wheel` macro handles wheel building differently and avoids the problematic subshell behavior.

@@ -1,0 +1,4 @@
+--- oterm.spec
++++ oterm.spec
+@@ -29,7 +29,6 @@
+ BuildRequires:  %{python_module setuptools} BuildRequires:  %{python_module wheel} BuildRequires:  %{python_module hatchling}-BuildRequires:  %{python_module pip}  Requires: %primary_python-textual >= 3.2.0 Requires: %primary_python-typer >= 0.15.2

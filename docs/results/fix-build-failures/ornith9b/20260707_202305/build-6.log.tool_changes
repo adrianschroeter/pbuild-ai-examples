@@ -1,0 +1,4 @@
+--- oterm.spec
++++ oterm.spec
+@@ -43,6 +43,8 @@
+ Requires: %primary_python-textual-image >= 0.8.2 Requires: %primary_python-fastmcp >= 2.5.2 +BuildRequires:  %{python_module pip}+BuildRequires:  %{python_module pip} BuildRequires:  fdupes BuildRequires:  python-rpm-macros BuildArch:      noarch

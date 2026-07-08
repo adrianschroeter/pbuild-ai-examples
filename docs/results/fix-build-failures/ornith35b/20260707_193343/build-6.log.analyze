@@ -1,0 +1,18 @@
+## Root Cause Analysis
+
+The build failed because of **hardcoded Python version numbers** in `BuildRequires:` that don't resolve in the build environment:
+
+```
+nothing provides ( python311-pip ), nothing provides ( python311-hatchling )
+```
+
+Two problems:
+1. `python311-pip` should use the macro `%{python_module pip}` so it adapts to the build Python version
+2. `hatchling` is a Python build backend (from pyproject.toml) and must be specified via `%{python_module hatchling}`, not hardcoded as `python311-hatchling`
+
+## Required Fix
+
+The spec file needs these BuildRequires lines:
+
+
+The core issue was **hardcoded Python version macros** instead of using `%{python_module}` which the build system resolves correctly.

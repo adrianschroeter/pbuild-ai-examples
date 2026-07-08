@@ -1,0 +1,5 @@
+--- oterm.spec
++++ oterm.spec
+@@ -15,7 +15,7 @@
+ # Please submit bugfixes or comments via http://bugs.opensuse.org/  -%define skip_python314 1+%define skip_python314 0  Name:           oterm Version:        0.13.0@@ -36,7 +36,7 @@
+ %setup -q -n oterm-%{version}  %build-%pyproject_wheel+%pyproject_wheel --python /usr/bin/python3.12  %install %pyproject_install --no-deps

@@ -1,5 +1,0 @@
-**Cause:** The `%prep` script fails because the spec file attempts to `cd oterm_0.13.0`, but the source archive `oterm-0.13.0.tar.gz` extracts to a directory named `oterm-0.13.0` (hyphen instead of underscore). This mismatch causes RPM to abort when changing into the non-existent target directory.
-
-**Fix:** Correct the extraction directory name by adding the `-n` flag to `%autosetup` (or update the hardcoded `cd` command):
-
-If the project uses `pyproject.toml`, replace legacy build/install macros with `%pyproject_wheel` and `%pyproject_install`. No additional BuildRequires are required to resolve this specific `%prep` failure.

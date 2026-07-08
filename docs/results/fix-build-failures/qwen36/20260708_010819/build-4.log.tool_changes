@@ -1,0 +1,4 @@
+--- oterm.spec
++++ oterm.spec
+@@ -25,7 +25,7 @@
+ Group:          Development/Languages/Python Url:            https://github.com/ggozad/oterm Source:         https://pypi.python.org/packages/source/o/oterm/oterm-%{version}.tar.gz-BuildRequires:  %{python_module poetry-core}+BuildRequires:  python3-hatchling >= 1.0 BuildRequires:  %{python_module pip} BuildRequires:  %{python_module wheel} 

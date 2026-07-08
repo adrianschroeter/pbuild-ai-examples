@@ -1,0 +1,391 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+building ./oterm.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+Reusing former build root
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    0s] 
+[    0s] rio started "build oterm.spec" at Tue Jul  7 23:19:05 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
+[    0s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec
+[    0s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
+[    0s] copying packages...
+[    1s] reordering...cycle: libncurses6 -> terminfo-base
+[    1s]   breaking dependency terminfo-base -> libncurses6
+[    1s] cycle: lua54 -> lua-interpreter
+[    1s]   breaking dependency lua54 -> lua-interpreter
+[    1s] cycle: binutils -> libctf0
+[    1s]   breaking dependency binutils -> libctf0
+[    1s] cycle: python313-base -> libpython3_13-1_0
+[    1s]   breaking dependency python313-base -> libpython3_13-1_0
+[    1s] cycle: rpm-config-SUSE -> rpm
+[    1s]   breaking dependency rpm -> rpm-config-SUSE
+[    1s] done
+[    1s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64'
+[    1s] Detected virtio-serial support
+[    1s] booting kvm...
+[    1s] ### VM INTERACTION START ###
+[    1s] Using virtio-serial support
+[    1s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    5s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=5e41b27ad9d147de92d4dac5d5229f88;user=root;hostname=localhost;machineid=4286f6c499944e9dbb8da55af15d0cfb;bootid=5027270db4954754af6983b23f2c4dc2;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
+[    5s] ### VM INTERACTION END ###
+[    5s] 2nd stage started in virtual machine
+[    5s] machine type: x86_64
+[    5s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 2 05:05:55 UTC 2026 (992f18c)
+[    5s] Time: Tue Jul  7 23:19:09 UTC 2026
+[    5s] Increasing log level from now on...
+[    5s] [    3.552294][  T513] sysrq: Changing Loglevel
+[    5s] [    3.552347][  T513] sysrq: Loglevel set to 4
+[    5s] Enable sysrq operations
+[    5s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    5s] no label, UUID=565ecd8f-0282-4805-ace3-a2f025666a40
+[    5s] logging output to //.build.log...
+[    5s] processing recipe //.build-srcdir/oterm.spec ...
+[    5s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/oterm.spec ...
+[    5s] initializing rpm db...
+[    5s] querying package ids...
+[    6s] deleting python313-hatchling
+[    6s] deleting python313-pathspec
+[    6s] deleting python313-pluggy
+[    6s] deleting python313-trove-classifiers
+[    6s] [1/141] keeping compat-usrmerge-tools-84.87-5.25
+[    6s] [2/141] keeping crypto-policies-20250714.cd6043a-4.2
+[    6s] [3/141] keeping file-magic-5.48-1.2
+[    6s] [4/141] keeping kernel-obs-build-7.1.2-1.1
+[    6s] [5/141] keeping pkgconf-m4-2.5.1-1.4
+[    6s] [6/141] keeping python-rpm-macros-20260601.4a231f4-1.2
+[    6s] [7/141] keeping system-user-root-20190513-2.20
+[    6s] [8/141] keeping filesystem-84.87-21.2
+[    6s] [9/141] keeping glibc-2.43-4.2
+[    6s] [10/141] keeping diffutils-3.12-1.4
+[    6s] [11/141] keeping envsubst-mini-1.0-2.3
+[    6s] [12/141] keeping fillup-1.42-281.6
+[    6s] [13/141] keeping glibc-gconv-modules-extra-2.43-4.2
+[    6s] [14/141] keeping glibc-locale-base-2.43-4.2
+[    6s] [15/141] keeping libacl1-2.3.2-2.6
+[    6s] [16/141] keeping libalternatives1-1.2+31.da24cd4-1.4
+[    6s] [17/141] keeping libatomic1-16.1.1+git8886-1.2
+[    6s] [18/141] keeping libattr1-2.6.0-1.1
+[    6s] [19/141] keeping libaudit1-4.0.2-3.4
+[    6s] [20/141] keeping libbz2-1-1.0.8-5.15
+[    6s] [21/141] keeping libcap-ng0-0.8.5-1.6
+[    6s] [22/141] keeping libcap2-2.78-1.3
+[    6s] [23/141] keeping libcrypt1-4.5.2-2.3
+[    6s] [24/141] keeping libeconf0-0.8.3-1.4
+[    6s] [25/141] keeping libexpat1-2.8.1-1.2
+[    6s] [26/141] keeping libffi8-3.5.2-2.4
+[    6s] [27/141] keeping libgcc_s1-16.1.1+git8886-1.2
+[    6s] [28/141] keeping libgdbm6-1.26-1.4
+[    6s] [29/141] keeping libgmp10-6.3.0-5.5
+[    6s] [30/141] keeping libgomp1-16.1.1+git8886-1.2
+[    6s] [31/141] keeping libgpg-error0-1.61-1.2
+[    6s] [32/141] keeping libitm1-16.1.1+git8886-1.2
+[    6s] [33/141] keeping libjitterentropy3-3.6.3-1.4
+[    6s] [34/141] keeping liblua5_4-5-5.4.8-4.5
+[    6s] [35/141] keeping liblz1-1.16-1.3
+[    6s] [36/141] keeping liblz4-1-1.10.0-2.7
+[    6s] [37/141] keeping liblzma5-5.8.3-1.3
+[    6s] [38/141] keeping libmpdec4-4.0.1-2.4
+[    6s] [39/141] keeping libpcre2-8-0-10.47-1.5
+[    6s] [40/141] keeping libpkgconf7-2.5.1-1.4
+[    6s] [41/141] keeping libpopt0-1.19-2.3
+[    6s] [42/141] keeping libseccomp2-2.6.0-2.5
+[    6s] [43/141] keeping libsframe2-2.45-4.2
+[    6s] [44/141] keeping libsmartcols1-2.42.1-1.2
+[    6s] [45/141] keeping libuuid1-2.42.1-1.2
+[    6s] [46/141] keeping libxml2-16-2.15.3-1.3
+[    6s] [47/141] keeping libz1-1.3.1-3.2
+[    6s] [48/141] keeping libzstd1-1.5.7-4.3
+[    6s] [49/141] keeping patch-2.8-2.4
+[    6s] [50/141] keeping which-2.25-1.2
+[    6s] [51/141] keeping alts-1.2+31.da24cd4-1.4
+[    6s] [52/141] keeping libblkid1-2.42.1-1.2
+[    6s] [53/141] keeping libctf-nobfd0-2.45-4.2
+[    6s] [54/141] keeping libgdbm_compat4-1.26-1.4
+[    6s] [55/141] keeping libisl23-0.27-1.5
+[    6s] [56/141] keeping libmpfr6-4.2.2-1.4
+[    6s] [57/141] keeping libselinux1-3.10-3.2
+[    6s] [58/141] keeping libstdc++6-16.1.1+git8886-1.2
+[    6s] [59/141] keeping perl-base-5.42.1-1.2
+[    6s] [60/141] keeping pkgconf-2.5.1-1.4
+[    6s] [61/141] keeping libelf1-0.194-1.3
+[    6s] [62/141] keeping libgcrypt20-1.12.2-1.3
+[    6s] [63/141] keeping permctl-1699_20260512-1.2
+[    6s] [64/141] keeping libmagic1-5.48-1.2
+[    6s] [65/141] keeping build-mkbaselibs-20260505-1.2
+[    6s] [66/141] keeping dwz-0.15-6.5
+[    6s] [67/141] keeping findutils-4.10.0-2.6
+[    6s] [68/141] keeping fdupes-2.4.0-1.4
+[    6s] [69/141] keeping file-5.48-1.2
+[    6s] [70/141] keeping libasan8-16.1.1+git8886-1.2
+[    6s] [71/141] keeping libfdisk1-2.42.1-1.2
+[    6s] [72/141] keeping libhwasan0-16.1.1+git8886-1.2
+[    6s] [73/141] keeping liblsan0-16.1.1+git8886-1.2
+[    6s] [74/141] keeping libmount1-2.42.1-1.2
+[    6s] [75/141] keeping libmpc3-1.4.1-1.3
+[    6s] [76/141] keeping libtsan2-16.1.1+git8886-1.2
+[    6s] [77/141] keeping libubsan1-16.1.1+git8886-1.2
+[    6s] [78/141] keeping sed-4.10-1.3
+[    6s] [79/141] keeping tar-1.35-8.2
+[    6s] [80/141] keeping libdw1-0.194-1.3
+[    6s] [81/141] keeping perl-5.42.1-1.2
+[    6s] [82/141] keeping brp-check-suse-84.87+git20260317.a0eb4ba-1.2
+[    6s] [83/141] keeping perl-rpm-packaging-1.3-1.3
+[    6s] [84/141] keeping libasm1-0.194-1.3
+[    6s] [85/141] keeping cpp15-15.3.0+git11272-1.2
+[    6s] [86/141] keeping terminfo-base-6.6.20260613-109.2
+[    6s] [87/141] keeping libncurses6-6.6.20260613-109.2
+[    6s] [88/141] keeping libreadline8-8.3.3-2.5
+[    6s] [89/141] keeping ncurses-utils-6.6.20260613-109.2
+[    6s] [90/141] keeping bash-5.3.15-7.2
+[    6s] [91/141] keeping lua54-5.4.8-4.5
+[    6s] [92/141] keeping bash-sh-5.3.15-7.2
+[    6s] [93/141] keeping compat-usrmerge-build-84.87-5.25
+[    6s] [94/141] keeping lua-interpreter-5-3.3
+[    6s] [95/141] keeping cpio-2.15-7.3
+[    6s] [96/141] keeping cpp-15-3.3
+[    6s] [97/141] keeping gzip-1.14-2.1
+[    6s] [98/141] keeping make-4.4.1-3.6
+[    6s] [99/141] keeping bzip2-1.0.8-5.15
+[    6s] [100/141] keeping grep-3.12-1.4
+[    6s] [101/141] keeping pkgconf-pkg-config-2.5.1-1.4
+[    6s] [102/141] keeping xz-5.8.3-1.3
+[    6s] [103/141] keeping gettext-runtime-mini-1.0-2.3
+[    6s] [104/141] keeping gawk-5.4.0-1.2
+[    6s] [105/141] keeping coreutils-9.11-4.2
+[    6s] [106/141] keeping elfutils-0.194-1.3
+[    6s] [107/141] keeping linux-glibc-devel-7.0-1.2
+[    6s] [108/141] keeping systemd-rpm-macros-26-1.3
+[    6s] [109/141] keeping libxcrypt-devel-4.5.2-2.3
+[    6s] [110/141] keeping permissions-config-1699_20260512-1.2
+[    6s] [111/141] keeping polkit-default-privs-1550+20260623.563df94-1.2
+[    6s] [112/141] keeping libopenssl3-3.5.3-6.2
+[    6s] [113/141] keeping aaa_base-84.87+git20260610.3b5a868c-1.2
+[    6s] [114/141] keeping gettext-tools-mini-1.0-2.3
+[    6s] [115/141] keeping binutils-2.45-4.2
+[    6s] [116/141] keeping rpm-4.20.1-7.2
+[    6s] [117/141] keeping aaa_base-malloccheck-84.87+git20260610.3b5a868c-1.2
+[    6s] [118/141] keeping permissions-1699_20260512-1.2
+[    6s] [119/141] keeping rpm-config-SUSE-20250904-1.3
+[    6s] [120/141] keeping glibc-devel-2.43-4.2
+[    6s] [121/141] keeping libctf0-2.45-4.2
+[    6s] [122/141] keeping rpmlint-mini-2.9.0+git20260629.bd947d09-21.10
+[    6s] [123/141] keeping build-compare-20260622T095938.6416d96-1.2
+[    6s] [124/141] keeping libarchive13-3.8.7-1.3
+[    6s] [125/141] keeping librpmbuild10-4.20.1-7.2
+[    6s] [126/141] keeping python313-base-3.13.13-3.2
+[    6s] [127/141] keeping debugedit-5.1-1.6
+[    6s] [128/141] keeping python313-packaging-26.2-1.2
+[    6s] [129/141] keeping python313-poetry-core-2.4.0-1.2
+[    6s] [130/141] keeping libpython3_13-1_0-3.13.13-3.2
+[    6s] [131/141] keeping python313-pip-26.1.2-1.2
+[    6s] [132/141] keeping pam-1.7.2+git12-1.2
+[    6s] [133/141] keeping post-build-checks-84.87+git20250725.0c3a172-1.3
+[    6s] [134/141] keeping gcc15-15.3.0+git11272-1.2
+[    6s] [135/141] keeping gcc15-PIE-15.3.0+git11272-1.2
+[    6s] [136/141] keeping gcc-15-3.3
+[    6s] [137/141] keeping python313-wheel-0.46.3-2.6
+[    6s] [138/141] keeping python-rpm-packaging-20210526+a18ca48-1.15
+[    6s] [139/141] keeping util-linux-2.42.1-1.2
+[    6s] [140/141] keeping gcc-PIE-15-3.3
+[    6s] [141/141] keeping rpm-build-4.20.1-7.2
+[    6s] now finalizing build dir...
+[    6s] ... running 01-add_abuild_user_to_trusted_group
+[    6s] ... running 02-set_timezone_to_utc
+[    6s] ... running 03-set-permissions-secure
+[    6s] ... running 11-hack_uname_version_to_kernel_version
+[    6s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[    6s] -----------------------------------------------------------------
+[    6s] I have the following modifications for oterm.spec:
+[    6s] 67a68
+[    6s] > %changelog
+[    6s] -----------------------------------------------------------------
+[    6s] ----- building oterm.spec (user abuild)
+[    6s] -----------------------------------------------------------------
+[    6s] -----------------------------------------------------------------
+[    6s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[    6s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/oterm.spec
+[    7s] Building target platforms: noarch
+[    7s] Building for target noarch
+[    7s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.edtnaa
+[    7s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.b2lHc0
+[    7s] + umask 022
+[    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + rm -rf oterm-0.13.0
+[    7s] + /usr/lib/rpm/rpmuncompress -x /home/abuild/rpmbuild/SOURCES/oterm-0.13.0.tar.gz
+[    7s] + STATUS=0
+[    7s] + '[' 0 -ne 0 ']'
+[    7s] + cd oterm-0.13.0
+[    7s] + /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+[    7s] + RPM_EC=0
+[    7s] ++ jobs -p
+[    7s] + exit 0
+[    7s] Executing(%build): /usr/bin/bash -e /var/tmp/rpm-tmp.99pOdf
+[    7s] + umask 022
+[    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + /usr/bin/rm -rf /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    7s] ++ dirname /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    7s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + /usr/bin/mkdir /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    7s] + cd oterm-0.13.0
+[    7s] ++ '[' -f _current_flavor ']'
+[    7s] ++ true
+[    7s] + last_flavor=
+[    7s] + '[' -z '' ']'
+[    7s] + last_flavor=tmp
+[    7s] + '[' tmp '!=' python313 ']'
+[    7s] + '[' -d build ']'
+[    7s] + '[' -d _build.python313 ']'
+[    7s] + echo python313
+[    7s] + python_flavor=python313
+[    7s] + myargs=
+[    7s] + '[' -f './dist/*-none-any.whl' ']'
+[    7s] + /usr/bin/python3.13 -mpip wheel --verbose --progress-bar off --disable-pip-version-check --use-pep517 --no-build-isolation --no-deps --wheel-dir ./build .
+[    7s] WARNING: Disabling truststore because of missing certificates
+[    7s] Processing ./.
+[    7s]   Preparing metadata (pyproject.toml): started
+[    7s]   Running command Preparing metadata (pyproject.toml)
+[    7s]   Preparing metadata (pyproject.toml): finished with status 'done'
+[    7s] ERROR: Exception:
+[    7s] Traceback (most recent call last):
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/cli/base_command.py", line 109, in _run_wrapper
+[    7s]     status = _inner_run()
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/cli/base_command.py", line 102, in _inner_run
+[    7s]     return self.run(options, args)
+[    7s]            ~~~~~~~~^^^^^^^^^^^^^^^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/cli/req_command.py", line 101, in wrapper
+[    7s]     return func(self, options, args)
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/commands/wheel.py", line 138, in run
+[    7s]     requirement_set = resolver.resolve(reqs, check_supported_wheels=True)
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/resolver.py", line 79, in resolve
+[    7s]     collected = self.factory.collect_root_requirements(root_reqs)
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 597, in collect_root_requirements
+[    7s]     reqs = list(
+[    7s]         self._make_requirements_from_install_req(
+[    7s]     ...<2 lines>...
+[    7s]         )
+[    7s]     )
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 553, in _make_requirements_from_install_req
+[    7s]     cand = self._make_base_candidate_from_link(
+[    7s]         ireq.link,
+[    7s]     ...<2 lines>...
+[    7s]         version=None,
+[    7s]     )
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/factory.py", line 228, in _make_base_candidate_from_link
+[    7s]     self._link_candidate_cache[link] = LinkCandidate(
+[    7s]                                        ~~~~~~~~~~~~~^
+[    7s]         link,
+[    7s]         ^^^^^
+[    7s]     ...<3 lines>...
+[    7s]         version=version,
+[    7s]         ^^^^^^^^^^^^^^^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 326, in __init__
+[    7s]     super().__init__(
+[    7s]     ~~~~~~~~~~~~~~~~^
+[    7s]         link=link,
+[    7s]         ^^^^^^^^^^
+[    7s]     ...<4 lines>...
+[    7s]         version=version,
+[    7s]         ^^^^^^^^^^^^^^^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 168, in __init__
+[    7s]     self.dist = self._prepare()
+[    7s]                 ~~~~~~~~~~~~~^^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 246, in _prepare
+[    7s]     dist = self._prepare_distribution()
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/resolution/resolvelib/candidates.py", line 337, in _prepare_distribution
+[    7s]     return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+[    7s]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/operations/prepare.py", line 542, in prepare_linked_requirement
+[    7s]     return self._prepare_linked_requirement(req, parallel_builds)
+[    7s]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/operations/prepare.py", line 661, in _prepare_linked_requirement
+[    7s]     dist = _get_prepared_distribution(
+[    7s]         req,
+[    7s]     ...<3 lines>...
+[    7s]         self.check_build_deps,
+[    7s]     )
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/operations/prepare.py", line 77, in _get_prepared_distribution
+[    7s]     abstract_dist.prepare_distribution_metadata(
+[    7s]     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[    7s]         build_env_installer, build_isolation, check_build_deps
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/distributions/sdist.py", line 71, in prepare_distribution_metadata
+[    7s]     self.req.prepare_metadata()
+[    7s]     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/req/req_install.py", line 540, in prepare_metadata
+[    7s]     self.metadata_directory = generate_metadata(
+[    7s]                               ~~~~~~~~~~~~~~~~~^
+[    7s]         build_env=self.build_env,
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]         backend=self.pep517_backend,
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]         details=details,
+[    7s]         ^^^^^^^^^^^^^^^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/operations/build/metadata.py", line 34, in generate_metadata
+[    7s]     distinfo_dir = backend.prepare_metadata_for_build_wheel(metadata_dir)
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_internal/utils/misc.py", line 721, in prepare_metadata_for_build_wheel
+[    7s]     return super().prepare_metadata_for_build_wheel(
+[    7s]            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[    7s]         metadata_directory=metadata_directory,
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]         config_settings=cs,
+[    7s]         ^^^^^^^^^^^^^^^^^^^
+[    7s]         _allow_fallback=_allow_fallback,
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_vendor/pyproject_hooks/_impl.py", line 224, in prepare_metadata_for_build_wheel
+[    7s]     return self._call_hook(
+[    7s]            ~~~~~~~~~~~~~~~^
+[    7s]         "prepare_metadata_for_build_wheel",
+[    7s]         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[    7s]     ...<4 lines>...
+[    7s]         },
+[    7s]         ^^
+[    7s]     )
+[    7s]     ^
+[    7s]   File "/usr/lib/python3.13/site-packages/pip/_vendor/pyproject_hooks/_impl.py", line 402, in _call_hook
+[    7s]     raise BackendUnavailable(
+[    7s]     ...<4 lines>...
+[    7s]     )
+[    7s] pip._vendor.pyproject_hooks._impl.BackendUnavailable: Cannot import 'hatchling.build'
+[    7s] error: Bad exit status from /var/tmp/rpm-tmp.99pOdf (%build)
+[    7s] 
+[    7s] RPM build errors:
+[    7s]     Bad exit status from /var/tmp/rpm-tmp.99pOdf (%build)
+[    7s] ### VM INTERACTION START ###
+[    7s] [    5.316593][    T1] sysrq: Power Off
+[    7s] ### VM INTERACTION END ###
+[    7s] 
+[    7s] rio failed "build oterm.spec" at Tue Jul  7 23:19:12 UTC 2026.
+[    7s] 
+
+finished ./oterm.spec after 7s: failed

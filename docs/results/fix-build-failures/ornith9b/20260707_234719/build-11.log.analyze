@@ -1,0 +1,5 @@
+The build log shows `python_flavor=python311` but `/usr/bin/python3.11` does not exist — only Python 3.12 is installed. The system's `_current_flavor` detection defaults to 3.11 when it can't find a preferred version, and since 3.11 isn't available, the build fails.
+
+Need to skip python311 flavor entirely so the build uses python312:
+
+BuildRequires: python-rpm-macros

@@ -1,0 +1,15 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+.: unresolvable (nothing provides ( python311-pip ), nothing provides ( python311-hatchling ))

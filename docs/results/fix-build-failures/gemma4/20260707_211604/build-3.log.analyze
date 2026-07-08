@@ -1,0 +1,4 @@
+The build failed because the file `/usr/bin/oterm` was installed but not included in the `%files` section of the spec file. This is a packaging error, not a missing dependency.
+
+To fix this, add the following line to the `%files` section:
+%{_bindir}/oterm

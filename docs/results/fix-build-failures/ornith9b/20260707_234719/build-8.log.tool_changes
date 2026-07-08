@@ -1,0 +1,4 @@
+--- oterm.spec
++++ oterm.spec
+@@ -14,8 +14,6 @@
+  # Please submit bugfixes or comments via http://bugs.opensuse.org/ --%define skip_python314 0  Name:           oterm Version:        0.13.0

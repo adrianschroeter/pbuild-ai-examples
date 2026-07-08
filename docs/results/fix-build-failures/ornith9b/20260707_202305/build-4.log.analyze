@@ -1,0 +1,3 @@
+The error is clear: `/usr/bin/python3.13: No module named pip`. The `%pyproject_wheel` macro internally invokes `python -mpip wheel`, but pip is not installed in the build environment. This is a missing dependency — the spec file needs to declare pip as a BuildRequires so it gets installed before the build runs.
+
+BuildRequires: %{python_module pip}

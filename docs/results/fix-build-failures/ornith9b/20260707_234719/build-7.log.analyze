@@ -1,0 +1,5 @@
+The build error is clear: `/usr/bin/python3.11: No such file or directory`. The build system set `python_flavor=python311` and tried to invoke that Python, but it doesn't exist on this system. This means the project's `pyproject.toml` requires a different Python version than what's available.
+
+The fix is to skip the python3.11 flavor by adding `%define skip_python311 1` near the top of the spec file (below the copyright header). This tells the RPM build system to not attempt building with Python 3.11 and skip it entirely, allowing the build to proceed with whatever Python versions are available.
+
+BuildRequires: %{python_module MODULENAME}

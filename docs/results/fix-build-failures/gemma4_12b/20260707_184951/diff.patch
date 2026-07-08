@@ -1,0 +1,17 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/oterm.spec sources/fix-build-example/oterm.spec
+--- source_backup/oterm.spec	2026-07-06 16:26:55.705630251 +0200
++++ sources/fix-build-example/oterm.spec	2026-07-07 19:26:55.470886721 +0200
+@@ -54,7 +54,7 @@
+ %setup -q -n oterm_%{version}
+ 
+ %build
+-%pyton_wheel
++%pyproject_wheel
+ 
+ %install
+ %pyproject_install
+@@ -66,4 +66,3 @@
+ %doc README.md CHANGES.txt
+ %{python_sitelib}/%name
+ %{python_sitelib}/%name-%version.dist-info
+-
