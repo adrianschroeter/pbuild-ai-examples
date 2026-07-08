@@ -1,0 +1,3 @@
+The build succeeded, but it failed during the final check because the executable `/usr/bin/oterm` was installed but not listed in the `%files` section of the spec file. This is a common "unpackaged files" error.
+
+To fix this, add `%{_bindir}/oterm` to the `%files` section.

@@ -1,0 +1,14 @@
+{
+  "run_time_seconds": 302,
+  "exit_code": 143,
+  "status": "error",
+  "success": false,
+  "files_changed": 0,
+  "pbuild_ai_version": "0.1.10",
+  "ai_model": null,
+  "ai_calls": null,
+  "ai_time_seconds": null,
+  "pbuild_calls": null,
+  "pbuild_time_seconds": null,
+  "total_runtime_seconds": null
+}

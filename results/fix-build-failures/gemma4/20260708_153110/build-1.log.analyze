@@ -1,0 +1,3 @@
+The build failure is caused by a typo in the `BuildRequires` section, where `%{python_module pipper}` is used instead of the correct module name for the Python package installer.
+
+BuildRequires: %{python_module pip}
