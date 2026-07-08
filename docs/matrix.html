@@ -951,6 +951,30 @@
             // Keep body scroll hidden since main modal is still open
         }
 
+        function colorizeDiff(diffText) {
+            // Colorize diff output: red for removed lines, green for added lines
+            const lines = diffText.split('\n');
+            const colorizedLines = lines.map(line => {
+                if (line.startsWith('-') && !line.startsWith('---')) {
+                    // Removed line - red
+                    return `<span style="color: #ff6b6b;">${escapeHtml(line)}</span>`;
+                } else if (line.startsWith('+') && !line.startsWith('+++')) {
+                    // Added line - green
+                    return `<span style="color: #51cf66;">${escapeHtml(line)}</span>`;
+                } else if (line.startsWith('@@')) {
+                    // Hunk header - cyan
+                    return `<span style="color: #22d3ee;">${escapeHtml(line)}</span>`;
+                } else if (line.startsWith('diff ') || line.startsWith('index ') || line.startsWith('---') || line.startsWith('+++')) {
+                    // Diff metadata - gray
+                    return `<span style="color: #9ca3af;">${escapeHtml(line)}</span>`;
+                } else {
+                    // Context line - normal
+                    return escapeHtml(line);
+                }
+            });
+            return colorizedLines.join('\n');
+        }
+
         async function showBuildLogsModal(resultPath) {
             const buildLogsModal = document.getElementById('buildLogsModal');
             const buildLogsContent = document.getElementById('buildLogsContent');
@@ -1066,7 +1090,7 @@
                         html += `<span id="diff-${attempt.num}-toggle">▼</span> Changes Made`;
                         html += `</h4>`;
                         html += `<div id="diff-${attempt.num}" style="margin-top: 0.5rem;">`;
-                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${escapeHtml(attempt.diff)}</pre>`;
+                        html += `<pre style="background: #1a1a1a; padding: 1rem; border-radius: 4px; overflow-x: auto;">${colorizeDiff(attempt.diff)}</pre>`;
                         html += `</div></div>`;
                     }
 
