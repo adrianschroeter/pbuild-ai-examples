@@ -342,10 +342,12 @@ RESULTS_DIR = "results"
 config = {}
 
 def read_yaml_simple(path):
-    """Parse YAML with hosts: and models: sections"""
+    """Parse YAML with hosts: and models: sections.
+    Supports sub-mappings (e.g. ollama_options) at indent level 6."""
     data = {"hosts": {}, "models": {}}
     current_section = None
     current_key = None
+    sub_map_key = None
 
     try:
         with open(path) as f:
@@ -354,28 +356,58 @@ def read_yaml_simple(path):
                 if not line:
                     continue
 
-                # Top-level section: hosts: or models:
-                if line.startswith("hosts:"):
-                    current_section = "hosts"
-                    continue
-                elif line.startswith("models:"):
-                    current_section = "models"
+                stripped = line.lstrip()
+                indent = len(line) - len(stripped)
+
+                # Top-level keys (indent 0)
+                if indent == 0:
+                    if line.startswith("hosts:"):
+                        current_section = "hosts"
+                    elif line.startswith("models:"):
+                        current_section = "models"
+                    current_key = None
+                    sub_map_key = None
                     continue
 
-                # Entry key: "  keyname:"
-                m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
-                if m and current_section:
-                    current_key = m.group(1)
-                    data[current_section][current_key] = {}
+                if current_section is None:
                     continue
 
-                # Property: "    propname: value"
-                m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
-                if m and current_section and current_key:
-                    val = m.group(2).strip()
-                    if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
-                        val = val[1:-1]
-                    data[current_section][current_key][m.group(1)] = val
+                # Entry keys at indent 2
+                if indent == 2:
+                    m = re.match(r'^  ([\w.\-][\w.\-]*):\s*$', line)
+                    if m:
+                        current_key = m.group(1)
+                        data[current_section][current_key] = {}
+                        sub_map_key = None
+                    continue
+
+                # Properties at indent >= 4
+                if indent >= 4 and current_key:
+                    m = re.match(r'^\s+(\w[\w-]*):\s*(.*)$', line)
+                    if m:
+                        prop = m.group(1)
+                        val = m.group(2).strip()
+
+                        # Indent 4 with empty value = start of sub-mapping
+                        if indent == 4 and not val:
+                            sub_map_key = prop
+                            data[current_section][current_key][prop] = {}
+                            continue
+
+                        # Indent 6 = inside a sub-mapping
+                        if indent == 6 and sub_map_key:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                                val = val[1:-1]
+                            data[current_section][current_key][sub_map_key][prop] = val
+                            continue
+
+                        # Indent 4 with value = regular property
+                        if indent == 4:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in '"\'':
+                                val = val[1:-1]
+                            data[current_section][current_key][prop] = val
+                            sub_map_key = None
+                            continue
     except FileNotFoundError:
         pass
     return data

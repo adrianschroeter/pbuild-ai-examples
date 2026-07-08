@@ -57,10 +57,12 @@ REPO_ROOT=$(pwd)
 MODELS_JSON=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
-    """Parse YAML with default:, hosts:, and models: sections"""
+    """Parse YAML with default:, hosts:, and models: sections.
+    Supports sub-mappings (e.g. ollama_options) at indent level 6."""
     data = {"default": None, "hosts": {}, "models": {}}
     current_section = None
     current_key = None
+    sub_map_key = None
 
     try:
         with open(path) as f:
@@ -69,35 +71,62 @@ def read_yaml_simple(path):
                 if not line:
                     continue
 
-                # Top-level default: key
-                if line.startswith("default:"):
-                    m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                stripped = line.lstrip()
+                indent = len(line) - len(stripped)
+
+                # Top-level keys (indent 0)
+                if indent == 0:
+                    if line.startswith("default:"):
+                        m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                        if m:
+                            data["default"] = m.group(1)
+                    elif line.startswith("hosts:"):
+                        current_section = "hosts"
+                    elif line.startswith("models:"):
+                        current_section = "models"
+                    current_key = None
+                    sub_map_key = None
+                    continue
+
+                if current_section is None:
+                    continue
+
+                # Entry keys at indent 2
+                if indent == 2:
+                    m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
                     if m:
-                        data["default"] = m.group(1)
+                        current_key = m.group(1)
+                        data[current_section][current_key] = {}
+                        sub_map_key = None
                     continue
 
-                # Top-level section: hosts: or models:
-                if line.startswith("hosts:"):
-                    current_section = "hosts"
-                    continue
-                elif line.startswith("models:"):
-                    current_section = "models"
-                    continue
+                # Properties at indent >= 4
+                if indent >= 4 and current_key:
+                    m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
+                    if m:
+                        prop = m.group(1)
+                        val = m.group(2).strip()
 
-                # Entry key: "  keyname:"
-                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
-                if m and current_section:
-                    current_key = m.group(1)
-                    data[current_section][current_key] = {}
-                    continue
+                        # Indent 4 with empty value = start of sub-mapping
+                        if indent == 4 and not val:
+                            sub_map_key = prop
+                            data[current_section][current_key][prop] = {}
+                            continue
 
-                # Property: "    propname: value"
-                m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
-                if m and current_section and current_key:
-                    val = m.group(2).strip()
-                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
-                        val = val[1:-1]
-                    data[current_section][current_key][m.group(1)] = val
+                        # Indent 6 = inside a sub-mapping
+                        if indent == 6 and sub_map_key:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
+                                val = val[1:-1]
+                            data[current_section][current_key][sub_map_key][prop] = val
+                            continue
+
+                        # Indent 4 with value = regular property
+                        if indent == 4:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
+                                val = val[1:-1]
+                            data[current_section][current_key][prop] = val
+                            sub_map_key = None
+                            continue
     except FileNotFoundError:
         pass
     return data
@@ -127,10 +156,12 @@ if [ "$ALL_MODELS" = true ]; then
     MODEL_KEYS=$(python3 -c 'import json, os, re
 
 def read_yaml_simple(path):
-    """Parse YAML with default:, hosts:, and models: sections"""
+    """Parse YAML with default:, hosts:, and models: sections.
+    Supports sub-mappings (e.g. ollama_options) at indent level 6."""
     data = {"default": None, "hosts": {}, "models": {}}
     current_section = None
     current_key = None
+    sub_map_key = None
 
     try:
         with open(path) as f:
@@ -139,35 +170,62 @@ def read_yaml_simple(path):
                 if not line:
                     continue
 
-                # Top-level default: key
-                if line.startswith("default:"):
-                    m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                stripped = line.lstrip()
+                indent = len(line) - len(stripped)
+
+                # Top-level keys (indent 0)
+                if indent == 0:
+                    if line.startswith("default:"):
+                        m = re.match(r"default:\s*\"?([^\"]+)\"?", line)
+                        if m:
+                            data["default"] = m.group(1)
+                    elif line.startswith("hosts:"):
+                        current_section = "hosts"
+                    elif line.startswith("models:"):
+                        current_section = "models"
+                    current_key = None
+                    sub_map_key = None
+                    continue
+
+                if current_section is None:
+                    continue
+
+                # Entry keys at indent 2
+                if indent == 2:
+                    m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
                     if m:
-                        data["default"] = m.group(1)
+                        current_key = m.group(1)
+                        data[current_section][current_key] = {}
+                        sub_map_key = None
                     continue
 
-                # Top-level section: hosts: or models:
-                if line.startswith("hosts:"):
-                    current_section = "hosts"
-                    continue
-                elif line.startswith("models:"):
-                    current_section = "models"
-                    continue
+                # Properties at indent >= 4
+                if indent >= 4 and current_key:
+                    m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
+                    if m:
+                        prop = m.group(1)
+                        val = m.group(2).strip()
 
-                # Entry key: "  keyname:"
-                m = re.match(r"^  ([\w.\-][\w.\-]*):\s*$", line)
-                if m and current_section:
-                    current_key = m.group(1)
-                    data[current_section][current_key] = {}
-                    continue
+                        # Indent 4 with empty value = start of sub-mapping
+                        if indent == 4 and not val:
+                            sub_map_key = prop
+                            data[current_section][current_key][prop] = {}
+                            continue
 
-                # Property: "    propname: value"
-                m = re.match(r"^\s+(\w[\w-]*):\s*(.*)$", line)
-                if m and current_section and current_key:
-                    val = m.group(2).strip()
-                    if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
-                        val = val[1:-1]
-                    data[current_section][current_key][m.group(1)] = val
+                        # Indent 6 = inside a sub-mapping
+                        if indent == 6 and sub_map_key:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
+                                val = val[1:-1]
+                            data[current_section][current_key][sub_map_key][prop] = val
+                            continue
+
+                        # Indent 4 with value = regular property
+                        if indent == 4:
+                            if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'"'"'":
+                                val = val[1:-1]
+                            data[current_section][current_key][prop] = val
+                            sub_map_key = None
+                            continue
     except FileNotFoundError:
         pass
     return data
@@ -290,6 +348,15 @@ d = json.loads(sys.stdin.read())
 key = sys.argv[1]
 models = d.get('models', {})
 print(models.get(key, {}).get('timeout', '') or '')
+" "$MODEL_KEY" 2>/dev/null || echo "")
+
+MODEL_OLLAMA_OPTIONS_JSON=$(echo "$MODELS_JSON" | python3 -c "
+import json, sys
+d = json.loads(sys.stdin.read())
+key = sys.argv[1]
+models = d.get('models', {})
+opts = models.get(key, {}).get('ollama_options', {})
+print(json.dumps(opts) if opts else '')
 " "$MODEL_KEY" 2>/dev/null || echo "")
 
 if [ -n "$MODEL_HOST" ]; then
@@ -454,6 +521,19 @@ EOF
     if [ -n "$MODEL_TIMEOUT" ]; then
         FULL_COMMAND_ARRAY+=("--ollama-timeout" "$MODEL_TIMEOUT")
     fi
+    # Add --ollama-option for each ollama_option from the model config
+    if [ -n "$MODEL_OLLAMA_OPTIONS_JSON" ] && [ "$MODEL_OLLAMA_OPTIONS_JSON" != "{}" ]; then
+        while IFS= read -r opt; do
+            if [ -n "$opt" ]; then
+                FULL_COMMAND_ARRAY+=("--ollama-option" "$opt")
+            fi
+        done < <(echo "$MODEL_OLLAMA_OPTIONS_JSON" | python3 -c "
+import json, sys
+opts = json.loads(sys.stdin.read())
+for k, v in opts.items():
+    print(f'{k}={v}')
+" 2>/dev/null)
+    fi
     if [ -n "$FULL_SOURCE_PATH" ]; then
         FULL_COMMAND_ARRAY+=("$FULL_SOURCE_PATH")
     fi
@@ -469,6 +549,18 @@ EOF
     DISPLAY_CMD="$DISPLAY_CMD --build-log $BUILD_LOG_FILE"
     if [ -n "$MODEL_TIMEOUT" ]; then
         DISPLAY_CMD="$DISPLAY_CMD --ollama-timeout $MODEL_TIMEOUT"
+    fi
+    if [ -n "$MODEL_OLLAMA_OPTIONS_JSON" ] && [ "$MODEL_OLLAMA_OPTIONS_JSON" != "{}" ]; then
+        while IFS= read -r opt; do
+            if [ -n "$opt" ]; then
+                DISPLAY_CMD="$DISPLAY_CMD --ollama-option $opt"
+            fi
+        done < <(echo "$MODEL_OLLAMA_OPTIONS_JSON" | python3 -c "
+import json, sys
+opts = json.loads(sys.stdin.read())
+for k, v in opts.items():
+    print(f'{k}={v}')
+" 2>/dev/null)
     fi
     if [ -n "$FULL_SOURCE_PATH" ]; then
         DISPLAY_CMD="$DISPLAY_CMD $FULL_SOURCE_PATH"
