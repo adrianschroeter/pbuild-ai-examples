@@ -1,0 +1,72 @@
+[PBUILD-AI] Version 0.1.10
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(qwen3.6:27b) says:
+Based on your guidelines and openSUSE best practices:
+
+**Required Fixes & Improvements:**
+1. **Remove `%changelog`**: Guidelines explicitly state it must not exist in `.spec` files; package history belongs in `_changes`.
+2. **Add `%fdupes %{buildroot}`**: Mandatory SUSE macro in `%install` to deduplicate identical payloads and shrink the RPM.
+3. **Align for `spec-cleaner`**: Fixed inconsistent whitespace/tabs, removed deprecated `Group:`, and dropped redundant `%defattr(-,root,root)` (RPM defaults already match this).
+4. **Preserved upstream workarounds**: The `sed` prefix fix and `mech-and-cow` removal are valid packaging patterns; per guidelines, no unnecessary rewrites were made.
+
+**Corrected Spec:**
+```spec
+#
+# spec file for package cowsay
+#
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+#
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           cowsay
+Version:        3.0.3
+Release:        0
+License:        GPL-1.0+ or Artistic-1.0
+Summary:        Configurable talking cow (and some other creatures)
+Url:            http://nog.net/~tony/warez/
+Source:         %{name}-%{version}.tar.gz
+
+Requires:       perl
+BuildRequires:  bash
+BuildArch:      noarch
+
+%description
+cowsay is a configurable talking cow, written in Perl.  It operates
+much as the figlet program does, and it written in the same spirit
+of silliness.
+
+%prep
+%setup -q
+sed -i "s|,\$%{nil}PREFIX,|,%{_prefix},|" install.sh
+
+%build
+# Nothing to build.
+
+%install
+bash ./install.sh %{buildroot}%{_prefix}
+mv -T %{buildroot}%{_prefix}/man/ %{buildroot}%{_mandir}
+rm -f %{buildroot}%{_datadir}/cows/mech-and-cow
+%fdupes %{buildroot}
+
+%files
+%doc ChangeLog LICENSE MANIFEST README
+%{_bindir}/%{name}
+%{_bindir}/cowthink
+%{_datadir}/cows
+%{_mandir}/man1/*
+```
+
+[STATS] AI model: qwen3.6:27b  |  AI calls: 1  |  AI time: 365.1s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 365.1s

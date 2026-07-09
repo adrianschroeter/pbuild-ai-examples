@@ -1,0 +1,8 @@
+--- PySolFC.spec
++++ PySolFC.spec
+@@ -85,5 +85,3 @@
+ %{_datadir}/PySolFC/cardset-*/
+ %{_datadir}/icons/hicolor/*/apps/pysol.png
+ %python3_package -n PySolFC
+-
+-%changelog

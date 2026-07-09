@@ -1,0 +1,92 @@
+Binärdateien source_backup/PySolFC-pysolfc-3.6.0.tar.gz und sources/franconian/PySolFC-pysolfc-3.6.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/PySolFC.spec sources/franconian/PySolFC.spec
+--- source_backup/PySolFC.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/franconian/PySolFC.spec	2026-07-09 00:30:39.355033703 +0200
+@@ -0,0 +1,87 @@
++#
++# spec file for package PySolFC
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++# Copyright (c) 2024 Adrian Sieber <adrian@example.com>
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as the file itself unless otherwise specified.
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           PySolFC
++Version:        3.6.0
++Release:        0
++Summary:        Python Solitaire Fan Club - A Collection of Solitaire/Patience Games
++License:        GPL-3.0-or-later
++Group:          Amusements/Games/Card
++URL:            https://pysolfc.sourceforge.io/
++Source0:        https://github.com/shlomif/PySolFC/archive/refs/tags/pysolfc-%{version}.tar.gz
++
++BuildRequires:  %{python_module attrs >= 18.2.0}
++BuildRequires:  %{python_module configobj}
++BuildRequires:  %{python_module pysol_cards}
++BuildRequires:  %{python_module setuptools >= 42.0.0}
++BuildRequires:  gettext-tools
++BuildRequires:  hicolor-icon-theme
++BuildRequires:  make
++BuildRequires:  python-rpm-macros
++BuildRequires:  update-desktop-files
++
++%description
++PySolFC is a Python-based collection of solitaire (patience) card games.
++It supports over 1000 different game variants including Klondike,
++FreeCell, Spider, Yukon, Baker's Dozen, Black Hole and many more.
++The game also supports multiple card sets (standard, mahjongg, hanafuda,
++hex-a-deck), sound, theming, a solver for several games, online hints,
++demo games, player statistics, and integrated help browser.
++
++%prep
++%autosetup -N PySolFC-pysolfc-%{version}
++
++%build
++make all_games_html rules mo
++%python3_expand_env_macros setup.py
++%python3_build
++
++%install
++%python3_install
++
++# Install .desktop file to proper location
++install -m 0644 -D data/pysol.desktop %{buildroot}%{_datadir}/applications/pysol.desktop
++
++# Install application icons to hicolor directory
++for size in 16x16 32x32 48x48 128x128 512x512; do
++    install -m 0644 -D -v "data/images/icons/$size/pysol.png" \
++        "%{buildroot}%{_datadir}/icons/hicolor/$size/apps/pysol.png"
++done
++
++%fdupes %{buildroot}%{_datadir}
++
++%files
++%license COPYING
++%doc README.md AUTHORS.md NEWS.asciidoc
++%{_datadir}/applications/pysol.desktop
++%dir %{_datadir}/PySolFC/
++%{_datadir}/PySolFC/html/
++%{_datadir}/PySolFC/images/
++%{_datadir}/PySolFC/sound/
++%{_datadir}/PySolFC/tiles/
++%{_datadir}/PySolFC/toolbar/
++%{_datadir}/PySolFC/themes/
++%{_datadir}/PySolFC/tcl/
++%{_datadir}/PySolFC/cardset-*/
++%{_datadir}/icons/hicolor/*/apps/pysol.png
++%python3_package -n PySolFC

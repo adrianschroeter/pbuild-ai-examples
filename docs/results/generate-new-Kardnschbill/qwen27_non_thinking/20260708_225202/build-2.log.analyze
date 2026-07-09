@@ -1,0 +1,6 @@
+The build fails because the spec file is missing `BuildRequires` declarations for several Python dependencies (`attrs`, `configobj`, `pysol_cards`, and `setuptools`). Without these macros, RPM cannot resolve the corresponding `python3xx-*` provides across the enabled interpreter versions in Tumbleweed. Add the lines below to satisfy the build-time dependencies. If `python-pysol_cards` is not already in your project repository, build that source package first before retrying this package.
+
+BuildRequires: %{python_module attrs}
+BuildRequires: %{python_module configobj}
+BuildRequires: %{python_module pysol_cards}
+BuildRequires: %{python_module setuptools}

@@ -1,0 +1,60 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/font-roboto.spec sources/font-example/font-roboto.spec
+--- source_backup/font-roboto.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/font-example/font-roboto.spec	2026-07-09 02:24:07.530077162 +0200
+@@ -0,0 +1,55 @@
++#
++# spec file for package font-roboto
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++# Copyright (c) 2025 SUSE LLC, all rights reserved
++# Created by font-roboto packaging assistant
++# Spec file for Google Roboto Font Family - OpenSUSE RPM package
++
++
++Source0:        https://github.com/googlefonts/roboto/releases/download/v2.138/roboto-unhinted.zip
++Name:           font-roboto
++Version:        2.138
++Release:        0
++Summary:        Google Roboto Font Family
++License:        Apache-2.0
++Group:          System/X11/Fonts
++URL:            https://github.com/googlefonts/roboto
++
++%description
++Roboto is a sans-serif typeface designed for on-screen use and optimized for mobile and web.
++It was released under the Apache License 2.0 by Google in 2013.
++
++The font files were taken from the official Google Fonts repository:
++https://github.com/googlefonts/roboto
++
++%prep
++%autosetup -T -n roboto-unhinted
++rm -rf __MACOSX
++
++%build
++
++%install
++mkdir -p %{buildroot}/usr/share/fonts/truetype/roboto
++cp *.ttf %{buildroot}/usr/share/fonts/truetype/roboto/
++chmod 0644 %{buildroot}/usr/share/fonts/truetype/roboto/*.ttf
++%fdupes -n %{buildroot}/usr/share/fonts/truetype/roboto
++
++%files
++%defattr(-,root,fonts,-)
++/usr/share/fonts/truetype/roboto/
++%{_fontconfig_cache_conf}
++
++%changelog
+Binärdateien source_backup/roboto-unhinted.zip und sources/font-example/roboto-unhinted.zip sind verschieden.

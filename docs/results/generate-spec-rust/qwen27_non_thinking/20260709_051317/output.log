@@ -1,0 +1,600 @@
+[PBUILD-AI] Version 0.1.10
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[GENERATE] Creating new package from prompt: https://github.com/rust-lang/cargo/archive/refs/tags/0.75.0.tar.gz
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/tags?per_page=10 (4199 bytes -> 4199 stripped)
+[GENERATE] Error fetching https://api.github.com/repos/rust-lang/cargo/releases/latest: HTTP Error 404: Not Found
+[GENERATE] [Fetched 4199 bytes]
+[TOOL] download_file: https://github.com/rust-lang/cargo/archive/refs/tags/0.75.0.tar.gz -> cargo-0.75.0.tar.gz (2646501 bytes)
+[GENERATE] OK: Downloaded 2646501 bytes to cargo-0.75.0.tar.gz
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/Cargo.toml
+[GENERATE] Applied skill: lang_rust
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/benches/benchsuite/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/benches/capture/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-platform/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-test-macro/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-test-support/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-test-support/containers/apache/bar/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-test-support/containers/sshd/bar/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/cargo-util/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/crates-io/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/home/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/mdman/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/resolver-tests/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/semver-check/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/xtask-build-man/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/xtask-bump-check/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/crates/xtask-stale-label/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/credential/cargo-credential-1password/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/credential/cargo-credential-libsecret/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/credential/cargo-credential-macos-keychain/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/credential/cargo-credential-wincred/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/credential/cargo-credential/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/add-basic.in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/add_basic/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/add_multiple/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/add_normalized_name_external/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/add_toolchain/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/build/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/build_prefer_existing_version/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/build_prefer_existing_version/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/build_prefer_existing_version/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/build_prefer_existing_version/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/change_rename_target/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/change_rename_target/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/cyclic_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/deprecated_default_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/deprecated_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/deprecated_section/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/deprecated_section/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_features/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/detect_workspace_inherit_optional/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev_build_conflict/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev_prefer_existing_version/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev_prefer_existing_version/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev_prefer_existing_version/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dev_prefer_existing_version/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/dry_run/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/empty_dep_table/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/empty_dep_table/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_activated_over_limit/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_activated_over_limit/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_deactivated_over_limit/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_deactivated_over_limit/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_empty/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_multiple_occurrences/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_preserve/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_preserve/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_spaced_values/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_unknown/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/features_unknown_no_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_branch/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_conflicts_namever/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_inferred_name/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_inferred_name_multiple/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_multiple_names/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_normalized_name/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_registry/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_registry/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_rev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/git_tag/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/infer_prerelease/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_arg/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_git_name/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_inherit_dependency/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_overwrite_inherit_dependency/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/in/dependency-alt/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/out/dependency-alt/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_key_rename_inherit_dependency/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_manifest/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_manifest/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_name_external/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path_name/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path_name/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path_name/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path_name/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_path_self/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_target_empty/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/invalid_vers/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/in/optional/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/in/optional/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/list_features_path_no_default/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/locked_changed/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/locked_unchanged/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/locked_unchanged/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/lockfile_updated/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/lockfile_updated/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/manifest_path_package/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/merge_activated_features/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/multiple_conflicts_with_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/multiple_conflicts_with_rename/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/namever/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/no_args/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/no_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/no_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/offline_empty_cache/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_default_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_default_features_with_no_default_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_default_features_with_no_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_git_with_path/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_git_with_path/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_git_with_path/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_git_with_path/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_features_noop/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_noop/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inherit_optional_noop/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inline_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_inline_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_dev_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_dev_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_dev_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_dev_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_name_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_default_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_default_features_with_default_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_default_features_with_default_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_optional/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_optional_with_optional/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_no_optional_with_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_optional/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_optional_with_no_optional/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_optional_with_no_optional/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_noop/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_noop/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_with_version/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_with_version/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_with_version/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_path_with_version/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_preserves_inline_table/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_preserves_inline_table/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_no_rename/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_no_rename/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_rename/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_rename/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_rename_noop/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_rename_with_rename_noop/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_git/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_path/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_path/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_path/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_version_with_path/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_with_rename/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_with_rename/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/overwrite_workspace_dep_features/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_dev/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_dev/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_dev/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_dev/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/in/optional/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_inferred_name_conflicts_full_feature/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_normalized_name/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_normalized_name/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_normalized_name/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/path_normalized_name/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_features_table/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_features_table/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_sorted/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_sorted/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_unsorted/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/preserve_unsorted/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/quiet/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/registry/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/registry/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rename/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/require_weak/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/require_weak/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_ignore/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_ignore/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_incompatible/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_incompatible/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_latest/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_latest/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_older/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/rust_version_older/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/sorted_table_with_dotted_item/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/sorted_table_with_dotted_item/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/target/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/target_cfg/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/unknown_inherited_feature/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/vers/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_name/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/in/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/in/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/out/dependency/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_add/workspace_path_dev/out/primary/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_bench/no_keep_going/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/auto_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_explicit/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_explicit_nosrc/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_implicit/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_implicit_namenosrc/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_implicit_namesrc/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/bin_already_exists_implicit_nosrc/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/creates_binary_when_both_binlib_present/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/creates_binary_when_instructed_and_has_lib_file/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/creates_library_when_instructed_and_has_bin_file/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/explicit_bin_with_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/formats_source/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/fossil_autodetect/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/git_autodetect/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/git_ignore_exists_no_conflicting_entries/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/ignores_failure_to_format_source/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/inferred_bin_with_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/inferred_lib_with_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/inherit_workspace_package_table/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/inherit_workspace_package_table/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/inherit_workspace_package_table/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/lib_already_exists_nosrc/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/lib_already_exists_src/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/mercurial_autodetect/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/path_contains_separator/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/pijul_autodetect/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_bin/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_git/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_git_ignore_exists/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_hg/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_hg_ignore_exists/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/simple_lib/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_init/with_argument/out/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_lints/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_lints/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_lints/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table.in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_with_edition/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_with_edition/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_with_registry/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_with_registry/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_without_version/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_without_version/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/inherit_workspace_package_table_without_version/out/crates/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/not_inherit_workspace_package_table_if_not_members/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/not_inherit_workspace_package_table_if_not_members/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_new/not_inherit_workspace_package_table_if_not_members/out/foo/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/avoid_empty_tables/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/build/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/dry_run/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/in/serde/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/in/serde_derive/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/out/serde/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_keep_used_patch/out/serde_derive/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_patch/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_profile/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_profile/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_replace/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_replace/in/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_replace/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/gc_replace/out/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_arg/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_dep/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package/out/dep-a/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package/out/dep-b/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package_multiple/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package_multiple/out/dep-a/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_package_multiple/out/dep-b/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_section/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_section_dep/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_target/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/invalid_target_dep/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/multiple_deps/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/multiple_dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/no_arg/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/offline/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/optional_dep_feature/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/optional_feature/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/package/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/package/out/dep-a/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/package/out/dep-b/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove-basic.in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove-package.in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove-package.in/dep-a/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove-package.in/dep-b/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove-target.in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/remove_basic/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/skip_gc_glob_profile/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/skip_gc_glob_profile/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/target/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/target_build/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/target_dev/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/update_lock_file/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/update_lock_file/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace/in/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace/out/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_non_virtual/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_non_virtual/in/my-member/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_non_virtual/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_non_virtual/out/my-member/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/in/my-other-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/in/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/out/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/out/my-other-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_remove/workspace_preserved/out/my-package/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_test/no_keep_going/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/cargo_update/toolchain_pkgname/in/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/alloc/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/compiler_builtins/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/core/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/panic_unwind/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/proc_macro/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/rustc-std-workspace-alloc/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/rustc-std-workspace-core/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/rustc-std-workspace-std/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/std/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/sysroot/Cargo.toml
+[SKILL ACTIVE] lang_rust for cargo-0.75.0/tests/testsuite/mock-std/library/test/Cargo.toml
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/Cargo.toml (6364 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/Cargo.lock (89127 chars)
+[GENERATE] Error: Git command failed (exit 128):
+Klone nach 'cargo'...
+remote: Not found.
+Schwerwiegend: Repository 'https://src.opensuse.org/pool/devel:languages:rust/cargo.git/' nicht gefunden
+
+[GENERATE] Error: Git command failed (exit 128):
+Klone nach 'cargo'...
+Schwerwiegend: could not read Username for 'https://src.opensuse.org': terminal prompts disabled
+
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/README.md (4493 chars)
+[TOOL] list_files: . (1 entries)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/cargo-platform/Cargo.toml (349 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/cargo-util/Cargo.toml (838 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/crates-io/Cargo.toml (481 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/mdman/Cargo.toml (425 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential/Cargo.toml (645 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential-libsecret/Cargo.toml (350 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential-macos-keychain/Cargo.toml (388 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential-wincred/Cargo.toml (436 chars)
+[GENERATE] Error: Shell metacharacters (;|&$`><) are not allowed in git_command.
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/.cargo/config.toml (155 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential-libsecret/Cargo.toml (350 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential/Cargo.toml (645 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/home/Cargo.toml (556 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/semver-check/Cargo.toml (285 chars)
+[GENERATE] Error fetching https://raw.githubusercontent.com/openSUSE/rpm-macros/main/noarch/cargo-packaging/macros.suse: HTTP Error 404: Not Found
+[GENERATE] Error fetching https://en.opensuse.org/openSUSE:Packaging_Rust_Software: HTTP Error 403: Forbidden
+[GENERATE] Error fetching https://raw.githubusercontent.com/openSUSE/rpm-macros/main/noarch/cargo-packaging/macros.suse: HTTP Error 404: Not Found
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/README.md (4493 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/Cargo.toml (6364 chars)
+[TOOL] web_fetch: https://github.com/rust-lang/cargo/blob/0.75.0/Cargo.toml (357316 bytes -> 44391 stripped)
+[GENERATE] [Fetched 357316 bytes]
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/cargo-platform/Cargo.toml (349 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/cargo-util/Cargo.toml (838 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/crates-io/Cargo.toml (481 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential/Cargo.toml (645 chars)
+[GENERATE] Error: Shell metacharacters (;|&$`><) are not allowed in git_command.
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/contents?ref=0.75.0 (17003 bytes -> 17003 stripped)
+[GENERATE] [Fetched 17003 bytes]
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/contents/credential?ref=0.75.0 (4819 bytes -> 4819 stripped)
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/contents/crates?ref=0.75.0 (8557 bytes -> 8557 stripped)
+[GENERATE] [Fetched 4819 bytes]
+[GENERATE] [Fetched 8557 bytes]
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/contents/credential/cargo-credential-libsecret?ref=0.75.0 (2723 bytes -> 2723 stripped)
+[TOOL] web_fetch: https://api.github.com/repos/rust-lang/cargo/contents/credential/cargo-credential-macos-keychain?ref=0.75.0 (2808 bytes -> 2808 stripped)
+[GENERATE] [Fetched 2723 bytes]
+[GENERATE] [Fetched 2808 bytes]
+[OLLAMA] Transient error (retry 2/3): timed out
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/cargo-test-support/Cargo.toml (807 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/resolver-tests/Cargo.toml (241 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/credential/cargo-credential-libsecret/src/lib.rs (8593 chars)
+[TOOL] read_file_from_archive: cargo-0.75.0.tar.gz/cargo-0.75.0/crates/xtask-build-man/Cargo.toml (140 chars)
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/cargo.spec ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/cargo.spec
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/cargo.spec
+[0m[36m[TOOL][0m [36m@@ -0,0 +1,55 @@
+[0m[32m[TOOL][0m [32m+#
+[0m[32m[TOOL][0m [32m+# Copyright (c) 2024 SUSE LLC
+[0m[32m[TOOL][0m [32m+#
+[0m[32m[TOOL][0m [32m+# All modifications and additions to the file contributed by third parties
+[0m[32m[TOOL][0m [32m+# remain the property of their copyright owners, unless otherwise agreed
+[0m[32m[TOOL][0m [32m+# upon. The license for this file, and modifications and additions to the
+[0m[32m[TOOL][0m [32m+# file, is the same license as the file itself.
+[0m[32m[TOOL][0m [32m+#
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+Name:           cargo
+[0m[32m[TOOL][0m [32m+Version:        0.75.0
+[0m[32m[TOOL][0m [32m+Release:        0
+[0m[32m[TOOL][0m [32m+Summary:        Rust's package manager
+[0m[32m[TOOL][0m [32m+License:        Apache-2.0 OR MIT
+[0m[32m[TOOL][0m [32m+Url:            https://github.com/rust-lang/cargo
+[0m[32m[TOOL][0m [32m+Source0:        https://github.com/rust-lang/cargo/archive/refs/tags/%{version}.tar.gz
+[0m[32m[TOOL][0m [32m+# Created by cargo vendor --locked --manifest-path Cargo.toml
+[0m[32m[TOOL][0m [32m+Source1:        registry.tar.zst
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+BuildRequires:  cargo
+[0m[32m[TOOL][0m [32m+BuildRequires:  cargo-packaging
+[0m[32m[TOOL][0m [32m+BuildRequires:  fdupes
+[0m[32m[TOOL][0m [32m+BuildRequires:  git
+[0m[32m[TOOL][0m [32m+BuildRequires:  perl
+[0m[32m[TOOL][0m [32m+BuildRequires:  rust(rustc) >= 1.72.0
+[0m[32m[TOOL][0m [32m+ExclusiveArch:  %{rust_tier1_arches}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%description
+[0m[32m[TOOL][0m [32m+Cargo is the Rust package manager. It downloads your Rust project's
+[0m[32m[TOOL][0m [32m+dependencies and compiles your project. Cargo makes it easy to manage
+[0m[32m[TOOL][0m [32m+dependencies, build projects, and publish crates to the crate registry.
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%prep
+[0m[32m[TOOL][0m [32m+%autosetup -p1 -a1
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%build
+[0m[32m[TOOL][0m [32m+export CARGO_HOME=$PWD/.cargo
+[0m[32m[TOOL][0m [32m+%{cargo_build}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%install
+[0m[32m[TOOL][0m [32m+export CARGO_HOME=$PWD/.cargo
+[0m[32m[TOOL][0m [32m+%{cargo_install}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%check
+[0m[32m[TOOL][0m [32m+export CARGO_HOME=$PWD/.cargo
+[0m[32m[TOOL][0m [32m+%{cargo_test}
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%files
+[0m[32m[TOOL][0m [32m+%doc README.md CHANGELOG.md CONTRIBUTING.md LICENSE-MIT LICENSE-APACHE
+[0m[32m[TOOL][0m [32m+%{_bindir}/cargo
+[0m[32m[TOOL][0m [32m+%{_datadir}/zsh/site-functions/_cargo
+[0m[32m[TOOL][0m [32m+%{_datadir}/bash-completion/completions/cargo
+[0m[32m[TOOL][0m [32m+%{_datadir}/fish/vendor_completions.d/cargo.fish
+[0m[32m[TOOL][0m [32m+
+[0m[32m[TOOL][0m [32m+%changelog
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: cargo.spec
+[GENERATE] OK: Wrote cargo.spec
+[SKILL ACTIVE] lang_rust for cargo.spec
+[TOOL] --- Diff for /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/_cargo_vendor.sh ---
+[31m[TOOL][0m [31m--- /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/_cargo_vendor.sh
+[0m[32m[TOOL][0m [32m+++ /home/adrian/opencode/pbuild-ai-examples/sources/rust-example/_cargo_vendor.sh
+[0m[36m[TOOL][0m [36m@@ -0,0 +1,12 @@
+[0m[32m[TOOL][0m [32m+#!/bin/sh
+[0m[32m[TOOL][0m [32m+set -e
+[0m[32m[TOOL][0m [32m+cd $(dirname $0)
+[0m[32m[TOOL][0m [32m+tar xzf cargo-*.tar.gz
+[0m[32m[TOOL][0m [32m+cd cargo-*
+[0m[32m[TOOL][0m [32m+cargo vendor --locked > Cargo.vendor
+[0m[32m[TOOL][0m [32m+tar czf ../registry.tar.gz vendor/
+[0m[32m[TOOL][0m [32m+gzip -d ../registry.tar.gz 2>/dev/null || true
+[0m[32m[TOOL][0m [32m+bsdtar --zst -cf ../registry.tar.zst -T - <(cat <<EOF
+[0m[32m[TOOL][0m [32m+vendor/
+[0m[32m[TOOL][0m [32m+EOF
+[0m[32m[TOOL][0m [32m+)
+[0m[TOOL] --- End diff ---
+[TOOL] write_file: _cargo_vendor.sh
+[GENERATE] OK: Wrote _cargo_vendor.sh
+[OLLAMA ERROR] HTTP 500: Internal Server Error - {"error":"XML syntax error on line 71: element \u003cparameter\u003e closed by \u003c/function\u003e"}
+[OLLAMA DEBUG] Payload size: 84475 bytes. Messages: 99.
+[EXIT] Exiting with code 2.

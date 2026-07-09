@@ -20,6 +20,10 @@ models:
     display: "Qwen 3.5 27B"
     host: "local"
     model: "qwen3.6:27b"
+  qwen27_non_thinking:
+    display: "Qwen 3.5 27B"
+    host: "local"
+    model: "qwen3.6:27b"
     ollama_options:
       temperature: 0.1
       thinking: false

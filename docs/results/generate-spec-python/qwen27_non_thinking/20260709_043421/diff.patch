@@ -1,0 +1,65 @@
+Binärdateien source_backup/ollama-0.3.3.tar.gz und sources/python-example/ollama-0.3.3.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-ollama.spec sources/python-example/python-ollama.spec
+--- source_backup/python-ollama.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/python-example/python-ollama.spec	2026-07-09 04:48:41.738472400 +0200
+@@ -0,0 +1,60 @@
++#
++# spec file for package python-ollama
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           python-ollama
++Version:        0.3.3
++Release:        0
++Summary:        Official Python Client Library for Ollama
++License:        MIT
++URL:            https://github.com/ollama/ollama-python
++Source0:        https://files.pythonhosted.org/packages/source/o/ollama/ollama-%{version}.tar.gz
++
++BuildRequires:  %{python_module httpx}
++BuildRequires:  python-rpm-macros
++BuildRequires:  python3-devel
++
++%description -n python-ollama
++The official Python client library for Ollama, the open-source platform
++for running large language models locally. It provides a simple interface
++to interact with Ollama models for chat, generation, embeddings, and
++model management via HTTP/REST APIs.
++
++%package -n python3-ollama
++Summary:        Official Python Client Library for Ollama
++Requires:       %{python_module httpx}
++
++%description -n python3-ollama
++The official Python client library for Ollama, the open-source platform
++for running large language models locally. It provides a simple interface
++to interact with Ollama models for chat, generation, embeddings, and
++model management via HTTP/REST APIs.
++
++%prep
++%autosetup -n ollama-%{version} -p1
++
++%build
++%pyproject_wheel
++
++%install
++%pyproject_install
++
++%files -n python3-ollama
++%doc README.md LICENSE
++%python3_sitelib/ollama/
++
++%changelog
