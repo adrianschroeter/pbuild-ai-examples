@@ -1,0 +1,10 @@
+The build fails during the `00-check-install-rpms` phase with `cpio: open failed - No such file or directory` on `/usr/bin/gawk`. This occurs because RPM created the package archive, but the payload contains an invalid or missing reference to the main executable, causing `cpio` to crash when attempting extraction in the check environment. Attempt 2 incorrectly replaced `%{_bindir}/gawk` with `%{_bindir}/gawkbug`, breaking the explicit file listing required for the primary binary.
+
+**Fix:**
+In the `%files` section of the spec:
+1. Locate the line where `%{_bindir}/gawk` was removed or replaced.
+2. Change it back to explicitly list the main executable: `%{_bindir}/gawk`.
+3. If `make install` also places `gawkbug` in the bin directory, add it on a separate line: `%{_bindir}/gawkbug`.
+4. Verify there are no duplicate entries or overlapping glob patterns (e.g., `%{_bindir}/*`) that conflict with explicit listings.
+
+This restores the correct payload manifest, allowing RPM to successfully extract and install `/usr/bin/gawk` during verification.

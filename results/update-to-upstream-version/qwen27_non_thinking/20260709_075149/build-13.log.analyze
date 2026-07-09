@@ -1,0 +1,18 @@
+The build fails during the post-build RPM installation verification hook (`00-check-install-rpms`) with:
+`error: unpacking of archive failed on file /usr/bin/gawk;6a4f7055: cpio: open failed - No such file or directory`
+
+This error means the RPM payload was created successfully, but when OBS attempts to extract and install it in a verification chroot, `cpio` cannot write to `/usr/bin/gawk`. This typically happens because:
+1. The parent directory `/usr/bin/` is missing or inaccessible in the target extraction environment.
+2. The file staged in `$RPM_BUILD_ROOT/usr/bin/gawk` has incompatible attributes (e.g., broken symlink, wrong type, or conflict with a pre-installed immutable package).
+3. `%install` silently failed to place the binary correctly, but RPM's loose globbing masked it until extraction time.
+
+Since multiple automated `%files` adjustments have failed and the error occurs strictly at the install-check phase, interactive inspection of the staged filesystem and payload is necessary.
+
+[DEEP_ANALYZE]
+Inside the build environment shell, execute:
+1. `ls -la ~/rpmbuild/BUILD/gawk-5.4.0-build/BUILDROOT/usr/bin/` → Verify `gawk`, `awk`, and `gawkbug` actually exist as regular files or valid symlinks.
+2. `rpm -qlp ~/rpmbuild/RPMS/x86_64/gawk-5.4.0-2.x86_64.rpm | grep '/usr/bin/'` → Compare listed payload entries against what's actually on disk.
+3. `cd /tmp && rpm2cpio ~/rpmbuild/RPMS/x86_64/gawk-5.4.0-2.x86_64.rpm | cpio -idvmv 2>&1 | grep -E '(cpio|gawk)'` → Manually extract to reproduce the exact `open failed` trigger and identify missing intermediate directories.
+4. Check chroot state: `ls -ld /usr/bin/` and `rpm -qf /usr/bin/gawk 2>/dev/null` → Determine if a conflicting package or read-only overlay is blocking installation.
+
+Use the findings to correct `%files` paths, add missing `%dir` declarations if required, or fix `%install` staging commands. Do not alter unrelated macros or sections.

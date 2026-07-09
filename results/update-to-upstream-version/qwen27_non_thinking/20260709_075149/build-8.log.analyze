@@ -1,0 +1,12 @@
+### Error Analysis
+The build fails during the packaging phase with:
+```
+error: Installed (but unpackaged) file(s) found:
+   /usr/bin/gawkbug
+   /usr/share/info/gawk_api-figure1.png
+   ...
+
+**Notes:**
+- The `*` suffix on `.gz` man pages is standard openSUSE practice to safely match compressed documentation regardless of build-time compression settings.
+- Do not wrap these in `%doc` or `%ghost`; they are regular installed files and must be explicitly listed.
+- Ensure no trailing whitespace or extra blank lines are introduced, as `spec-cleaner` enforces strict formatting.

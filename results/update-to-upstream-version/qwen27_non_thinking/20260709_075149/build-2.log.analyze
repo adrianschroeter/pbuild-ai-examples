@@ -1,0 +1,11 @@
+**Error Analysis:**
+The build failed during the packaging phase with `error: Installed (but unpackaged) file(s) found:`. RPM requires every file copied into the build root (`BUILDROOT`) by `%install` to be explicitly listed in the spec's `%files` section. The following files were installed but omitted, causing the strict packager check to abort:
+- `/usr/bin/gawkbug`
+- Several `.png` and `.jpg` images in `/usr/share/info/`
+- Two man pages (`gawkbug.1.gz`, `pm-gawk.1.gz`) in `/usr/share/man/man1/`
+
+**Fix Needed:**
+Add every missing file to the main package's `%files` section in `gawk.spec`. Use standard RPM path macros to keep the spec clean and architecture-agnostic:
+
+
+Insert these lines directly under the existing `%files` block (or group them with other file globs). Ensure no files are skipped, as RPM will fail if even a single installed path is unlisted. Rebuild after adding these entries to resolve the packaging error.

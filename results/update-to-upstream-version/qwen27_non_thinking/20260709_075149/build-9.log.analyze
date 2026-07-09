@@ -1,0 +1,10 @@
+The build passes `%check` and `rpmbuild -bb`, but fails during OBS's post-build verification step (`00-check-install-rpms`) which attempts to install the freshly generated RPMs. The error:
+`error: unpacking of archive failed on file /usr/bin/gawk;6a4f5a20: cpio: open failed - No such file or directory`
+indicates that the RPM payload claims to contain `/usr/bin/gawk`, but extraction fails because the target path cannot be resolved. This almost always means the binary was **not actually installed into `$RPM_BUILD_ROOT/usr/bin/`** during the `%install` phase, despite `make install` exiting successfully. Silent failures in parallel make install, incorrect `DESTDIR` propagation, or upstream changes to default installation prefixes can cause the file to be placed elsewhere (e.g., `/usr/local/bin/gawk` inside the build root) or skipped entirely. RPM's archive header still records the path from `%files`, leading to a cpio extraction mismatch when verification runs.
+
+**Fix needed:**
+1. Verify what `make install` actually places under `$RPM_BUILD_ROOT/usr/bin/`. If the binary is missing, the `%install` section likely needs `DESTDIR=$RPM_BUILD_ROOT` explicitly passed, or the upstream makefile requires a prefix override (`prefix=/usr`).
+2. Ensure the `%files` line exactly matches the installed path. If gawk installs differently (e.g., as `gawk-%{version}` or into a libexec wrapper), update the corresponding `%{_bindir}/...` entry accordingly.
+3. Remove non-existent glob patterns from `%files` if they caused silent RPM packaging warnings that masked the real issue (e.g., `%{_infodir}/*.png` and `*.jpg` from Attempt 6 are likely unmatched).
+
+Include `[DEEP_ANALYZE]` to inspect the build root contents and validate the `%install` command behavior.

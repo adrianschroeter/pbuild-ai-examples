@@ -1,0 +1,5 @@
+### Root Cause Analysis
+The build fails during `abuild`'s RPM installation verification phase (`installing all built rpms`). The log explicitly shows:
+```
+error: gawk-5.4.0-1.2.x86_64: erase skipped
+>>> error: unpacking of archive failed on file /usr/bin/gawk;... cpio: open failed - No such file or directory
