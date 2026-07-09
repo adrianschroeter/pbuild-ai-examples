@@ -1,0 +1,9 @@
+### Error Analysis
+The build fails immediately during spec file parsing with:
+`error: line 33: Unknown tag: %check_install_rpm -x gawk`
+
+RPM treats any line outside of a scriptlet section (`%prep`, `%build`, `%install`, `%check`, etc.) as a package metadata tag. The previous attempt added `%check_install_rpm -x %{name}` at the top level of the spec file. Since RPM does not recognize this as a valid tag or an expanded macro, it aborts with an "Unknown tag" error.
+
+### Fix Needed
+Remove the invalid line entirely. Locate and delete the following line(s) added near the top of the spec file (likely around the `BuildRequires` block):
+Do not add any replacement macro or command here. Once this syntactically invalid tag is removed, RPM will successfully parse the spec and proceed to the build phases.

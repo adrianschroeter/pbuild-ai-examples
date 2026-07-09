@@ -1,0 +1,71 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+building ./gawk.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+Reusing former build root
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    0s] 
+[    0s] rio started "build gawk.spec" at Thu Jul  9 11:37:06 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    1s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec
+[    1s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    1s] copying packages...
+[    1s] reordering...cycle: libncurses6 -> terminfo-base
+[    1s]   breaking dependency terminfo-base -> libncurses6
+[    1s] cycle: lua54 -> lua-interpreter
+[    1s]   breaking dependency lua54 -> lua-interpreter
+[    1s] cycle: binutils -> libctf0
+[    1s]   breaking dependency binutils -> libctf0
+[    1s] cycle: rpm-config-SUSE -> rpm
+[    1s]   breaking dependency rpm -> rpm-config-SUSE
+[    1s] done
+[    1s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64'
+[    1s] setting source mtime to 1637492521
+[    1s] Detected virtio-serial support
+[    2s] booting kvm...
+[    2s] ### VM INTERACTION START ###
+[    2s] Using virtio-serial support
+[    2s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    5s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=59e976094c594eb48c6319c8e9183679;user=root;hostname=localhost;machineid=e83ab39e166e440b8c4b9a0b903a4c0f;bootid=20457bf8d87849a880ebca4fe72345c6;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
+[    5s] ### VM INTERACTION END ###
+[    5s] 2nd stage started in virtual machine
+[    5s] machine type: x86_64
+[    5s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 2 05:05:55 UTC 2026 (992f18c)
+[    5s] Time: Thu Jul  9 11:37:11 UTC 2026
+[    5s] Increasing log level from now on...
+[    5s] [    3.545157][  T514] sysrq: Changing Loglevel
+[    5s] [    3.545196][  T514] sysrq: Loglevel set to 4
+[    5s] Enable sysrq operations
+[    5s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    5s] no label, UUID=05c073aa-e605-45ae-8c9f-2e3f1b42a5e4
+[    5s] logging output to //.build.log...
+[    5s] processing recipe //.build-srcdir/gawk.spec ...
+[    5s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/gawk.spec ...
+[    5s] It seems that there was an incomplete setup of /.
+[    5s] ### VM INTERACTION START ###
+[    5s] [    3.605147][    T1] sysrq: Power Off
+[    5s] ### VM INTERACTION END ###
+[    5s] 
+[    5s] rio failed "build gawk.spec" at Thu Jul  9 11:37:11 UTC 2026.
+[    5s] 
+
+finished ./gawk.spec after 6s: failed

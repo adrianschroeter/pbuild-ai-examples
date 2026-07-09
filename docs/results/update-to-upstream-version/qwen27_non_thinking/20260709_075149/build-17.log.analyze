@@ -1,0 +1,8 @@
+**Error Analysis:**
+The build fails during the `check-files` phase with `error: Installed (but unpackaged) file(s) found:`. RPM strictly requires that every file placed in the build root (`$RPM_BUILD_ROOT`) must be explicitly claimed in a `%files` section. The log shows seven PNG/JPG images installed to `/usr/share/info/` are missing from your package manifest, causing `rpmbuild` to abort before creating the `.rpm`.
+
+**Fix:**
+Add every missing file to the main `%files` block using the `%{_infodir}` macro. Append these exact lines inside the existing `%files` section:
+
+
+*(Note: You may alternatively use `%{_infodir}/gawk_*.png %{_infodir}/gawk_*.jpg` if you prefer wildcards, but explicit listing guarantees exact resolution of the reported unpackaged files without risking future drift.)*

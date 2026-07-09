@@ -1,0 +1,4 @@
+The build fails because the spec file lists a signature file (`gawk-5.4.0.tar.xz.sig`) as a source, but OBS/abuild automatically strips `.sig` and `.asc` files before provisioning the build environment. When RPM validates or attempts to access the listed sources during `%prep`, it cannot find the stripped file and aborts with `Bad file: ... No such file or directory`.
+
+**Fix needed:**
+Find and delete the `Source:` line that references the signature file (e.g., `Source1: gawk-%{version}.tar.xz.sig`). If any other parts of the spec reference it via `%{SOURCE...}` macros or explicit paths, remove those references as well. Signature verification files are handled outside the build chain in OBS and should not be declared as package sources.

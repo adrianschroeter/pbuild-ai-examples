@@ -1,0 +1,14 @@
+**Error Analysis:**
+The build fails during the post-build verification step (`00-check-install-rpms`) with `cpio: open failed - No such file or directory` on `/usr/bin/gawk`. This indicates that the RPM payload archive is corrupted. In RPM builds, cpio corruption during installation almost always originates from a malformed `%files` section. Specifically:
+- Previous fix attempts added speculative wildcards (`%{_infodir}/*.png`, `%{_infodir}/*.jpg`) and introduced duplicate entries. Paths that don't exist in the buildroot or unmatched globs cause `rpmbuild` to write invalid cpio headers, which silently passes during packing but fails during extraction verification.
+- The payload corruption may also stem from trailing whitespace/empty lines at the end of `%files`, or broken symlink references where `/usr/bin/gawk` points outside the valid buildroot structure.
+
+**Fix Needed:**
+1. **Remove invalid/speculative entries:** Delete `%{_infodir}/*.png` and `%{_infodir}/*.jpg` from the `%files` section. Info directories do not contain image files, and these non-matching patterns are corrupting the archive.
+2. **Deduplicate binaries:** Ensure `%{_bindir}/gawk` and `%{_bindir}/gawkbug` appear exactly once in the `%files` block. Remove any duplicate lines introduced by previous patches.
+3. **Clean up wildcards & macros:** Replace aggressive globs with precise, standard paths:
+   - Use `%{_infodir}/*.info%{?ext_info}` for documentation.
+   - Use `%{_mandir}/man1/*gawk*.gz` and `%{_mandir}/man3/*gawk*.gz` for man pages instead of broad `*` globs that may match unpackaged test artifacts.
+4. **Remove trailing whitespace/empty lines** at the end of the `%files` section to prevent RPM from interpreting blank lines as empty file paths.
+
+[DEEP_ANALYZE]

@@ -1,0 +1,20 @@
+### Error Analysis
+The build passes compilation and tests, but fails during the post-build RPM installation check (`check-install-rpms`) with:
+`error: unpacking of archive failed on file /usr/bin/gawk;...: cpio: open failed - No such file or directory`
+
+This indicates that the generated `.rpm` payload contains a reference to `/usr/bin/gawk`, but the file was **not properly installed into the build root (`%{buildroot}`)** before packaging. When `rpmbuild -bb` attempts to archive it, either the path resolves to nothing, points to a broken symlink, or was skipped silently. The resulting RPM has an invalid payload entry, causing `cpio` to fail during extraction in the verification chroot.
+
+This is almost always caused by `%install` running without explicitly passing `DESTDIR=%{buildroot}`, especially in out-of-tree builds where makefiles sometimes default to installing into the host prefix (which is read-only or ignored in OBS), silently skipping the binary copy.
+
+### Required Fixes
+1. **Fix `%install` section**: 
+   Locate the line running `make install` and explicitly pass the build root:
+   If you were using a macro like `%make_install`, replace it with the explicit `make` command above to guarantee `DESTDIR` isn't stripped or misexpanded by the project's Makefile. Remove any trailing `|| :` or error suppression around this line so missing installs fail early.
+
+2. **Verify `%files` entry**:
+   Ensure `%{_bindir}/gawk` appears **exactly once** in the main package's `%files` section. If it's currently listed as an absolute path (`/usr/bin/gawk`), change it to use the macro `%{_bindir}/gawk`. If you recently added extra glob patterns (like `*.info`, `*.png`) that match nothing or conflict, remove them and stick to explicit paths for binaries.
+
+3. **Optional debugging guard** (if out-of-tree paths are suspect):
+   Add a quick sanity check right after the install command to catch missing files before packaging:
+
+These changes will ensure the binary is correctly staged in `$RPM_BUILD_ROOT/usr/bin/`, allowing RPM to package a valid payload and pass the install verification step.

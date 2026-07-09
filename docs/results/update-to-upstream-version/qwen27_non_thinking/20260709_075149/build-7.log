@@ -1,0 +1,422 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+building ./gawk.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    0s] 
+[    0s] rio started "build gawk.spec" at Thu Jul  9 07:33:49 UTC 2026.
+[    0s] 
+[    0s] 
+[    0s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    0s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec
+[    0s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --clean --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/gawk.spec ...
+[    0s] hostname: No address associated with hostname
+[    0s] cycle: libncurses6 -> terminfo-base
+[    0s]   breaking dependency terminfo-base -> libncurses6
+[    1s] [1/27] preinstalling compat-usrmerge-tools...
+[    1s] [2/27] preinstalling system-user-root...
+[    1s] [3/27] preinstalling filesystem...
+[    1s] [4/27] preinstalling glibc...
+[    1s] [5/27] preinstalling fillup...
+[    1s] [6/27] preinstalling libacl1...
+[    1s] [7/27] preinstalling libattr1...
+[    1s] [8/27] preinstalling libbz2-1...
+[    1s] [9/27] preinstalling libcap2...
+[    1s] [10/27] preinstalling libgmp10...
+[    1s] [11/27] preinstalling libgpg-error0...
+[    1s] [12/27] preinstalling libjitterentropy3...
+[    1s] [13/27] preinstalling liblua5_4-5...
+[    1s] [14/27] preinstalling liblzma5...
+[    1s] [15/27] preinstalling libpcre2-8-0...
+[    1s] [16/27] preinstalling libpopt0...
+[    1s] [17/27] preinstalling libz1...
+[    1s] [18/27] preinstalling libzstd1...
+[    1s] [19/27] preinstalling libselinux1...
+[    1s] [20/27] preinstalling libgcrypt20...
+[    1s] [21/27] preinstalling terminfo-base...
+[    1s] [22/27] preinstalling libncurses6...
+[    1s] [23/27] preinstalling libreadline8...
+[    1s] [24/27] preinstalling bash...
+[    1s] [25/27] preinstalling bash-sh...
+[    1s] [26/27] preinstalling coreutils...
+[    1s] [27/27] preinstalling rpm...
+[    1s] 
+[    1s] [1/18] preinstalling grep...
+[    1s] [2/18] preinstalling kernel-obs-build...
+[    1s] [3/18] preinstalling libaudit1...
+[    1s] [4/18] preinstalling libcap-ng0...
+[    1s] [5/18] preinstalling libcrypt1...
+[    1s] [6/18] preinstalling libeconf0...
+[    1s] [7/18] preinstalling libgcc_s1...
+[    2s] [8/18] preinstalling libsmartcols1...
+[    2s] [9/18] preinstalling libuuid1...
+[    2s] [10/18] preinstalling libblkid1...
+[    2s] [11/18] preinstalling perl-base...
+[    2s] [12/18] preinstalling permctl...
+[    2s] [13/18] preinstalling libmount1...
+[    2s] [14/18] preinstalling permissions-config...
+[    2s] [15/18] preinstalling libfdisk1...
+[    2s] [16/18] preinstalling permissions...
+[    2s] [17/18] preinstalling pam...
+[    2s] [18/18] preinstalling util-linux...
+[    2s] copying packages...
+[    2s] reordering...cycle: libncurses6 -> terminfo-base
+[    2s]   breaking dependency terminfo-base -> libncurses6
+[    2s] cycle: lua54 -> lua-interpreter
+[    2s]   breaking dependency lua54 -> lua-interpreter
+[    2s] cycle: binutils -> libctf0
+[    2s]   breaking dependency binutils -> libctf0
+[    2s] cycle: rpm-config-SUSE -> rpm
+[    2s]   breaking dependency rpm -> rpm-config-SUSE
+[    2s] done
+[    2s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/gawk.update-to-upstream/_build.tumbleweed.x86_64'
+[    2s] setting source mtime to 1637492521
+[    2s] Detected virtio-serial support
+[    2s] Creating ext4 filesystem on /var/tmp/build-root-adrian/.mount.img
+[    3s] tune2fs 1.47.0 (5-Feb-2023)
+[    3s] Setting maximal mount count to -1
+[    3s] booting kvm...
+[    3s] ### VM INTERACTION START ###
+[    3s] Using virtio-serial support
+[    3s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    6s] P+q6E616D65\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J]3008;start=36c37803dfc04604bd46b14a86629e23;user=root;hostname=localhost;machineid=759ec66b712b40128a856c8a31238a50;bootid=d06a81b6360c42c69d2713e711adc190;pid=1;pidfdid=1;comm=systemd;type=boot\[18t[6n[32766;32766H[6n[!p]104\[0m[?7h[1G[0J### VM INTERACTION END ###
+[    6s] 2nd stage started in virtual machine
+[    6s] machine type: x86_64
+[    6s] Linux version: 7.1.2-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul  2 05:05:55 UTC 2026 (992f18c)
+[    6s] Time: Thu Jul  9 07:33:55 UTC 2026
+[    6s] Increasing log level from now on...
+[    6s] [    3.387718][  T509] sysrq: Changing Loglevel
+[    6s] [    3.387775][  T509] sysrq: Loglevel set to 4
+[    6s] Enable sysrq operations
+[    6s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    6s] no label, UUID=725c8f90-1a82-4157-811c-1ca2da26b2d9
+[    6s] logging output to //.build.log...
+[    6s] processing recipe //.build-srcdir/gawk.spec ...
+[    6s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/gawk.spec ...
+[    6s] initializing rpm db...
+[    6s] querying package ids...
+[    7s] [1/136] cumulate compat-usrmerge-tools-84.87-5.25
+[    7s] [2/136] cumulate crypto-policies-20250714.cd6043a-4.2
+[    7s] [3/136] cumulate file-magic-5.48-1.2
+[    7s] [4/136] cumulate kernel-obs-build-7.1.2-1.1
+[    7s] [5/136] cumulate pkgconf-m4-2.5.1-1.4
+[    7s] [6/136] cumulate system-user-root-20190513-2.20
+[    7s] [7/136] cumulate filesystem-84.87-21.2
+[    7s] [8/136] cumulate glibc-2.43-4.2
+[    7s] [9/136] cumulate diffutils-3.12-1.4
+[    7s] [10/136] cumulate envsubst-mini-1.0-2.3
+[    7s] [11/136] cumulate fillup-1.42-281.6
+[    7s] [12/136] cumulate glibc-gconv-modules-extra-2.43-4.2
+[    7s] [13/136] cumulate glibc-locale-base-2.43-4.2
+[    7s] [14/136] cumulate libacl1-2.3.2-2.6
+[    7s] [15/136] cumulate libalternatives1-1.2+31.da24cd4-1.4
+[    7s] [16/136] cumulate libatomic1-16.1.1+git8886-1.2
+[    7s] [17/136] cumulate libattr1-2.6.0-1.1
+[    7s] [18/136] cumulate libaudit1-4.0.2-3.4
+[    7s] [19/136] cumulate libbz2-1-1.0.8-5.15
+[    7s] [20/136] cumulate libcap-ng0-0.8.5-1.6
+[    7s] [21/136] cumulate libcap2-2.78-1.3
+[    7s] [22/136] cumulate libcrypt1-4.5.2-2.3
+[    7s] [23/136] cumulate libeconf0-0.8.3-1.4
+[    7s] [24/136] cumulate libgcc_s1-16.1.1+git8886-1.2
+[    7s] [25/136] cumulate libgdbm6-1.26-1.4
+[    7s] [26/136] cumulate libgmp10-6.3.0-5.5
+[    7s] [27/136] cumulate libgomp1-16.1.1+git8886-1.2
+[    7s] [28/136] cumulate libgpg-error0-1.61-1.2
+[    7s] [29/136] cumulate libitm1-16.1.1+git8886-1.2
+[    7s] [30/136] cumulate libjitterentropy3-3.6.3-1.4
+[    7s] [31/136] cumulate liblua5_4-5-5.4.8-4.5
+[    7s] [32/136] cumulate liblz1-1.16-1.3
+[    7s] [33/136] cumulate liblz4-1-1.10.0-2.7
+[    7s] [34/136] cumulate liblzma5-5.8.3-1.3
+[    7s] [35/136] cumulate libpcre2-8-0-10.47-1.5
+[    7s] [36/136] cumulate libpkgconf7-2.5.1-1.4
+[    7s] [37/136] cumulate libpopt0-1.19-2.3
+[    7s] [38/136] cumulate libseccomp2-2.6.0-2.5
+[    7s] [39/136] cumulate libsframe2-2.45-4.2
+[    7s] [40/136] cumulate libsmartcols1-2.42.1-1.2
+[    7s] [41/136] cumulate libuuid1-2.42.1-1.2
+[    7s] [42/136] cumulate libxml2-16-2.15.3-1.3
+[    7s] [43/136] cumulate libz1-1.3.1-3.2
+[    7s] [44/136] cumulate libzstd1-1.5.7-4.3
+[    7s] [45/136] cumulate patch-2.8-2.4
+[    7s] [46/136] cumulate which-2.25-1.2
+[    7s] [47/136] cumulate alts-1.2+31.da24cd4-1.4
+[    7s] [48/136] cumulate libblkid1-2.42.1-1.2
+[    7s] [49/136] cumulate libctf-nobfd0-2.45-4.2
+[    7s] [50/136] cumulate libgdbm_compat4-1.26-1.4
+[    7s] [51/136] cumulate libisl23-0.27-1.5
+[    7s] [52/136] cumulate libmpfr6-4.2.2-1.4
+[    7s] [53/136] cumulate libselinux1-3.10-3.2
+[    7s] [54/136] cumulate libstdc++6-16.1.1+git8886-1.2
+[    7s] [55/136] cumulate perl-base-5.42.1-1.2
+[    7s] [56/136] cumulate pkgconf-2.5.1-1.4
+[    7s] [57/136] cumulate libelf1-0.194-1.3
+[    7s] [58/136] cumulate libgcrypt20-1.12.2-1.3
+[    7s] [59/136] cumulate permctl-1699_20260512-1.2
+[    7s] [60/136] cumulate libmagic1-5.48-1.2
+[    7s] [61/136] cumulate build-mkbaselibs-20260505-1.2
+[    7s] [62/136] cumulate dwz-0.15-6.5
+[    7s] [63/136] cumulate findutils-4.10.0-2.6
+[    7s] [64/136] cumulate file-5.48-1.2
+[    7s] [65/136] cumulate libasan8-16.1.1+git8886-1.2
+[    7s] [66/136] cumulate libfdisk1-2.42.1-1.2
+[    7s] [67/136] cumulate libhwasan0-16.1.1+git8886-1.2
+[    7s] [68/136] cumulate liblsan0-16.1.1+git8886-1.2
+[    7s] [69/136] cumulate libmount1-2.42.1-1.2
+[    7s] [70/136] cumulate libmpc3-1.4.1-1.3
+[    7s] [71/136] cumulate libtsan2-16.1.1+git8886-1.2
+[    7s] [72/136] cumulate libubsan1-16.1.1+git8886-1.2
+[    7s] [73/136] cumulate sed-4.10-1.3
+[    7s] [74/136] cumulate tar-1.35-8.2
+[    7s] [75/136] cumulate libgmpxx4-6.3.0-5.5
+[    7s] [76/136] cumulate libdw1-0.194-1.3
+[    7s] [77/136] cumulate perl-5.42.1-1.2
+[    7s] [78/136] cumulate brp-check-suse-84.87+git20260317.a0eb4ba-1.2
+[    7s] [79/136] cumulate perl-rpm-packaging-1.3-1.3
+[    7s] [80/136] cumulate libasm1-0.194-1.3
+[    7s] [81/136] cumulate cpp15-15.3.0+git11272-1.2
+[    7s] [82/136] cumulate terminfo-base-6.6.20260613-109.2
+[    7s] [83/136] cumulate libncurses6-6.6.20260613-109.2
+[    7s] [84/136] cumulate libreadline8-8.3.3-2.5
+[    7s] [85/136] cumulate ncurses-utils-6.6.20260613-109.2
+[    7s] [86/136] cumulate tack-1.11.20251210-109.2
+[    7s] [87/136] cumulate libncurses_c++6-6.6.20260613-109.2
+[    7s] [88/136] cumulate bash-5.3.15-7.2
+[    7s] [89/136] cumulate lua54-5.4.8-4.5
+[    7s] [90/136] cumulate bash-sh-5.3.15-7.2
+[    7s] [91/136] cumulate compat-usrmerge-build-84.87-5.25
+[    7s] [92/136] cumulate lua-interpreter-5-3.3
+[    7s] [93/136] cumulate cpio-2.15-7.3
+[    7s] [94/136] cumulate cpp-15-3.3
+[    7s] [95/136] cumulate gzip-1.14-2.1
+[    7s] [96/136] cumulate make-4.4.1-3.6
+[    7s] [97/136] cumulate bzip2-1.0.8-5.15
+[    7s] [98/136] cumulate grep-3.12-1.4
+[    7s] [99/136] cumulate pkgconf-pkg-config-2.5.1-1.4
+[    7s] [100/136] cumulate xz-5.8.3-1.3
+[    7s] [101/136] cumulate gettext-runtime-mini-1.0-2.3
+[    7s] [102/136] cumulate gawk-5.4.0-1.2
+[    7s] [103/136] cumulate coreutils-9.11-4.2
+[    7s] [104/136] cumulate elfutils-0.194-1.3
+[    7s] [105/136] cumulate linux-glibc-devel-7.0-1.2
+[    7s] [106/136] cumulate systemd-rpm-macros-26-1.3
+[    7s] [107/136] cumulate libxcrypt-devel-4.5.2-2.3
+[    7s] [108/136] cumulate gmp-devel-6.3.0-5.5
+[    7s] [109/136] cumulate permissions-config-1699_20260512-1.2
+[    7s] [110/136] cumulate polkit-default-privs-1550+20260623.563df94-1.2
+[    7s] [111/136] cumulate libopenssl3-3.5.3-6.2
+[    7s] [112/136] cumulate ncurses-devel-6.6.20260613-109.2
+[    7s] [113/136] cumulate aaa_base-84.87+git20260610.3b5a868c-1.2
+[    7s] [114/136] cumulate gettext-tools-mini-1.0-2.3
+[    7s] [115/136] cumulate binutils-2.45-4.2
+[    7s] [116/136] cumulate rpm-4.20.1-9.1
+[    7s] [117/136] cumulate aaa_base-malloccheck-84.87+git20260610.3b5a868c-1.2
+[    7s] [118/136] cumulate permissions-1699_20260512-1.2
+[    7s] [119/136] cumulate rpm-config-SUSE-20250904-1.3
+[    7s] [120/136] cumulate glibc-devel-2.43-4.2
+[    7s] [121/136] cumulate libctf0-2.45-4.2
+[    7s] [122/136] cumulate readline-devel-8.3.3-2.5
+[    7s] [123/136] cumulate mpfr-devel-4.2.2-1.4
+[    7s] [124/136] cumulate rpmlint-mini-2.9.0+git20260629.bd947d09-21.11
+[    7s] [125/136] cumulate build-compare-20260622T095938.6416d96-1.2
+[    7s] [126/136] cumulate libarchive13-3.8.7-1.3
+[    7s] [127/136] cumulate librpmbuild10-4.20.1-9.1
+[    7s] [128/136] cumulate debugedit-5.1-1.6
+[    7s] [129/136] cumulate pam-1.7.2+git12-2.1
+[    7s] [130/136] cumulate post-build-checks-84.87+git20250725.0c3a172-1.3
+[    7s] [131/136] cumulate gcc15-15.3.0+git11272-1.2
+[    7s] [132/136] cumulate gcc15-PIE-15.3.0+git11272-1.2
+[    7s] [133/136] cumulate gcc-15-3.3
+[    7s] [134/136] cumulate util-linux-2.42.1-1.2
+[    7s] [135/136] cumulate gcc-PIE-15-3.3
+[    7s] [136/136] cumulate rpm-build-4.20.1-9.1
+[    7s] now installing cumulated packages
+[    7s] Preparing...                          ########################################
+[    7s] Updating / installing...
+[    7s] system-user-root-20190513-2.20        ########################################
+[    7s] pkgconf-m4-2.5.1-1.4                  ########################################
+[    7s] file-magic-5.48-1.2                   ########################################
+[    7s] crypto-policies-20250714.cd6043a-4.2  ########################################
+[    7s] compat-usrmerge-tools-84.87-5.25      ########################################
+[    7s] filesystem-84.87-21.2                 ########################################
+[    7s] glibc-2.43-4.2                        ########################################
+[    7s] libz1-1.3.1-3.2                       ########################################
+[    7s] libgcc_s1-16.1.1+git8886-1.2          ########################################
+[    7s] libstdc++6-16.1.1+git8886-1.2         ########################################
+[    7s] libgmp10-6.3.0-5.5                    ########################################
+[    7s] libzstd1-1.5.7-4.3                    ########################################
+[    7s] libelf1-0.194-1.3                     ########################################
+[    7s] libacl1-2.3.2-2.6                     ########################################
+[    7s] libbz2-1-1.0.8-5.15                   ########################################
+[    7s] libmpfr6-4.2.2-1.4                    ########################################
+[    7s] libcrypt1-4.5.2-2.3                   ########################################
+[    7s] perl-base-5.42.1-1.2                  ########################################
+[    7s] liblzma5-5.8.3-1.3                    ########################################
+[    7s] libdw1-0.194-1.3                      ########################################
+[    7s] fillup-1.42-281.6                     ########################################
+[    7s] libcap2-2.78-1.3                      ########################################
+[    7s] diffutils-3.12-1.4                    ########################################
+[    7s] libeconf0-0.8.3-1.4                   ########################################
+[    7s] libblkid1-2.42.1-1.2                  ########################################
+[    7s] libgomp1-16.1.1+git8886-1.2           ########################################
+[    7s] liblua5_4-5-5.4.8-4.5                 ########################################
+[    7s] libpopt0-1.19-2.3                     ########################################
+[    7s] permctl-1699_20260512-1.2             ########################################
+[    7s] libmpc3-1.4.1-1.3                     ########################################
+[    7s] dwz-0.15-6.5                          ########################################
+[    7s] libisl23-0.27-1.5                     ########################################
+[    7s] cpp15-15.3.0+git11272-1.2             ########################################
+[    7s] libaudit1-4.0.2-3.4                   ########################################
+[    7s] libgdbm6-1.26-1.4                     ########################################
+[    7s] libjitterentropy3-3.6.3-1.4           ########################################
+[    7s] libpcre2-8-0-10.47-1.5                ########################################
+[    7s] libselinux1-3.10-3.2                  ########################################
+[    7s] sed-4.10-1.3                          ########################################
+[    7s] findutils-4.10.0-2.6                  ########################################
+[    7s] libuuid1-2.42.1-1.2                   ########################################
+[    7s] terminfo-base-6.6.20260613-109.2      ########################################
+[    7s] libncurses6-6.6.20260613-109.2        ########################################
+[    7s] libreadline8-8.3.3-2.5                ########################################
+[    7s] bash-5.3.15-7.2                       ########################################
+[    7s] bash-sh-5.3.15-7.2                    ########################################
+[    7s] grep-3.12-1.4                         ########################################
+[    7s] xz-5.8.3-1.3                          ########################################
+[    7s] gawk-5.4.0-1.2                        ########################################
+[    7s] cpio-2.15-7.3                         ########################################
+[    7s] cpp-15-3.3                            ########################################
+[    7s] gzip-1.14-2.1                         ########################################
+[    7s] make-4.4.1-3.6                        ########################################
+[    7s] bzip2-1.0.8-5.15                      ########################################
+[    7s] ncurses-utils-6.6.20260613-109.2      ########################################
+[    7s] tack-1.11.20251210-109.2              ########################################
+[    7s] libncurses_c++6-6.6.20260613-109.2    ########################################
+[    7s] libfdisk1-2.42.1-1.2                  ########################################
+[    7s] libmount1-2.42.1-1.2                  ########################################
+[    7s] tar-1.35-8.2                          ########################################
+[    7s] libgdbm_compat4-1.26-1.4              ########################################
+[    7s] perl-5.42.1-1.2                       ########################################
+[    7s] perl-rpm-packaging-1.3-1.3            ########################################
+[    7s] libasm1-0.194-1.3                     ########################################
+[    7s] elfutils-0.194-1.3                    ########################################
+[    7s] libgmpxx4-6.3.0-5.5                   ########################################
+[    7s] libasan8-16.1.1+git8886-1.2           ########################################
+[    7s] libhwasan0-16.1.1+git8886-1.2         ########################################
+[    7s] liblsan0-16.1.1+git8886-1.2           ########################################
+[    7s] libtsan2-16.1.1+git8886-1.2           ########################################
+[    7s] libubsan1-16.1.1+git8886-1.2          ########################################
+[    7s] libctf-nobfd0-2.45-4.2                ########################################
+[    7s] envsubst-mini-1.0-2.3                 ########################################
+[    7s] gettext-runtime-mini-1.0-2.3          ########################################
+[    7s] glibc-gconv-modules-extra-2.43-4.2    ########################################
+[    7s] glibc-locale-base-2.43-4.2            ########################################
+[    7s] libalternatives1-1.2+31.da24cd4-1.4   ########################################
+[    7s] alts-1.2+31.da24cd4-1.4               ########################################
+[    7s] lua-interpreter-5-3.3                 ########################################
+[    7s] lua54-5.4.8-4.5                       ########################################
+[    7s] libatomic1-16.1.1+git8886-1.2         ########################################
+[    7s] libattr1-2.6.0-1.1                    ########################################
+[    7s] coreutils-9.11-4.2                    ########################################
+[    7s] aaa_base-84.87+git20260610.3b5a868c-1.########################################
+[    7s] Updating /etc/sysconfig/proxy ...
+[    7s] aaa_base-malloccheck-84.87+git20260610########################################
+[    7s] linux-glibc-devel-7.0-1.2             ########################################
+[    7s] systemd-rpm-macros-26-1.3             ########################################
+[    7s] permissions-config-1699_20260512-1.2  ########################################
+[    7s] Updating /etc/sysconfig/security ...
+[    7s] Checking permissions and ownerships - using the permissions files
+[    7s] 	/usr/share/permissions/permissions
+[    7s] 	/usr/share/permissions/permissions.easy
+[    7s] 	/etc/permissions.local
+[    7s] permissions-1699_20260512-1.2         ########################################
+[    7s] pam-1.7.2+git12-2.1                   ########################################
+[    7s] polkit-default-privs-1550+20260623.563########################################
+[    7s] Updating /etc/sysconfig/security ...
+[    7s] can't open /etc/polkit-1/rules.d/90-default-privs.rules.new: No such file or directory
+[    7s] warning: %post(polkit-default-privs-1550+20260623.563df94-1.2.noarch) scriptlet failed, exit status 2
+[    7s] libopenssl3-3.5.3-6.2                 ########################################
+[    8s] gettext-tools-mini-1.0-2.3            ########################################
+[    8s] libcap-ng0-0.8.5-1.6                  ########################################
+[    8s] libgpg-error0-1.61-1.2                ########################################
+[    8s] libgcrypt20-1.12.2-1.3                ########################################
+[    8s] rpm-config-SUSE-20250904-1.3          ########################################
+[    8s] rpm-4.20.1-9.1                        ########################################
+[    8s] Updating /etc/sysconfig/services ...
+[    8s] libitm1-16.1.1+git8886-1.2            ########################################
+[    8s] liblz1-1.16-1.3                       ########################################
+[    8s] libmagic1-5.48-1.2                    ########################################
+[    8s] librpmbuild10-4.20.1-9.1              ########################################
+[    8s] liblz4-1-1.10.0-2.7                   ########################################
+[    8s] libpkgconf7-2.5.1-1.4                 ########################################
+[    8s] pkgconf-2.5.1-1.4                     ########################################
+[    8s] pkgconf-pkg-config-2.5.1-1.4          ########################################
+[    8s] libxcrypt-devel-4.5.2-2.3             ########################################
+[    8s] glibc-devel-2.43-4.2                  ########################################
+[    8s] gmp-devel-6.3.0-5.5                   ########################################
+[    8s] ncurses-devel-6.6.20260613-109.2      ########################################
+[    8s] libseccomp2-2.6.0-2.5                 ########################################
+[    8s] file-5.48-1.2                         ########################################
+[    8s] libsframe2-2.45-4.2                   ########################################
+[    8s] binutils-2.45-4.2                     ########################################
+[    8s] libctf0-2.45-4.2                      ########################################
+[    9s] gcc15-15.3.0+git11272-1.2             ########################################
+[    9s] gcc15-PIE-15.3.0+git11272-1.2         ########################################
+[    9s] gcc-15-3.3                            ########################################
+[    9s] debugedit-5.1-1.6                     ########################################
+[    9s] libsmartcols1-2.42.1-1.2              ########################################
+[    9s] util-linux-2.42.1-1.2                 ########################################
+[    9s] libxml2-16-2.15.3-1.3                 ########################################
+[    9s] libarchive13-3.8.7-1.3                ########################################
+[    9s] patch-2.8-2.4                         ########################################
+[    9s] which-2.25-1.2                        ########################################
+[    9s] rpm-build-4.20.1-9.1                  ########################################
+[    9s] gcc-PIE-15-3.3                        ########################################
+[    9s] build-compare-20260622T095938.6416d96-########################################
+[    9s] readline-devel-8.3.3-2.5              ########################################
+[    9s] mpfr-devel-4.2.2-1.4                  ########################################
+[    9s] rpmlint-mini-2.9.0+git20260629.bd947d0########################################
+[    9s] post-build-checks-84.87+git20250725.0c########################################
+[    9s] compat-usrmerge-build-84.87-5.25      ########################################
+[    9s] brp-check-suse-84.87+git20260317.a0eb4########################################
+[    9s] build-mkbaselibs-20260505-1.2         ########################################
+[    9s] kernel-obs-build-7.1.2-1.1            ########################################
+[    9s] now finalizing build dir...
+[    9s] ... running 01-add_abuild_user_to_trusted_group
+[    9s] ... running 02-set_timezone_to_utc
+[    9s] ... running 03-set-permissions-secure
+[    9s] ... running 11-hack_uname_version_to_kernel_version
+[    9s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[    9s] -----------------------------------------------------------------
+[    9s] I have the following modifications for gawk.spec:
+[    9s] -----------------------------------------------------------------
+[    9s] ----- building gawk.spec (user abuild)
+[    9s] -----------------------------------------------------------------
+[    9s] -----------------------------------------------------------------
+[   10s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv
+[   10s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/gawk.spec
+[   10s] error: line 33: Unknown tag: %check_install_rpm -x gawk
+[   10s] ### VM INTERACTION START ###
+[   10s] [    6.782805][    T1] sysrq: Power Off
+[   10s] ### VM INTERACTION END ###
+[   10s] 
+[   10s] rio failed "build gawk.spec" at Thu Jul  9 07:33:59 UTC 2026.
+[   10s] 
+
+finished ./gawk.spec after 11s: failed
