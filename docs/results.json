@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-09T07:36:54+02:00",
+  "generated": "2026-07-09T07:44:25+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -8,7 +8,7 @@
       "display": "Qwen-3.6:27B"
     },
     "qwen27_non_thinking": {
-      "display": "Qwen 3.5 27B Non Thinking"
+      "display": "Qwen 3.6 27B Non Thinking"
     },
     "gemma4_31b_q4": {
       "display": "Gemma 4 31B Q4"
