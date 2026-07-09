@@ -1,0 +1,17 @@
+[PBUILD-AI] Version 0.1.10
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: hello.spec...
+-> AI(qwen3.6:27b) says:
+**Critical Violation:**
+- ❌ Remove the `%changelog` section entirely. openSUSE policy requires package history in a separate `*.changes` file, not inside the `.spec`.
+
+**Best Practices / Warnings:**
+- ⚠️ Omit `Group:`. It is deprecated and ignored by modern OBS/spec-cleaner.
+- ⚠️ `%files` only contains `%doc` with no actual file paths. This will trigger an empty-package warning or build failure. List installed files or drop the directive if none exist.
+- ⚠️ Add a standard OBS copyright/header comment block at the top of the spec file (required by guidelines).
+
+**Notes:**
+- The inline/minimal structure is acceptable for examples. If you later add dependencies, remember `BuildRequires:` must have one package per line and avoid unresolved macros. No other rule violations detected.
+
+[STATS] AI model: qwen3.6:27b  |  AI calls: 1  |  AI time: 156.3s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 156.3s

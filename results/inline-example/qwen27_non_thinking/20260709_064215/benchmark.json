@@ -1,0 +1,14 @@
+{
+  "run_time_seconds": 156,
+  "exit_code": 0,
+  "status": "success",
+  "success": true,
+  "files_changed": 0,
+  "pbuild_ai_version": "0.1.10",
+  "ai_model": "qwen3.6:27b",
+  "ai_calls": 1,
+  "ai_time_seconds": 156.3,
+  "pbuild_calls": 0,
+  "pbuild_time_seconds": 0.0,
+  "total_runtime_seconds": 156.3
+}

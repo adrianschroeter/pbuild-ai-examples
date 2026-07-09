@@ -1,0 +1,78 @@
+Binärdateien source_backup/local-time-1.0.6.tar.gz und sources/lisp-example/local-time-1.0.6.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/local-time.spec sources/lisp-example/local-time.spec
+--- source_backup/local-time.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/lisp-example/local-time.spec	2026-07-09 03:13:50.639510672 +0200
+@@ -0,0 +1,73 @@
++#
++# spec file for package local-time
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++# Copyright 2025 openSUSE.org
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as the regular file.
++
++
++Name:           cl-local-time
++Version:        1.0.6
++Release:        0
++Summary:        Time Manipulation Library for Common Lisp
++License:        MIT
++Group:          Development/Libraries/Other
++URL:            http://common-lisp.net/project/local-time/
++Source0:        https://github.com/dlowe-net/local-time/archive/refs/tags/v%{version}.tar.gz
++
++BuildRequires:  cl-asdf
++BuildRequires:  common-lisp-controller
++BuildArch:      noarch
++
++%description
++local-time is a Common Lisp library for manipulating dates and times.
++It provides timestamp manipulation, timezone support with bundled zoneinfo,
++formatting and parsing of time strings, and various utility functions
++for working with calendar dates and times.
++
++%prep
++%autosetup -n local-time-%{version}
++
++%build
++# Lisp libraries are typically source-only; no compilation needed
++
++%install
++mkdir -p %{buildroot}%{_datadir}/common-lisp/source/%{name}/
++cp -r COPYING CREDITS INSTALL README TODO \
++       cl-postgres+local-time.asd local-time.asd src zoneinfo \
++       %{buildroot}%{_datadir}/common-lisp/source/%{name}/
++mkdir -p %{buildroot}%{_datadir}/common-lisp/systems/
++ln -sf ../source/%{name}/local-time.asd %{buildroot}%{_datadir}/common-lisp/systems/local-time.asd
++ln -sf ../source/%{name}/cl-postgres+local-time.asd %{buildroot}%{_datadir}/common-lisp/systems/cl-postgres+local-time.asd
++
++%post
++register-common-lisp-implementation clisp
++
++%preun
++unregister-common-lisp-implementation clisp
++
++%files
++%license COPYING
++%doc README INSTALL TODO CREDITS
++%dir %{_datadir}/common-lisp/source/%{name}/
++%{_datadir}/common-lisp/source/%{name}/
++%{_datadir}/common-lisp/systems/local-time.asd
++%{_datadir}/common-lisp/systems/cl-postgres+local-time.asd
++
++%changelog

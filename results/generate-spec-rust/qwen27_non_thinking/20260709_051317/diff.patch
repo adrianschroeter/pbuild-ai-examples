@@ -1,0 +1,76 @@
+Binärdateien source_backup/cargo-0.75.0.tar.gz und sources/rust-example/cargo-0.75.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/cargo.spec sources/rust-example/cargo.spec
+--- source_backup/cargo.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/rust-example/cargo.spec	2026-07-09 06:10:15.914328658 +0200
+@@ -0,0 +1,55 @@
++#
++# Copyright (c) 2024 SUSE LLC
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as the file itself.
++#
++
++Name:           cargo
++Version:        0.75.0
++Release:        0
++Summary:        Rust's package manager
++License:        Apache-2.0 OR MIT
++Url:            https://github.com/rust-lang/cargo
++Source0:        https://github.com/rust-lang/cargo/archive/refs/tags/%{version}.tar.gz
++# Created by cargo vendor --locked --manifest-path Cargo.toml
++Source1:        registry.tar.zst
++
++BuildRequires:  cargo
++BuildRequires:  cargo-packaging
++BuildRequires:  fdupes
++BuildRequires:  git
++BuildRequires:  perl
++BuildRequires:  rust(rustc) >= 1.72.0
++ExclusiveArch:  %{rust_tier1_arches}
++
++%description
++Cargo is the Rust package manager. It downloads your Rust project's
++dependencies and compiles your project. Cargo makes it easy to manage
++dependencies, build projects, and publish crates to the crate registry.
++
++%prep
++%autosetup -p1 -a1
++
++%build
++export CARGO_HOME=$PWD/.cargo
++%{cargo_build}
++
++%install
++export CARGO_HOME=$PWD/.cargo
++%{cargo_install}
++
++%check
++export CARGO_HOME=$PWD/.cargo
++%{cargo_test}
++
++%files
++%doc README.md CHANGELOG.md CONTRIBUTING.md LICENSE-MIT LICENSE-APACHE
++%{_bindir}/cargo
++%{_datadir}/zsh/site-functions/_cargo
++%{_datadir}/bash-completion/completions/cargo
++%{_datadir}/fish/vendor_completions.d/cargo.fish
++
++%changelog
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/_cargo_vendor.sh sources/rust-example/_cargo_vendor.sh
+--- source_backup/_cargo_vendor.sh	1970-01-01 01:00:00.000000000 +0100
++++ sources/rust-example/_cargo_vendor.sh	2026-07-09 06:10:49.866056106 +0200
+@@ -0,0 +1,12 @@
++#!/bin/sh
++set -e
++cd $(dirname $0)
++tar xzf cargo-*.tar.gz
++cd cargo-*
++cargo vendor --locked > Cargo.vendor
++tar czf ../registry.tar.gz vendor/
++gzip -d ../registry.tar.gz 2>/dev/null || true
++bsdtar --zst -cf ../registry.tar.zst -T - <(cat <<EOF
++vendor/
++EOF
++)

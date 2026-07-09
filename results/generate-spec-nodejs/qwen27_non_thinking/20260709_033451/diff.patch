@@ -1,0 +1,62 @@
+Binärdateien source_backup/chalk-5.3.0.tgz und sources/nodejs-example/chalk-5.3.0.tgz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/nodejs-chalk.spec sources/nodejs-example/nodejs-chalk.spec
+--- source_backup/nodejs-chalk.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/nodejs-example/nodejs-chalk.spec	2026-07-09 03:42:19.116366244 +0200
+@@ -0,0 +1,57 @@
++#
++# spec file for package nodejs-chalk
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           nodejs-chalk
++Version:        5.3.0
++Release:        0
++Summary:        Terminal string styling done right
++License:        MIT
++Group:          Development/Libraries/Other
++URL:            https://github.com/chalk/chalk
++Source0:        https://registry.npmjs.org/chalk/-/chalk-%{version}.tgz
++
++BuildRequires:  nodejs-devel
++BuildRequires:  nodejs-packaging
++BuildArch:      noarch
++
++%description
++Chalk is a terminal string styling library for Node.js. It allows you to
++easily add colors, backgrounds, and other text decorations to output in the
++terminal or console. It supports 256 colors and truecolor (16 million colors).
++
++%prep
++%setup -q -n package
++find . -name '*.node' -delete
++find . -name '*.jar' -delete
++find . -name '*.dll' -delete
++find . -name '*.exe' -delete
++find . -name '*.so' -delete
++find . -name '*.dylib' -delete
++
++%install
++mkdir -p %{buildroot}%{nodejs_sitelib}/%{name}
++cp -r source %{buildroot}%{nodejs_sitelib}/%{name}/
++cp package.json %{buildroot}%{nodejs_sitelib}/%{name}/
++%fdupes %{buildroot}
++
++%files
++%license license
++%doc readme.md
++%{nodejs_sitelib}/%{name}/
++
++%changelog

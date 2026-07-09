@@ -1,0 +1,191 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/0001-fix-resource-path.patch sources/electron-example/0001-fix-resource-path.patch
+--- source_backup/0001-fix-resource-path.patch	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/0001-fix-resource-path.patch	2026-07-09 01:18:34.112382924 +0200
+@@ -0,0 +1,29 @@
++--- a/src/atom-paths.js
+++++ b/src/atom-paths.js
++@@ -14,12 +14,15 @@ const hasWriteAccess = dir => {
++ };
++ 
++ const getAppDirectory = () => {
++-  switch (process.platform) {
++-    case 'darwin':
++-      return process.execPath.substring(
++-        0,
++-        process.execPath.indexOf('.app') + 4
++-      );
++-    case 'linux':
++-    case 'win32':
++-      return path.join(process.execPath, '..');
+++  if (process.env.ATOM_RESOURCE_PATH) {
+++    return process.env.ATOM_RESOURCE_PATH;
++   }
+++  switch (process.platform) {
+++    case 'darwin':
+++      return process.execPath.substring(
+++        0,
+++        process.execPath.indexOf('.app') + 4
+++      );
+++    case 'linux':
+++    case 'win32':
+++      return path.join(process.execPath, '..');
+++  }
++ };
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/0002-disable-update-check.patch sources/electron-example/0002-disable-update-check.patch
+--- source_backup/0002-disable-update-check.patch	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/0002-disable-update-check.patch	2026-07-09 01:18:52.760771472 +0200
+@@ -0,0 +1,13 @@
++--- a/src/main-process/auto-update-manager.js
+++++ b/src/main-process/auto-update-manager.js
++@@ -42,6 +42,10 @@ module.exports = class AutoUpdateManager extends EventEmitter {
++ 
++   initialize() {
++     if (process.platform === 'win32') {
+++      // Auto-update is not supported on Linux in system packages
+++      this.state = UnsupportedState;
+++      return;
+++    }
++       const platformInfo = os.platform();
++       if (platformInfo !== 'darwin' && platformInfo !== 'linux') {
++         return;
+Binärdateien source_backup/atom-1.60.0.tar.gz und sources/electron-example/atom-1.60.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.desktop sources/electron-example/atom.desktop
+--- source_backup/atom.desktop	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.desktop	2026-07-09 01:09:33.407116893 +0200
+@@ -0,0 +1,11 @@
++[Desktop Entry]
++Name=Atom
++GenericName=Text Editor
++Comment=A hackable text editor for the 21st Century
++Exec=atom %F
++Icon=atom
++Terminal=false
++Type=Application
++Categories=TextEditor;Development;Utility;
++MimeType=text/plain;text/x-c;text/x-c++;text/x-java;text/x-python;text/x-shellscript;text/xml;text/html;application/json;inode/directory;
++StartupNotify=true
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/atom.spec sources/electron-example/atom.spec
+--- source_backup/atom.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/electron-example/atom.spec	2026-07-09 01:09:01.600454174 +0200
+@@ -0,0 +1,121 @@
++#
++# Copyright (c) 2024 SUSE LLC
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as used in the version of the file provided
++# with the program originally from GitHub.
++#
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++Name:           atom
++Version:        1.60.0
++Release:        0
++Summary:        A hackable text editor for the 21st Century
++License:        MIT
++URL:            https://atom.io
++Source0:        https://github.com/atom/atom/archive/refs/tags/v%{version}.tar.gz/%{name}-%{version}.tar.gz
++Source99:       %{name}.desktop
++Source100:      0001-disable-update-check.patch
++Source101:      0002-disable-telemetry.patch
++Source102:      0003-fix-resource-path.patch
++
++BuildRequires:  nodejs-electron-devel >= 9.0
++BuildRequires:  npm
++BuildRequires:  coffee-script
++BuildRequires:  less
++BuildRequires:  fdupes
++BuildRequires:  update-desktop-database
++
++Requires:       nodejs-electron%{_isa} >= 9.0
++Requires:       hicolor-icon-theme
++
++%description
++Atom is a text editor that is modern, approachable, and hackable to the
++core. It is designed for customizability while remaining approachable for
++all users. Built on Node.js and Electron, it combines clean, familiar UI
++design with the power of features like inline preview and fuzzy finding
++of files.
++
++%prep
++%autosetup -p1
++
++# Remove precompiled binaries to ensure they are rebuilt for the target architecture
++find . -name '*.node' -delete
++find . -name '*.jar' -delete
++find . -name '*.dll' -delete
++find . -name '*.exe' -delete
++find . -name '*.dylib' -delete
++find . -not -type d -name '*.so' -delete
++find . -name '*.o' -delete
++find . -name '*.a' -delete
++find . -name '*.wasm' -delete
++
++# Remove any existing node_modules that might cause issues
++rm -rf node_modules
++
++%build
++export ELECTRON_SKIP_BINARY_DOWNLOAD=1
++export ESBUILD_BINARY_PATH=""
++
++# Install dependencies without running scripts that might try to download things
++npm ci --ignore-scripts --no-optional
++
++# Rebuild native modules against system Electron
++%electron_rebuild
++
++# Transpile CoffeeScript files
++npx coffee -co src/ src/**/*.coffee
++
++# Compile LESS stylesheets
++npx lessc static/linux.less out/style.css
++
++%install
++# Create application directory in libdir
++mkdir -p %{buildroot}%{_libdir}/%{name}
++
++# Install the application source
++cp -a src node_modules packages static apm docs scripts \
++      atom.sh package.json LICENSE.md README.md \
++      %{buildroot}%{_libdir}/%{name}/
++
++# Create wrapper script for launching Atom
++cat > %{buildroot}%{_bindir}/atom << 'EOF'
++#!/bin/sh
++ATOM_RESOURCE_PATH="%{_libdir}/atom"
++export ATOM_RESOURCE_PATH
++exec nodejs-electron "$ATOM_RESOURCE_PATH/src/main-process/main.js" "$@"
++EOF
++chmod 755 %{buildroot}%{_bindir}/atom
++
++# Create wrapper script for APM (Atom Package Manager)
++cat > %{buildroot}%{_bindir}/apm << 'EOF'
++#!/bin/sh
++ATOM_RESOURCE_PATH="%{_libdir}/atom"
++export ATOM_RESOURCE_PATH
++exec node "$ATOM_RESOURCE_PATH/apm/node_modules/.bin/apm" "$@"
++EOF
++chmod 755 %{buildroot}%{_bindir}/apm
++
++# Install .desktop file
++install -D -m 644 %{SOURCE99} %{buildroot}%{_datadir}/applications/%{name}.desktop
++
++# Install application icons
++for size in 16 24 32 48 64 128 256 512; do
++    install -D -m 644 "resources/app-icons/stable/png/${size}.png" \
++        "%{buildroot}%{_datadir}/icons/hicolor/${size}x${size}/apps/%{name}.png"
++done
++
++# Deduplicate files
++%fdupes %{buildroot}%{_libdir}/%{name}
++
++%files
++%license LICENSE.md
++%doc README.md docs/
++%{_bindir}/atom
++%{_bindir}/apm
++%{_datadir}/applications/%{name}.desktop
++%{_datadir}/icons/hicolor/*/apps/%{name}.png
++%{_libdir}/%{name}

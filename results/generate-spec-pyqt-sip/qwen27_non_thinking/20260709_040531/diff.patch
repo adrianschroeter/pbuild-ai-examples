@@ -1,0 +1,71 @@
+Binärdateien source_backup/PyQt-builder-1.15.0.tar.gz und sources/pyqt-sip-example/PyQt-builder-1.15.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/python-PyQt-builder.spec sources/pyqt-sip-example/python-PyQt-builder.spec
+--- source_backup/python-PyQt-builder.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/pyqt-sip-example/python-PyQt-builder.spec	2026-07-09 04:26:19.819315939 +0200
+@@ -0,0 +1,66 @@
++#
++# spec file for package python-PyQt-builder
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           python-PyQt-builder
++Version:        1.15.0
++Release:        0
++Summary:        The PEP 517 compliant PyQt build system
++License:        GPL-2.0-or-later
++Group:          Development/Libraries/Python
++URL:            https://www.riverbankcomputing.com/software/pyqt-builder/
++Source0:        https://pypi.io/packages/source/P/PyQt-builder/%{name}-%{version}.tar.gz
++
++BuildRequires:  %{python_module packaging}
++BuildRequires:  %{python_module pip}
++BuildRequires:  %{python_module setuptools}
++BuildRequires:  %{python_module wheel}
++BuildRequires:  fdupes
++BuildRequires:  python-rpm-macros
++
++Requires:       %{python_module packaging}
++Requires:       %{python_module sip}
++
++%description
++PyQt-builder is the PEP 517 compliant build system for PyQt and projects
++that extend PyQt. It extends the SIP build system and uses Qt's qmake to
++perform the actual compilation and installation of extension modules.
++
++Projects that use PyQt-builder provide an appropriate pyproject.toml file
++and an optional project.py script. Any PEP 517 compliant frontend, for
++example pip or sip-install, can then be used to build and install the
++project.
++
++%prep
++%autosetup -n PyQt-builder-%{version}
++
++%build
++%pyproject_wheel
++
++%install
++%pyproject_install
++%fdupes -s %{buildroot}%{python_sitearch}/pyqtbuild/
++
++%files
++%license LICENSE LICENSE-GPL2 LICENSE-GPL3
++%doc NEWS README
++%{_bindir}/pyqt-bundle
++%{_bindir}/pyqt-qt-wheel
++%{python_sitearch}/PyQt_builder*
++%{python_sitearch}/pyqtbuild/
++
++%changelog

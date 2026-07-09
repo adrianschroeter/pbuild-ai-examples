@@ -1,0 +1,53 @@
+Binärdateien source_backup/rake-13.0.6.gem und sources/ruby-example/rake-13.0.6.gem sind verschieden.
+Binärdateien source_backup/rake-13.0.6.tar.gz und sources/ruby-example/rake-13.0.6.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/rubygem-rake.spec sources/ruby-example/rubygem-rake.spec
+--- source_backup/rubygem-rake.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/ruby-example/rubygem-rake.spec	2026-07-09 05:12:26.541567401 +0200
+@@ -0,0 +1,47 @@
++#
++# spec file for package rubygem-rake
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++# Copyright (c) 2024 Adrian Perez de Castro <aperez@igalia.com>
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           rubygem-rake
++Version:        13.0.6
++Release:        0
++Summary:        Make-like build program implemented in Ruby
++License:        MIT
++URL:            https://github.com/ruby/rake
++Source0:        https://rubygems.org/downloads/rake-%{version}.gem
++BuildArch:      noarch
++BuildRequires:  ruby-macros
++
++%description
++Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
++specified in standard Ruby syntax. Rake has the following features:
++
++ * Rakefiles (rake's version of Makefiles) are completely defined in standard
++   Ruby syntax. No XML files to edit. No quirky Makefile syntax to worry about
++   (is that a tab or a space?)
++ * Users can specify tasks with prerequisites.
++ * Rake supports rule patterns to synthesize implicit tasks.
++ * Flexible FileLists that act like arrays but know about manipulating file
++   names and paths.
++ * Supports parallel execution of tasks.
++
++%install
++%gem_install -f
++
++%files
++%gem_files

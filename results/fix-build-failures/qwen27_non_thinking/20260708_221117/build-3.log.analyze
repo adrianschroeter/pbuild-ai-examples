@@ -1,0 +1,3 @@
+The build failed because `%pyproject_wheel` invokes `pip` to generate the wheel, but the `pip` module is missing from the Python 3.13 environment in the chroot. This directly causes the `/usr/bin/python3.13: No module named pip` crash during the `%build` phase. Adding the standard python module macro for pip supplies the required executable and resolves the failure.
+
+BuildRequires: %{python_module pip}

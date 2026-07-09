@@ -1,0 +1,11 @@
+{
+  "example": "generate-spec-php",
+  "model_key": "qwen27_non_thinking",
+  "model_name": "qwen3.6:27b",
+  "model_host_name": "",
+  "model_host_description": "",
+  "timestamp": "2026-07-09T03:54:23+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}

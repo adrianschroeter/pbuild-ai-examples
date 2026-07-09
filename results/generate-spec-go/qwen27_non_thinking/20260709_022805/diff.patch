@@ -1,0 +1,65 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/cobra-1.8.0.spec sources/go-example/cobra-1.8.0.spec
+--- source_backup/cobra-1.8.0.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/go-example/cobra-1.8.0.spec	2026-07-09 02:40:42.309399178 +0200
+@@ -0,0 +1,60 @@
++#
++# spec file for package cobra-1.8.0
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           golang-github-spf13-cobra
++Version:        1.8.0
++Release:        0
++Summary:        Library for Creating CLI Applications in Go
++License:        Apache-2.0
++URL:            https://github.com/spf13/cobra
++Source0:        https://github.com/spf13/cobra/archive/refs/tags/v%{version}.tar.gz
++BuildRequires:  go-github-cpuguy83-go-md2man-v2 >= 2.0.3
++BuildRequires:  go-github-inconshreveable-mousetrap >= 1.1.0
++BuildRequires:  go-github-spf13-pflag >= 1.0.5
++BuildRequires:  go-gopkg-in-yaml.v3 >= 3.0.1
++BuildRequires:  golang
++BuildRequires:  golang-rpc
++
++%description
++Cobra is a library providing a simple interface for creating modern
++command line interfaces in Go. It offers fully POSIX-compliant flags,
++nested subcommands, intelligent suggestions, automatic help generation,
++shell autocompletion (bash, zsh, fish, powershell), and man page generation.
++
++Cobra is used by many popular Go projects including Kubernetes, Hugo,
++GitHub CLI, Docker, Homebrew, rkt, Helm, and others.
++
++%prep
++%autosetup -n cobra-%{version}
++# Remove vendored dependencies to use system packages instead
++rm -rf vendor
++
++%build
++# No compilation needed for pure Go library, deps are resolved at consumer build time
++
++%install
++goinstall -pkgname github.com/spf13/cobra \
++  -srcdir "%{SOURCE_DIR}" \
++  -prefix "/usr" %{?use_buildgo_opts}
++
++%files
++%{_golibdir}/github.com/spf13/cobra/
++
++%license LICENSE.txt
++
++%changelog
+Binärdateien source_backup/cobra-1.8.0.tar.gz und sources/go-example/cobra-1.8.0.tar.gz sind verschieden.

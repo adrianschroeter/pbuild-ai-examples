@@ -1,0 +1,84 @@
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/cowboy.spec sources/erlang-example/cowboy.spec
+--- source_backup/cowboy.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/erlang-example/cowboy.spec	2026-07-09 02:09:19.142067237 +0200
+@@ -0,0 +1,77 @@
++#
++# spec file for package cowboy
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           erlang-cowboy
++Version:        2.10.0
++Release:        0
++Summary:        Small, fast, modern HTTP server for Erlang/OTP
++License:        ISC
++URL:            https://ninenines.eu/docs/en/cowboy
++#!RemoteAsset: github.com/ninenines/cowboy/archive/refs/tags/2.10.0.tar.gz
++Source0:        %{name}-%{version}.tar.gz
++
++BuildRequires:  erlang-cowlib >= 2.12.1
++BuildRequires:  erlang-crypto
++BuildRequires:  erlang-devel >= 22.0
++BuildRequires:  erlang-public_key
++BuildRequires:  erlang-ranch >= 1.8.0
++BuildRequires:  erlang-ssl
++Requires:       erlang-cowlib >= 2.12.1
++Requires:       erlang-crypto
++Requires:       erlang-public_key
++Requires:       erlang-ranch >= 1.8.0
++Requires:       erlang-ssl
++
++%description
++Cowboy is a small, fast and modern HTTP server for Erlang/OTP. It aims to
++provide a complete HTTP stack in a small code base, optimized for low latency
++and low memory usage using binary strings. Cowboy provides routing capabilities,
++selectively dispatching requests to handlers written in Erlang. Because it uses
++Ranch for managing connections, Cowboy can easily be embedded in any other
++application.
++
++%prep
++%autosetup -n cowboy-%{version}
++
++# The Makefile fetches dependencies from git at build time, but the build
++# environment has no network access. Replace DEPS with LOCAL_DEPS so that
++# cowlib and ranch are found on ERL_LIB_PATH (provided by system packages)
++# instead of being downloaded.
++sed -i '/^DEPS = cowlib ranch$/c\LOCAL_DEPS += cowlib ranch' Makefile
++sed -i '/^dep_cowlib/d' Makefile
++sed -i '/^dep_ranch/d' Makefile
++
++# Remove documentation and test dependencies (not needed for the package build)
++sed -i '/^DOC_DEPS/d' Makefile
++sed -i '/^TEST_DEPS/d' Makefile
++sed -i '/^dep_ct_helper/d' Makefile
++sed -i '/^dep_gun/d' Makefile
++sed -i '/^dep_ci/d' Makefile
++sed -i '/^DEP_EARLY_PLUGINS/d' Makefile
++
++%build
++# Tell erlang.mk where to find system-installed dependencies (cowlib, ranch)
++export ERL_LIB_PATH=%{erlang_libdir}/cowlib*/ebin:%{erlang_libdir}/ranch*/ebin
++make %{?_smp_mflags}
++
++%install
++mkdir -p %{buildroot}%{erlang_libdir}/%{name}-%{version}
++cp -a ebin %{buildroot}%{erlang_libdir}/%{name}-%{version}/
++
++%files
++%{erlang_libdir}/%{name}-%{version}
+Binärdateien source_backup/erlang-cowboy-2.10.0.tar.gz und sources/erlang-example/erlang-cowboy-2.10.0.tar.gz sind verschieden.
+Binärdateien source_backup/erlang-cowlib-2.12.1.tar.gz und sources/erlang-example/erlang-cowlib-2.12.1.tar.gz sind verschieden.
+Binärdateien source_backup/erlang-ranch-1.8.0.tar.gz und sources/erlang-example/erlang-ranch-1.8.0.tar.gz sind verschieden.

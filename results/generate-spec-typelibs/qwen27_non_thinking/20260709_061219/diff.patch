@@ -1,0 +1,165 @@
+Binärdateien source_backup/libpeas-1.36.0.tar.xz und sources/typelibs-example/libpeas-1.36.0.tar.xz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/libpeas.spec sources/typelibs-example/libpeas.spec
+--- source_backup/libpeas.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/typelibs-example/libpeas.spec	2026-07-09 06:37:54.056234029 +0200
+@@ -0,0 +1,160 @@
++#
++# spec file for package libpeas
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           libpeas
++Version:        1.36.0
++Release:        0
++Summary:        GObject Plugins Engine Library
++License:        LGPL-2.1-or-later
++Group:          System/Libraries
++URL:            https://wiki.gnome.org/Projects/Libpeas
++Source0:        https://download.gnome.org/sources/libpeas/1.36/%{name}-%{version}.tar.xz
++#Maintainer: TODO
++BuildRequires:  fdupes
++BuildRequires:  gobject-introspection
++BuildRequires:  gtk-doc-tools
++BuildRequires:  gtk3-devel
++BuildRequires:  meson >= 0.50.0
++BuildRequires:  pkg-config
++BuildRequires:  python3-rpm-macros
++BuildRequires:  sed
++BuildRequires:  tar
++BuildRequires:  xz
++BuildRequires:  zip
++
++%description
++libpeas is a gobject-based plugins engine, and is targetted at giving every
++application the chance to assume its own extensibility. It is currently used by
++several Gnome applications like gedit and Totem.
++
++%package -n libpeas-1_0-0
++Summary:        GObject Plugins Engine Library
++Group:          System/Libraries
++License:        LGPL-2.1-or-later
++
++%description -n libpeas-1_0-0
++libpeas is a gobject-based plugins engine, and is targetted at giving every
++application the chance to assume its own extensibility. It is currently used by
++several Gnome applications like gedit and Totem.
++
++%package -n libpeas-gtk-1_0-0
++Summary:        GObject Plugins Engine Library for GTK+ 3
++Group:          System/Libraries
++License:        LGPL-2.1-or-later
++Requires:       libpeas-1_0-0 = %{version}
++
++%description -n libpeas-gtk-1_0-0
++This package contains the GTK+ 3 widgetry for libpeas, providing a plugin
++manager dialog and other UI components.
++
++%package -n libpeas-devel
++Summary:        GObject Plugins Engine Library -- Development Files
++Group:          Development/Libraries/GNOME
++License:        LGPL-2.1-or-later
++Requires:       gobject-introspection
++Requires:       gtk3-devel
++Requires:       libpeas-1_0-0 = %{version}
++
++%description -n libpeas-devel
++This package contains libraries and .spec files needed for writing
++applications that use libpeas.
++
++%package -n libpeas-gtk-devel
++Summary:        GObject Plugins Engine Library for GTK+ 3 -- Development Files
++Group:          Development/Libraries/GNOME
++License:        LGPL-2.1-or-later
++Requires:       libpeas-devel = %{version}
++Requires:       libpeas-gtk-1_0-0 = %{version}
++
++%description -n libpeas-gtk-devel
++This package contains libraries and .spec files needed for writing
++applications that use the GTK+ 3 widgetry of libpeas.
++
++%package -n typelib-1_0-Peas-1_0
++Summary:        GObject Introspection bindings for libpeas
++Group:          Development/Libraries/GNOME
++License:        LGPL-2.1-or-later
++
++%description -n typelib-1_0-Peas-1_0
++GObject Introspection bindings for the libpeas library.
++
++%package -n typelib-1_0-GtkPeas-1_0
++Summary:        GObject Introspection bindings for libpeas-gtk
++Group:          Development/Libraries/GNOME
++License:        LGPL-2.1-or-later
++
++%description -n typelib-1_0-GtkPeas-1_0
++GObject Introspection bindings for the GTK+ 3 widgetry of libpeas.
++
++%package -n python3-libpeas
++Summary:        Python3 loader module for libpeas
++Group:          Development/Libraries/GNOME
++License:        LGPL-2.1-or-later
++Requires:       libpeas-1_0-0 = %{version}
++%{python_requires_pkgconfig libpeas-1.0}
++
++%description -n python3-libpeas
++This package contains the Python3 loader module for libpeas, allowing
++plugins written in Python3 to be loaded by applications using libpeas.
++
++%prep
++%autosetup -p1
++
++%build
++%meson \
++  -Dgtk_doc=true \
++  -Dlua51_loader=false \
++  -Dpython2_loader=false \
++  -Dpython3_loader=true \
++  -Dglade_catalog=true \
++  -Ddemos=false
++%meson_build
++
++%install
++%meson_install
++%suse_update_desktop_file -r libpeas-peas-demo Application System
++%fdupes %{buildroot}
++%suse_replace_deps libpeas-gtk.pc
++
++%files -n libpeas-1_0-0
++%{_libdir}/libpeas-1.0.so.*
++%{iconthemedir}/hicolor/*/actions/libpeas-plugin.*
++%{_datadir}/libpeas-1.0/glade/*.xml
++
++%files -n libpeas-gtk-1_0-0
++%{_libdir}/libpeas-gtk-1.0.so.*
++
++%files -n libpeas-devel
++%{_includedir}/*
++%{_pkgconfigdir}/*.pc
++%{_datadir}/vala/vapi/libpeas-1.0.vapi
++%{_datadir}/vala/vapi/libpeas-gtk-1.0.vapi
++
++%files -n libpeas-gtk-devel
++%doc NEWS README
++
++%files -n typelib-1_0-Peas-1_0
++%{_libdir}/girepository-1.0/Peas-1.0.typelib
++
++%files -n typelib-1_0-GtkPeas-1_0
++%{_libdir}/girepository-1.0/GtkPeas-1.0.typelib
++
++%files -n python3-libpeas
++%{_libdir}/libpeas-1.0/loaders/python3loader.so
++
++%changelog

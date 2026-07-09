@@ -1,0 +1,66 @@
+Binärdateien source_backup/Module-Runtime-0.018.tar.gz und sources/perl-example/Module-Runtime-0.018.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/Module-Runtime.spec sources/perl-example/Module-Runtime.spec
+--- source_backup/Module-Runtime.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/perl-example/Module-Runtime.spec	2026-07-09 03:53:43.428083345 +0200
+@@ -0,0 +1,61 @@
++#
++# spec file for package Module-Runtime
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++# Copyright (C) 2025 Graham Knop <haarg@haarg.org>
++#
++# All modifications and additions to the file are licensed under the same terms.
++#
++
++
++Name:           Module-Runtime
++Version:        0.018
++Release:        0
++Summary:        Runtime module handling
++License:        Artistic-1.0-Perl OR GPL-1.0-or-later
++Group:          Development/Libraries/Perl
++URL:            https://github.com/haarg/Module-Runtime
++Source0:        https://cpan.metacpan.org/authors/id/H/HA/HAARG/%{name}-%{version}.tar.gz
++
++BuildRequires:  perl-devel >= 5.006
++BuildRequires:  perl(ExtUtils::MakeMaker)
++BuildRequires:  perl(Test::More)
++
++%description
++Module::Runtime provides functions for runtime module loading, including
++require_module, use_module, and use_package_optimistically. It also provides
++utility functions for composing module names and validating module specifiers.
++
++%prep
++%setup -q -n %{name}-%{version}
++
++%build
++%make_build
++
++%install
++%make_install
++find %{buildroot} -type f -name .packlist -delete
++
++%check
++%make_check
++
++%files
++%license LICENSE
++%doc Changes README TODO
++%{_perl}/Module/
++%dir %{_perl}/auto/
++%{_perl}/auto/Module/
++
++%changelog

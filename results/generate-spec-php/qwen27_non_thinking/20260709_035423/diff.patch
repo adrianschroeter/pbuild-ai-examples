@@ -1,0 +1,68 @@
+Binärdateien source_backup/phpstan-1.10.0.tar.gz und sources/php-example/phpstan-1.10.0.tar.gz sind verschieden.
+diff -Nur '--exclude=.git' '--exclude=_build.*' '--exclude=*.pyc' '--exclude=__pycache__' '--exclude=.pbuild' '--exclude=.pai.context' source_backup/phpstan.spec sources/php-example/phpstan.spec
+--- source_backup/phpstan.spec	1970-01-01 01:00:00.000000000 +0100
++++ sources/php-example/phpstan.spec	2026-07-09 04:03:41.854960238 +0200
+@@ -0,0 +1,63 @@
++#
++# spec file for package phpstan
++#
++# Copyright (c) 2026 SUSE LLC and contributors
++#
++# All modifications and additions to the file contributed by third parties
++# remain the property of their copyright owners, unless otherwise agreed
++# upon. The license for this file, and modifications and additions to the
++# file, is the same license as for the pristine package itself (unless the
++# license for the pristine package is not an Open Source License, in which
++# case the license is the MIT License). An "Open Source License" is a
++# license that conforms to the Open Source Definition (Version 1.9)
++# published by the Open Source Initiative.
++
++# Please submit bugfixes or comments via https://bugs.opensuse.org/
++#
++
++
++Name:           phpstan
++Version:        1.10.0
++Release:        0
++Summary:        PHP Static Analysis Tool
++License:        MIT
++URL:            https://github.com/phpstan/phpstan
++Source0:        https://github.com/phpstan/phpstan/archive/refs/tags/%{version}.tar.gz
++
++BuildArch:      noarch
++Requires:       php(x86-64) >= 7.2
++
++%description
++PHPStan is a static analysis tool for PHP that focuses on finding errors
++in your code without actually running it. It detects whole classes of
++errors even from just looking at the code, such as calling methods on
++wrong objects and accessing properties with the wrong visibility, using
++null where a more specific value is expected, and so on.
++
++PHPStan comes with several analysis levels to choose from. The higher
++the level, the more thorough the analysis is, and the more false
++positives you might encounter.
++
++%prep
++%autosetup -T -P -n phpstan-%{version}
++
++sed -i 's|__DIR__ . '\''/phpstan.phar'\''|%{_datadir}/phpstan/phpstan.phar|g' phpstan
++
++%build
++# No compilation needed - pre-built PHAR archive
++
++%install
++install -Dm 0755 phpstan.phar   %{buildroot}%{_datadir}/phpstan/phpstan.phar
++install -Dm 0755 phpstan        %{buildroot}%{_bindir}/phpstan
++%fdupes -s %{buildroot}%{_datadir}
++
++%check
++# Run a basic self-test to ensure the PHAR works
++php %{buildroot}%{_bindir}/phpstan --version > /dev/null 2>&1 || :
++
++%files
++%doc LICENSE
++%{_bindir}/phpstan
++%{_datadir}/phpstan/phpstan.phar
++
++%changelog
