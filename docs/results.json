@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10T09:51:05+02:00",
+  "generated": "2026-07-10T10:15:58+02:00",
   "models": {
     "default": {
       "display": "Unknown Model"
@@ -245,6 +245,32 @@
           "output": "[PBUILD-AI] Version 0.1.8\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(gemma4:12b-qat-256k) says:\nHere are the errors and missing best practices for your spec file:\n\n**Errors:**\n1.  **Remove `%changelog`**: The instructions explicitly state that the `%changelog` section should not exist in the `.spec` file (changes should go in `PACKAGE.changes`).\n2.  **Incorrect `BuildArch`**: You have `BuildArch: noarch`. Because this package requires `perl` (an architecture-specific interpreter), it cannot be `noarch`. Remove this line to allow it to build for the target architectures.\n\n**Best Practices & Improvements:**\n1.  **%setup vs %autosetup**: While `%setup -q` works, many modern SUSE specs prefer `%autosetup` to automatically handle directory naming without requiring manual intervention if the tarball structure is standard.\n2.  **Redundant `bash` in BuildRequires**: If you remove `BuildArch: noarch`, `bash` is generally provided by the build environment and doesn't strictly need to be listed as a `BuildRequires` unless specific shell features are used.\n3.  **Source URL**: Ensure the URL points to the actual source repository/host if possible, though the current one is acceptable for basic functionality.\n\n**Summary of changes needed:**\n*   Delete the `%changelog` header at the bottom.\n*   Delete `BuildArch: noarch`.\n\n[STATS] AI model: gemma4:12b-qat-256k  |  AI calls: 1  |  AI time: 60.7s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 60.8s\n",
           "diff": "",
           "result_path": "results/basic-analyze/gemma4_12b/20260702_142156"
+        },
+        "gemma4_31b_q4": {
+          "timestamp": "20260710_095556",
+          "run_time_seconds": 80,
+          "status": "success",
+          "success": true,
+          "exit_code": 0,
+          "files_changed": 0,
+          "ai_model": "gemma4:31b-it-qat-q4_0-it-256k",
+          "ai_calls": 1,
+          "ai_time_seconds": 80.1,
+          "pbuild_calls": 0,
+          "pbuild_time_seconds": 0.0,
+          "total_runtime_seconds": 80.2,
+          "pbuild_ai_version": "0.1.10",
+          "model_host_name": "AMD Strix Halo",
+          "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+          "source_url": "https://src.opensuse.org/pool/cowsay",
+          "source_ref": "852d1df910bf97567adb4a1989a4e3939e6bd5242a5c6fd46dc5d39da78c30c5",
+          "skills_used": [],
+          "trend_percent": null,
+          "first_run_time_seconds": null,
+          "run_count": 1,
+          "output": "[PBUILD-AI] Version 0.1.10\n[SKILL LOADED] OPENSUSE.md (Base skill)\n[INFO] No specific skill found. Using default profile.\n[AI] Analyzing Spec-file: cowsay.spec...\n-> AI(gemma4:31b-it-qat-q4_0-it-256k) says:\n- **Error:** The `%changelog` section must be removed. openSUSE uses a separate `PACKAGE.changes` file for version history.\n\n[STATS] AI model: gemma4:31b-it-qat-q4_0-it-256k  |  AI calls: 1  |  AI time: 80.1s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 80.2s\n",
+          "diff": "",
+          "result_path": "results/basic-analyze/gemma4_31b_q4/20260710_095556"
         },
         "leanstral": {
           "timestamp": "20260705_144757",
