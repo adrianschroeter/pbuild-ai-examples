@@ -65,7 +65,7 @@ models:
     host: "local"
     model: "ornith:9b"
   leanstral:
-    display: "leanstral-1.5:119B-A6B"
+    display: "Leanstral-1.5:119B-A6B"
     host: "local"
     model: "huggingface.co/Abiray/Leanstral-1.5-119B-A6B-Q4KM-GGUF:latest"
     timeout: "600"  # 10 minutes timeout for large model
