@@ -1,0 +1,73 @@
+[PBUILD-AI] Version 0.1.10
+[SKILL LOADED] OPENSUSE.md (Base skill)
+[INFO] No specific skill found. Using default profile.
+[AI] Analyzing Spec-file: cowsay.spec...
+-> AI(unsloth/DeepSeek-V4-Flash:UD-Q2_K_XL) says:
+We need to check the given RPM spec file for errors or missing best practices according to openSUSE conventions. The user provided a context (the base skill) which outlines many rules. We must be brief but point out issues.
+
+Let's analyze the spec:
+
+1. Copyright header: present, okay.
+2. Name, Version, Release: fine.
+3. License: "GPL-1.0+ or Artistic-1.0" - need to check if that's valid SPDX? openSUSE uses SPDX identifiers. GPL-1.0+ is not a standard SPDX; should be "GPL-1.0-or-later". Also Artistic-1.0 is okay but maybe needs "Artistic-2.0"? Actually Artistic-1.0 exists. But GPL-1.0+ is ambiguous. Might need to fix.
+4. Group: fine.
+5. Summary, Url, Source: ok.
+6. Requires: perl - good.
+7. BuildRequires: bash - okay but note rule "Have a single dependency per BuildRequires: line" - it's already one. But also they say do not use macros in BR unless defined in same spec. Here no macro.
+8. BuildArch: noarch - fine.
+9. %description: ok.
+10. %prep: uses %setup -q, then sed on install.sh. That might be okay but note the sed line has `%{nil}PREFIX`? Actually it's `"|,\$%{nil}PREFIX,|,%{_prefix},|"`. The `%{nil}` is a macro that expands to nothing (empty). So essentially `$PREFIX` becomes `%{_prefix}`. That seems odd but might work. However best practice: use %{_prefix} directly without sed? But if upstream uses $PREFIX, it's fine. Could be simplified.
+11. %build: comment says "Nothing to build." - okay.
+12. %install: runs install.sh with arguments. Then moves man directory and removes a file. The move command `mv -T` might fail if destination exists? But it's fine. However note that using bash ./install.sh is not typical; usually we call make install or similar. Here they have custom script, okay.
+13. %files: uses %defattr(-,root,root). Includes doc files, bindir binaries, datadir/cows (entire directory), mandir/man1/*. Good.
+14. Missing: no %check section? Not required if no tests.
+15. No %clean, %post etc - good per rules.
+16. No changelog in spec file; they say "Do not include empty %changelog" but here it has an empty one. The base skill says "%changelog section should not exist in .spec file." So that's a violation: remove the %changelog line entirely (the whole block). Also note there is no PACKAGE.changes mentioned; they want changelog entries in separate file.
+17. There's also a comment about "Copyright ... All modifications and additions...". That's fine.
+
+Other issues:
+- The Source line uses `%{name}-%{version}.tar.gz`. Should be explicit like `Source0: %{name}-%{version}.tar.gz`? Usually we have Source0, but it might work without number. However best practice is to use Source0 (or SourceN). But not strictly required.
+- The sed line in %prep modifies install.sh; that may be okay but note the macro `%{nil}` is odd. Could just do `sed -i "s|\$PREFIX|%{_prefix}|" install.sh`. However it's a minor style issue, not an error.
+
+Also check for missing BuildRequires: No perl-devel or something? But package only needs perl at runtime, and bash to run install script. That's fine.
+
+Potential best practice violation: The %files section uses `%{_datadir}/cows` which is a directory. Should use `%dir` if empty? But it likely contains files; listing the directory without ownership of contents might be okay but better to list individual files or use `%{_datadir}/cows/`. However it's common to include entire directories with recursion. The line `%{_mandir}/man1/*` will capture all man pages. That's fine.
+
+Also note that the package has no explicit license file in %files? It includes LICENSE under doc, so okay.
+
+Now let's list errors/best practices missing:
+
+1. Remove empty %changelog section.
+2. License should be "GPL-1.0-or-later" or "GPL-1.0-only"? Actually cowsay is GPL 1+? Need to check upstream but spec says GPL-1.0+, not standard SPDX. Should change to "GPL-1.0-or-later".
+3. Source: should be numbered (Source0:) for clarity.
+4. In %prep, sed line uses `%{nil}` which is unnecessary; could simplify.
+5. The install script is run with bash directly; might need BuildRequires on coreutils? Not needed.
+6. Missing a check that man pages are compressed? No issue.
+
+Also note the copyright header says "SUSE LINUX Products GmbH" but now it's SUSE LLC. That's not an error per se, just outdated.
+
+Given the instruction to keep brief and point out errors or missing best practices, I'll list the most critical: empty %changelog (must be removed), license SPDX non-standard, and maybe unnumbered Source. Also note that they use `bash ./install.sh` which might need bash in BuildRequires already present.
+
+Also check if there is any requirement for %fdupes or %set_permissions? Not needed here because noarch and no suid bits.
+
+Thus answer concisely.</think>**Errors / Missing Best Practices:**
+
+1. **Remove empty `%changelog` section.**  
+   openSUSE convention requires changelog entries in a separate `PACKAGE.changes` file, not in the spec.
+
+2. **License identifier is non‑standard SPDX.**  
+   Replace `GPL-1.0+ or Artistic-1.0` with `GPL-1.0-or-later and Artistic-1.0`. (The `or` operator may be used but ensure correct SPDX syntax; `GPL-1.0+` is not valid.)
+
+3. **Source line should be numbered.**  
+   Use `Source0: %{name}-%{version}.tar.gz` instead of unnumbered `Source:`.
+
+4. **(Optional) Simplify sed in `%prep`.**  
+   The macro `%{nil}` expands to nothing, making the expression equivalent to:
+   ```bash
+   sed -i "s|\$PREFIX|%{_prefix}|" install.sh
+   ```
+   This is more readable and avoids an unnecessary macro.
+
+5. **No other violations** – BuildRequires, noarch, missing sections, etc., are handled correctly per the given conventions.
+
+[STATS] AI model: unsloth/DeepSeek-V4-Flash:UD-Q2_K_XL  |  AI calls: 1  |  AI time: 391.7s  |  pbuild calls: 0  |  pbuild time: 0.0s  |  total runtime: 391.8s

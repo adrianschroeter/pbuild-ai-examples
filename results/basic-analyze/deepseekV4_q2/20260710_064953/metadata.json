@@ -1,0 +1,11 @@
+{
+  "example": "basic-analyze",
+  "model_key": "deepseekV4_q2",
+  "model_name": "unsloth/DeepSeek-V4-Flash:UD-Q2_K_XL",
+  "model_host_name": "AMD Strix Halo",
+  "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+  "timestamp": "2026-07-10T06:49:56+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/usr/bin/pbuild-ai"
+}
