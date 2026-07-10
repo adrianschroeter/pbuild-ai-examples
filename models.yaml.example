@@ -25,6 +25,7 @@ models:
     host: "local"
     model: "qwen3.6:27b"
     ollama_options:
+#      format: text    # json is default, but some models don't support it.
 #      temperature: 0.1
       thinking: false
   gemma4:
@@ -43,6 +44,14 @@ models:
     display: "Qwen3.6:35B-a3b"
     host: "local"
     model: "qwen3.6:35b-a3b"
+    ollama_options:
+      temperature: 0.0
+      top_p: 0.1
+      top_k: 10
+  deepseekV4_q2:
+    display: "DeepSeek V4 Flash Q2"
+    host: "biene"
+    model: "unsloth/DeepSeek-V4-Flash:UD-Q2_K_XL"
   qwen36bf16:
     display: "Qwen3.6:35B-a3b-bf16"
     host: "local"
