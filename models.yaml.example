@@ -28,6 +28,10 @@ models:
 #      format: text    # json is default, but some models don't support it.
 #      temperature: 0.1
       thinking: false
+  qwen38_27b:
+    display: "Qwen 3.8 27B"
+    host: "llamacpp"
+    model: "qwen3.8:27b"
   gemma4:
     display: "Gemma 4 31B BF16"
     host: "remote1"

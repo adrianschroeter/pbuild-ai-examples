@@ -517,6 +517,15 @@ EOF
 
     FULL_COMMAND_ARRAY=("$COMMAND" "${OPTIONS_ARRAY[@]}" "--build-log" "$BUILD_LOG_FILE")
 
+    # Pass the AI server and model explicitly to pbuild-ai
+    # (--openai-server / --model override the OLLAMA_HOST / OLLAMA_MODEL env vars)
+    if [ -n "$MODEL_HOST" ]; then
+        FULL_COMMAND_ARRAY+=("--openai-server" "$MODEL_HOST")
+    fi
+    if [ -n "$MODEL_NAME" ]; then
+        FULL_COMMAND_ARRAY+=("--model" "$MODEL_NAME")
+    fi
+
     # Add --ollama-timeout if model specifies a timeout
     if [ -n "$MODEL_TIMEOUT" ]; then
         FULL_COMMAND_ARRAY+=("--ollama-timeout" "$MODEL_TIMEOUT")
@@ -547,6 +556,12 @@ for k, v in opts.items():
         fi
     done
     DISPLAY_CMD="$DISPLAY_CMD --build-log $BUILD_LOG_FILE"
+    if [ -n "$MODEL_HOST" ]; then
+        DISPLAY_CMD="$DISPLAY_CMD --openai-server $MODEL_HOST"
+    fi
+    if [ -n "$MODEL_NAME" ]; then
+        DISPLAY_CMD="$DISPLAY_CMD --model $MODEL_NAME"
+    fi
     if [ -n "$MODEL_TIMEOUT" ]; then
         DISPLAY_CMD="$DISPLAY_CMD --ollama-timeout $MODEL_TIMEOUT"
     fi
