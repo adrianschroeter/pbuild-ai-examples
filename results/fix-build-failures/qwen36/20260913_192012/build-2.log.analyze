@@ -1,0 +1,48 @@
+Name:           oterm
+Summary:        Another terminal client for Ollama
+License:        MIT
+Source0:        https://github.com/ibobek/oterm/archive/v%{version}/oterm-%{version}.tar.gz
+Version:        0.3.1
+Release:        0
+URL:            https://github.com/ibobek/oterm
+BuildArch:      noarch
+
+# Provide macro definitions if not available from python-rpm-macros or build config
+%define python_module python-%{**} python3-%{**}
+%define pythons %primary %primary_python
+
+# Dependencies
+Requires:       python3-typer >= 0.15.2
+Requires:       python3-python-dotenv >= 1.0.1
+Requires:       python3-aiosqlite >= 0.21.0
+Requires:       python3-packaging >= 25.0
+Requires:       python3-pillow >= 11.2.1
+Requires:       python3-ollama >= 0.5.0
+Requires:       python3-textualeffects >= 0.1.4
+Requires:       python3-pydantic >= 2.11.3
+Requires:       python3-textual-image >= 0.8.2
+Requires:       python3-fastmcp >= 2.5.2
+
+BuildRequires:  fdupes
+BuildRequires:  python-rpm-macros
+BuildRequires:  pyproject-wheel-builder
+BuildRequires:  python3-hatchling
+
+%description
+Another terminal client for Ollama
+
+%prep
+%setup -q -n oterm-%{version}
+
+%build
+%pyproject_wheel
+
+%install
+%pyproject_install
+%fdupes %{buildroot}%{python3_sitearch}
+
+%files
+%license LICENSE
+%doc README.md CHANGES.txt
+%{python3_sitearch}/oterm
+%{python3_sitearch}/oterm-%{version}-py3.%.dist-info

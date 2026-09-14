@@ -1,0 +1,60 @@
+1. Analyze the user's input: The user wants me to act as a Python developer fixing a failed RPM build for `python-oterm`.
+2. Examine the error log:
+   - The log shows: `.: unresolvable (nothing provides ( python313-pipper ))`
+   - This indicates a missing dependency resolution during the build phase.
+   - The spec file contains: `BuildRequires:  %{python_module pipper}`
+   - Looking at PyPI, the package is `oterm`. Does it depend on `pipper`? Or is `pipper` a typo?
+   - Let's check the context. `oterm` is a terminal client for Ollama.
+   - Usually, packages use `pip` or maybe `pipper` isn't a real package.
+   - Wait, `pipper` sounds like a typo for `pyproject-piper`? Or maybe it's just wrong.
+   - Let's look at the spec again:
+     ```
+     BuildRequires:  %{python_module poetry-core}
+     BuildRequires:  %{python_module pipper}
+     BuildRequires:  %{python_module wheel}
+     BuildRequires:  %{python_module hatchling}
+     ```
+   - `poetry-core`, `wheel`, `hatchling` are build backends.
+   - Why is `pipper` there? A quick mental check suggests `pipper` is likely a hallucination or typo in the original spec, or perhaps the user meant `pyproject-hooks`?
+   - However, the error is explicitly `nothing provides ( python313-pipper )`. The system cannot find this package.
+   - If I look at the build macros used: `%pyton_wheel` and `%pyproject_install`.
+   - Note: `%pyton_wheel` is a typo in the spec! It should be `%pyproject_wheel`.
+   - But the immediate failure is dependency resolution: `unresolvable (nothing provides ( python313-pipper ))`.
+   - The parser instruction says: "Include the exact BuildRequires line in your analysis... The build system will automatically pick up any line starting with BuildRequires: from your analysis and insert it into the spec file."
+   - If `pipper` is a typo, I should suggest removing it or replacing it with what's actually needed.
+   - Usually, for `pyproject.toml` builds, we need the backend. The spec lists `poetry-core`, `wheel`, and `hatchling`. This is redundant. Usually, you only need one backend depending on what `pyproject.toml` defines (`build-backend`).
+   - If I don't know the exact backend, I should look at common errors. The error says `pipper` is missing.
+   - To fix the immediate unresolvable dependency, I must address `pipper`. Since `pipper` is likely a typo or non-existent in openSUSE repos (I suspect it's not a standard Python package), the best move is to suggest removing it if it's wrong, OR if the user wants me to provide a replacement, I should identify what was meant.
+   - However, the prompt asks to "suggest the missing RPM package name for BuildRequires" and "Include the exact BuildRequires line...". The system inserts these lines. If I insert `BuildRequires: %{python_module pipper}`, it will likely still fail if the package doesn't exist in the repo.
+   - Wait, the prompt says "The build system will automatically pick up any line starting with BuildRequires: from your analysis and insert it into the spec file." This implies I should provide the *correct* missing dependency. If `pipper` is wrong, providing it again won't help.
+   - The root cause is likely that `pipper` is a typo for something else, or just garbage. In many `pyproject.toml` cases, if the backend isn't specified, tools like `setuptools` or `flit_core` are used.
+   - Let's look at the `%build` section: `%pyton_wheel`. This is a typo for `%pyproject_wheel`.
+   - The instructions say: "You may need to convert to %pyproject_wheel and %pyproject_install macros when the project switched to pyproject.toml."
+   - The log error `unresolvable (nothing provides ( python313-pipper ))` happens during dependency expansion, before `%build` runs. So the fix must be in BuildRequires.
+   - Hypothesis: The original spec has `pipper`. This package does not exist. The user needs to remove it or replace it with the correct backend.
+   - If I cannot interactively check `pyproject.toml`, I should assume standard backends. The spec already has `poetry-core` and `hatchling`. It probably doesn't need `pipper`.
+   - However, the prompt asks me to "suggest the missing RPM package name". This phrasing assumes something is missing. If `pipper` is a typo for `pyproject-hooks`, maybe?
+   - Actually, looking at common mistakes, `pipper` might be a typo for `pillow`? No, pillow is in Requires.
+   - Maybe it's a typo for `pip`? But we use build backends now.
+   - If the system inserts lines starting with `BuildRequires:`, and I output `BuildRequires: %{python_module pipper}`, I'm just repeating the error.
+   - The smart move is to realize `pipper` is likely a typo for nothing, or the user pasted a bad spec. But wait! Is there a package called `pyproject-piper`? No.
+   - Let's look at the other macros. `%pyton_wheel` -> `%pyproject_wheel`.
+   - The instructions say: "The build system will automatically pick up any line starting with BuildRequires: from your analysis...". If I provide a correct one, it adds it. Does it remove wrong ones? No, it just inserts.
+   - So if the spec already has `BuildRequires: %{python_module pipper}`, and I don't tell it to remove that, it stays there. The build will fail because of the existing line in the spec.
+   - Wait, usually these agents edit the file directly or provide a diff? No, the prompt says "The build system will automatically pick up any line starting with BuildRequires: from your analysis and insert it into the spec file." This is a bit ambiguous. Does it append? If it appends, the bad line remains.
+   - However, my role is to "Explain the cause and suggest the missing RPM package name". And "Include the exact BuildRequires line...".
+   - Maybe the prompt implies I should output the *correct* line that replaces the wrong one? No, it says "insert it".
+   - Let's focus on the typo in `%build`: `%pyton_wheel`. This causes a build failure if dependencies were resolved. But dependencies failed first.
+   - The error `unresolvable (nothing provides ( python313-pipper ))` is fatal at dependency resolution.
+   - Since I cannot edit the spec file directly to remove lines, and the system only inserts lines from my analysis, I am in a bind if the bad line remains. However, usually, the human or post-processor handles the removal, or perhaps the "insert" mechanism replaces? Unlikely.
+   - Alternative interpretation: The user wants me to identify that `pipper` is wrong and suggest what should be there instead, hoping the system replaces it, OR I just explain it.
+   - But wait! What if `pipper` *is* the missing package name the user *thinks* is needed, but isn't?
+   - Let's look at the instruction: "suggest the missing RPM package name for BuildRequires... Include the exact BuildRequires line in your analysis".
+   - If I say `BuildRequires: %{python_module pipper}`, it inserts that. It fails again.
+   - If I say `BuildRequires: %{python_module pyproject-hooks}`, maybe that helps?
+   - Actually, looking at `oterm` on PyPI (mental simulation or general knowledge), standard projects use `setuptools`, `hatchling`, etc. The spec already lists `poetry-core`, `wheel`, `hatchling`. It's overkill.
+   - The typo `%pyton_wheel` is the smoking gun for a bad spec. The spec is broken.
+   - If I have to provide a BuildRequires line, and `pipper` is wrong, what should I provide? Maybe the user wants me to point out `python-rpm-macros` is needed? It is already there.
+   - Let's look at the error again. `unresolvable (nothing provides ( python313-pipper ))`. 
+   - If I cannot remove lines, I must assume the user will fix the spec based on my explanation, or the system replaces matching lines? No, "insert it".
+   - Okay, let's look at the

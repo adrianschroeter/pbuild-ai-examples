@@ -1,0 +1,34 @@
+--- oterm.spec
++++ oterm.spec
+@@ -1,17 +1,19 @@
+ %{?!python_module:%define python_module() python-%{**} python3-%{**}}
++%define         pythons %primary_python
+ Name:           oterm
+ Version:        0.13.0
+ Release:        0
+ License:        MIT
+ Summary:        Another terminal client for Ollama
+-Group:          Development/Languages/Python
+ Url:            https://github.com/ggozad/oterm
+-Source:         https://pypi.io/packages/source/o/oterm/oterm-%{version}.tar.gz
+-BuildRequires:  %{python_module poetry-core}
++Source:         https://pypi.org/packages/source/o/oterm/oterm-%{version}.tar.gz
+ BuildRequires:  %{python_module pip}
+ BuildRequires:  %{python_module wheel}
+ BuildRequires:  %{python_module hatchling}
+ BuildRequires:  python-rpm-macros
++BuildRequires:  fdupes
++BuildArch:      noarch
++
+ Requires: %primary_python-textual >= 3.2.0
+ Requires: %primary_python-typer >= 0.15.2
+ Requires: %primary_python-python-dotenv >= 1.0.1
+@@ -24,8 +26,6 @@
+ Requires: %primary_python-pydantic >= 2.11.3
+ Requires: %primary_python-textual-image >= 0.8.2
+ Requires: %primary_python-fastmcp >= 2.5.2
+-BuildRequires:  fdupes
+-BuildArch:      noarch
+ 
+ %description
+ Another terminal client for Ollama

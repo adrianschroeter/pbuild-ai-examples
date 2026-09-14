@@ -1,0 +1,11 @@
+{
+  "example": "fix-build-failures",
+  "model_key": "qwen38_27b",
+  "model_name": "qwen3.8:27b-q4",
+  "model_host_name": "",
+  "model_host_description": "",
+  "timestamp": "2026-09-13T13:37:49+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/home/adrian/opencode/pbuild-ai/pbuild-ai"
+}

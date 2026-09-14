@@ -1,0 +1,16 @@
+--- oterm.spec
++++ oterm.spec
+@@ -48,7 +48,7 @@
+ Another terminal client for Ollama
+ 
+ %prep
+-%setup -q -n oterm_%{version}
++%setup -q
+ 
+ %build
+ %pyproject_wheel
+@@ -63,4 +63,3 @@
+ %doc README.md CHANGES.txt
+ %{python_sitelib}/%name
+ %{python_sitelib}/%name-%version.dist-info
+-

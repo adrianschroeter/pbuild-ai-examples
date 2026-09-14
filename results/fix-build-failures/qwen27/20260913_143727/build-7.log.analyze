@@ -1,0 +1,1 @@
+To fix this, I need to add `%python_subpackages` in the preamble or before `%python_files` is called. Usually, just adding `%python_subpackages` without arguments creates the standard subpackage structure based on `%python_files`. The error message explicitly says: `To get rid of this error, either add a %python_subpackages macro to preamble or remove %python_files.`

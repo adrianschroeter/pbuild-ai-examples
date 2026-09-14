@@ -1,0 +1,22 @@
+--- oterm.spec
++++ oterm.spec
+@@ -25,6 +25,19 @@
+ BuildRequires:  %{python_module fastmcp} >= 2.5.2
+ BuildRequires:  fdupes
+ BuildRequires:  python-rpm-macros
++BuildRequires:  %{python_module pipper}
++Requires: %primary_python-typer >= 0.15.2
++Requires: %primary_python-textualeffects >= 0.1.4
++Requires: %primary_python-textual-image >= 0.8.2
++Requires: %primary_python-textual >= 3.2.0
++Requires: %primary_python-python-dotenv >= 1.0.1
++Requires: %primary_python-pydantic >= 2.11.3
++Requires: %primary_python-pillow >= 11.2.1
++Requires: %primary_python-packaging >= 25.0
++Requires: %primary_python-ollama >= 0.5.0
++Requires: %primary_python-fastmcp >= 2.5.2
++Requires: %primary_python-aiosqlite >= 0.21.0
++Requires: %primary_python-aiosql >= 13.4
+ BuildArch:      noarch
+ 
+ %description

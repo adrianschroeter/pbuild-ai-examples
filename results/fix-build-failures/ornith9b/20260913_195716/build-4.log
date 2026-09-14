@@ -1,0 +1,263 @@
+starting project builder
+    source directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example
+    result directory: /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64
+    build area: /var/tmp/build-root-adrian
+    architecture: x86_64
+    build config:
+      - tumbleweed
+    repositories:
+      - https://download.opensuse.org/tumbleweed/repo/oss
+getting package information
+parsing 1 recipe file
+fetching metadata of 1 remote repo
+preparing package pool
+expanding dependencies
+building ./oterm.spec
+VM_ROOT: /var/tmp/build-root-adrian/.mount.img, VM_SWAP: /var/tmp/build-root-adrian/.mount.swap
+Using mkfs copyin mode to populate the root filesystem
+Reusing former build root
+logging output to /var/tmp/build-root-adrian/.build.log...
+[    0s] Using BUILD_ROOT=/var/tmp/build-root-adrian/.mount
+[    0s] Using BUILD_ARCH=x86_64:i686:i586:i486:i386
+[    0s] Doing kvm build in /var/tmp/build-root-adrian/.mount.img
+[    0s] 
+[    1s] 
+[    1s] rio started "build oterm.spec" at Sun Sep 13 18:36:02 UTC 2026.
+[    1s] 
+[    1s] 
+[    1s] processing recipe /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
+[    1s] running changelog2spec --target rpm --file /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec
+[    1s] init_buildsystem --configdir /usr/lib/build/configs --cachedir /home/adrian/.cache/opensuse.org/build/cache --prepare --rpmlist /var/tmp/build-root-adrian/.build.rpmlist /home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/oterm.spec ...
+[    1s] copying packages...
+[    1s] reordering...cycle: libncurses6 -> terminfo-base
+[    1s]   breaking dependency terminfo-base -> libncurses6
+[    1s] cycle: lua54 -> lua-interpreter
+[    1s]   breaking dependency lua54 -> lua-interpreter
+[    1s] cycle: binutils -> libctf0
+[    1s]   breaking dependency binutils -> libctf0
+[    1s] cycle: python313-base -> libpython3_13-1_0
+[    1s]   breaking dependency python313-base -> libpython3_13-1_0
+[    1s] cycle: rpm-config-SUSE -> rpm
+[    1s]   breaking dependency rpm -> rpm-config-SUSE
+[    1s] done
+[    1s] cp: -r not specified; omitting directory '/home/adrian/opencode/pbuild-ai-examples/sources/fix-build-example/_build.tumbleweed.x86_64'
+[    1s] Detected virtio-serial support
+[    2s] booting kvm...
+[    2s] ### VM INTERACTION START ###
+[    2s] Using virtio-serial support
+[    2s] /usr/bin/qemu-kvm -nodefaults -no-reboot -nographic -vga none -cpu host -M pc,accel=kvm,usb=off,dump-guest-core=off,vmport=off -sandbox on -bios /usr/share/qemu/qboot.rom -object rng-random,filename=/dev/random,id=rng0 -device virtio-rng-pci,rng=rng0 -object iothread,id=io0 -net none -kernel /var/tmp/build-root-adrian/.mount/boot/kernel -initrd /var/tmp/build-root-adrian/.mount/boot/initrd -append root=/dev/disk/by-id/virtio-0 rootfstype=ext4 rootflags=noatime elevator=noop nmi_watchdog=0 rw ia32_emulation=1 oops=panic panic=1 quiet console=hvc0 init=/.build/build -m 512 -drive file=/var/tmp/build-root-adrian/.mount.img,format=raw,if=none,id=disk,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=disk,serial=0 -drive file=/var/tmp/build-root-adrian/.mount.swap,format=raw,if=none,id=swap,cache=unsafe,aio=io_uring -device virtio-blk-pci,iothread=io0,drive=swap,serial=1 -device virtio-serial,max_ports=2 -device virtconsole,chardev=virtiocon0 -chardev stdio,id=virtiocon0 -chardev socket,id=monitor,server=on,wait=off,path=/var/tmp/build-root-adrian/.mount.img.qemu/monitor -mon chardev=monitor,mode=readline
+[    6s] P+q6E616D65\[18t7[32766;32766H[6n8[!p]104\[0m[?7h[1G[0J]3008;start=30488a43883845db9c5661616fce654e;user=root;hostname=localhost;machineid=bc719fd7f7624d72bf8579a3a34d4058;bootid=f1a40592d29347668666a96311085dcb;pid=1;pidfdid=1;comm=systemd;type=boot\[18t7[32766;32766H[6n8[!p]104\[0m[?7h[1G[0JExtracting build.extract.tar
+[    6s] ### VM INTERACTION END ###
+[    6s] 2nd stage started in virtual machine
+[    6s] machine type: x86_64
+[    6s] Linux version: 7.2.4-1-default #1 SMP PREEMPT_DYNAMIC Mon Sep 7 16:12:54 UTC 2026 (eac7913)
+[    6s] Time: Sun Sep 13 18:36:06 UTC 2026
+[    6s] Increasing log level from now on...
+[    6s] [    3.615289][  T477] sysrq: Changing Loglevel
+[    6s] [    3.615352][  T477] sysrq: Loglevel set to 4
+[    6s] Enable sysrq operations
+[    6s] Setting up swapspace version 1, size = 1024 MiB (1073737728 bytes)
+[    6s] no label, UUID=2cb86cbe-d4e7-4ad3-bf16-eeeb904a7a13
+[    6s] logging output to //.build.log...
+[    6s] processing recipe //.build-srcdir/oterm.spec ...
+[    6s] init_buildsystem --configdir /.build/configs --cachedir /var/cache/build //.build-srcdir/oterm.spec ...
+[    6s] initializing rpm db...
+[    6s] querying package ids...
+[    7s] [1/147] keeping compat-usrmerge-tools-84.87-5.26
+[    7s] [2/147] keeping crypto-policies-20250714.cd6043a-5.1
+[    7s] [3/147] keeping file-magic-5.48-2.2
+[    7s] [4/147] keeping kernel-obs-build-7.2.4-1.1
+[    7s] [5/147] keeping pkgconf-m4-2.5.1-1.5
+[    7s] [6/147] keeping python-rpm-macros-20260909.65d2791-1.1
+[    7s] [7/147] keeping suse-reproducible-builds-1.0-1.2
+[    7s] [8/147] keeping system-user-root-20190513-2.20
+[    7s] [9/147] keeping filesystem-84.87-21.2
+[    7s] [10/147] keeping glibc-2.44-1.1
+[    7s] [11/147] keeping diffutils-3.12-1.5
+[    7s] [12/147] keeping envsubst-mini-1.0-2.4
+[    7s] [13/147] keeping fillup-1.42-281.7
+[    7s] [14/147] keeping glibc-gconv-modules-extra-2.44-1.1
+[    7s] [15/147] keeping glibc-locale-base-2.44-1.1
+[    7s] [16/147] keeping libacl1-2.4.0-1.2
+[    7s] [17/147] keeping libalternatives1-2.0+0.4f22c01-1.1
+[    7s] [18/147] keeping libatomic1-16.2.0+git9497-3.1
+[    7s] [19/147] keeping libattr1-2.6.0-1.2
+[    7s] [20/147] keeping libaudit1-4.0.2-3.5
+[    7s] [21/147] keeping libbz2-1-1.0.8-6.1
+[    7s] [22/147] keeping libcap-ng0-0.8.5-1.7
+[    7s] [23/147] keeping libcap2-2.78-1.4
+[    7s] [24/147] keeping libcrypt1-4.5.2-2.4
+[    7s] [25/147] keeping libeconf0-0.8.4-1.2
+[    7s] [26/147] keeping libexpat1-2.8.4-1.1
+[    7s] [27/147] keeping libffi8-3.5.2-2.5
+[    7s] [28/147] keeping libgcc_s1-16.2.0+git9497-3.1
+[    7s] [29/147] keeping libgdbm6-1.26-1.5
+[    7s] [30/147] keeping libgmp10-6.3.0-5.6
+[    7s] [31/147] keeping libgomp1-16.2.0+git9497-3.1
+[    7s] [32/147] keeping libgpg-error0-1.61-2.1
+[    7s] [33/147] keeping libitm1-16.2.0+git9497-3.1
+[    7s] [34/147] keeping libjitterentropy3-3.6.3-1.5
+[    7s] [35/147] keeping liblua5_4-5-5.4.8-4.6
+[    7s] [36/147] keeping liblz1-1.16-1.4
+[    7s] [37/147] keeping liblz4-1-1.10.0-2.8
+[    7s] [38/147] keeping liblzma5-5.8.3-1.4
+[    7s] [39/147] keeping libmpdec4-4.0.1-2.5
+[    7s] [40/147] keeping libpcre2-8-0-10.48-1.1
+[    7s] [41/147] keeping libpkgconf7-2.5.1-1.5
+[    7s] [42/147] keeping libpopt0-1.19-2.4
+[    7s] [43/147] keeping libseccomp2-2.6.1-3.1
+[    7s] [44/147] keeping libsframe2-2.45-4.3
+[    7s] [45/147] keeping libsmartcols1-2.42.2-2.1
+[    7s] [46/147] keeping libuuid1-2.42.2-2.1
+[    7s] [47/147] keeping libxml2-16-2.15.4-1.1
+[    7s] [48/147] keeping libz1-1.3.1-3.3
+[    7s] [49/147] keeping libzstd1-1.5.7-6.1
+[    7s] [50/147] keeping patch-2.8-3.2
+[    7s] [51/147] keeping which-2.25-1.3
+[    7s] [52/147] keeping alts-2.0+0.4f22c01-1.1
+[    7s] [53/147] keeping libblkid1-2.42.2-2.1
+[    7s] [54/147] keeping libctf-nobfd0-2.45-4.3
+[    7s] [55/147] keeping libgdbm_compat4-1.26-1.5
+[    7s] [56/147] keeping libisl23-0.27-1.6
+[    7s] [57/147] keeping libmpfr6-4.2.2-1.5
+[    7s] [58/147] keeping libselinux1-3.11-2.1
+[    7s] [59/147] keeping libstdc++6-16.2.0+git9497-3.1
+[    7s] [60/147] keeping perl-base-5.44.0-1.2
+[    7s] [61/147] keeping pkgconf-2.5.1-1.5
+[    7s] [62/147] keeping libelf1-0.194-1.4
+[    7s] [63/147] keeping libgcrypt20-1.12.3-1.1
+[    7s] [64/147] keeping permctl-1699_20260806-1.1
+[    7s] [65/147] keeping libmagic1-5.48-2.2
+[    7s] [66/147] keeping build-mkbaselibs-20260505-1.3
+[    7s] [67/147] keeping dwz-0.15-6.6
+[    7s] [68/147] keeping findutils-4.11.0-1.2
+[    7s] [69/147] keeping fdupes-2.4.0-1.5
+[    7s] [70/147] keeping file-5.48-2.2
+[    7s] [71/147] keeping libasan8-16.2.0+git9497-3.1
+[    7s] [72/147] keeping libfdisk1-2.42.2-2.1
+[    7s] [73/147] keeping libhwasan0-16.2.0+git9497-3.1
+[    7s] [74/147] keeping liblsan0-16.2.0+git9497-3.1
+[    7s] [75/147] keeping libmount1-2.42.2-2.1
+[    7s] [76/147] keeping libmpc3-1.4.1-1.4
+[    7s] [77/147] keeping libtsan2-16.2.0+git9497-3.1
+[    7s] [78/147] keeping libubsan1-16.2.0+git9497-3.1
+[    7s] [79/147] keeping sed-4.10-1.4
+[    7s] [80/147] keeping tar-1.35-10.1
+[    7s] [81/147] keeping libdw1-0.194-1.4
+[    7s] [82/147] keeping perl-5.44.0-1.2
+[    7s] [83/147] keeping brp-check-suse-84.87+git20260317.a0eb4ba-1.3
+[    7s] [84/147] keeping perl-rpm-packaging-1.3-1.3
+[    7s] [85/147] keeping libasm1-0.194-1.4
+[    7s] [86/147] keeping cpp16-16.2.0+git9497-3.1
+[    7s] [87/147] keeping terminfo-base-6.6.20260815-111.1
+[    7s] [88/147] keeping libncurses6-6.6.20260815-111.1
+[    7s] [89/147] keeping libreadline8-8.3.3-2.6
+[    7s] [90/147] keeping ncurses-utils-6.6.20260815-111.1
+[    7s] [91/147] keeping bash-5.3.15-8.2
+[    7s] [92/147] keeping lua54-5.4.8-4.6
+[    7s] [93/147] keeping bash-sh-5.3.15-8.2
+[    7s] [94/147] keeping compat-usrmerge-build-84.87-5.26
+[    7s] [95/147] keeping lua-interpreter-5-3.3
+[    7s] [96/147] keeping cpio-2.15-9.1
+[    7s] [97/147] keeping cpp-16-1.1
+[    7s] [98/147] keeping gzip-1.14-3.1
+[    7s] [99/147] keeping make-4.4.1-3.7
+[    7s] [100/147] keeping bzip2-1.0.8-6.1
+[    7s] [101/147] keeping grep-3.12-1.5
+[    7s] [102/147] keeping pkgconf-pkg-config-2.5.1-1.5
+[    7s] [103/147] keeping xz-5.8.3-1.4
+[    7s] [104/147] keeping gettext-runtime-mini-1.0-2.4
+[    7s] [105/147] keeping gawk-5.4.1-1.2
+[    7s] [106/147] keeping coreutils-9.11-4.3
+[    7s] [107/147] keeping elfutils-0.194-1.4
+[    7s] [108/147] keeping linux-glibc-devel-7.2-1.1
+[    7s] [109/147] keeping systemd-rpm-macros-26-1.3
+[    7s] [110/147] keeping libxcrypt-devel-4.5.2-2.4
+[    7s] [111/147] keeping permissions-config-1699_20260806-1.1
+[    7s] [112/147] keeping polkit-default-privs-1550+20260825.76d85e6-1.1
+[    7s] [113/147] keeping libopenssl3-3.5.3-8.1
+[    7s] [114/147] keeping aaa_base-84.87+git20260610.3b5a868c-1.3
+[    7s] [115/147] keeping gettext-tools-mini-1.0-2.4
+[    7s] [116/147] keeping binutils-2.45-4.3
+[    7s] [117/147] keeping rpm-4.20.1-10.1
+[    7s] [118/147] keeping aaa_base-malloccheck-84.87+git20260610.3b5a868c-1.3
+[    7s] [119/147] keeping permissions-1699_20260806-1.1
+[    7s] [120/147] keeping rpm-config-SUSE-20250904-1.3
+[    7s] [121/147] keeping glibc-devel-2.44-1.1
+[    7s] [122/147] keeping libctf0-2.45-4.3
+[    7s] [123/147] keeping rpmlint-mini-2.10.0+git20260827.9644f1e0-21.35
+[    7s] [124/147] keeping build-compare-20260622T095938.6416d96-1.3
+[    7s] [125/147] keeping libarchive13-3.8.9-1.1
+[    7s] [126/147] keeping librpmbuild10-4.20.1-10.1
+[    7s] [127/147] keeping python313-base-3.13.14-2.1
+[    7s] [128/147] keeping debugedit-5.1-1.7
+[    7s] [129/147] keeping python313-packaging-26.3-1.1
+[    7s] [130/147] keeping python313-pathspec-1.1.1-1.3
+[    7s] [131/147] keeping python313-pluggy-1.6.0-2.7
+[    7s] [132/147] keeping python313-poetry-core-2.4.0-2.1
+[    7s] [133/147] keeping python313-tomlkit-0.15.1-2.1
+[    7s] [134/147] keeping libpython3_13-1_0-3.13.14-2.1
+[    7s] [135/147] keeping python313-trove-classifiers-2026.6.1.19-1.1
+[    7s] [136/147] keeping python313-pip-26.2-1.1
+[    7s] [137/147] keeping pam-1.7.2+git48-1.1
+[    7s] [138/147] keeping post-build-checks-84.87+git20260421.8ed5e73-1.1
+[    7s] [139/147] keeping gcc16-16.2.0+git9497-3.1
+[    7s] [140/147] keeping gcc16-PIE-16.2.0+git9497-3.1
+[    7s] [141/147] keeping gcc-16-1.1
+[    7s] [142/147] keeping python313-wheel-0.48.0-1.1
+[    7s] [143/147] keeping python-rpm-packaging-20210526+a18ca48-1.15
+[    7s] [144/147] keeping python313-hatchling-1.32.0-1.1
+[    7s] [145/147] keeping util-linux-2.42.2-2.1
+[    7s] [146/147] keeping gcc-PIE-16-1.1
+[    7s] [147/147] keeping rpm-build-4.20.1-10.1
+[    7s] now finalizing build dir...
+[    7s] ... running 01-add_abuild_user_to_trusted_group
+[    7s] ... running 02-set_timezone_to_utc
+[    7s] ... running 03-set-permissions-secure
+[    7s] ... running 11-hack_uname_version_to_kernel_version
+[    7s] WARNING: BUILD_RELEASE is not set in /.buildenv, setting SOURCE_DATE_EPOCH_MTIME to SOURCE_DATE_EPOCH
+[    7s] -----------------------------------------------------------------
+[    7s] ----- building oterm.spec (user abuild)
+[    7s] -----------------------------------------------------------------
+[    7s] -----------------------------------------------------------------
+[    7s] WARNING: BUILD_RELEASE is not set in /.buildenv, setting SOURCE_DATE_EPOCH_MTIME to SOURCE_DATE_EPOCH
+[    7s] + exec rpmbuild -ba --define '_srcdefattr (-,root,root)' --nosignature --define '_build_create_debug 1' /home/abuild/rpmbuild/SOURCES/oterm.spec
+[    7s] Building target platforms: noarch
+[    7s] Building for target noarch
+[    7s] using SOURCE_DATE_EPOCH with value 1748930680 as build time
+[    7s] Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.elLGjj
+[    7s] Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.WUu6on
+[    7s] + umask 022
+[    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    7s] + rm -rf oterm-0.13.0
+[    7s] + /usr/lib/rpm/rpmuncompress -x /home/abuild/rpmbuild/SOURCES/oterm-0.13.0.tar.gz
+[    8s] + STATUS=0
+[    8s] + '[' 0 -ne 0 ']'
+[    8s] + cd oterm-0.13.0
+[    8s] + /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+[    8s] + RPM_EC=0
+[    8s] ++ jobs -p
+[    8s] + exit 0
+[    8s] Executing(%build): /usr/bin/bash -e /var/tmp/rpm-tmp.M8Mj8a
+[    8s] + umask 022
+[    8s] + cd /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    8s] + /usr/bin/rm -rf /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    8s] ++ dirname /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    8s] + /usr/bin/mkdir -p /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build
+[    8s] + /usr/bin/mkdir /home/abuild/rpmbuild/BUILD/oterm-0.13.0-build/BUILDROOT
+[    8s] + cd oterm-0.13.0
+[    8s] + %set +m
+[    8s] /var/tmp/rpm-tmp.M8Mj8a: line 37: fg: no job control
+[    8s] error: Bad exit status from /var/tmp/rpm-tmp.M8Mj8a (%build)
+[    8s] 
+[    8s] RPM build errors:
+[    8s]     Bad exit status from /var/tmp/rpm-tmp.M8Mj8a (%build)
+[    8s] ### VM INTERACTION START ###
+[    8s] [    5.170340][    T1] sysrq: Power Off
+[    8s] ### VM INTERACTION END ###
+[    8s] 
+[    8s] rio failed "build oterm.spec" at Sun Sep 13 18:36:09 UTC 2026.
+[    8s] 
+
+finished ./oterm.spec after 8s: failed

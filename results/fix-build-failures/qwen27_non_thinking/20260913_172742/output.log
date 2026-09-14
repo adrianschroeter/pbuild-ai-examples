@@ -1,0 +1,16 @@
+usage: pbuild_ai.py [-h] [--analyze] [--version] [--fix] [--update]
+                    [--generate GENERATE] [--create CREATE] [--modify MODIFY]
+                    [--root ROOT] [--show-buildlog] [--build-log BUILD_LOG]
+                    [--shell-after-build] [--vm-type VM_TYPE]
+                    [--vm-memory VM_MEMORY] [--update-only] [--preset PRESET]
+                    [--dist DIST] [--allow-tool-scripts] [--debug]
+                    [--max-fix-attempts MAX_FIX_ATTEMPTS]
+                    [--max-ai-rounds MAX_AI_ROUNDS] [--auto-deps [AUTO_DEPS]]
+                    [--try-build-first] [--deep-analyze] [--prompt PROMPT]
+                    [--fresh] [-i] [--ai-server AI_SERVER] [--model MODEL]
+                    [--ai-timeout AI_TIMEOUT] [--ai-option AI_OPTION]
+                    [--email EMAIL] [--changelog] [--skills-dir SKILLS_DIR]
+                    [--clean | --no-clean]
+                    workspace_dir [package_name]
+pbuild_ai.py: error: unrecognized arguments: --ollama-option
+[EXIT] Exiting with code 2.

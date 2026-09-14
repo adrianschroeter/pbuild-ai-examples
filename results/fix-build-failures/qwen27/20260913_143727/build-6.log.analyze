@@ -1,0 +1,29 @@
+The user wants me to fix an openSUSE RPM spec file build failure.
+
+Let's look at the error:
+`
+    [    8s] + /usr/bin/python3.14 -mpip wheel --verbose --progress-bar off --disable-pip-version-check --use-pep517 --no-build-isolation --no-deps --wheel-dir ./build .
+    [    8s] /usr/bin/python3.14: No module named pip
+>>> [    8s] error: Bad exit status from /var/tmp/rpm-tmp.ENmWjq (%build)
+`
+
+This indicates that `pip` is not installed for python3.14, or the build macro being used expects `pip` but it's missing in the minimal buildroot. However, looking at the skill instructions:
+"Do NOT use %py3_build, %py3_install, %pyproject_buildrequires, %pyproject_files, or %pyproject_save_files macros — avoid them entirely."
+"Use %pyproject_wheel and %pyproject_install instead when the source uses a pyproject.toml."
+
+The build script currently runs:
+`/usr/bin/python3.14 -mpip wheel --verbose ...`
+This is likely coming from `%py3_build` or an inline script in the spec file, or maybe a macro expansion. Wait, the log shows `python_flavor=python314` and then it executes pip directly. This often happens when using `%pyproject_wheel` incorrectly or when the spec file has a custom %build section.
+
+Let's look at the diff snippets provided in the prompt:
+The prompt shows attempts to fix macros like `%{python_module hatchling}` vs `%{?!python_module:%define python_module() python-%{**} python3-%{**}}`.
+Actually, the error says `No module named pip`. In openSUSE Python packaging, if we use PEP 517 (pyproject.toml), we should rely on `hatchling` or `setuptools` via `%pyproject_wheel`, not raw `pip wheel`. The `%pyproject_wheel` macro handles the build backend correctly.
+
+Let's check what macros are available. The skill says: "Use %pyproject_wheel and %pyproject_install instead when the source uses a pyproject.toml."
+If the spec file has a custom `%build` that calls `pip wheel`, it should be replaced with `%pyproject_wheel`.
+Also, `BuildRequires: %{python_module hatchling}` or `python-hatchling` is needed if using PEP 517 without build isolation, or we rely on `%pyproject_buildrequires` but the skill says to avoid that. Actually, `%pyproject_wheel` usually requires the build backend as a `BuildRequires`.
+
+Wait, the error happens at `/usr/bin/python3.14 -mpip wheel ...`. This is characteristic of `%py3_build` or an outdated macro setup. The prompt shows previous attempts modifying macros like `%define python_module() ...`.
+The key issue: `pip` is not a build requirement by default for Python modules in openSUSE when using PEP 517 backends. We should add `BuildRequires: %{python_module pip}` or better, switch to using `%pyproject_wheel` which uses the configured backend (like hatchling) instead of pip.
+
+Let's reconstruct the likely spec file structure based on diffs:

@@ -1,0 +1,10 @@
+--- oterm.spec
++++ oterm.spec
+@@ -54,6 +54,7 @@
+ %setup -q
+ 
+ %build
++%set +m
+ %py3_wheel
+ 
+ %install

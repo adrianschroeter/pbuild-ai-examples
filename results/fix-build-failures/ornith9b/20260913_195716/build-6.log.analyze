@@ -1,0 +1,1 @@
+The binary /usr/bin/oterm is installed by the build but not listed in the %%files section. The %%files section only lists %%python_sitelib and the .dist-info directory, missing the %%_bindir entry for the console script.

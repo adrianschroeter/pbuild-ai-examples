@@ -1,0 +1,7 @@
+[PBUILD-AI] Version 0.0.0
+[SKILL LOADED] OPENSUSE.md (Base skill) from /home/adrian/opencode/pbuild-ai/src/pbuild_ai/skills
+[SKILL ACTIVE] lang_python for oterm.spec
+[INFO] Using skill profile: lang_python_skill
+[AI] Analyzing Spec-file: oterm.spec... (2k/32k tok)
+[AI ERROR] HTTP Error 404: Not Found — {"error":"model 'gemma4:31b-it-bf16' not found"}
+[EXIT] Exiting with code 2.

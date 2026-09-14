@@ -1,0 +1,11 @@
+{
+  "example": "fix-build-failures",
+  "model_key": "laguna_s_2.1_q4",
+  "model_name": "laguna-s-2.1:q4_K_M",
+  "model_host_name": "AMD Strix Halo",
+  "model_host_description": "An AMD Strix Halo 128GB server. Used by multiple people in parallel",
+  "timestamp": "2026-09-13T20:43:34+02:00",
+  "hostname": "rio",
+  "repo_root": "/home/adrian/opencode/pbuild-ai-examples",
+  "pbuild_ai_bin": "/home/adrian/opencode/pbuild-ai/pbuild-ai"
+}
