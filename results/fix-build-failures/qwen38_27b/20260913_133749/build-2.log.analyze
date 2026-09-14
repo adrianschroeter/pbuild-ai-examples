@@ -1,1 +1,0 @@
-Missing `BuildRequires: %{python_module pip}` (or `python-pip`) needed for wheel-based builds; also `%{python_module wheel}` and `%{python_module hatchling}` are present but redundant if using `%pyproject_wheel`

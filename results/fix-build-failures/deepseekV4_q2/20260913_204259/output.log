@@ -1,7 +1,0 @@
-[PBUILD-AI] Version 0.0.0
-[SKILL LOADED] OPENSUSE.md (Base skill) from /home/adrian/opencode/pbuild-ai/src/pbuild_ai/skills
-[SKILL ACTIVE] lang_python for oterm.spec
-[INFO] Using skill profile: lang_python_skill
-[AI] Analyzing Spec-file: oterm.spec... (2k/1024k tok)
-[AI ERROR] HTTP Error 500: Internal Server Error — {"error":"llama-server process has terminated: exit status 1: cudaMalloc failed: out of memory\nalloc_tensor_range: failed to allocate ROCm0 buffer of size 5637144576\nllama_init_from_model: failed to initialize the context: failed to allocate buffer for kv cache"}
-[EXIT] Exiting with code 2.

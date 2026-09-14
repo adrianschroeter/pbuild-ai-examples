@@ -1,3 +1,0 @@
-1. **Missing `pip` BuildRequire**: The spec uses `%pyton_wheel` (a typo of `%pyproject_wheel`) which internally invokes `pip`, but `BuildRequires: %{python_module pip}` is absent. This is a direct cause of the unresolvable build dependency error.
-2. **Typo in `%pyton_wheel`**: The macro `%pyton_wheel` in the `%build` section is invalid (missing 'p') and should be corrected to `%pyproject_wheel`.
-3. **Unnecessary `BuildRequires`**: `BuildRequires: %{python_module wheel}` is redundant as `%pyproject_wheel` handles the build backend automatically.
